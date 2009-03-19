@@ -1,0 +1,15 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title><% if !@game %>Twixt Commentator<% else %><%=h2 @game.player1 %> | <%=h2 @game.player2 %><% end %></title>
+  <%= stylesheet_link_tag 'twixt', :media => 'all' %>
+  <%= javascript_include_tag 'prototype.js', 'twixtboard.js', 'twixtcontroller.js', 'twixtmoves.js', 'peg.js', 'move.js', 'link.js', 'comments.js', 'view.js' %>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+</head>
+<body onresize='setCommentDivTop()'>
+  <p class='err'><%= flash[:error] %></p>
+  <%= render :partial => 'layouts/loginbox' %>
+  <%= yield :layout %>
+</body>
+</html>

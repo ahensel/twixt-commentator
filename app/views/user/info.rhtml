@@ -1,0 +1,30 @@
+Name: <b><%=h2 @user.name %></b>
+<% if @user.id == session[:user_id] %>
+  (current user)
+<% end %>
+<br/>
+<% if @user.on_lg %>
+Plays on Little Golem
+  <% if !@user.name_on_lg.blank? and (@user.name_on_lg != @user.name) %>
+    as <b><%=h2 @user.name_on_lg %></b>
+  <% else %>
+    (under same name)
+  <% end %>
+<% else %>
+Does not play on Little Golem
+<% end %>
+<br/>
+Account created on: <%= @user.created_on.strftime('%Y-%m-%d') %>
+<br/>
+Info:
+<% if @user.info.blank? %>
+  None
+<% else %>
+  <blockquote>
+    <%=xssize @user.info %>
+  </blockquote>
+<% end %>
+<br/>
+<% if !params[:back_to].blank? %>
+  <%= link_to 'Back', :controller => params[:back_to], :page => params[:main_page], :gid => params[:ret_gid] %>
+<% end %>

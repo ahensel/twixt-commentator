@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  comment: MyText
+  game_id: 1
+  created_on: 2008-12-02 15:26:52
+  user_id: 1
+
+two:
+  comment: MyText
+  game_id: 1
+  created_on: 2008-12-02 15:26:52
+  user_id: 1

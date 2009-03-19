@@ -1,0 +1,140 @@
+* add "Edit my last comment" link after posting
+  - don't change submitted on date
+  - enable deleting post entirely
+  - include only if:
+    - comment user id is same user id that's logged in
+    - it's not a preview
+
+-----
+
+- For in-progress games, allow private comments that are revealed when the game is finished
+  - game should not show up in "Commented Games" section until finished
+  - include move number at time of comment
+
+* when reading game, if game is determined to be in progress, store as type '?', and show it
+* if game stored in database is of type '?', must check LG anyway; store new game if lg_game_data doesn't match.
+* in comment controller, if game type is '?', only read comments for current user
+* don't show in-progress games on main page
+* add link in comment header to move at the time
+  - also, change guessing logic to take that into account?
+
+* make a ruby script that slurps games.txt into database (after names.rb run)
+  - don't overwrite any games that happen to already be there.
+* make a refresh.rb that works with games database
+
+-----
+
+Table of games recently completed, & Glicko Ratings
+- nightly cron job, kicks off ruby script
+  - like refresh.rb, but dumps new games into database
+  - every 7th time or so, also checks for forfeits
+  - then runs something like ratings.rb, to put ratings into database (no update if abs(diff) < 2)
+- table to show games recently added
+- display ratings
+  - players (stored in games table)
+    - main_page table
+    - game page
+  - commenters (stored in comments table, at the time of comment)
+    - ask them in the profile
+        > 2000, ~ 1900, ~ 1700, ~ 1500, < 1400
+
+---
+
+"About this site" page
+- Alt+N, Alt+B for next and back buttons
+  - n, b also, but remember that when comment window is open, all keys
+     refocus to comment window
+- Ctrl+A Backspace shortcut to get back to "No Comment"
+- What R, L, F, D mean
+- How the ratings are calculated
+- Clicking on moves in the comments, and the meaning of | and []
+- Illegal move pop-up
+
+Links to other Twixt sites
+
+RSS (at about the time you deploy to real server, so people don't have dead RSS feeds hanging around)
+
+---
+
+game 731017: the "Sorry" message there
+game 725139: delete
+game 420000: delete
+game 724798: delete
+
+Better ability to find what you're looking for:
+- Tagging: let users tag posts with keywords
+- Sorting / filtering / searching ?
+- Users can make personal lists of games?
+- Ratings (using stars)
+
+Insert | and [] in all of the old posts
+JS semicolons?
+Tick marks in IE?
+Time Zone conversion for users?
+Hover over peg -> highlight move text?
+Paypal donate button?
+Pop-up user info box?
+Detach comment text area?
+Dropped Flash messages?
+Move number in URL? ( /game/723646?move=25 )
+More user hinting on moves?
+- -12.m6 meaning not mainline, continuing variation ?
+- snapshot?
+- "Transscribe clicks" checkbox during commenting?
+- Bug: In comment text, moves far beyond end of game are problematic.
+- What to do about non-sequential numbers?
+auto_link_url patch!
+login forms should use https:
+
+Hi Alan, on your website I just started adding comments to my game 771056
+against technolion, and something non-intuituve to me happened. It seems
+any comment I add is seen at every point in the game, not just at the node
+where I added it. Is this intentional? Also is there any way for the user
+to edit a comment after submitting it? I'm used to Jtwixt comments which
+apply to specific nodes. Sorry if I am covering the same ground as the
+last time I had difficulty with your site. Also how should I download all
+your source code? I would still like to try to add "show all branches,
+not just list them" capability. I would also like to see the ability to
+upload a Jtwixt file. It would be super convenient for me to annotate a
+game with Jtwixt and then just upload it. Maybe there would be restrictions
+on the root comment node which would contain a header your page could
+interpret. What do you think! Thanks!
+
+- carriage returns should count as intervening text
+- maybe change the way it recognizes consecutive numbers (searching
+  previous text for previous move number)
+
+- minify javascript and concatenate into one file as part of deploy process.
+- 'no expires' headers for images.
+
+- clear selections, as per ajax cookbook:
+function disableSelection(element) {
+    element.onselectstart = function() {
+        return false;
+    };
+    element.unselectable = "on";
+    element.style.MozUserSelect = "none";
+    element.style.cursor = "default";
+}
+
+or:
+
+/***********************************************
+* Disable Text Selection script- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+
+***********************************************/
+
+
+function disableSelection(target){
+  if (typeof target.onselectstart!="undefined") //IE route
+    target.onselectstart=function(){return false}
+  else if (typeof target.style.MozUserSelect!="undefined") //Firefox route
+    target.style.MozUserSelect="none"
+  else //All other route (ie: Opera)
+    target.onmousedown=function(){return false}
+
+  target.style.cursor = "default"
+}
+

@@ -1,0 +1,2026 @@
+
+
+Processing Rails::InfoController#properties (for 127.0.0.1 at 2008-11-28 16:25:31) [GET]
+  Session ID: abbfa9191333b9f8fde110c215b415e5
+  Parameters: {"action"=>"properties", "controller"=>"rails/info"}
+  [4;36;1mSQL (21.0ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+Completed in 123ms (View: 2, DB: 21) | 200 OK [http://localhost/rails/info/properties]
+  [4;36;1mSQL (2.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mselect sqlite_version(*)[0m
+  [4;36;1mSQL (4.6ms)[0m   [0;1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [4;35;1mSQL (2.9ms)[0m   [0mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateUsers (1)
+  [4;36;1mSQL (3.9ms)[0m   [0;1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "hashed_password" varchar(255), "salt" varchar(255), "created_on" datetime, "on_lg" boolean, "name_on_lg" varchar(255), "info" text, "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (3.6ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('1')[0m
+Migrating to CreateGames (2)
+  [4;36;1mSQL (2.2ms)[0m   [0;1mCREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "lg_game_num" integer, "result" varchar(255), "lg_data" text, "created_on" datetime, "last_commented_on" datetime, "last_commented_by" integer, "player1" varchar(255), "player2" varchar(255), "winner" integer, "tournament" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (1.5ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('2')[0m
+Migrating to CreateComments (3)
+  [4;36;1mSQL (3.4ms)[0m   [0;1mCREATE TABLE "comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "comment" text, "game_id" integer, "created_on" datetime, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (1.9ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('3')[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("comments")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("games")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("users")[0m
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2008-12-02 17:22:17) [GET]
+  Session ID: 329acd3ee2400dd06260c6c2ffc74b7f
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2008-12-02 17:22:17) [GET]
+  Session ID: 329acd3ee2400dd06260c6c2ffc74b7f
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+
+
+MissingSourceFile (no such file to load -- mysql):
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/activesupport/lib/active_support/core_ext/kernel/requires.rb:7:in `require_library_or_gem'
+    /vendor/rails/activesupport/lib/active_support/core_ext/kernel/reporting.rb:11:in `silence_warnings'
+    /vendor/rails/activesupport/lib/active_support/core_ext/kernel/requires.rb:5:in `require_library_or_gem'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb:63:in `mysql_connection'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:215:in `send'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:215:in `new_connection'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:237:in `checkout_new_connection'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:180:in `checkout'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:176:in `loop'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:176:in `checkout'
+    /opt/local/lib/ruby/1.8/monitor.rb:242:in `synchronize'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:175:in `checkout'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:90:in `connection'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:321:in `retrieve_connection'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_specification.rb:121:in `retrieve_connection'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_specification.rb:113:in `connection'
+    /vendor/rails/activerecord/lib/active_record/query_cache.rb:8:in `cache'
+    /vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:533:in `send'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:533:in `process_without_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    /vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `process'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:401:in `process'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:180:in `handle_request'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_trace (32.9ms)
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_request_and_response (1.4ms)
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-01-28 22:20:52) [GET]
+  Session ID: 50def01e1837d73fe21aa788e2126b45
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+NoMethodError (undefined method `paginate' for #<MainPageController:0x3274324>):
+    /app/controllers/main_page_controller.rb:4:in `index'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:1213:in `send'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:1213:in `perform_action_without_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:617:in `call_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /vendor/rails/actionpack/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    /vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/query_cache.rb:48:in `cache'
+    /vendor/rails/activerecord/lib/active_record/query_cache.rb:8:in `cache'
+    /vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:533:in `send'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:533:in `process_without_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    /vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `process'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:401:in `process'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:180:in `handle_request'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_trace (25.3ms)
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_request_and_response (1.0ms)
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 20:16:55) [GET]
+  Session ID: 905e58064b519db09adebf8c9953dfc6
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+NoMethodError (undefined method `paginate' for #<MainPageController:0x3161928>):
+    /app/controllers/main_page_controller.rb:4:in `index'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:1213:in `send'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:1213:in `perform_action_without_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:617:in `call_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /vendor/rails/actionpack/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    /vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/query_cache.rb:48:in `cache'
+    /vendor/rails/activerecord/lib/active_record/query_cache.rb:8:in `cache'
+    /vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:533:in `send'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:533:in `process_without_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    /vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `process'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:401:in `process'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:180:in `handle_request'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_trace (26.9ms)
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_request_and_response (1.0ms)
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 20:51:24) [GET]
+  Session ID: BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA==--4b12a036f02f722c36a83383635e52a7d4d246e4
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (75.3ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (2.7ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (20.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 11) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.5ms)
+Completed in 187ms (View: 101, DB: 79) | 200 OK [http://localhost/]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 20:51:30) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--ac8208b169883ebe2b53e364158862eb66b851aa
+  Parameters: {"action"=>"index", "page"=>"3", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (1.9ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 40, 20[0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mGame Columns (3.2ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mUser Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.1ms)
+Completed in 43ms (View: 36, DB: 2) | 200 OK [http://localhost/?page=3]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 20:51:33) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--ac8208b169883ebe2b53e364158862eb66b851aa
+  Parameters: {"action"=>"index", "page"=>"2", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (1.9ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 20, 20[0m
+  [4;35;1mGame Columns (3.0ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.5ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 10) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 10) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 7) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.1ms)
+Completed in 62ms (View: 50, DB: 6) | 200 OK [http://localhost/?page=2]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 20:51:36) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--ac8208b169883ebe2b53e364158862eb66b851aa
+  Parameters: {"action"=>"index", "page"=>"1", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (1.7ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.0ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 11) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.1ms)
+Completed in 58ms (View: 46, DB: 6) | 200 OK [http://localhost/?page=1]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 20:51:38) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--ac8208b169883ebe2b53e364158862eb66b851aa
+  Parameters: {"action"=>"index", "page"=>"2", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (2.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 20, 20[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.5ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 10) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 10) LIMIT 1[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 7) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.3ms)
+Completed in 66ms (View: 53, DB: 6) | 200 OK [http://localhost/?page=2]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 20:51:40) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--ac8208b169883ebe2b53e364158862eb66b851aa
+  Parameters: {"action"=>"index", "page"=>"1", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (1.7ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 11) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.1ms)
+Completed in 147ms (View: 134, DB: 6) | 200 OK [http://localhost/?page=1]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 20:51:43) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--ac8208b169883ebe2b53e364158862eb66b851aa
+  Parameters: {"gid"=>"772607", "main_page"=>"1", "action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (0.4ms)[0m   [0;1mSELECT * FROM `games` WHERE (lg_game_num = 772607) LIMIT 1[0m
+  [4;35;1mGame Columns (3.2ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;36;1mComment Load (6.3ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.game_id = 290) [0m
+  [4;35;1mComment Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mUser Columns (2.5ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.7ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 17) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.1ms)
+Completed in 74ms (View: 62, DB: 4) | 200 OK [http://localhost/game/772607?main_page=1]
+
+
+Processing UserController#login (for 127.0.0.1 at 2009-03-18 20:52:03) [POST]
+  Session ID: BAh7BzoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRg==--9bc753cf26bcbaf6636051087d3bbaabe6e8907b
+  Parameters: {"name"=>"Alan Hensel", "commit"=>"Log in", "action"=>"login", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "ret_gid"=>"772607", "controller"=>"user", "password"=>"[FILTERED]", "back_to"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mUser Columns (2.4ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`name` = 'Alan Hensel') LIMIT 1[0m
+Redirected to controllergamepagegid772607
+Completed in 13ms (DB: 3) | 302 Found [http://localhost/user/login?back_to=game&ret_gid=772607]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 20:52:03) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVDoMdXNlcl9pZGkJ--3181c6b0d04f409a6fba85c1995771ac41f4ce8a
+  Parameters: {"gid"=>"772607", "action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (0.4ms)[0m   [0;1mSELECT * FROM `games` WHERE (lg_game_num = 772607) LIMIT 1[0m
+  [4;35;1mGame Columns (2.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;36;1mComment Load (0.6ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.game_id = 290) [0m
+  [4;35;1mComment Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mUser Columns (2.2ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 17) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.7ms)
+Completed in 64ms (View: 55, DB: 3) | 200 OK [http://localhost/game/772607]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 20:52:13) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"game"=>"290", "new_comment"=>"This is a test", "commit"=>"Comment", "button_pressed"=>"Comment", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mComment Columns (2.7ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mComment Create (0.3ms)[0m   [0mINSERT INTO `comments` (`comment`, `created_on`, `user_id`, `game_id`) VALUES('This is a test', '2009-03-19 00:52:13', 4, 290)[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mGame Columns (2.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mGame Load (2.5ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 290) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mGame Update (0.3ms)[0m   [0;1mUPDATE `games` SET `last_commented_on` = '2009-03-19 00:52:13' WHERE `id` = 290[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mCOMMIT[0m
+Rendering comment/index
+  [4;36;1mUser Columns (2.2ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 43ms (View: 15, DB: 9) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 20:52:37) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVDoMdXNlcl9pZGkJ--3181c6b0d04f409a6fba85c1995771ac41f4ce8a
+  Parameters: {"game"=>"290", "new_comment"=>"This is another test", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mComment Columns (3.0ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;35;1mUser Columns (2.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 102ms (View: 17, DB: 3) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 20:52:42) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"game"=>"290", "new_comment"=>"This is another test", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mComment Columns (2.6ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;36;1mUser Columns (2.2ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 27ms (View: 18, DB: 3) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing UserController#profile (for 127.0.0.1 at 2009-03-18 20:52:46) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"action"=>"profile", "id"=>"4", "ret_gid"=>"772607", "controller"=>"user", "back_to"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mUser Columns (2.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.6ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) [0m
+Rendering template within layouts/admin
+Rendering user/profile
+Completed in 21ms (View: 9, DB: 4) | 200 OK [http://localhost/user/profile/4?back_to=game&ret_gid=772607]
+
+
+Processing UserController#profile (for 127.0.0.1 at 2009-03-18 20:52:52) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"action"=>"profile", "id"=>"4", "ret_gid"=>"772607", "controller"=>"user", "back_to"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mUser Columns (2.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.9ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) [0m
+Rendering template within layouts/admin
+Rendering user/profile
+Completed in 21ms (View: 9, DB: 4) | 200 OK [http://localhost/user/profile/4?back_to=game&ret_gid=772607]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 20:52:54) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"gid"=>"772607", "action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (0.4ms)[0m   [0;1mSELECT * FROM `games` WHERE (lg_game_num = 772607) LIMIT 1[0m
+  [4;35;1mGame Columns (3.0ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;36;1mComment Load (0.7ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.game_id = 290) [0m
+  [4;35;1mComment Columns (2.1ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mUser Columns (2.5ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 17) LIMIT 1[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.4ms)
+Completed in 65ms (View: 54, DB: 3) | 200 OK [http://localhost/game/772607]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 20:52:56) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (1.7ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.0ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.5ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 11) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.7ms)
+Completed in 63ms (View: 51, DB: 6) | 200 OK [http://localhost/]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 20:53:02) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVDoMdXNlcl9pZGkJ--3181c6b0d04f409a6fba85c1995771ac41f4ce8a
+  Parameters: {"gid"=>"772607", "action"=>"index", "controller"=>"game"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (0.4ms)[0m   [0mSELECT * FROM `games` WHERE (lg_game_num = 772607) LIMIT 1[0m
+  [4;36;1mGame Columns (3.1ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;35;1mComment Load (0.7ms)[0m   [0mSELECT * FROM `comments` WHERE (`comments`.game_id = 290) [0m
+  [4;36;1mComment Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+  [4;35;1mUser Columns (2.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 17) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.5ms)
+Completed in 64ms (View: 53, DB: 4) | 200 OK [http://localhost/game/772607]
+
+
+Processing JtwixtController#gen (for 127.0.0.1 at 2009-03-18 20:53:04) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"action"=>"gen", "gameid"=>"772607", "controller"=>"jtwixt"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (0.4ms)[0m   [0mSELECT * FROM `games` WHERE (lg_game_num = '772607') LIMIT 1[0m
+  [4;36;1mGame Columns (2.2ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+Sending data game772607.tgt
+Completed in 10ms (View: 0, DB: 3) | 200 OK [http://localhost/jtwixt/gen?gameid=772607]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (1.4ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 2[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 21:40:51) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVDoMdXNlcl9pZGkJ--3181c6b0d04f409a6fba85c1995771ac41f4ce8a
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (1.7ms)[0m   [0mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;36;1mGame Columns (3.1ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+  [4;35;1mSQL (92.0ms)[0m   [0mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;36;1mUser Columns (2.4ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 11) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+
+
+ActionView::TemplateError (You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.length) on line #36 of app/views/main_page/index.rhtml:
+33:   <% end -%>
+34:   </tbody>
+35: </table>
+36: Page: <%= pagination_links %>
+
+    app/helpers/main_page_helper.rb:10:in `pagination_links'
+    app/views/main_page/index.rhtml:36
+    vendor/rails/actionpack/lib/action_view/renderable.rb:34:in `send'
+    vendor/rails/actionpack/lib/action_view/renderable.rb:34:in `render'
+    vendor/rails/actionpack/lib/action_view/template.rb:73:in `render_template'
+    vendor/rails/actionpack/lib/action_view/base.rb:250:in `render'
+    vendor/rails/actionpack/lib/action_view/base.rb:356:in `_render_with_layout'
+    vendor/rails/actionpack/lib/action_view/base.rb:248:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1156:in `render_for_file'
+    vendor/rails/actionpack/lib/action_controller/base.rb:886:in `render_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:858:in `render_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1208:in `default_render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1214:in `perform_action_without_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:617:in `call_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    vendor/rails/actionpack/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/query_cache.rb:48:in `cache'
+    vendor/rails/activerecord/lib/active_record/query_cache.rb:8:in `cache'
+    vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    vendor/rails/actionpack/lib/action_controller/base.rb:533:in `send'
+    vendor/rails/actionpack/lib/action_controller/base.rb:533:in `process_without_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `process'
+    vendor/rails/actionpack/lib/action_controller/base.rb:401:in `process'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:180:in `handle_request'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_trace (34.2ms)
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_request_and_response (1.1ms)
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 21:41:36) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (1.8ms)[0m   [0mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;36;1mGame Columns (3.1ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+  [4;35;1mSQL (104.2ms)[0m   [0mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;36;1mUser Columns (2.5ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 11) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+
+
+ActionView::TemplateError (undefined method `number' for 1:Fixnum) on line #36 of app/views/main_page/index.rhtml:
+33:   <% end -%>
+34:   </tbody>
+35: </table>
+36: Page: <%= pagination_links %>
+
+    app/helpers/main_page_helper.rb:16:in `pagination_links'
+    app/helpers/main_page_helper.rb:15:in `each'
+    app/helpers/main_page_helper.rb:15:in `pagination_links'
+    app/views/main_page/index.rhtml:36
+    vendor/rails/actionpack/lib/action_view/renderable.rb:34:in `send'
+    vendor/rails/actionpack/lib/action_view/renderable.rb:34:in `render'
+    vendor/rails/actionpack/lib/action_view/template.rb:73:in `render_template'
+    vendor/rails/actionpack/lib/action_view/base.rb:250:in `render'
+    vendor/rails/actionpack/lib/action_view/base.rb:356:in `_render_with_layout'
+    vendor/rails/actionpack/lib/action_view/base.rb:248:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1156:in `render_for_file'
+    vendor/rails/actionpack/lib/action_controller/base.rb:886:in `render_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:858:in `render_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1208:in `default_render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1214:in `perform_action_without_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:617:in `call_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    vendor/rails/actionpack/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/query_cache.rb:48:in `cache'
+    vendor/rails/activerecord/lib/active_record/query_cache.rb:8:in `cache'
+    vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    vendor/rails/actionpack/lib/action_controller/base.rb:533:in `send'
+    vendor/rails/actionpack/lib/action_controller/base.rb:533:in `process_without_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `process'
+    vendor/rails/actionpack/lib/action_controller/base.rb:401:in `process'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:180:in `handle_request'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_trace (30.2ms)
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_request_and_response (0.9ms)
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 21:44:16) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (1.8ms)[0m   [0mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;36;1mGame Columns (3.0ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+  [4;35;1mSQL (105.9ms)[0m   [0mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;36;1mUser Columns (2.4ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 11) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.3ms)
+Completed in 166ms (View: 49, DB: 111) | 200 OK [http://localhost/]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 21:44:20) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"action"=>"index", "page"=>"2", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (1.8ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 20, 20[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (1.8ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.5ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 10) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 10) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 7) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.4ms)
+Completed in 61ms (View: 48, DB: 7) | 200 OK [http://localhost/?page=2]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 21:44:23) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"action"=>"index", "page"=>"3", "controller"=>"main_page"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (1.8ms)[0m   [0mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 40, 20[0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;36;1mGame Columns (3.0ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+  [4;35;1mUser Columns (2.5ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (2.2ms)
+Completed in 51ms (View: 43, DB: 2) | 200 OK [http://localhost/?page=3]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 21:44:25) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (1.7ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 11) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.4ms)
+Completed in 60ms (View: 48, DB: 6) | 200 OK [http://localhost/]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 21:47:21) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"commit"=>"Go", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "new_gid"=>"1010612", "controller"=>"game"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+Redirected to controllergamegid1010612
+Completed in 2ms (DB: 0) | 302 Found [http://localhost/game]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 21:47:21) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"gid"=>"1010612", "action"=>"index", "controller"=>"game"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (0.3ms)[0m   [0mSELECT * FROM `games` WHERE (lg_game_num = 1010612) LIMIT 1[0m
+  [4;36;1mGame Columns (3.3ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;35;1mUser Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (1.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (14.1ms)
+Completed in 1234ms (View: 40, DB: 4) | 200 OK [http://localhost/game/1010612]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 21:50:46) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"commit"=>"Go", "gid"=>"1010612", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "new_gid"=>"915970", "controller"=>"game"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+Redirected to controllergamegid915970
+  [4;35;1mGame Load (0.4ms)[0m   [0mSELECT * FROM `games` WHERE (lg_game_num = 1010612) LIMIT 1[0m
+  [4;36;1mGame Columns (3.6ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+Completed in 1228ms (DB: 4) | 302 Found [http://localhost/game/1010612]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 21:50:47) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"gid"=>"915970", "action"=>"index", "controller"=>"game"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (0.4ms)[0m   [0mSELECT * FROM `games` WHERE (lg_game_num = 915970) LIMIT 1[0m
+  [4;36;1mGame Columns (3.1ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mGame Create (0.3ms)[0m   [0;1mINSERT INTO `games` (`result`, `last_commented_on`, `winner`, `created_on`, `last_commented_by`, `lg_data`, `lg_game_num`, `player1`, `tournament`, `player2`) VALUES('R', NULL, 1, '2009-03-19 01:50:48', NULL, '(;FF[4]EV[twixt.mc.2008.aug.1.1]PB[Klaus Hußmanns]PW[å¤©]SZ[24]SO[http://www.littlegolem.com];b[cd];r[resign])', 915970, 'Klaus Hußmanns', 'twixt.mc.2008.aug.1.1', 'å¤©')[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mCOMMIT[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;36;1mComment Load (0.7ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.game_id = 298) [0m
+  [4;35;1mUser Columns (2.5ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (15.5ms)
+Completed in 486ms (View: 39, DB: 5) | 200 OK [http://localhost/game/915970]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 21:51:10) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"game"=>"298", "new_comment"=>"Very short game between players that need unicode chars.\n", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mComment Columns (2.6ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;36;1mUser Columns (2.1ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 27ms (View: 18, DB: 3) | 200 OK [http://localhost/comment?game=298]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 21:57:10) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVDoMdXNlcl9pZGkJ--3181c6b0d04f409a6fba85c1995771ac41f4ce8a
+  Parameters: {"game"=>"298", "new_comment"=>"Very short game between players that need unicode chars.\n", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mComment Columns (2.6ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;35;1mUser Columns (2.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 103ms (View: 93, DB: 3) | 200 OK [http://localhost/comment?game=298]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 22:08:23) [GET]
+  Session ID: db7d70368ef9185c9c398e4dd63b78fc
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (1.7ms)[0m   [0mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;36;1mGame Columns (3.0ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;36;1mUser Columns (2.1ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 11) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.2ms)
+Completed in 62ms (View: 50, DB: 6) | 200 OK [http://localhost/]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 22:08:48) [GET]
+  Session ID: 04a963685d781c20c89b8b33337c5fa2
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (2.4ms)[0m   [0mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;36;1mGame Columns (2.5ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;36;1mUser Columns (2.2ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 11) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.0ms)
+Completed in 60ms (View: 47, DB: 6) | 200 OK [http://localhost/]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 22:08:51) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlNGY2MWUwZDI3YWNhYzFmZTQwZDQyMDZjODViYTgyMDQiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--d148fd333f5c48c613ef63b8cffd25e8ce1730d6
+  Parameters: {"gid"=>"772607", "action"=>"index", "controller"=>"game"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (0.4ms)[0m   [0mSELECT * FROM `games` WHERE (lg_game_num = 772607) LIMIT 1[0m
+  [4;36;1mGame Columns (3.1ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;35;1mComment Load (0.7ms)[0m   [0mSELECT * FROM `comments` WHERE (`comments`.game_id = 290) [0m
+  [4;36;1mComment Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+  [4;35;1mUser Columns (3.5ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 17) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.2ms)
+Completed in 69ms (View: 58, DB: 4) | 200 OK [http://localhost/game/772607]
+
+
+Processing UserController#login (for 127.0.0.1 at 2009-03-18 22:09:00) [POST]
+  Session ID: BAh7BzoMY3NyZl9pZCIlNGY2MWUwZDI3YWNhYzFmZTQwZDQyMDZjODViYTgyMDQiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRg==--2c2718ddd73ff21815b9c5da20549a442aa0c07e
+  Parameters: {"name"=>"Alan Hensel", "commit"=>"Log in", "action"=>"login", "authenticity_token"=>"919f569ab9c05fb7245f577aad86a02349032fe5", "ret_gid"=>"772607", "controller"=>"user", "password"=>"[FILTERED]", "back_to"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mUser Columns (3.1ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.5ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`name` = 'Alan Hensel') LIMIT 1[0m
+Redirected to controllergamepagegid772607
+Completed in 16ms (DB: 4) | 302 Found [http://localhost/user/login?back_to=game&ret_gid=772607]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 22:09:00) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlNGY2MWUwZDI3YWNhYzFmZTQwZDQyMDZjODViYTgyMDQiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVDoMdXNlcl9pZGkJ--6a1fb2fae5caa60b4ea41a29665010c152f2c45f
+  Parameters: {"gid"=>"772607", "action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (0.4ms)[0m   [0;1mSELECT * FROM `games` WHERE (lg_game_num = 772607) LIMIT 1[0m
+  [4;35;1mGame Columns (2.5ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;36;1mComment Load (0.6ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.game_id = 290) [0m
+  [4;35;1mComment Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mUser Columns (2.4ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 17) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.5ms)
+Completed in 65ms (View: 54, DB: 3) | 200 OK [http://localhost/game/772607]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 22:09:06) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlNGY2MWUwZDI3YWNhYzFmZTQwZDQyMDZjODViYTgyMDQiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--3863596245a66eb9ae83692a50fff8b3e5780772
+  Parameters: {"game"=>"290", "new_comment"=>"preview test", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"919f569ab9c05fb7245f577aad86a02349032fe5", "controller"=>"comment"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mComment Columns (2.7ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;35;1mUser Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 26ms (View: 17, DB: 3) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 22:09:08) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlNGY2MWUwZDI3YWNhYzFmZTQwZDQyMDZjODViYTgyMDQiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVDoMdXNlcl9pZGkJ--6a1fb2fae5caa60b4ea41a29665010c152f2c45f
+  Parameters: {"game"=>"290", "new_comment"=>"preview test", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"919f569ab9c05fb7245f577aad86a02349032fe5", "controller"=>"comment"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mComment Columns (2.5ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;36;1mUser Columns (2.2ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 27ms (View: 17, DB: 3) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 22:09:08) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlNGY2MWUwZDI3YWNhYzFmZTQwZDQyMDZjODViYTgyMDQiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--82a8ee6fd3a3d2b2b20acc3ce17e4788a6a99b85
+  Parameters: {"game"=>"290", "new_comment"=>"preview test", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"919f569ab9c05fb7245f577aad86a02349032fe5", "controller"=>"comment"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mComment Columns (2.6ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;35;1mUser Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 107ms (View: 19, DB: 3) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 22:09:08) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlNGY2MWUwZDI3YWNhYzFmZTQwZDQyMDZjODViYTgyMDQiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--82a8ee6fd3a3d2b2b20acc3ce17e4788a6a99b85
+  Parameters: {"game"=>"290", "new_comment"=>"preview test", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"919f569ab9c05fb7245f577aad86a02349032fe5", "controller"=>"comment"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mComment Columns (2.1ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;36;1mUser Columns (2.4ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 26ms (View: 18, DB: 2) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 22:09:08) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlNGY2MWUwZDI3YWNhYzFmZTQwZDQyMDZjODViYTgyMDQiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--82a8ee6fd3a3d2b2b20acc3ce17e4788a6a99b85
+  Parameters: {"game"=>"290", "new_comment"=>"preview test", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"919f569ab9c05fb7245f577aad86a02349032fe5", "controller"=>"comment"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mComment Columns (2.5ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;35;1mUser Columns (2.5ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 27ms (View: 18, DB: 3) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 22:09:08) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlNGY2MWUwZDI3YWNhYzFmZTQwZDQyMDZjODViYTgyMDQiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--82a8ee6fd3a3d2b2b20acc3ce17e4788a6a99b85
+  Parameters: {"game"=>"290", "new_comment"=>"preview test", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"919f569ab9c05fb7245f577aad86a02349032fe5", "controller"=>"comment"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mComment Columns (2.6ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;36;1mUser Columns (2.3ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.8ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 27ms (View: 18, DB: 3) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 22:09:09) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlNGY2MWUwZDI3YWNhYzFmZTQwZDQyMDZjODViYTgyMDQiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--82a8ee6fd3a3d2b2b20acc3ce17e4788a6a99b85
+  Parameters: {"game"=>"290", "new_comment"=>"preview test", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"919f569ab9c05fb7245f577aad86a02349032fe5", "controller"=>"comment"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mComment Columns (2.7ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;35;1mUser Columns (2.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.7ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 26ms (View: 17, DB: 3) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 22:09:09) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlNGY2MWUwZDI3YWNhYzFmZTQwZDQyMDZjODViYTgyMDQiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--82a8ee6fd3a3d2b2b20acc3ce17e4788a6a99b85
+  Parameters: {"game"=>"290", "new_comment"=>"preview test", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"919f569ab9c05fb7245f577aad86a02349032fe5", "controller"=>"comment"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mComment Columns (2.6ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;36;1mUser Columns (2.1ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 26ms (View: 17, DB: 3) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing UserController#logout (for 127.0.0.1 at 2009-03-18 22:09:22) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlNGY2MWUwZDI3YWNhYzFmZTQwZDQyMDZjODViYTgyMDQiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--82a8ee6fd3a3d2b2b20acc3ce17e4788a6a99b85
+  Parameters: {"action"=>"logout", "ret_gid"=>"772607", "controller"=>"user", "back_to"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Redirected to controllergamepagegid772607
+Completed in 2ms (DB: 0) | 302 Found [http://localhost/user/logout?back_to=game&ret_gid=772607]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 22:09:22) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlNGY2MWUwZDI3YWNhYzFmZTQwZDQyMDZjODViYTgyMDQiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWQw--6a6021c509819d117d5aec9bba217b796e8fdfde
+  Parameters: {"gid"=>"772607", "action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (0.4ms)[0m   [0;1mSELECT * FROM `games` WHERE (lg_game_num = 772607) LIMIT 1[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;36;1mComment Load (0.7ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.game_id = 290) [0m
+  [4;35;1mComment Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mUser Columns (2.4ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 17) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.2ms)
+Completed in 149ms (View: 138, DB: 4) | 200 OK [http://localhost/game/772607]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 22:17:01) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (2.5ms)[0m   [0mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;36;1mGame Columns (2.7ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+  [4;35;1mSQL (1.8ms)[0m   [0mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;36;1mUser Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 11) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.4ms)
+Completed in 56ms (View: 42, DB: 7) | 200 OK [http://localhost/]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 22:17:04) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"gid"=>"772607", "action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (0.4ms)[0m   [0;1mSELECT * FROM `games` WHERE (lg_game_num = 772607) LIMIT 1[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;36;1mComment Load (0.7ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.game_id = 290) [0m
+  [4;35;1mComment Columns (2.2ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mUser Columns (2.4ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 17) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.5ms)
+Completed in 66ms (View: 55, DB: 4) | 200 OK [http://localhost/game/772607]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 22:17:22) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"game"=>"290", "new_comment"=>"this is another test", "commit"=>"Comment", "button_pressed"=>"Comment", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mComment Columns (3.5ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mComment Create (0.3ms)[0m   [0;1mINSERT INTO `comments` (`comment`, `created_on`, `user_id`, `game_id`) VALUES('this is another test', '2009-03-19 02:17:22', 4, 290)[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mCOMMIT[0m
+  [4;36;1mGame Columns (2.2ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+  [4;35;1mGame Load (2.7ms)[0m   [0mSELECT * FROM `games` WHERE (`games`.`id` = 290) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mGame Update (0.3ms)[0m   [0mUPDATE `games` SET `last_commented_on` = '2009-03-19 02:17:22' WHERE `id` = 290[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mCOMMIT[0m
+Rendering comment/index
+  [4;35;1mUser Columns (1.8ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 42ms (View: 13, DB: 11) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 22:17:25) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVDoMdXNlcl9pZGkJ--3181c6b0d04f409a6fba85c1995771ac41f4ce8a
+  Parameters: {"gid"=>"772607", "action"=>"index", "controller"=>"game"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (0.4ms)[0m   [0mSELECT * FROM `games` WHERE (lg_game_num = 772607) LIMIT 1[0m
+  [4;36;1mGame Columns (3.0ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;35;1mComment Load (0.8ms)[0m   [0mSELECT * FROM `comments` WHERE (`comments`.game_id = 290) [0m
+  [4;36;1mComment Columns (2.1ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+  [4;35;1mUser Columns (2.6ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 17) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.7ms)
+Completed in 70ms (View: 60, DB: 4) | 200 OK [http://localhost/game/772607]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 22:32:08) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (1.8ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.2ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 11) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.6ms)
+Completed in 65ms (View: 53, DB: 6) | 200 OK [http://localhost/]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 22:32:10) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVDoMdXNlcl9pZGkJ--3181c6b0d04f409a6fba85c1995771ac41f4ce8a
+  Parameters: {"gid"=>"772607", "action"=>"index", "controller"=>"game"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (0.4ms)[0m   [0mSELECT * FROM `games` WHERE (lg_game_num = 772607) LIMIT 1[0m
+  [4;36;1mGame Columns (3.1ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;35;1mComment Load (0.7ms)[0m   [0mSELECT * FROM `comments` WHERE (`comments`.game_id = 290) [0m
+  [4;36;1mComment Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+  [4;35;1mUser Columns (2.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 17) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.5ms)
+Completed in 67ms (View: 56, DB: 4) | 200 OK [http://localhost/game/772607]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 22:32:20) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"game"=>"290", "new_comment"=>"Once again", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mComment Columns (2.7ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;35;1mUser Columns (2.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 28ms (View: 18, DB: 3) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 22:33:31) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVDoMdXNlcl9pZGkJ--3181c6b0d04f409a6fba85c1995771ac41f4ce8a
+  Parameters: {"game"=>"290", "new_comment"=>"Once again", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mComment Columns (2.6ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;36;1mUser Columns (65.2ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 90ms (View: 80, DB: 3) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 22:34:58) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"gid"=>"772607", "action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (0.4ms)[0m   [0;1mSELECT * FROM `games` WHERE (lg_game_num = 772607) LIMIT 1[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;36;1mComment Load (66.6ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.game_id = 290) [0m
+  [4;35;1mComment Columns (2.2ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mUser Columns (2.3ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 17) LIMIT 1[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.5ms)
+Completed in 219ms (View: 207, DB: 4) | 200 OK [http://localhost/game/772607]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 22:35:11) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"game"=>"290", "new_comment"=>"And this is?", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mComment Columns (2.7ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;36;1mUser Columns (2.6ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 28ms (View: 18, DB: 3) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 22:36:10) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVDoMdXNlcl9pZGkJ--3181c6b0d04f409a6fba85c1995771ac41f4ce8a
+  Parameters: {"gid"=>"772607", "action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (0.4ms)[0m   [0;1mSELECT * FROM `games` WHERE (lg_game_num = 772607) LIMIT 1[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;36;1mComment Load (118.0ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.game_id = 290) [0m
+  [4;35;1mComment Columns (2.1ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mUser Columns (2.3ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 17) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.5ms)
+Completed in 184ms (View: 173, DB: 4) | 200 OK [http://localhost/game/772607]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 22:36:26) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"game"=>"290", "new_comment"=>"and", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mComment Columns (2.7ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;36;1mUser Columns (2.3ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 27ms (View: 18, DB: 3) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 22:37:00) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVDoMdXNlcl9pZGkJ--3181c6b0d04f409a6fba85c1995771ac41f4ce8a
+  Parameters: {"game"=>"290", "new_comment"=>"and", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mComment Columns (2.2ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;35;1mUser Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 22ms (View: 14, DB: 2) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 22:47:27) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"game"=>"290", "new_comment"=>"and", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mComment Columns (2.7ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;36;1mUser Columns (2.2ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.8ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 28ms (View: 18, DB: 3) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 23:02:38) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"gid"=>"772607", "action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (0.5ms)[0m   [0;1mSELECT * FROM `games` WHERE (lg_game_num = 772607) LIMIT 1[0m
+  [4;35;1mGame Columns (3.3ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;36;1mComment Load (0.8ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.game_id = 290) [0m
+  [4;35;1mComment Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mUser Columns (2.6ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 17) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.6ms)
+Completed in 71ms (View: 58, DB: 4) | 200 OK [http://localhost/game/772607]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 23:02:46) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"game"=>"290", "new_comment"=>"This is another one", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mComment Columns (2.8ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;36;1mUser Columns (2.1ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 26ms (View: 17, DB: 3) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-18 23:02:50) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVDoMdXNlcl9pZGkJ--3181c6b0d04f409a6fba85c1995771ac41f4ce8a
+  Parameters: {"game"=>"290", "new_comment"=>"This is another one", "commit"=>"Comment", "button_pressed"=>"Comment", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mComment Columns (3.7ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mBEGIN[0m
+  [4;36;1mComment Create (0.4ms)[0m   [0;1mINSERT INTO `comments` (`comment`, `created_on`, `user_id`, `game_id`) VALUES('This is another one', '2009-03-19 03:02:50', 4, 290)[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mCOMMIT[0m
+  [4;36;1mGame Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+  [4;35;1mGame Load (1.5ms)[0m   [0mSELECT * FROM `games` WHERE (`games`.`id` = 290) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mGame Update (0.2ms)[0m   [0mUPDATE `games` SET `last_commented_on` = '2009-03-19 03:02:50' WHERE `id` = 290[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mCOMMIT[0m
+Rendering comment/index
+  [4;35;1mUser Columns (2.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 47ms (View: 18, DB: 10) | 200 OK [http://localhost/comment?game=290]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 23:06:47) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"gid"=>"772607", "action"=>"index", "controller"=>"game"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (0.4ms)[0m   [0mSELECT * FROM `games` WHERE (lg_game_num = 772607) LIMIT 1[0m
+  [4;36;1mGame Columns (3.3ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;35;1mComment Load (0.7ms)[0m   [0mSELECT * FROM `comments` WHERE (`comments`.game_id = 290) [0m
+  [4;36;1mComment Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+  [4;35;1mUser Columns (2.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 17) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.4ms)
+Completed in 144ms (View: 133, DB: 4) | 200 OK [http://localhost/game/772607]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 23:08:45) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (1.7ms)[0m   [0mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;36;1mGame Columns (2.5ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;36;1mUser Columns (2.3ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.5ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 11) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.5ms)
+Completed in 64ms (View: 52, DB: 5) | 200 OK [http://localhost/]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-18 23:10:54) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVDoMdXNlcl9pZGkJ--3181c6b0d04f409a6fba85c1995771ac41f4ce8a
+  Parameters: {"gid"=>"772607", "action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (0.4ms)[0m   [0;1mSELECT * FROM `games` WHERE (lg_game_num = 772607) LIMIT 1[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;36;1mComment Load (0.8ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.game_id = 290) [0m
+  [4;35;1mComment Columns (1.8ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mUser Columns (2.1ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 17) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.7ms)
+Completed in 71ms (View: 60, DB: 4) | 200 OK [http://localhost/game/772607]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 23:11:50) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (1.7ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (1.5ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 11) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.4ms)
+Completed in 54ms (View: 43, DB: 4) | 200 OK [http://localhost/]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 23:11:54) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVDoMdXNlcl9pZGkJ--3181c6b0d04f409a6fba85c1995771ac41f4ce8a
+  Parameters: {"action"=>"index", "page"=>"2", "controller"=>"main_page"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (1.9ms)[0m   [0mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 20, 20[0m
+  [4;36;1mGame Columns (3.0ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;36;1mUser Columns (2.5ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 10) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 10) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 7) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.4ms)
+Completed in 60ms (View: 48, DB: 6) | 200 OK [http://localhost/?page=2]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-18 23:11:56) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"action"=>"index", "page"=>"3", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (1.8ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 40, 20[0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mUser Columns (2.6ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.7ms)
+Completed in 48ms (View: 41, DB: 2) | 200 OK [http://localhost/?page=3]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-03-19 10:13:31) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (1.9ms)[0m   [0mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;36;1mGame Columns (2.3ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;36;1mUser Columns (2.3ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.5ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 15) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 11) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.4ms)
+Completed in 58ms (View: 46, DB: 5) | 200 OK [http://localhost/]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-19 10:13:37) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"commit"=>"Go", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "new_gid"=>"100016", "controller"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Redirected to controllergamegid100016
+Completed in 2ms (DB: 0) | 302 Found [http://localhost/game]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-19 10:13:37) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"gid"=>"100016", "action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (0.3ms)[0m   [0;1mSELECT * FROM `games` WHERE (lg_game_num = 100016) LIMIT 1[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;35;1mUser Columns (2.9ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (15.0ms)
+Completed in 724ms (View: 30, DB: 0) | 200 OK [http://localhost/game/100016]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-19 10:13:44) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IiJUdhbWUgMTAwMDE2IGlzIG5vdCBhIFR3aXh0IGdhbWUuBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--db99a57b542ec34c97fc69530e109f314967954b
+  Parameters: {"commit"=>"Go", "gid"=>"100016", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "new_gid"=>"1000166", "controller"=>"game"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+Redirected to controllergamegid1000166
+  [4;35;1mGame Load (0.3ms)[0m   [0mSELECT * FROM `games` WHERE (lg_game_num = 100016) LIMIT 1[0m
+Completed in 467ms (DB: 0) | 302 Found [http://localhost/game/100016]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-03-19 10:13:45) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IiJUdhbWUgMTAwMDE2IGlzIG5vdCBhIFR3aXh0IGdhbWUuBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--db99a57b542ec34c97fc69530e109f314967954b
+  Parameters: {"gid"=>"1000166", "action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (0.3ms)[0m   [0;1mSELECT * FROM `games` WHERE (lg_game_num = 1000166) LIMIT 1[0m
+  [4;35;1mGame Columns (3.3ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mGame Create (0.4ms)[0m   [0mINSERT INTO `games` (`result`, `last_commented_on`, `winner`, `created_on`, `last_commented_by`, `lg_data`, `lg_game_num`, `player1`, `tournament`, `player2`) VALUES('R', NULL, 2, '2009-03-19 14:13:45', NULL, '(;FF[4]EV[twixt.rt.2009.11.1]PB[spd_iv]PW[Klaus Hußmanns]SZ[24]SO[http://www.littlegolem.com];b[ed];r[swap];b[jj];r[lp];b[ho];r[hs];b[qo];r[qs];b[fs];r[im];b[rq];r[oh];b[gi];r[mu];b[gm];r[jk];b[ih];r[gq];b[kr];r[kt];b[ss];r[nq];b[pk];r[le];b[sh];r[sf];b[li];r[nf];b[hf];r[om];b[resign])', 1000166, 'spd_iv', 'twixt.rt.2009.11.1', 'Klaus Hußmanns')[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mCOMMIT[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;35;1mComment Load (0.7ms)[0m   [0mSELECT * FROM `comments` WHERE (`comments`.game_id = 299) [0m
+  [4;36;1mUser Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.7ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (14.0ms)
+Completed in 624ms (View: 45, DB: 5) | 200 OK [http://localhost/game/1000166]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-19 11:03:51) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRjoMdXNlcl9pZGkJ--e4e056edf6e77fdc80cd01e48118776408b69995
+  Parameters: {"game"=>"299", "new_comment"=>"test adding a comment", "commit"=>"Comment", "button_pressed"=>"Preview", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mComment Columns (2.3ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+Rendering comment/index
+  [4;35;1mUser Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 25ms (View: 17, DB: 2) | 200 OK [http://localhost/comment?game=299]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-19 11:03:53) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVDoMdXNlcl9pZGkJ--3181c6b0d04f409a6fba85c1995771ac41f4ce8a
+  Parameters: {"game"=>"299", "new_comment"=>"test adding a comment", "commit"=>"Comment", "button_pressed"=>"Comment", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mComment Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mComment Create (0.3ms)[0m   [0mINSERT INTO `comments` (`comment`, `created_on`, `user_id`, `game_id`) VALUES('test adding a comment', '2009-03-19 15:03:53', 4, 299)[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mGame Columns (2.2ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mGame Load (1.4ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 299) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mGame Update (0.3ms)[0m   [0;1mUPDATE `games` SET `last_commented_on` = '2009-03-19 15:03:53', `last_commented_by` = 4 WHERE `id` = 299[0m
+  [4;35;1mSQL (28.4ms)[0m   [0mCOMMIT[0m
+Rendering comment/index
+  [4;36;1mUser Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 74ms (View: 18, DB: 37) | 200 OK [http://localhost/comment?game=299]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-03-19 11:04:03) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlOWI3YjhlNWFiNGZhZGVkOGFkNjVjZDBhNDBjODNhNGYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA6DHVzZXJfaWRpCQ==--08511c883cd2286e20b07692d0a68845d00e79d3
+  Parameters: {"game"=>"299", "new_comment"=>"test adding another one", "commit"=>"Comment", "button_pressed"=>"Comment", "action"=>"index", "authenticity_token"=>"d1e5882929ce0520529ba95d47f09395d3e6d6d3", "controller"=>"comment"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mComment Columns (2.4ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mComment Create (0.3ms)[0m   [0;1mINSERT INTO `comments` (`comment`, `created_on`, `user_id`, `game_id`) VALUES('test adding another one', '2009-03-19 15:04:03', 4, 299)[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mCOMMIT[0m
+  [4;36;1mGame Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+  [4;35;1mGame Load (1.0ms)[0m   [0mSELECT * FROM `games` WHERE (`games`.`id` = 299) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mGame Update (0.2ms)[0m   [0mUPDATE `games` SET `last_commented_on` = '2009-03-19 15:04:03' WHERE `id` = 299[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mCOMMIT[0m
+Rendering comment/index
+  [4;35;1mUser Columns (2.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Completed in 40ms (View: 14, DB: 8) | 200 OK [http://localhost/comment?game=299]

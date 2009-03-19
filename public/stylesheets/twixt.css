@@ -1,0 +1,293 @@
+/* CSS for this site is pretty much snarfed directly from Little Golem, to provide a familiar look */
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11pt;
+  background-color: #ffffff;
+}
+
+table.main {
+  border-right: 1px solid #000000;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+}
+
+td {
+  color: #000000;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10pt; 
+}
+
+td.main {
+  border-left: 1px solid #000000;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+tr.even {
+  background-color: #cccccc;
+}
+tr.odd {
+  background-color: #eeeeee;
+}
+
+th {
+  font-size: 10pt;
+}
+
+th.main {
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  padding-left: 5px;
+  padding-right: 5px;  
+}
+
+p {     
+  font-size: 11pt;  
+}
+
+.news {
+  font-size: 10pt;  
+  text-align: left;
+  font-weight: bold;  
+}
+
+.err {
+  color: #ff0000;
+  font-weight: bold
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: navy;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold
+}
+h1 {
+  font-size: 30pt;
+  text-align: center
+}
+h2 {
+  font-size: 20pt;
+  padding: 5px;
+}
+a {
+  text-decoration: none;
+}
+a:link {
+  color: #0000ff;
+  text-decoration: underline;
+}
+a:visited {
+  color: #0000ff;
+  text-decoration: underline;
+}
+a:hover {
+  color: #ff0000;
+  text-decoration: underline;
+}
+
+a.white {
+  color: #ffffff;
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 10pt;
+}
+a.black {
+  color: #000000;
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 10pt;
+}
+a.white:visited {
+  color: #ffffff;
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 10pt;
+}
+a.black:visited {
+  color: #000000;
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 10pt;  
+}
+
+span.white {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 10pt;
+}
+span.black {
+  color: #000000;
+  font-weight: bold;
+  font-size: 10pt;
+}
+
+pre {
+  font-size: 9pt;
+}
+
+/* the following are attributes for the JavaScript Twixt Board */
+
+div.board, .boardglass, .markerglass {
+  position: absolute;
+}
+
+div.board {
+  background-color: #efffef;
+  border: 1px solid #000000;
+  cursor: pointer;
+  cursor: hand;
+  top: 100px;
+  left: 10px;
+  width: 478px;
+  height: 476px;
+}
+
+div.boardglass {
+  background-color: transparent;
+  cursor: pointer;
+  cursor: hand;
+}
+
+div.markerglass {
+  background-color: transparent;
+  cursor: pointer;
+  cursor: hand;
+}
+
+div.noscript {
+  position: absolute;
+  top: 200px;
+  left: 70px;
+  width: 338px;
+  font-weight: bold;
+  font-size: 20px;
+  border: 1px solid #ff0000;
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+div.turn {
+  position: absolute;
+  font-weight: bold;
+  font-size: 15px;
+  height: 25px;
+}
+
+div.sidebar {
+  position: absolute;
+  border: 1px solid #000000;
+  padding: 10px;
+  background-color: #ffffff;
+  display: none;
+}
+
+div#underbar {
+  position: absolute;
+  top: 586px;
+  left: 10px;
+  width: 478px;
+}
+
+div#moves, span.moves {
+  font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+  background-color: #b0b0b0;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+div#userMoves {
+  font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+  background-color: #ff8080;
+}
+
+div#comments {
+  position: absolute;
+  border: 1px solid #000000;
+  padding: 10px;
+  background-color: #ffffff;
+  display: none;
+  overflow: auto;
+}
+
+img.crosshair {
+  display: none;
+  position: absolute;
+  width: 13px;
+  height: 13px;
+}
+
+img.piece {
+  display: none;
+}
+
+/* other css */
+.winner {
+  font-size: 12pt;
+  font-weight: normal;
+  text-decoration: underline;
+}
+
+.loser {
+  font-size: 12pt;
+  font-weight: normal;
+}
+
+.commentHeader, .previewHeader {
+  font-size: 10pt;
+  font-weight: normal;
+  margin-left: -10px;
+  padding-left: 10px;
+}
+.commentHeader {
+  background-color: #a0a0ff;  
+}
+.previewHeader {
+  background-color: #c0c0ff;
+}
+
+.commentTextArea {
+  width: 100%;
+  font-size: 10pt;
+  font-family: Arial, Helvetica, sans-serif;
+  border: 1px solid #000000;
+}
+
+div#current_comments {
+  font-size: 10pt;  
+}
+
+div.loginBox {
+  position: absolute;
+  text-align: right;
+  right: 10px;
+  top: 10px;
+}
+
+div.loginBox div {
+}
+
+div.loginBox label {
+  font-size: 9pt;
+  text-align: right;
+  float: left;
+  width: 5em;
+  margin-right: 0.5em;
+}
+
+div.loginBox input {
+  font-size: 9pt;
+}
+
+div.pleaseRegister {
+  border: 1px solid #000000;
+  padding: 4px;
+}
+
+.boxed {
+  border: 1px solid #000000;
+}
+
+.info {
+  border: none;
+}

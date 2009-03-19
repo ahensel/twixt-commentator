@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  lg_game_num: 1
+  result: MyString
+  lg_data: MyText
+  created_on: 2008-12-02 15:26:10
+  last_commented_on: 2008-12-02 15:26:10
+  last_commented_by: 1
+  player1: MyString
+  player2: MyString
+  winner: 1
+  tournament: MyString
+
+two:
+  lg_game_num: 1
+  result: MyString
+  lg_data: MyText
+  created_on: 2008-12-02 15:26:10
+  last_commented_on: 2008-12-02 15:26:10
+  last_commented_by: 1
+  player1: MyString
+  player2: MyString
+  winner: 1
+  tournament: MyString
