@@ -1,0 +1,90 @@
+- form_tag do
+  Game number:
+  = text_field_tag :new_gid, params[:gid], :size => 7, :maxlength => 7, :class => 'boxed'
+  = submit_tag 'Go'
+  = link_to 'Main Page', :controller => 'main_page', :action => 'index', :page => params[:main_page]
+- if !!@game
+  %img{ :src => "/images/pieces/whitepeg.gif", :alt => "White:" }
+  \&nbsp;
+  %span{ :class => (@game.winner == 1)? 'winner': 'loser' }
+    = h2 @game.player1
+  \&nbsp;&nbsp;
+  %img{ :src => "/images/pieces/blackpeg.gif", :alt => "Black:" }
+  \&nbsp;
+  %span{ :class => (@game.winner == 2)? 'winner': 'loser' }
+    = h2 @game.player2
+  #turn.turn
+  #board.board
+    / preload pieces so that we don't see them appearing on demand
+    %img#crosshair.crosshair{ :src => "/images/pieces/crosshair.gif", :galleryimg => "no", :alt => "" }
+    %img.piece{ :src => "/images/pieces/whitepeg.gif", :galleryimg => "no", :alt => "" }
+    %img.piece{ :src => "/images/pieces/blackpeg.gif", :galleryimg => "no", :alt => "" }
+    %img.piece{ :src => "/images/pieces/eselink.gif", :galleryimg => "no", :alt => "" }
+    %img.piece{ :src => "/images/pieces/wswlink.gif", :galleryimg => "no", :alt => "" }
+    %img.piece{ :src => "/images/pieces/sselink.gif", :galleryimg => "no", :alt => "" }
+    %img.piece{ :src => "/images/pieces/sswlink.gif", :galleryimg => "no", :alt => "" }
+    %img#boardImage{ :src => "/images/pieces/board.gif", :galleryimg => "no", :alt => "" }
+  #boardglass1.boardglass
+  #boardglass2.boardglass{ :style => "display: none" }
+  #markerglass.markerglass
+    %img#newwhitepeg.crosshair{ :src => "/images/pieces/newwhitepeg.gif", :galleryimg => "no", :alt => "" }
+    %img#newblackpeg.crosshair{ :src => "/images/pieces/newblackpeg.gif", :galleryimg => "no", :alt => "" }
+  #underbar
+    - if !@game.tournament.blank?
+      %a{ :href => "http://www.littlegolem.net/jsp/tournament/tournament.jsp?trnid=#{@game.tournament}" }<
+        = @game.tournament
+        \&nbsp;(LG)
+      |
+    %a{ :href => "http://www.littlegolem.net/jsp/game/game.jsp?gid=#{@game.lg_game_num}" }<
+      This&nbsp;game&nbsp;(LG)
+    |
+    = link_to 'Download&nbsp;JTwixt&nbsp;file', :controller => :jtwixt, :action => :gen, :gameid => params[:gid]
+  #sidebar.sidebar
+    %table
+      %tr
+        %td
+          #moves
+      %tr
+        %td
+          #userMoves
+      %tr
+        %td
+          %a{ :href => "", :accesskey => "b", :onclick => "backButton(); return false;" } Back
+          %a{ :href => "", :accesskey => "n", :onclick => "nextButton(); return false;" } Next
+  #comments
+    #current_comments
+      - for comment in @game.comments
+        .commentHeader
+          On
+          = comment.created_on.strftime('%Y-%m-%d at %H:%M,')
+          - author = User.find_by_id(comment.user_id)
+          %b
+            = h2 author.name
+          = link_to image_tag('/images/info.gif', :class => 'info', :alt => '(info)', :width =>'9', :height => '9'), :controller => 'user', :action => 'info', :id => author.id, :back_to => params[:controller], :ret_gid => params[:gid]
+          said:
+        = xssize comment.comment
+        %br
+        %br
+    - if @game.is_in_progress
+      .commentHeader
+        Game is in progress.
+    - elsif !session[:user_id]
+      .commentHeader
+        You must be logged in to add comments.
+    - else
+      #addCommentLink
+        %a{ :href => "", :onclick => "return showAddCommentBox();" }
+          Add a comment
+      #addComment{ :style => "display: none" }
+        .commentHeader
+          Add a comment:
+        - form_remote_tag :url => {:controller => '/comment', :game => @game}, :update => 'current_comments', :position => :bottom do
+          = text_area_tag :new_comment, nil, :rows => 8, :class => 'commentTextArea', :onkeyup => 'checkStateChange()', :onfocus => 'commentsInFocus(true)', :onblur => 'commentsInFocus(false)'
+          = submit_tag 'No Comment', :onclick => 'removePreview(); setButtonPressed(this, "Comment"); return hideAddCommentBox();', :id => 'comment_button'
+          = submit_tag 'Preview', :onclick => 'removePreview(); setButtonPressed(this, "Preview"); return true;', :id => 'preview_button', :disabled => 'true'
+          = hidden_field_tag 'button_pressed', 'Comment'
+
+  = hidden_field_tag 'movesJson', @parser.getMovesList.to_json
+%noscript
+  .noscript
+    JavaScript was not detected. This site requires JavaScript to be enabled in your browser.

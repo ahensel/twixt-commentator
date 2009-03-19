@@ -1,0 +1,16 @@
+%html
+  %head
+    %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "Content-Type" }
+    %title
+      Twixt Commentator
+    = stylesheet_link_tag 'twixt', :media => 'all'
+    = javascript_include_tag 'prototype.js'
+    %link{ :href => "/favicon.ico", :rel => "icon", :type => "image/x-icon" }
+    %link{ :href => "/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon" }
+    :javascript
+      Event.observe(window, 'load', function() { $('new_gid').focus(); });
+  %body
+    %p.err
+      = flash[:error]
+    = render :partial => 'layouts/loginbox'
+    = yield :layout
