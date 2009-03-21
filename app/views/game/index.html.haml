@@ -5,14 +5,10 @@
   = link_to 'Main Page', :controller => 'main_page', :action => 'index', :page => params[:main_page]
 - if !!@game
   %img{ :src => "/images/pieces/whitepeg.gif", :alt => "White:" }
-  \&nbsp;
-  %span{ :class => (@game.winner == 1)? 'winner': 'loser' }
-    = h2 @game.player1
+  %span{ :class => (@game.winner == 1)? 'winner': 'loser' }= h2 @game.player1
   \&nbsp;&nbsp;
   %img{ :src => "/images/pieces/blackpeg.gif", :alt => "Black:" }
-  \&nbsp;
-  %span{ :class => (@game.winner == 2)? 'winner': 'loser' }
-    = h2 @game.player2
+  %span{ :class => (@game.winner == 2)? 'winner': 'loser' }= h2 @game.player2
   #turn.turn
   #board.board
     / preload pieces so that we don't see them appearing on demand
@@ -32,8 +28,7 @@
   #underbar
     - if !@game.tournament.blank?
       %a{ :href => "http://www.littlegolem.net/jsp/tournament/tournament.jsp?trnid=#{@game.tournament}" }<
-        = @game.tournament
-        \&nbsp;(LG)
+        = "#{@game.tournament}&nbsp;(LG)"
       |
     %a{ :href => "http://www.littlegolem.net/jsp/game/game.jsp?gid=#{@game.lg_game_num}" }<
       This&nbsp;game&nbsp;(LG)
@@ -49,8 +44,8 @@
           #userMoves
       %tr
         %td
-          %a{ :href => "", :accesskey => "b", :onclick => "backButton(); return false;" } Back
-          %a{ :href => "", :accesskey => "n", :onclick => "nextButton(); return false;" } Next
+          %a#backLink{ :href => "", :accesskey => "b", :onclick => "backButton(); return false;" } Back
+          %a#nextLink{ :href => "", :accesskey => "n", :onclick => "nextButton(); return false;" } Next
   #comments
     #current_comments
       - for comment in @game.comments

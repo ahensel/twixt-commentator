@@ -16,7 +16,27 @@ document.onmousemove = mouseOverBoard;
 document.onkeydown = function(e) { keyIntercept(e); };
 document.onkeypress = function(e) { keyIntercept(e); };
 
-Event.observe(window, 'load', function() { positionElements(); showMovesOnLoad(); });
+Event.observe(window, 'load', function() { disableSelections(); positionElements(); showMovesOnLoad(); });
+
+function disableSelection(target) {
+  if (typeof target.onselectstart!="undefined") {
+    target.onselectstart = function() {return false;};  // IE
+    target.style.KhtmlUserSelect = "none";  // Safari
+  }
+  else if (typeof target.style.MozUserSelect != "undefined") {
+    target.style.MozUserSelect = "none";   //Firefox
+  }
+  else {  // All others
+    target.onmousedown = function() {return false;};
+  }
+}
+function disableSelections() {
+  disableSelection($('board'));
+  disableSelection($('newwhitepeg'));
+  disableSelection($('newblackpeg'));
+  disableSelection($('backLink'));
+  disableSelection($('nextLink'));
+}
 
 function positionElements() {
   leftMargin = 10;
@@ -946,6 +966,7 @@ function addImgToBoard(imgfile, id, leftPos, topPos, width, height)
   img.style.left = leftPos + "px";
   img.style.top = topPos + "px";
   b.appendChild(img);
+  disableSelection(img);
 
   return img;
 }
