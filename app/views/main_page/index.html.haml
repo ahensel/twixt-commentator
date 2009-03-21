@@ -42,7 +42,7 @@ Enjoy!
             style='font-style: italic;'
           >
           = h2 game.loser_name
-          %td.main{ :style => "text-align: center;<haml:silent> if !game.is_resignation then </haml:silent> font-weight: bold;<haml:silent> end </haml:silent>" }
+          %td.main{ :style => (game.is_resignation)? "text-align: center;" : "text-align: center; font-weight: bold;" }
             = game.result
           %td.main
             = (game.tournament.blank?)? '&nbsp;': game.tournament
