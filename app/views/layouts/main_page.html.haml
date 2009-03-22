@@ -7,6 +7,7 @@
     = javascript_include_tag 'prototype.js'
     %link{ :href => "/favicon.ico", :rel => "icon", :type => "image/x-icon" }
     %link{ :href => "/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon" }
+    = auto_discovery_link_tag(:rss, formatted_all_comments_url(:rss))
     :javascript
       Event.observe(window, 'load', function() { $('new_gid').focus(); });
   %body

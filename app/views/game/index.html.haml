@@ -50,13 +50,7 @@
     #current_comments
       - for comment in @game.comments
         .commentHeader
-          On
-          = comment.created_on.strftime('%Y-%m-%d at %H:%M,')
-          - author = User.find_by_id(comment.user_id)
-          %b
-            = h2 author.name
-          = link_to image_tag('/images/info.gif', :class => 'info', :alt => '(info)', :width =>'9', :height => '9'), :controller => 'user', :action => 'info', :id => author.id, :back_to => params[:controller], :ret_gid => params[:gid]
-          said:
+          =render :partial => '/comment/comment_header', :locals => {:comment => comment}
         = xssize comment.comment
         %br
         %br

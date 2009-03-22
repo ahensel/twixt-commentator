@@ -42,4 +42,5 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'game/:gid', :controller => 'game'
   map.connect ':controller/:action/:id.:format'
   map.connect ':controller/:action/:id'
+  map.formatted_all_comments 'rss_feed/all_comments.:format', :controller => 'rss_feed', :action => 'all_comments'
 end
