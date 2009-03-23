@@ -30,7 +30,7 @@
         \&nbsp;Player on Little Golem?
       %br
       / name on LG, if different from name
-      #name_on_lg_div{ :style => "padding: 5px; display: <haml:silent> if @user.on_lg then </haml:silent>block<haml:silent> else </haml:silent>none<haml:silent> end </haml:silent>;" }
+      #name_on_lg_div{ :style => (@user.on_lg)? "padding: 5px; display: block;" : "padding: 5px; display: none;" }
         %label{ :for => "user_name_on_lg" }
           Name on Little Golem, if different from above:
         %br
