@@ -7,7 +7,7 @@
       .commentHeader
         =render :partial => 'comment_header', :locals => {:comment => @comment}
       
-    = xssize @comment.comment
+    = prepare_comment @comment.comment
     %br
     %br
   :javascript

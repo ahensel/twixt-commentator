@@ -1,7 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  lg_game_num: 1
+  lg_game_num: 101
   result: MyString
   lg_data: MyText
   created_on: 2008-12-02 15:26:10
@@ -13,7 +13,7 @@ one:
   tournament: MyString
 
 two:
-  lg_game_num: 1
+  lg_game_num: 102
   result: MyString
   lg_data: MyText
   created_on: 2008-12-02 15:26:10

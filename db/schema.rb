@@ -18,8 +18,6 @@ ActiveRecord::Schema.define(:version => 11) do
     t.integer  "user_id"
   end
 
-  add_index "comments", ["game_id"], :name => "index_comments_on_game_id"
-
   create_table "games", :force => true do |t|
     t.integer  "lg_game_num"
     t.string   "result",            :limit => 1
@@ -35,6 +33,10 @@ ActiveRecord::Schema.define(:version => 11) do
 
   add_index "games", ["lg_game_num"], :name => "index_games_on_lg_game_num", :unique => true
 
+  create_table "schema_info", :id => false, :force => true do |t|
+    t.integer "version"
+  end
+
   create_table "temp_comment", :force => true do |t|
     t.text "comment"
   end
@@ -48,7 +50,5 @@ ActiveRecord::Schema.define(:version => 11) do
     t.string   "name_on_lg"
     t.text     "info"
   end
-
-  add_index "users", ["id"], :name => "index_users_on_id"
 
 end

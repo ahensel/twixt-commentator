@@ -1,7 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  name: MyString
+  name: Maciej
   hashed_password: MyString
   salt: MyString
   created_on: 2008-12-02 15:23:57
@@ -10,7 +10,7 @@ one:
   info: MyText
 
 two:
-  name: MyString
+  name: Klaus
   hashed_password: MyString
   salt: MyString
   created_on: 2008-12-02 15:23:57

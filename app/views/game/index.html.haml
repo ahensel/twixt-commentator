@@ -51,7 +51,7 @@
       - for comment in @game.comments
         .commentHeader
           =render :partial => '/comment/comment_header', :locals => {:comment => comment}
-        = xssize comment.comment
+        = prepare_comment comment.comment
         %br
         %br
     - if @game.is_in_progress
