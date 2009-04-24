@@ -54,3 +54,7 @@ Enjoy!
             = link_to image_tag('/images/info.gif', :class => 'info', :alt => '(info)', :width => '9', :height => '9'), :controller => 'user', :action => 'info', :id => author.id, :back_to => params[:controller], :main_page => params[:page]
   Page:
   = pagination_links
+%br
+%a{ :href => faq_path } FAQ
+|
+%a{ :href => formatted_all_comments_url(:rss) } RSS

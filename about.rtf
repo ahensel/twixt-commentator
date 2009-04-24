@@ -1,47 +1,104 @@
-{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
-{\fonttbl\f0\fswiss\fcharset77 Helvetica;\f1\fswiss\fcharset77 Helvetica-Bold;}
+{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
+{\fonttbl\f0\fswiss\fcharset77 Helvetica;\f1\fswiss\fcharset77 Helvetica-Bold;\f2\fswiss\fcharset77 Helvetica-Oblique;
+}
 {\colortbl;\red255\green255\blue255;}
 \margl1440\margr1440\vieww11260\viewh11080\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f0\fs24 \cf0 \
-About Twixt Commentator, and FAQ (Fake Asked Questions)\
+Twixt Commentator FAQ (Fake Asked Questions)\
 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b \cf0 About Twixt Commentator
+\f0\b0 \
 \
+I've learned a lot about Twixt by following other players' games on Little Golem. However, it was always like watching a sports game with the sound turned off: no commentary, no explanation of why things were played they way they were. You just had to guess.\
+\
+Twixt Commentator aims to fix that. Now commentary can be attached to a game, thereby making it easier for people to learn and improve their Twixt skills.\
+\
+Some people like to use Twixt Commentator as a convenient way to analyze their in-progress games. This was not the original intent of the site, but I can't stop you. You can't add comments to a game until it is over, however.\
+\
+Even if you don't plan to comment on a game, Twixt Commentator makes it possible to step through a game quickly. Little Golem also lets you step through games, but each click is a round trip to the server, generating an image file every time, which can be annoying.\
+\
+Twixt Commentator sticks to familiar Little Golem styles. It is like a mix of the two Little Golem modes: \
+\
+- It is like a Little Golem forum, except that every topic is a game, and the comments are all accompanied by a Twixt board so that you can follow along. Game moves in the comments are automatically converted into clickable links to the game.\
+\
+- Conversely, it is like viewing a Little Golem game, except that you can add comments, and you can freely explore variations that did not happen in the game.\
 \
 \
 
 \f1\b What do R, F, L, and D mean in the End column?\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
+\f0\b0 \cf0 \
+These are shorthand codes for how the game ended. Most games end in resignation (R). A game can also end by Forfeit (somebody ran out of time), Loss (the opponent actually connected his sides of the board), or Draw (which must be agreed upon).\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b \cf0 How do you cancel a comment?
 \f0\b0 \
-These are codes for how the game ended. Most games end in resignation (R). A game can also end by Forfeit (somebody ran out of time), Loss (the opponent actually connected his sides of the board), or Draw (which must be agreed upon).\
+\
+When the comment box is empty, the "Comment" button turns into a "No Comment" button. A quick keyboard shortcut to empty the comment box is Ctrl+A, Backspace.\
+\
 \
 
-\f1\b How do you cancel a comment?
+\f1\b Moves in the comments are automatically clickable. How does that work?
 \f0\b0 \
 \
-When the comment box is empty, the "Comment" button turne\\\
+Anything that looks like a Twixt move (such as 23.L4, 1.i6, 2.swap, 37.resign, 27.???, etc) is automatically highlighted and becomes clickable.\
+\
+You can create your variation on the board, and cut-and-paste the text into the comment box. This is often the most reliable way.\
+\
+Watch out: moves in the comments can be ambiguous. Make it clear what variation you are talking about. Twixt Commentator makes its best guess, which means:\
+\
+1. If the numbering sequence fits with previous numbering in the comments, it assumes you mean a continuation of that. For example, "23.g7, and then 24.g8" will result in a link on "24.g8" that tries to guarantee "23.g7" first. If you write "23.g7, and then 24.g8 or 24.g6", then both "24.g8" and "24.g6" will try to place the "23.g7" peg first. I have found this to be the best compromise.\
+\
+2. If the numbering does not follow in the text, for example "23.g7 25.g8", then the link on "25.g8" will begin on move 25, and the first thing it does is check to see if the board is currently at move 24, and make it a continuation from there.\
+\
+3. Otherwise, it assumes that you mean a branch off of the main variation.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f2\i \cf0 Because of this ambiguity, if you really mean a main branch off of the main variation, you should put a vertical bar (|) in front of the moves.
+\f0\i0  For example,\
+\
+|23.g7\
+\
+means 23.g7 follows whatever move 22 was in the actual game.\
+\
+In any case, I highly recommend using the "Preview" button and testing all of your moves.\
 \
 \
-About clickable moves in the comments\
-(guessing, |, and [], illegal move pop-up)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b \cf0 Time Zones
+\f0\b0 \
 \
-Keyboard shortcuts, Ctrl+N and Ctrl+B\
+The time zone is UTC, just like it is for Little Golem.\
 \
-Canceling a comment\
-(Ctrl+A Backspace, No Comment)\
 \
-Viewing in-progress games\
+
+\f1\b What if I forget my password?
+\f0\b0 \
 \
-Time Zones\
+Since I don't keep anyone's e-mail address, and the password is stored in encrypted format, there is really no way for me to recover your password. The only secure thing is to... remember your password!\
 \
-What if I forget my password?\
 \
-About JTwixt\
+
+\f1\b About JTwixt
+\f0\b0 \
 \
-Future directions (and current purpose)\
-(flipping thru games, reading commentary, etc)\
+There is a "Download JTwixt file" link under every game board. JTwixt is a separate Java program that you can use to analyze board positions. It is much more powerful for analyzing Twixt game trees and keeping notes about branches. \
 \
-Who to e-mail with more questions\
 \
-Other Twixt-related sites}
+
+\f1\b Who's behind this site?
+\f0\b0 \
+\
+This site is a personal project of Alan Hensel, originally made for the purposes of learning Ruby on Rails. You can reach me at alhensel@gmail.com.\
+\
+Since this is just a personal project, I don't guarantee any improvements in the future. Ultimately, I'll do what strikes my fancy. This is not an open source project, but I'm not tight-fisted about sharing.\
+}

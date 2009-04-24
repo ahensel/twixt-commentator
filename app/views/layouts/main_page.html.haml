@@ -10,7 +10,7 @@
     = auto_discovery_link_tag(:rss, formatted_all_comments_url(:rss))
     :javascript
       Event.observe(window, 'load', function() { $('new_gid').focus(); });
-  %body
+  %body.main_page
     %p.err
       = flash[:error]
     = render :partial => 'layouts/loginbox'

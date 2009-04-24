@@ -18015,3 +18015,2530 @@ Rendered comment/_comment_header (1.0ms)
   [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
 Rendered layouts/_loginbox (1.9ms)
 Completed in 292ms (View: 281, DB: 4) | 200 OK [http://localhost/game/821049]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-22 14:12:27) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlNDdlMzk1MTJlYmVkZGQ0ZmI0YzBjZjZjOWZhZWU4YzU6DHVzZXJfaWRpCSIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNoSGFzaHsGOgplcnJvcjAGOgpAdXNlZHsGOwhG--a8985e3bf110ee64af974c47548a3369d919c518
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (5.1ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (2.7ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (76.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.6ms)
+Completed in 151ms (View: 60, DB: 84) | 200 OK [http://localhost/]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-04-22 14:12:30) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlNDdlMzk1MTJlYmVkZGQ0ZmI0YzBjZjZjOWZhZWU4YzU6DHVzZXJfaWRpCSIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNoSGFzaHsGOgplcnJvcjAGOgpAdXNlZHsGOwhU--53f4380716077346dd83a5cebd8f719f54c92a26
+  Parameters: {"gid"=>"998611", "action"=>"index", "controller"=>"game"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Load (0.4ms)[0m   [0mSELECT * FROM `games` WHERE (lg_game_num = 998611) LIMIT 1[0m
+  [4;36;1mGame Columns (3.3ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;35;1mComment Load (2.0ms)[0m   [0mSELECT * FROM `comments` WHERE (`comments`.game_id = 1242) [0m
+  [4;36;1mComment Columns (1.6ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+  [4;35;1mUser Columns (2.8ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (1.5ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+Rendered comment/_comment_header (15.8ms)
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+Rendered comment/_comment_header (1.6ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+Rendered comment/_comment_header (1.9ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+Rendered comment/_comment_header (1.2ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+Rendered comment/_comment_header (1.1ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+Rendered comment/_comment_header (1.1ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+Rendered comment/_comment_header (1.1ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+Rendered comment/_comment_header (1.1ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+Rendered comment/_comment_header (1.2ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+Rendered comment/_comment_header (1.6ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+Rendered comment/_comment_header (1.3ms)
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered comment/_comment_header (1.7ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered layouts/_loginbox (1.9ms)
+Completed in 113ms (View: 101, DB: 4) | 200 OK [http://localhost/game/998611]
+
+
+Processing CommentController#index (for 127.0.0.1 at 2009-04-22 14:13:36) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlNDdlMzk1MTJlYmVkZGQ0ZmI0YzBjZjZjOWZhZWU4YzU6DHVzZXJfaWRpCSIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNoSGFzaHsGOgplcnJvcjAGOgpAdXNlZHsGOwhG--a8985e3bf110ee64af974c47548a3369d919c518
+  Parameters: {"game"=>"1242", "new_comment"=>"21.g15 23.f13 ", "commit"=>"Comment", "button_pressed"=>"Comment", "action"=>"index", "authenticity_token"=>"7d34d4069a64a6119717e48fe57b615ac6043d0d", "controller"=>"comment"}
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mComment Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mComment Create (0.3ms)[0m   [0mINSERT INTO `comments` (`comment`, `created_on`, `user_id`, `game_id`) VALUES('21.g15 23.f13', '2009-04-22 18:13:36', 4, 1242)[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mGame Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mGame Load (1.3ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 1242) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mGame Update (0.2ms)[0m   [0;1mUPDATE `games` SET `last_commented_on` = '2009-04-22 18:13:36' WHERE `id` = 1242[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mCOMMIT[0m
+Rendering comment/index
+  [4;36;1mUser Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (2.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered comment/_comment_header (15.7ms)
+Completed in 46ms (View: 20, DB: 9) | 200 OK [http://localhost/comment?game=1242]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-23 14:46:42) [GET]
+  Session ID: 16169581dbb8a0b69c509557691fcfa9
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (5.3ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (2.7ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (1.6ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+Rendered layouts/_loginbox (2.5ms)
+Completed in 102ms (View: 83, DB: 10) | 200 OK [http://localhost/]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-04-23 14:47:03) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {}
+
+
+ActionController::RoutingError (No route matches "/about/" with {:method=>:get}):
+    /vendor/rails/actionpack/lib/action_controller/routing/recognition_optimisation.rb:66:in `recognize_path'
+    /vendor/rails/actionpack/lib/action_controller/routing/route_set.rb:385:in `recognize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:179:in `handle_request'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-04-23 14:47:13) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {}
+
+
+ActionController::RoutingError (No route matches "/about/faq.html.haml" with {:method=>:get}):
+    /vendor/rails/actionpack/lib/action_controller/routing/recognition_optimisation.rb:66:in `recognize_path'
+    /vendor/rails/actionpack/lib/action_controller/routing/route_set.rb:385:in `recognize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:179:in `handle_request'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (not_found)
+
+
+Processing ApplicationController#faq (for 127.0.0.1 at 2009-04-23 14:50:59) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+
+
+NameError (uninitialized constant AboutController):
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:431:in `load_missing_constant'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:77:in `const_missing'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:89:in `const_missing'
+    /vendor/rails/activesupport/lib/active_support/inflector.rb:353:in `constantize'
+    /vendor/rails/activesupport/lib/active_support/inflector.rb:352:in `each'
+    /vendor/rails/activesupport/lib/active_support/inflector.rb:352:in `constantize'
+    /vendor/rails/activesupport/lib/active_support/core_ext/string/inflections.rb:162:in `constantize'
+    /vendor/rails/actionpack/lib/action_controller/routing/route_set.rb:387:in `recognize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:179:in `handle_request'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_trace (26.9ms)
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_request_and_response (1.1ms)
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-04-23 14:51:09) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {}
+
+
+ActionController::RoutingError (No route matches "/about/faq" with {:method=>:get}):
+    /vendor/rails/actionpack/lib/action_controller/routing/recognition_optimisation.rb:66:in `recognize_path'
+    /vendor/rails/actionpack/lib/action_controller/routing/route_set.rb:385:in `recognize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:179:in `handle_request'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (not_found)
+
+
+Processing ApplicationController#faq (for 127.0.0.1 at 2009-04-23 14:51:17) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+
+
+NameError (uninitialized constant AboutController):
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:431:in `load_missing_constant'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:77:in `const_missing'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:89:in `const_missing'
+    /vendor/rails/activesupport/lib/active_support/inflector.rb:353:in `constantize'
+    /vendor/rails/activesupport/lib/active_support/inflector.rb:352:in `each'
+    /vendor/rails/activesupport/lib/active_support/inflector.rb:352:in `constantize'
+    /vendor/rails/activesupport/lib/active_support/core_ext/string/inflections.rb:162:in `constantize'
+    /vendor/rails/actionpack/lib/action_controller/routing/route_set.rb:387:in `recognize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:179:in `handle_request'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_trace (21.7ms)
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_request_and_response (0.8ms)
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing ApplicationController#faq (for 127.0.0.1 at 2009-04-23 14:51:30) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+
+
+NameError (uninitialized constant AboutController):
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:431:in `load_missing_constant'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:77:in `const_missing'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:89:in `const_missing'
+    /vendor/rails/activesupport/lib/active_support/inflector.rb:353:in `constantize'
+    /vendor/rails/activesupport/lib/active_support/inflector.rb:352:in `each'
+    /vendor/rails/activesupport/lib/active_support/inflector.rb:352:in `constantize'
+    /vendor/rails/activesupport/lib/active_support/core_ext/string/inflections.rb:162:in `constantize'
+    /vendor/rails/actionpack/lib/action_controller/routing/route_set.rb:387:in `recognize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:179:in `handle_request'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_trace (21.5ms)
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_request_and_response (0.8ms)
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 14:52:28) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering about/faq
+ERROR: compiling _run_haml_app47views47about47faq46html46haml RAISED compile error
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:16: syntax error, unexpected tIDENTIFIER, expecting kDO or '{' or '('
+...ittle Golem forum, except that every topic is a game, and th...
+                              ^
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:16: syntax error, unexpected kAND
+...hat every topic is a game, and the comments are all accompan...
+                              ^
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:16: syntax error, unexpected kIN, expecting kEND
+...an follow along. Game moves in the comments are automaticall...
+                              ^
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:16: syntax error, unexpected ';'
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:18: dynamic constant assignment
+ Conversely, it is like viewing a Little G...
+            ^
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:18: syntax error, unexpected tIDENTIFIER, expecting kDO or '{' or '('
+ Conversely, it is like viewing a Little Golem g...
+                  ^
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:18: syntax error, unexpected tIDENTIFIER, expecting kDO or '{' or '('
+...Little Golem game, except that you can add comments, and you...
+                              ^
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:18: syntax error, unexpected kAND
+...that you can add comments, and you can freely explore variat...
+                              ^
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:18: syntax error, unexpected kNOT, expecting kEND
+...xplore variations that did not happen in the game.;
+                              ^
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:18: syntax error, unexpected ';'
+Function body:           def _run_haml_app47views47about47faq46html46haml(local_assigns)
+            old_output_buffer = output_buffer;;extend Haml::Helpers;_hamlout = @haml_buffer = Haml::Buffer.new(@haml_buffer, {:attr_wrapper=>"'", :format=>:xhtml, :preserve=>["textarea", "pre"], :autoclose=>["meta", "img", "link", "br", "hr", "input", "area", "param", "col", "base"], :ugly=>false});_erbout = _hamlout.buffer;__in_erb_template = true;;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+_hamlout.push_text("<h2>\n  Twixt Commentator FAQ (Fake Asked Questions)\n</h2>\n<p>\n  <b>About Twixt Commentator</b>\n</p>\nI've learned a lot about Twixt by following other players' games on Little Golem. However, it was always like watching a sports game with the sound turned off: no commentary, no explanation of why things were played they way they were. You just had to guess.\nTwixt Commentator aims to fix that. Now commentary can be attached to a game, thereby making it easier for people to learn and improve their Twixt skills.\nSome people like to use Twixt Commentator as a convenient way to analyze their in-progress games. This was not the original intent of the site, but I can't stop you. You can't add comments to a game until it is over, however.\nEven if you don't plan to comment on a game, Twixt Commentator makes it possible to step through a game quickly. Little Golem also lets you step through games, but each click is a round trip to the server, generating an image file every time, which can be annoying.\nTwixt Commentator sticks to familiar Little Golem styles. It is like a mix of the two Little Golem modes:\n"); It is like a Little Golem forum, except that every topic is a game, and the comments are all accompanied by a Twixt board so that you can follow along. Game moves in the comments are automatically converted into clickable links to the game.;
+
+ Conversely, it is like viewing a Little Golem game, except that you can add comments, and you can freely explore variations that did not happen in the game.;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+_hamlout.push_text("What do R, F, L, and D mean in the End column?\nThese are shorthand codes for how the game ended. Most games end in resignation (R). A game can also end by Forfeit (somebody ran out of time), Loss (the opponent actually connected his sides of the board), or Draw (which must be agreed upon).\nHow do you cancel a comment?\nWhen the comment box is empty, the \"Comment\" button turns into a \"No Comment\" button. A quick keyboard shortcut to empty the comment box is Ctrl+A, Backspace.\nMoves in the comments are automatically clickable. How does that work?\nAnything that looks like a Twixt move (such as 23.L4, 1.i6, 2.swap, 37.resign, 27.???, etc) is automatically highlighted and becomes clickable.\nYou can create your variation on the board, and cut-and-paste the text into the comment box. This is often the most reliable way.\nWatch out: moves in the comments can be ambiguous. Make it clear what variation you are talking about. Twixt Commentator makes its best guess, which means:\n1. If the numbering sequence fits with previous numbering in the comments, it assumes you mean a continuation of that. For example, \"23.g7, and then 24.g8\" will result in a link on \"24.g8\" that tries to guarantee \"23.g7\" first. If you write \"23.g7, and then 24.g8 or 24.g6\", then both \"24.g8\" and \"24.g6\" will try to place the \"23.g7\" peg first. I have found this to be the best compromise.\n2. If the numbering does not follow in the text, for example \"23.g7 25.g8\", then the link on \"25.g8\" will begin on move 25, and the first thing it does is check to see if the board is currently at move 24, and make it a continuation from there.\n3. Otherwise, it assumes that you mean a branch off of the main variation.\nBecause of this ambiguity, if you really mean a main branch off of the main variation, you should put a vertical bar (|) in front of the moves. For example,\n|23.g7\nmeans 23.g7 follows whatever move 22 was in the actual game.\nIn any case, I highly recommend using the \"Preview\" button and testing all of your moves.\nTime Zones\nThe time zone is UTC, just like it is for Little Golem.\nWhat if I forget my password?\nSince I don't keep anyone's e-mail address, and the password is stored in encrypted format, there is really no way for me to recover your password. The only secure thing is to... remember your password!\nAbout JTwixt\nThere is a \"Download JTwixt file\" link under every game board. JTwixt is a separate Java program that you can use to analyze board positions. It is much more powerful for analyzing Twixt game trees and keeping notes about branches.\nWho's behind this site?\nThis site is a personal project of Alan Hensel, originally made for the purposes of learning Ruby on Rails. You can reach me at alhensel@gmail.com.\nSince this is just a personal project, I don't guarantee any improvements in the future. Ultimately, I'll do what strikes my fancy. This is not an open source project, but I'm not tight-fisted about sharing.\n");@haml_buffer = @haml_buffer.upper;_erbout;
+          ensure
+            self.output_buffer = old_output_buffer
+          end
+Backtrace: /Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:78:in `compile!'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_view/renderable.rb:58:in `compile'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_view/renderable.rb:56:in `synchronize'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_view/renderable.rb:56:in `compile'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_view/renderable.rb:26:in `render'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_view/template.rb:73:in `render_template'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_view/base.rb:250:in `render_without_haml'
+/Users/alan/rails/twixt-commentator/vendor/gems/haml-2.0.9/lib/haml/helpers/action_view_mods.rb:14:in `render'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/base.rb:1156:in `render_for_file'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/base.rb:886:in `render_without_benchmark'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+/Users/alan/rails/twixt-commentator/vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/base.rb:858:in `render_without_benchmark'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+/Users/alan/rails/twixt-commentator/vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/base.rb:1208:in `default_render'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/base.rb:1219:in `perform_action_without_filters'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/filters.rb:617:in `call_filters'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+/opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+/Users/alan/rails/twixt-commentator/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/query_cache.rb:48:in `cache'
+/Users/alan/rails/twixt-commentator/vendor/rails/activerecord/lib/active_record/query_cache.rb:8:in `cache'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/base.rb:533:in `send'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/base.rb:533:in `process_without_filters'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `sass_old_process'
+/Users/alan/rails/twixt-commentator/vendor/gems/haml-2.0.9/lib/sass/plugin/rails.rb:19:in `process'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/base.rb:401:in `process'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:180:in `handle_request'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+/Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+/Users/alan/rails/twixt-commentator/vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+/Users/alan/rails/twixt-commentator/vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+/Users/alan/rails/twixt-commentator/vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+/Users/alan/rails/twixt-commentator/vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+/Users/alan/rails/twixt-commentator/vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+/opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+/opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+/Users/alan/rails/twixt-commentator/vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+/Users/alan/rails/twixt-commentator/vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+/Users/alan/rails/twixt-commentator/vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+/Users/alan/rails/twixt-commentator/vendor/rails/railties/lib/commands/server.rb:49
+/opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+/opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+script/server:3
+
+
+ActionView::TemplateError (compile error
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:16: syntax error, unexpected tIDENTIFIER, expecting kDO or '{' or '('
+...ittle Golem forum, except that every topic is a game, and th...
+                              ^
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:16: syntax error, unexpected kAND
+...hat every topic is a game, and the comments are all accompan...
+                              ^
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:16: syntax error, unexpected kIN, expecting kEND
+...an follow along. Game moves in the comments are automaticall...
+                              ^
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:16: syntax error, unexpected ';'
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:18: dynamic constant assignment
+ Conversely, it is like viewing a Little G...
+            ^
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:18: syntax error, unexpected tIDENTIFIER, expecting kDO or '{' or '('
+ Conversely, it is like viewing a Little Golem g...
+                  ^
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:18: syntax error, unexpected tIDENTIFIER, expecting kDO or '{' or '('
+...Little Golem game, except that you can add comments, and you...
+                              ^
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:18: syntax error, unexpected kAND
+...that you can add comments, and you can freely explore variat...
+                              ^
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:18: syntax error, unexpected kNOT, expecting kEND
+...xplore variations that did not happen in the game.;
+                              ^
+/Users/alan/rails/twixt-commentator/app/views/about/faq.html.haml:18: syntax error, unexpected ';') on line #16 of app/views/about/faq.html.haml:
+13: 
+14: Twixt Commentator sticks to familiar Little Golem styles. It is like a mix of the two Little Golem modes: 
+15: 
+16: - It is like a Little Golem forum, except that every topic is a game, and the comments are all accompanied by a Twixt board so that you can follow along. Game moves in the comments are automatically converted into clickable links to the game.
+17: 
+18: - Conversely, it is like viewing a Little Golem game, except that you can add comments, and you can freely explore variations that did not happen in the game.
+19: 
+
+    app/views/about/faq.html.haml:78:in `compile!'
+    vendor/rails/actionpack/lib/action_view/renderable.rb:58:in `compile'
+    vendor/rails/actionpack/lib/action_view/renderable.rb:56:in `synchronize'
+    vendor/rails/actionpack/lib/action_view/renderable.rb:56:in `compile'
+    vendor/rails/actionpack/lib/action_view/renderable.rb:26:in `render'
+    vendor/rails/actionpack/lib/action_view/template.rb:73:in `render_template'
+    vendor/rails/actionpack/lib/action_view/base.rb:250:in `render_without_haml'
+    vendor/gems/haml-2.0.9/lib/haml/helpers/action_view_mods.rb:14:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1156:in `render_for_file'
+    vendor/rails/actionpack/lib/action_controller/base.rb:886:in `render_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:858:in `render_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1208:in `default_render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1219:in `perform_action_without_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:617:in `call_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    vendor/rails/actionpack/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/query_cache.rb:48:in `cache'
+    vendor/rails/activerecord/lib/active_record/query_cache.rb:8:in `cache'
+    vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    vendor/rails/actionpack/lib/action_controller/base.rb:533:in `send'
+    vendor/rails/actionpack/lib/action_controller/base.rb:533:in `process_without_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `sass_old_process'
+    vendor/gems/haml-2.0.9/lib/sass/plugin/rails.rb:19:in `process'
+    vendor/rails/actionpack/lib/action_controller/base.rb:401:in `process'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:180:in `handle_request'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_trace (115.2ms)
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_request_and_response (0.9ms)
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 14:56:07) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Haml::SyntaxError (1 space was used for indentation. Haml must be indented using two spaces.):
+    /app/views/about/faq.html.haml:47
+    /vendor/gems/haml-2.0.9/lib/haml/precompiler.rb:150:in `precompile'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:368:in `each_with_index'
+    /vendor/gems/haml-2.0.9/lib/haml/precompiler.rb:122:in `each'
+    /vendor/gems/haml-2.0.9/lib/haml/precompiler.rb:122:in `each_with_index'
+    /vendor/gems/haml-2.0.9/lib/haml/precompiler.rb:122:in `precompile'
+    /vendor/gems/haml-2.0.9/lib/haml/engine.rb:100:in `initialize'
+    /vendor/gems/haml-2.0.9/lib/haml/template/plugin.rb:21:in `new'
+    /vendor/gems/haml-2.0.9/lib/haml/template/plugin.rb:21:in `compile'
+    /vendor/rails/actionpack/lib/action_view/template_handler.rb:11:in `call'
+    /vendor/rails/actionpack/lib/action_view/renderable.rb:21:in `_unmemoized_compiled_source'
+    /vendor/rails/activesupport/lib/active_support/memoizable.rb:57:in `compiled_source'
+    /vendor/rails/activesupport/lib/active_support/memoizable.rb:25:in `__send__'
+    /vendor/rails/activesupport/lib/active_support/memoizable.rb:25:in `memoize_all'
+    /vendor/rails/activesupport/lib/active_support/memoizable.rb:22:in `each'
+    /vendor/rails/activesupport/lib/active_support/memoizable.rb:22:in `memoize_all'
+    /vendor/rails/activesupport/lib/active_support/memoizable.rb:17:in `freeze'
+    /vendor/rails/activesupport/lib/active_support/memoizable.rb:70:in `_pick_template'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:1273:in `send'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:1273:in `template_exists?'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:1218:in `perform_action_without_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:617:in `call_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /vendor/rails/actionpack/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    /vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/query_cache.rb:48:in `cache'
+    /vendor/rails/activerecord/lib/active_record/query_cache.rb:8:in `cache'
+    /vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:533:in `send'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:533:in `process_without_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    /vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `sass_old_process'
+    /vendor/gems/haml-2.0.9/lib/sass/plugin/rails.rb:19:in `process'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:401:in `process'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:180:in `handle_request'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_trace (31.8ms)
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_request_and_response (0.9ms)
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 14:56:19) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering about/faq
+Completed in 8ms (View: 1, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 14:57:40) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering about/faq
+Completed in 8ms (View: 1, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-23 14:58:11) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (4.6ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (2.7ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (2.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+Rendered layouts/_loginbox (2.3ms)
+Completed in 154ms (View: 137, DB: 10) | 200 OK [http://localhost/]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-23 15:05:03) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (3.9ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (79.5ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.5ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+
+
+ActionView::TemplateError (undefined local variable or method `rss_path' for #<ActionView::Base:0x2ff4644>) on line #61 of app/views/main_page/index.html.haml:
+58: %br
+59:   %a{ :href => faq_path } FAQ
+60:   |
+61:   %a{ :href => rss_path } RSS
+
+    app/views/main_page/index.html.haml:61
+    vendor/rails/actionpack/lib/action_view/renderable.rb:34:in `send'
+    vendor/rails/actionpack/lib/action_view/renderable.rb:34:in `render'
+    vendor/rails/actionpack/lib/action_view/template.rb:73:in `render_template'
+    vendor/rails/actionpack/lib/action_view/base.rb:250:in `render_without_haml'
+    vendor/gems/haml-2.0.9/lib/haml/helpers/action_view_mods.rb:14:in `render'
+    vendor/rails/actionpack/lib/action_view/base.rb:356:in `_render_with_layout'
+    vendor/rails/actionpack/lib/action_view/base.rb:248:in `render_without_haml'
+    vendor/gems/haml-2.0.9/lib/haml/helpers/action_view_mods.rb:14:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1156:in `render_for_file'
+    vendor/rails/actionpack/lib/action_controller/base.rb:886:in `render_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:858:in `render_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1208:in `default_render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1214:in `perform_action_without_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:617:in `call_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    vendor/rails/actionpack/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/query_cache.rb:48:in `cache'
+    vendor/rails/activerecord/lib/active_record/query_cache.rb:8:in `cache'
+    vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    vendor/rails/actionpack/lib/action_controller/base.rb:533:in `send'
+    vendor/rails/actionpack/lib/action_controller/base.rb:533:in `process_without_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `sass_old_process'
+    vendor/gems/haml-2.0.9/lib/sass/plugin/rails.rb:19:in `process'
+    vendor/rails/actionpack/lib/action_controller/base.rb:401:in `process'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:180:in `handle_request'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_trace (31.2ms)
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_request_and_response (0.8ms)
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-23 15:05:31) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (4.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.0ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (1.8ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+
+
+ActionView::TemplateError (undefined local variable or method `rss_feed_path' for #<ActionView::Base:0x31ecfa0>) on line #61 of app/views/main_page/index.html.haml:
+58: %br
+59:   %a{ :href => faq_path } FAQ
+60:   |
+61:   %a{ :href => rss_feed_path } RSS
+
+    app/views/main_page/index.html.haml:61
+    vendor/rails/actionpack/lib/action_view/renderable.rb:34:in `send'
+    vendor/rails/actionpack/lib/action_view/renderable.rb:34:in `render'
+    vendor/rails/actionpack/lib/action_view/template.rb:73:in `render_template'
+    vendor/rails/actionpack/lib/action_view/base.rb:250:in `render_without_haml'
+    vendor/gems/haml-2.0.9/lib/haml/helpers/action_view_mods.rb:14:in `render'
+    vendor/rails/actionpack/lib/action_view/base.rb:356:in `_render_with_layout'
+    vendor/rails/actionpack/lib/action_view/base.rb:248:in `render_without_haml'
+    vendor/gems/haml-2.0.9/lib/haml/helpers/action_view_mods.rb:14:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1156:in `render_for_file'
+    vendor/rails/actionpack/lib/action_controller/base.rb:886:in `render_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:858:in `render_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1208:in `default_render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1214:in `perform_action_without_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:617:in `call_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    vendor/rails/actionpack/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/query_cache.rb:48:in `cache'
+    vendor/rails/activerecord/lib/active_record/query_cache.rb:8:in `cache'
+    vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    vendor/rails/actionpack/lib/action_controller/base.rb:533:in `send'
+    vendor/rails/actionpack/lib/action_controller/base.rb:533:in `process_without_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `sass_old_process'
+    vendor/gems/haml-2.0.9/lib/sass/plugin/rails.rb:19:in `process'
+    vendor/rails/actionpack/lib/action_controller/base.rb:401:in `process'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:180:in `handle_request'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_trace (30.9ms)
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_request_and_response (0.8ms)
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-23 15:06:45) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (3.9ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (100.9ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.5ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+
+
+ActionView::TemplateError (formatted_all_comments_url failed to generate from {:controller=>"rss_feed", :action=>"all_comments"} - you may have ambiguous routes, or you may need to supply additional parameters for this route.  content_url has the following required parameters: ["rss_feed", "all_comments", :format] - are they all satisfied?) on line #61 of app/views/main_page/index.html.haml:
+58: %br
+59:   %a{ :href => faq_path } FAQ
+60:   |
+61:   %a{ :href => formatted_all_comments_path } RSS
+
+    vendor/rails/actionpack/lib/action_controller/routing/route_set.rb:380:in `raise_named_route_error'
+    vendor/rails/actionpack/lib/action_controller/routing/route_set.rb:340:in `generate'
+    vendor/rails/actionpack/lib/action_controller/url_rewriter.rb:208:in `rewrite_path'
+    vendor/rails/actionpack/lib/action_controller/url_rewriter.rb:187:in `rewrite_url'
+    vendor/rails/actionpack/lib/action_controller/url_rewriter.rb:165:in `rewrite'
+    vendor/rails/actionpack/lib/action_controller/base.rb:635:in `url_for'
+    vendor/rails/actionpack/lib/action_view/helpers/url_helper.rb:85:in `send'
+    vendor/rails/actionpack/lib/action_view/helpers/url_helper.rb:85:in `url_for'
+    (eval):17:in `formatted_all_comments_path'
+    app/views/main_page/index.html.haml:61
+    vendor/rails/actionpack/lib/action_view/renderable.rb:34:in `send'
+    vendor/rails/actionpack/lib/action_view/renderable.rb:34:in `render'
+    vendor/rails/actionpack/lib/action_view/template.rb:73:in `render_template'
+    vendor/rails/actionpack/lib/action_view/base.rb:250:in `render_without_haml'
+    vendor/gems/haml-2.0.9/lib/haml/helpers/action_view_mods.rb:14:in `render'
+    vendor/rails/actionpack/lib/action_view/base.rb:356:in `_render_with_layout'
+    vendor/rails/actionpack/lib/action_view/base.rb:248:in `render_without_haml'
+    vendor/gems/haml-2.0.9/lib/haml/helpers/action_view_mods.rb:14:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1156:in `render_for_file'
+    vendor/rails/actionpack/lib/action_controller/base.rb:886:in `render_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:858:in `render_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1208:in `default_render'
+    vendor/rails/actionpack/lib/action_controller/base.rb:1214:in `perform_action_without_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:617:in `call_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    vendor/rails/actionpack/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/query_cache.rb:48:in `cache'
+    vendor/rails/activerecord/lib/active_record/query_cache.rb:8:in `cache'
+    vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    vendor/rails/actionpack/lib/action_controller/base.rb:533:in `send'
+    vendor/rails/actionpack/lib/action_controller/base.rb:533:in `process_without_filters'
+    vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `sass_old_process'
+    vendor/gems/haml-2.0.9/lib/sass/plugin/rails.rb:19:in `process'
+    vendor/rails/actionpack/lib/action_controller/base.rb:401:in `process'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:180:in `handle_request'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_trace (33.7ms)
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_request_and_response (0.8ms)
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-23 15:07:21) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (3.9ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.2ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (132.6ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.5ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+Rendered layouts/_loginbox (2.5ms)
+Completed in 219ms (View: 72, DB: 140) | 200 OK [http://localhost/]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-23 15:07:51) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (3.9ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (75.1ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+Rendered layouts/_loginbox (2.1ms)
+Completed in 238ms (View: 148, DB: 82) | 200 OK [http://localhost/]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 15:07:54) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering about/faq
+Completed in 8ms (View: 1, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 15:09:10) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"layout"=>"main_page", "action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering about/faq
+Completed in 8ms (View: 1, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-23 15:10:52) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (3.9ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.2ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.5ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+Rendered layouts/_loginbox (2.4ms)
+Completed in 87ms (View: 71, DB: 9) | 200 OK [http://localhost/]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 15:20:47) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering about/faq
+Completed in 8ms (View: 1, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 15:22:29) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering about/faq
+Completed in 11ms (View: 1, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 15:22:42) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering about/faq
+Completed in 8ms (View: 1, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 15:23:23) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering about/faq
+Completed in 8ms (View: 1, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 15:23:25) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering about/faq
+Completed in 8ms (View: 1, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 17:43:26) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+
+
+ActionView::MissingTemplate (Missing layout layouts/about.erb in view path /Users/alan/rails/twixt-commentator/app/views:):
+    /vendor/rails/actionpack/lib/action_view/template.rb:95:in `find_full_path'
+    /vendor/rails/actionpack/lib/action_view/template.rb:16:in `initialize'
+    /vendor/rails/actionpack/lib/action_view/base.rb:321:in `new'
+    /vendor/rails/actionpack/lib/action_view/base.rb:321:in `_unmemoized__pick_template'
+    /vendor/rails/activesupport/lib/active_support/memoizable.rb:70:in `_pick_template'
+    /vendor/rails/actionpack/lib/action_view/base.rb:250:in `render_without_haml'
+    /vendor/gems/haml-2.0.9/lib/haml/helpers/action_view_mods.rb:14:in `render'
+    /vendor/rails/actionpack/lib/action_view/base.rb:360:in `_render_with_layout'
+    /vendor/rails/actionpack/lib/action_view/base.rb:248:in `render_without_haml'
+    /vendor/gems/haml-2.0.9/lib/haml/helpers/action_view_mods.rb:14:in `render'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:1156:in `render_for_file'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:886:in `render_without_benchmark'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    /vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:858:in `render_without_benchmark'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    /vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:1208:in `default_render'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:1219:in `perform_action_without_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:617:in `call_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /vendor/rails/actionpack/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    /vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/query_cache.rb:48:in `cache'
+    /vendor/rails/activerecord/lib/active_record/query_cache.rb:8:in `cache'
+    /vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:533:in `send'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:533:in `process_without_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    /vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `sass_old_process'
+    /vendor/gems/haml-2.0.9/lib/sass/plugin/rails.rb:19:in `process'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:401:in `process'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:180:in `handle_request'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 17:43:37) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about.html.haml
+Rendering about/faq
+
+
+ActionView::MissingTemplate (Missing layout layouts/about.html.haml in view path /Users/alan/rails/twixt-commentator/app/views:):
+    /vendor/rails/actionpack/lib/action_view/template.rb:95:in `find_full_path'
+    /vendor/rails/actionpack/lib/action_view/template.rb:16:in `initialize'
+    /vendor/rails/actionpack/lib/action_view/base.rb:321:in `new'
+    /vendor/rails/actionpack/lib/action_view/base.rb:321:in `_unmemoized__pick_template'
+    /vendor/rails/activesupport/lib/active_support/memoizable.rb:70:in `_pick_template'
+    /vendor/rails/actionpack/lib/action_view/base.rb:250:in `render_without_haml'
+    /vendor/gems/haml-2.0.9/lib/haml/helpers/action_view_mods.rb:14:in `render'
+    /vendor/rails/actionpack/lib/action_view/base.rb:360:in `_render_with_layout'
+    /vendor/rails/actionpack/lib/action_view/base.rb:248:in `render_without_haml'
+    /vendor/gems/haml-2.0.9/lib/haml/helpers/action_view_mods.rb:14:in `render'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:1156:in `render_for_file'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:886:in `render_without_benchmark'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    /vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:858:in `render_without_benchmark'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    /vendor/rails/activesupport/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:51:in `render'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:1208:in `default_render'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:1219:in `perform_action_without_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:617:in `call_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /vendor/rails/actionpack/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    /vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/query_cache.rb:48:in `cache'
+    /vendor/rails/activerecord/lib/active_record/query_cache.rb:8:in `cache'
+    /vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:533:in `send'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:533:in `process_without_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    /vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `sass_old_process'
+    /vendor/gems/haml-2.0.9/lib/sass/plugin/rails.rb:19:in `process'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:401:in `process'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:180:in `handle_request'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 17:44:02) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-23 17:52:56) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (4.1ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.7ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+Rendered layouts/_loginbox (2.9ms)
+Completed in 88ms (View: 72, DB: 9) | 200 OK [http://localhost/]
+
+
+Processing GameController#index (for 127.0.0.1 at 2009-04-23 17:53:09) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"gid"=>"998611", "action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (0.4ms)[0m   [0;1mSELECT * FROM `games` WHERE (lg_game_num = 998611) LIMIT 1[0m
+  [4;35;1mGame Columns (2.7ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+Rendering template within layouts/game
+Rendering game/index
+  [4;36;1mComment Load (0.6ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.game_id = 1242) [0m
+  [4;35;1mComment Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mUser Columns (2.1ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+Rendered comment/_comment_header (15.7ms)
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+Rendered comment/_comment_header (2.0ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+Rendered comment/_comment_header (1.4ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+Rendered comment/_comment_header (1.4ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+Rendered comment/_comment_header (1.4ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+Rendered comment/_comment_header (1.4ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+Rendered comment/_comment_header (1.3ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+Rendered comment/_comment_header (1.3ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+Rendered comment/_comment_header (1.5ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+Rendered comment/_comment_header (1.4ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+Rendered comment/_comment_header (1.4ms)
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered comment/_comment_header (1.9ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+Rendered comment/_comment_header (1.5ms)
+Rendered layouts/_loginbox (2.1ms)
+Completed in 191ms (View: 181, DB: 3) | 200 OK [http://localhost/game/998611]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-23 17:53:13) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHRg==--93608fc8dbd9f311ddabedcc931041cc19e60b82
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (3.9ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (1.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+Rendered layouts/_loginbox (2.3ms)
+Completed in 165ms (View: 150, DB: 9) | 200 OK [http://localhost/]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-23 17:55:05) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoKZXJyb3IwBjoKQHVzZWR7BjsHVA==--293f8404182a42f0820f61948cb3fb036b5aedbf
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (3.9ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (83.6ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.5ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.7ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+Rendered layouts/_loginbox (2.6ms)
+Completed in 170ms (View: 72, DB: 91) | 200 OK [http://localhost/]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-23 17:55:50) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (3.9ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+Rendered layouts/_loginbox (2.0ms)
+Completed in 78ms (View: 63, DB: 9) | 200 OK [http://localhost/]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-23 17:56:08) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (3.9ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.0ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.5ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (1.8ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+Rendered layouts/_loginbox (2.2ms)
+Completed in 85ms (View: 70, DB: 8) | 200 OK [http://localhost/]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 17:56:12) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:23:07) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-23 19:23:13) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (4.1ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (1.6ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.6ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+Rendered layouts/_loginbox (2.7ms)
+Completed in 86ms (View: 71, DB: 9) | 200 OK [http://localhost/]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:23:21) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-23 19:23:26) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (3.9ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (2.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+Rendered layouts/_loginbox (2.4ms)
+Completed in 166ms (View: 151, DB: 9) | 200 OK [http://localhost/]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:40:31) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:44:27) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:44:38) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 12ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:45:35) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:45:49) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:46:13) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 14ms (View: 5, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:46:55) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 12ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:47:10) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:47:40) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:49:13) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:49:35) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:50:03) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:50:29) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 91ms (View: 84, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:50:50) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:56:52) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:58:24) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 14ms (View: 5, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:59:22) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 19:59:53) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:00:07) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:02:53) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 91ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:03:22) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:04:02) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 12ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:05:59) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:06:09) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:07:12) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:07:32) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:08:35) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 12ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:10:45) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:12:09) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 3, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:12:44) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:13:51) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:14:25) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Haml::SyntaxError (Illegal nesting: content can't be both given on the same line as %blockquote and nested within it.):
+    /app/views/about/faq.html.haml:39
+    /vendor/gems/haml-2.0.9/lib/haml/precompiler.rb:585:in `render_tag'
+    /vendor/gems/haml-2.0.9/lib/haml/precompiler.rb:192:in `process_line'
+    /vendor/gems/haml-2.0.9/lib/haml/precompiler.rb:156:in `precompile'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:368:in `each_with_index'
+    /vendor/gems/haml-2.0.9/lib/haml/precompiler.rb:122:in `each'
+    /vendor/gems/haml-2.0.9/lib/haml/precompiler.rb:122:in `each_with_index'
+    /vendor/gems/haml-2.0.9/lib/haml/precompiler.rb:122:in `precompile'
+    /vendor/gems/haml-2.0.9/lib/haml/engine.rb:100:in `initialize'
+    /vendor/gems/haml-2.0.9/lib/haml/template/plugin.rb:21:in `new'
+    /vendor/gems/haml-2.0.9/lib/haml/template/plugin.rb:21:in `compile'
+    /vendor/rails/actionpack/lib/action_view/template_handler.rb:11:in `call'
+    /vendor/rails/actionpack/lib/action_view/renderable.rb:21:in `_unmemoized_compiled_source'
+    /vendor/rails/activesupport/lib/active_support/memoizable.rb:57:in `compiled_source'
+    /vendor/rails/activesupport/lib/active_support/memoizable.rb:25:in `__send__'
+    /vendor/rails/activesupport/lib/active_support/memoizable.rb:25:in `memoize_all'
+    /vendor/rails/activesupport/lib/active_support/memoizable.rb:22:in `each'
+    /vendor/rails/activesupport/lib/active_support/memoizable.rb:22:in `memoize_all'
+    /vendor/rails/activesupport/lib/active_support/memoizable.rb:17:in `freeze'
+    /vendor/rails/activesupport/lib/active_support/memoizable.rb:70:in `_pick_template'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:1273:in `send'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:1273:in `template_exists?'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:1218:in `perform_action_without_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:617:in `call_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /vendor/rails/actionpack/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /vendor/rails/actionpack/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    /vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    /vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/query_cache.rb:48:in `cache'
+    /vendor/rails/activerecord/lib/active_record/query_cache.rb:8:in `cache'
+    /vendor/rails/actionpack/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:533:in `send'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:533:in `process_without_filters'
+    /vendor/rails/actionpack/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    /vendor/rails/actionpack/lib/action_controller/session_management.rb:134:in `sass_old_process'
+    /vendor/gems/haml-2.0.9/lib/sass/plugin/rails.rb:19:in `process'
+    /vendor/rails/actionpack/lib/action_controller/base.rb:401:in `process'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:180:in `handle_request'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:107:in `dispatch_unlocked'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:120:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `synchronize'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:119:in `dispatch'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:129:in `dispatch_cgi'
+    /vendor/rails/actionpack/lib/action_controller/dispatcher.rb:36:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load_without_new_constant_marking'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:141:in `load'
+    /vendor/rails/railties/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:507:in `new_constants_in'
+    /vendor/rails/activesupport/lib/active_support/dependencies.rb:148:in `require'
+    /vendor/rails/railties/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_trace (120.1ms)
+Rendered /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/_request_and_response (1.0ms)
+Rendering /Users/alan/rails/twixt-commentator/vendor/rails/actionpack/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:14:55) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:15:14) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:15:37) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing MainPageController#index (for 127.0.0.1 at 2009-04-23 20:23:34) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"index", "controller"=>"main_page"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mGame Load (3.8ms)[0m   [0;1mSELECT * FROM `games` WHERE (last_commented_on is not null) ORDER BY last_commented_on DESC LIMIT 0, 20[0m
+  [4;35;1mGame Columns (3.6ms)[0m   [0mSHOW FIELDS FROM `games`[0m
+  [4;36;1mSQL (2.7ms)[0m   [0;1mSELECT count(*) AS count_all FROM `games` WHERE (last_commented_on is not null) [0m
+Rendering template within layouts/main_page
+Rendering main_page/index
+  [4;35;1mUser Columns (3.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 4) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 40) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 38) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 21) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 9) LIMIT 1[0m
+Rendered layouts/_loginbox (2.0ms)
+Completed in 87ms (View: 70, DB: 10) | 200 OK [http://localhost/]
+
+
+Processing RssFeedController#all_comments (for 127.0.0.1 at 2009-04-23 20:23:36) [GET]
+  Parameters: {"format"=>"rss", "action"=>"all_comments", "controller"=>"rss_feed"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mComment Load (1.3ms)[0m   [0;1mSELECT * FROM `comments` ORDER BY created_on DESC LIMIT 20[0m
+Rendering rss_feed/all_comments
+  [4;35;1mComment Columns (2.2ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mGame Columns (3.2ms)[0m   [0;1mSHOW FIELDS FROM `games`[0m
+  [4;35;1mGame Load (0.4ms)[0m   [0mSELECT * FROM `games` WHERE (`games`.`id` = 1242) [0m
+  [4;36;1mUser Columns (2.6ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (1.1ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 1242) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 1242) [0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) [0m
+  [4;36;1mGame Load (0.3ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 1290) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 1242) [0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) [0m
+  [4;36;1mGame Load (0.8ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 80) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 1242) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 1242) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 1290) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 80) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 80) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 80) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 80) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 80) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) [0m
+  [4;36;1mGame Load (0.3ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 1294) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 80) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 1290) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 1242) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 1242) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 40) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `games` WHERE (`games`.`id` = 80) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 21) [0m
+Completed in 152ms (View: 146, DB: 2) | 200 OK [http://localhost/rss_feed/all_comments.rss]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:23:52) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:24:50) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:28:11) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 12ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]
+
+
+Processing AboutController#faq (for 127.0.0.1 at 2009-04-23 20:29:12) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlZGRiNGIzOTFiZDUzZmMxZjEzMDFhNDRjOWM5MDM5NjkiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--17fb96073d7ec24b42254b7c3a5258478e042ef3
+  Parameters: {"action"=>"faq", "controller"=>"about"}
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering template within layouts/about
+Rendering about/faq
+Completed in 11ms (View: 4, DB: 0) | 200 OK [http://localhost/faq]

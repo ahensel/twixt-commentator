@@ -43,4 +43,5 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id.:format'
   map.connect ':controller/:action/:id'
   map.formatted_all_comments 'rss_feed/all_comments.:format', :controller => 'rss_feed', :action => 'all_comments'
+  map.faq '/faq', :controller => 'about', :action => 'faq'
 end

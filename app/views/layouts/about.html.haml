@@ -2,18 +2,9 @@
   %head
     %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "Content-Type" }
     %title
-      - if !@game
-        Twixt Commentator
-      - else
-        = h2 @game.player1
-        |
-        = h2 @game.player2
+      Twixt Commentator FAQ
     = stylesheet_link_tag 'twixt', :media => 'all'
-    = javascript_include_tag 'prototype.js', 'twixt_min.js'
     %link{ :href => "/favicon.ico", :rel => "icon", :type => "image/x-icon" }
     %link{ :href => "/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon" }
-  %body.game_page { :onresize => "setCommentDivTop();" }
-    %p.err
-      = flash[:error]
-    = render :partial => 'layouts/loginbox'
+  %body.about_page
     = yield :layout

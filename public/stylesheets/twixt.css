@@ -291,3 +291,12 @@ div.pleaseRegister {
 .info {
   border: none;
 }
+
+body.main_page {
+  margin-left: 25px;
+  margin-right: 25px;
+}
+body.about_page {
+  margin-left: 25px;
+  margin-right: 25px;
+}
