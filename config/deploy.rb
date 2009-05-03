@@ -2,6 +2,8 @@
 #	Application
 set :application, "twixt-commentator"
 set :deploy_to, "/Library/Rails/#{application}"
+set :runner, nil
+set :user, "alan"
 
 #	Settings
 default_run_options[:pty] = true
