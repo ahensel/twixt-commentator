@@ -71,44 +71,34 @@ h2 {
   padding: 5px;
 }
 a {
+  color: #5050ff;
   text-decoration: none;
 }
-a:link {
-  color: #0000ff;
-  text-decoration: underline;
-}
 a:visited {
-  color: #0000ff;
-  text-decoration: underline;
+  color: #5050ff;
+  text-decoration: none;
 }
 a:hover {
-  color: #ff0000;
   text-decoration: underline;
 }
 
 a.white {
   color: #ffffff;
-  text-decoration: underline;
+  text-decoration: none;
   font-weight: bold;
   font-size: 10pt;
 }
 a.black {
   color: #000000;
-  text-decoration: underline;
+  text-decoration: none;
   font-weight: bold;
   font-size: 10pt;
 }
-a.white:visited {
-  color: #ffffff;
+a.white:hover {
   text-decoration: underline;
-  font-weight: bold;
-  font-size: 10pt;
 }
-a.black:visited {
-  color: #000000;
+a.black:hover {
   text-decoration: underline;
-  font-weight: bold;
-  font-size: 10pt;  
 }
 
 span.white {
@@ -196,9 +186,10 @@ div#moves, span.moves {
   padding-right: 1px;
 }
 
-div#userMoves {
+span.userMoves {
   font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
   background-color: #ff8080;
+  padding-right: 1px;
 }
 
 div#comments {

@@ -212,6 +212,7 @@ function showUserMovesText() {
   var userMovesText = '';
 
   if (currentMoves.hasUserMoves()) {
+    userMovesText += "|<span class='userMoves'>";
     var moveNum = getUserMovesFirstNum();
 
     currentMoves.getUserMoves().each(function (move) {
@@ -220,6 +221,7 @@ function showUserMovesText() {
       userMovesText += "<span class='" + className + "'>" + moveText + "</span> ";
       moveNum ++;
     });
+    userMovesText += "</span>";
   }
   $('userMoves').innerHTML = userMovesText;
   setCommentDivTop();

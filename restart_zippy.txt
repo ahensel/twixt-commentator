@@ -1,6 +1,15 @@
 ssh zippy.local
   (type password)
 
+cd /opt/local/apache2/bin
+sudo ./apachectl -k start
+  (type password)
+
+
+
+----
+OLD INSTRUCTIONS from when I was using Mongrel instead of Passenger:
+
 cd /Library/Rails/twixt-reviewer/current/log
 rm *.pid
 kill -9 `lsof -t -i TCP:8000`
@@ -10,7 +19,3 @@ kill -9 `lsof -t -i TCP:8003`
 kill -9 `lsof -t -i TCP:8004`
 cd ../config
 /usr/local/bin/mongrel_rails cluster::start -C mongrel_cluster.yml
-cd /opt/local/apache2/bin
-sudo ./apachectl -k start
-  (type password)
-

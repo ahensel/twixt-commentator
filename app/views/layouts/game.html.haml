@@ -12,7 +12,7 @@
     = javascript_include_tag 'prototype.js', 'twixt_min.js'
     %link{ :href => "/favicon.ico", :rel => "icon", :type => "image/x-icon" }
     %link{ :href => "/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon" }
-  %body.game_page { :onresize => "setCommentDivTop();" }
+  %body.game_page{ :onresize => "setCommentDivTop();" }
     %p.err
       = flash[:error]
     = render :partial => 'layouts/loginbox'
