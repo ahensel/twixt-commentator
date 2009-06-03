@@ -7,7 +7,7 @@ module MainPageHelper
   # 1 ... 5 6 7 8 9 ... 13
   def pagination_links
     html = ''
-    top = @commented_games.length
+    top = @commented_games.total_pages
     cur = params[:page].to_i
     if (cur == nil or cur < 1 or cur > top)
       cur = 1
