@@ -356,7 +356,7 @@ function getNextCommentPegError(pegString, movesSoFar) {
 }
 
 function placePegByNotation(pegString) {
-  if (pegString == "swap") {
+  if (pegString.toLowerCase() == "swap") {
     swapFirstPeg();
   }
   else {
@@ -388,7 +388,14 @@ function swapFirstPeg() {
       peg1.x = peg1.y;
       peg1.y = tmp;
     }
-    currentMoves.userMoves.push(new SwapMove());
+    if (currentMoves.hasUserMoves() || (currentMoves.moves.length > 1 && currentMoves.moves[1].getText().toLowerCase() != "swap")) {
+      currentMoves.userMoves.push(new SwapMove());
+    }
+    else {
+      uncolorMove(currentMoveNum);
+      currentMoveNum++;
+      colorMove(currentMoveNum, '#ff8080');
+    }
   }
 }
 

@@ -4,56 +4,42 @@ A forum to view, comment on, and read other people's comments on finished Twixt 
 <a href="http://littlegolem.net/">Little Golem</a>.
 Enjoy!
 %p
-  - form_tag :controller => 'game', :action => 'index' do
+  -form_tag :controller => 'game', :action => 'index' do
     View Little Golem Twixt Game:
-    = text_field_tag :new_gid, '', :size => 7, :maxlength => 7, :class => 'boxed'
-    = submit_tag 'Go'
-  %h3
-    Commented Games
+    =text_field_tag :new_gid, '', :size => 7, :maxlength => 7, :class => 'boxed'
+    =submit_tag 'Go'
+  %h3 Commented Games
   %table.main{ :cellspacing => "0" }
     %thead
       %tr
-        %th.main
-          Game #
-        %th.main
-          Winner
-        %th.main
-          Loser
-        %th.main
-          End
-        %th.main
-          Tournament
-        %th.main
-          Last Comment
-        %th.main
-          Author
+        %th.main Game #
+        %th.main Winner
+        %th.main Loser
+        %th.main End
+        %th.main Tournament
+        %th.main Last Comment
+        %th.main Author
     %tbody
-      - for game in @commented_games
+      -for game in @commented_games
         %tr{ :class => cycle('even', 'odd') }
+          %td.main{ :style => "text-align: right;" }
+            =link_to game.lg_game_num, :controller => 'game', :gid => game.lg_game_num, :main_page => params[:page]
+          %td.main{ :style => "font-style: #{game.is_draw ? 'italic' : 'plain'}" }
+            =h2 game.winner_name
+          %td.main{ :style => "font-style: #{game.is_draw ? 'italic' : 'plain'}" }
+            =h2 game.loser_name
+          %td.main{ :style => "text-align: center;#{(game.is_resignation)? '': ' font-weight: bold;'}" }
+            =game.result
           %td.main
-            = link_to game.lg_game_num, :controller => 'game', :gid => game.lg_game_num, :main_page => params[:page]
-          <td class='main'
-          - if game.is_draw
-            style='font-style: italic;'
-          >
-          = h2 game.winner_name
-          <td class='main'
-          - if game.is_draw
-            style='font-style: italic;'
-          >
-          = h2 game.loser_name
-          %td.main{ :style => (game.is_resignation)? "text-align: center;" : "text-align: center; font-weight: bold;" }
-            = game.result
-          %td.main
-            = (game.tournament.blank?)? '&nbsp;': game.tournament
+            =(game.tournament.blank?)? '&nbsp;': game.tournament
           %td.main{ :style => "text-align: center;" }
-            = game.last_commented_on.strftime('%Y-%m-%d %H:%M')
-          - author = User.find_by_id(game.last_commented_by)
+            =game.last_commented_on.strftime('%Y-%m-%d %H:%M')
+          -author = User.find_by_id(game.last_commented_by)
           %td.main
-            = h2 author.name
-            = link_to image_tag('/images/info.gif', :class => 'info', :alt => '(info)', :width => '9', :height => '9'), :controller => 'user', :action => 'info', :id => author.id, :back_to => params[:controller], :main_page => params[:page]
+            =h2 author.name
+            =link_to image_tag('/images/info.gif', :class => 'info', :alt => '(info)', :width => '9', :height => '9'), :controller => 'user', :action => 'info', :id => author.id, :back_to => params[:controller], :main_page => params[:page]
   Page:
-  = pagination_links
+  =pagination_links
 %br
 %a{ :href => faq_path } FAQ
 |

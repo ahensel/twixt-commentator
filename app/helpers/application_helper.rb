@@ -33,6 +33,11 @@ module ApplicationHelper
     
     # substitutions:
     html.gsub(/#{pre}#{seq}/) {|moves|
+      if moves.starts_with?('|')
+        move_array = []
+        first_move_num = nil
+        last_move_num = 0
+      end
       jump_method = (moves.starts_with?('|'))? 'cJumpMain' : 'cJump'
       
       moves.gsub!(/#{nm}/) {|move|
