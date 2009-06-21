@@ -120,13 +120,12 @@ pre {
 
 div.board, .boardglass, .markerglass {
   position: absolute;
+  cursor: pointer;
 }
 
 div.board {
   background-color: #efffef;
   border: 1px solid #000000;
-  cursor: pointer;
-  cursor: hand;
   top: 100px;
   left: 10px;
   width: 478px;
@@ -135,14 +134,10 @@ div.board {
 
 div.boardglass {
   background-color: transparent;
-  cursor: pointer;
-  cursor: hand;
 }
 
 div.markerglass {
   background-color: transparent;
-  cursor: pointer;
-  cursor: hand;
 }
 
 div.noscript {
