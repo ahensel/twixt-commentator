@@ -1,7 +1,7 @@
 
 #	Application
 set :application, "twixt-commentator"
-set :deploy_to, "/Library/Rails/#{application}"
+set :deploy_to, "/var/www/rails/#{application}"
 set :runner, nil
 set :user, "alan"
 
@@ -10,12 +10,12 @@ default_run_options[:pty] = true
 set :use_sudo, true
 
 #	Servers
-set :domain, "zippy.local"
+set :domain, "yippy.local"
 server domain, :app, :web, :db, :primary => true
 
 #	Source Control
 set :scm, :git
-set :repository,  "ssh://zippy.local/var/git/twixt-commentator.git"
+set :repository,  "ssh://yippy.local/var/git/twixt-commentator.git"
 
 #	Passenger
 namespace :passenger do
