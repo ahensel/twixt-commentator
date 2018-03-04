@@ -62,8 +62,7 @@ private
             " is a forfeit, or still in progress."
           return nil
         else
-          if (html_data.index("<b>0</b>") != nil) and (html_data.index("<b>2</b>") != nil) and
-             (html_data.index("result") != nil)
+          if (html_data.index("game finished") != nil)
 
              @parser.forfeit
              # game is a forfeit 
