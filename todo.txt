@@ -93,3 +93,13 @@ interpret. What do you think! Thanks!
 - make it possible to start with a blank game, and set the moves that you want for the main variation.
    (note: if the last move is not resign, lost, draw, or forfeit, the game will be marked in-progress ('?'), and you won't be able to make any comments.)
    668101, 821049, 806158, 847463
+
+
+
+Thierry's suggestions from June 11, 2011:
+It would be fine if you could include links to the game's variation sequence (just below the standard game sequence) so that you could go backward in it without erasing moves. It could work this way :
+- If you click on one of the move of the variation sequence, it would drive you on this move and let you able to go backward of forward the variation.
+- If you click on the standard sequence, it erases the variation one (just like it does today)
+- If you go backward from the variation sequence to the standard one, it doesn't erase the variation sequence. Then you can easily switch from standard to variation sequence and back without loosing the latter.
+- If you start a new variation sequence, it erases the old one
+- If you go backward the variation sequence, but not up to the standard one, and you play another move, it erases the following moves in the variation sequence (but it doesn't erase the previous ones)
