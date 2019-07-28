@@ -347,7 +347,7 @@ function getNextCommentPegError(pegString, movesSoFar) {
   if (twixtGame.board.getPeg(x, y) != null) {
     return "- Peg " + pegString + " cannot be placed because there is already a peg on that spot.\n";
   }
-  else if (!twixtGame.board.isLegalSpot(x,y, ((twixtGame.board.getAllPegs().length + movesSoFar + 1) % 2))) {
+  else if (!twixtGame.board.isLegalSpot(x,y, ((currentMoves.getUserMoves().length + movesSoFar + 1) % 2))) {
     return "- Illegal spot for peg: " + pegString + "\n";
   }
   else {
