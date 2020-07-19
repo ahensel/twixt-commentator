@@ -1,3 +1,4 @@
+require 'net/https'
 require 'JTwixtFormatter'
 require 'LittleGolemParser'
 
@@ -17,10 +18,11 @@ class JtwixtController < ApplicationController
 private
   #refactor: this is remarkably similar to code in game_controller...
   def getGameFromLittleGolem(game_number)
-    http_connection = Net::HTTP::new('www.littlegolem.net')
+    http_connection = Net::HTTP::new('www.littlegolem.net', 443)
+    http_connection.use_ssl = true
     lg_response, lg_data = http_connection.get("/jsp/game/png.jsp?gid=#{game_number}&#{rand.to_s}")
     
-    if lg_response.code != '200'
+    if lg_response.code != '200' || lg_data == nil || lg_data.strip == ''
       return nil  # HTML error
     else
       lg_data = lg_data.strip

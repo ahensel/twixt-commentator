@@ -1,4 +1,5 @@
 require 'net/http'
+require 'net/https'
 #require 'iconv'
 require 'LittleGolemParser'
 
@@ -29,10 +30,11 @@ class GameController < ApplicationController
 private
 
   def getGameFromLittleGolem(game_number)
-    http_connection = Net::HTTP::new('www.littlegolem.net')
+    http_connection = Net::HTTP::new('www.littlegolem.net', 443)
+    http_connection.use_ssl = true
     lg_response, lg_data = http_connection.get("/jsp/game/png.jsp?gid=#{game_number}&#{rand.to_s}")
 
-    if lg_response.code == '500'
+    if lg_response.code == '500' || lg_data == nil || lg_data.strip == ''
       flash[:error] = "Game #{game_number} does not exist."
       return nil
     elsif lg_response.code != '200'
