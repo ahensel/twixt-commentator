@@ -1,0 +1,61 @@
+extends ../layouts/main_page
+
+block content
+  h2 Twixt Commentator
+  | A forum to view, comment on, and read other people's comments on finished Twixt games from&nbsp;
+  a(href='http://littlegolem.net/') Little Golem
+  | .&nbsp;Enjoy!
+  p
+    form(action='/game' method='post')
+      | View Little Golem Twixt Game:&nbsp;
+      input#new_gid.boxed(type='text' name='new_gid' size='7' maxlength='7')
+      input(type='submit' value='Go')
+    h3 Commented Games
+    table.main(cellspacing='0')
+      thead
+        tr
+          th.main Game #
+          th.main Winner
+          th.main Loser
+          th.main End
+          th.main Tournament
+          th.main Last Comment
+          th.main Author
+      tbody
+        each game, i in commentedGames
+          tr(class=i % 2 === 0 ? 'even' : 'odd')
+            td.main(style='text-align: right;')
+              a(href=`/game/${game.lg_game_num}?main_page=${params && params.page || ''}`)= game.lg_game_num
+            td.main(style=`font-style: ${game.isDraw() ? 'italic' : 'normal'}`)
+              != h2(game.winnerName())
+            td.main(style=`font-style: ${game.isDraw() ? 'italic' : 'normal'}`)
+              != h2(game.loserName())
+            td.main(style=`text-align: center;${game.isResignation() ? '' : ' font-weight: bold;'}`)
+              = game.result
+            td.main
+              if game.tournament && game.tournament.trim() !== ''
+                = game.tournament
+              else
+                | &nbsp;
+            td.main(style='text-align: center;')
+              = game.last_commented_on ? new Date(game.last_commented_on).toISOString().slice(0,16).replace('T',' ') : ''
+            - var author = authorMap[game.last_commented_by]
+            td.main
+              if author
+                != h2(author.name)
+                | &nbsp;
+                a(href=`/user/info/${author.id}?back_to=main_page&main_page=${params && params.page || ''}`)
+                  img.info(src='/images/info.gif' alt='(info)' width='9' height='9')
+  | Page:&nbsp;
+  each p in pages
+    if p.page === null
+      | ...&nbsp;
+    else if p.current
+      | #{p.label}&nbsp;
+    else
+      a(href=p.url)= p.label
+      | &nbsp;
+  br
+  a(href='/faq') FAQ
+  | &nbsp;|&nbsp;
+  a(href='/rss_feed/all_comments.rss') RSS

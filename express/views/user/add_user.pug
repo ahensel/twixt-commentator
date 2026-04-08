@@ -1,0 +1,52 @@
+extends ../layouts/admin
+
+block content
+  div
+    fieldset.boxed
+      if errors && errors.length
+        ul.error
+          each e in errors
+            li= e
+      legend New User Registration for Twixt Game Reviewer
+      form(action='/user/add_user' method='post')
+        table
+          tr
+            td
+              label(for='user_name') Name:
+            td
+              input#user_name.boxed(type='text' name='name' size='40')
+              span(style='color: #ff0000') &nbsp;(Required)
+          tr
+            td
+              label(for='user_password') Password:
+            td
+              input#user_password.boxed(type='password' name='password' size='40')
+              span(style='color: #ff0000') &nbsp;(Required)
+          tr
+            td
+              label(for='user_password_confirmation') Confirm:
+            td
+              input#user_password_confirmation.boxed(type='password' name='password_confirmation' size='40')
+              span(style='color: #ff0000') &nbsp;(Required)
+        hr
+        label
+          input(type='checkbox' name='on_lg' onchange="$('name_on_lg_div').style.display = (this.checked ? 'block' : 'none'); return true;")
+          | &nbsp;Player on Little Golem?
+        br
+        #name_on_lg_div(style='padding: 5px; display: none;')
+          label(for='user_name_on_lg') Name on Little Golem, if different from above:
+          br
+          input#user_name_on_lg.boxed(type='text' name='name_on_lg' size='40')
+          br
+        | Info:
+        br
+        textarea.boxed(name='info')
+        hr
+        input(type='hidden' name='back_to' value=params && params.back_to ? params.back_to : '')
+        if params && params.main_page
+          input(type='hidden' name='main_page' value=params.main_page)
+        if params && params.ret_gid
+          input(type='hidden' name='ret_gid' value=params.ret_gid)
+        input.submit(type='submit' value='Register')
+        | &nbsp;
+        a(href=`/${params && params.back_to === 'game' ? 'game/' + (params.ret_gid || '') : ''}`) Cancel
