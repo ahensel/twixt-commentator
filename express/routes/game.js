@@ -117,11 +117,11 @@ async function getGameFromLittleGolem(gameNumber, flash) {
 
 // GET /game/:gid
 router.get('/:gid', async (req, res) => {
-  const flash = {}; // req.flash ? { error: req.flash('error')[0] } : {};
+  const flash = req.flash ? { error: req.flash.getError() } : {};
 
   const gameNumber = parseGameNumber(req.params.gid, flash);
   if (!gameNumber) {
-    if (flash.error) req.flash && req.flash('error', flash.error);
+    if (flash.error) req.flash && req.flash.error(flash.error);
     return res.render('game/index', { game: null, parser: null, flash, params: req.query });
   }
 
@@ -152,7 +152,7 @@ router.get('/:gid', async (req, res) => {
     }
   }
 
-  if (flash.error) req.flash && req.flash('error', flash.error);
+  if (flash.error) req.flash && req.flash.error(flash.error);
 
   res.render('game/index', {
     game,

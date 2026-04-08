@@ -67,7 +67,9 @@ app.use(async (req, res, next) => {
 app.use((req, res, next) => {
   req.flash = {
     error: (msg) => { req.session._flash_error = msg; },
+    getError: () => { return req.session._flash_error; },
     notice: (msg) => { req.session._flash_notice = msg; },
+    getNotice: () => { return req.session._flash_notice; },
   };
   next();
 });
