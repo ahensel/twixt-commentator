@@ -78,7 +78,7 @@ block content
           form#comment_form(action='/comment' method='post')
             input(type='hidden' name='game' value=game.id)
             input(type='hidden' id='button_pressed' name='button_pressed' value='Comment')
-            textarea.commentTextArea(name='new_comment' rows='8' onkeyup='checkStateChange()' onfocus='commentsInFocus(true)' onblur='commentsInFocus(false)')
+            textarea.commentTextArea(id='new_comment' rows='8' onkeyup='checkStateChange()' onfocus='commentsInFocus(true)' onblur='commentsInFocus(false)')
             input#comment_button(type='submit' value='No Comment' onclick='removePreview(); setButtonPressed(this, "Comment"); return hideAddCommentBox();')
             input#preview_button(type='submit' value='Preview' onclick='removePreview(); setButtonPressed(this, "Preview"); return true;' disabled='true')
 
