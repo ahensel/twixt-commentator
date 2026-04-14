@@ -122,7 +122,7 @@ router.get('/:gid', async (req, res) => {
   const gameNumber = parseGameNumber(req.params.gid, flash);
   if (!gameNumber) {
     if (flash.error) req.flash && req.flash.error(flash.error);
-    return res.render('game/index', { game: null, parser: null, flash, params: req.query });
+    return res.render('game/index', { game: null, parser: null, flash, params: { controller: 'game', gid: req.params.gid, ...req.query } });
   }
 
   let game = await Game.findOne({
@@ -158,7 +158,7 @@ router.get('/:gid', async (req, res) => {
     game,
     parser,
     flash,
-    params: { gid: req.params.gid, ...req.query },
+    params: { controller: 'game', gid: req.params.gid, ...req.query },
     session: req.session,
   });
 });
