@@ -127,7 +127,7 @@ router.get('/:gid', async (req, res) => {
 
   let game = await Game.findOne({
     where: { lg_game_num: gameNumber },
-    include: [{ association: 'comments' }],
+    include: [{ association: 'comments', include: [{ association: 'author' }] }],
   });
 
   let parser = null;
@@ -145,7 +145,7 @@ router.get('/:gid', async (req, res) => {
     if (game && game.id) {
       game = await Game.findOne({
         where: { id: game.id },
-        include: [{ association: 'comments' }],
+        include: [{ association: 'comments', include: [{ association: 'author' }] }],
       });
     } else if (game) {
       game.comments = [];

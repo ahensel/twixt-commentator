@@ -92,5 +92,7 @@ User.prototype.setPassword = function (pwd) {
 
 Game.hasMany(Comment, { foreignKey: 'game_id', as: 'comments' });
 Comment.belongsTo(Game, { foreignKey: 'game_id', as: 'game' });
+Comment.belongsTo(User, { foreignKey: 'user_id', as: 'author' });
+User.hasMany(Comment,  { foreignKey: 'user_id', as: 'comments' });
 
 module.exports = { sequelize, Game, Comment, User };

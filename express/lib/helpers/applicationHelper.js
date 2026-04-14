@@ -22,10 +22,11 @@ function sanitize(html) {
     ;
 }
 
-// Better sanitizer: strip everything except known safe tags
+// Better sanitizer: keep only known safe opening/closing tags, strip everything else
 function sanitizeHtml(html) {
   if (html == null) return '';
-  return String(html).replace(/<\/?(?!(?:b|i|u|em|strong|s|strike|sup|sub|blockquote|code|pre|br)\b)[^>]*>/gi, '');
+  const allowed = /^<\/?(b|i|u|em|strong|s|strike|sup|sub|blockquote|code|pre|br)(\s[^>]*)?>$/i;
+  return String(html).replace(/<[^>]*>/g, tag => allowed.test(tag) ? tag : '');
 }
 
 function xssize(html) {

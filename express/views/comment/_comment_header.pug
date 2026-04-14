@@ -1,6 +1,6 @@
-- var author = locals.author || null
+- var author = locals.author || comment.author || null
 | On&nbsp;
-= comment.created_on ? new Date(comment.created_on).toISOString().replace('T',' ').slice(0,16) + ',' : ''
+= comment.created_on ? new Date(comment.created_on).toISOString().slice(0,10) + ' at ' + new Date(comment.created_on).toISOString().slice(11,16) + ',' : ''
 | &nbsp;
 b
   != h2(author ? author.name : '')
