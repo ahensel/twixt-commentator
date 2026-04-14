@@ -38,7 +38,7 @@ block content
     #underbar
       if game.tournament && game.tournament.trim() !== ''
         a(href=`http://www.littlegolem.net/jsp/tournament/tournament.jsp?trnid=${game.tournament}`)
-          = `${game.tournament}&nbsp;(LG)`
+          != `${game.tournament}&nbsp;(LG)`
         | &nbsp;|&nbsp;
       a(href=`http://www.littlegolem.net/jsp/game/game.jsp?gid=${game.lg_game_num}`) This&nbsp;game&nbsp;(LG)
       | &nbsp;|&nbsp;
