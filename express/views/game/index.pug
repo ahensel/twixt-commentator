@@ -78,7 +78,7 @@ block content
           form#comment_form(action='/comment' method='post')
             input(type='hidden' name='game' value=game.id)
             input(type='hidden' id='button_pressed' name='button_pressed' value='Comment')
-            textarea.commentTextArea(id='new_comment' rows='8' onkeyup='checkStateChange()' onfocus='commentsInFocus(true)' onblur='commentsInFocus(false)')
+            textarea.commentTextArea(id='new_comment' name='new_comment' rows='8' onkeyup='checkStateChange()' onfocus='commentsInFocus(true)' onblur='commentsInFocus(false)')
             input#comment_button(type='submit' value='No Comment' onclick='removePreview(); setButtonPressed(this, "Comment"); return hideAddCommentBox();')
             input#preview_button(type='submit' value='Preview' onclick='removePreview(); setButtonPressed(this, "Preview"); return true;' disabled='true')
 
@@ -87,3 +87,37 @@ block content
 
   noscript
     .noscript JavaScript was not detected. This site requires JavaScript to be enabled in your browser.
+
+block append scripts
+  script.
+    (function () {
+      var form = document.getElementById('comment_form');
+      if (!form) return;
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var buttonPressed = document.getElementById('button_pressed').value;
+        var data = new FormData(form);
+        var body = new URLSearchParams();
+        data.forEach(function (v, k) { body.append(k, v); });
+        fetch('/comment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body.toString()
+        })
+        .then(function (r) { return r.text(); })
+        .then(function (html) {
+          var container = document.getElementById('current_comments');
+          if (container && html.trim()) {
+            container.insertAdjacentHTML('beforeend', html);
+          }
+          // After a real Comment submission (not Preview), reset the UI
+          if (buttonPressed !== 'Preview') {
+            document.getElementById('new_comment').value = '';
+            checkStateChange();
+            document.getElementById('addComment').style.display = 'none';
+            document.getElementById('addCommentLink').style.display = 'inline';
+          }
+        })
+        .catch(function (err) { console.error('Comment submit error:', err); });
+      });
+    })();

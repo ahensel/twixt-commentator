@@ -10,9 +10,11 @@ html
     link(rel='stylesheet' href='/stylesheets/twixt.css' media='all')
     script(src='/javascripts/prototype.js')
     script(src='/javascripts/twixt_min.js')
+    script(src='/javascripts/comments.js')
     link(href='/favicon.ico' rel='icon' type='image/x-icon')
     link(href='/favicon.ico' rel='shortcut icon' type='image/x-icon')
   body.game_page(onresize='setCommentDivTop();')
     p.err= flash && flash.error ? flash.error : ''
     include _loginbox
     block content
+    block scripts
