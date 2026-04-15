@@ -25,7 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 // ── Middleware ───────────────────────────────────────────────────────────────
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true, encoding: 'utf-8' }));
 app.use(bodyParser.json());
 
 app.use(session({
