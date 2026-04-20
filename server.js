@@ -21,8 +21,8 @@ const PORT = process.env.PORT || 3000;
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
-// ── Static assets (shared with the Rails app) ────────────────────────────────
-app.use(express.static(path.join(__dirname, '..', 'public')));
+// ── Static assets ────────────────────────────────────────────────────────────
+app.use(express.static(path.join(__dirname, 'public')));
 
 // ── Middleware ───────────────────────────────────────────────────────────────
 app.use(bodyParser.urlencoded({ extended: true, encoding: 'utf-8' }));
