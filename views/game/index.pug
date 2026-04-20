@@ -1,0 +1,123 @@
+extends ../layouts/game
+
+block content
+  form(action='/game' method='post')
+    | Game number:&nbsp;
+    input.boxed(type='text' name='new_gid' value=params && params.gid ? params.gid : '' size='7' maxlength='7')
+    input(type='submit' value='Go')
+    | &nbsp;
+    a(href=`/?page=${params && params.main_page || ''}`) Main Page
+
+  if game
+    img(src='/images/pieces/whitepeg.gif' alt='White:')
+    span(class=game.winner === 1 ? 'winner' : 'loser')
+      != h2(game.player1)
+    | &nbsp;&nbsp;
+    img(src='/images/pieces/blackpeg.gif' alt='Black:')
+    span(class=game.winner === 2 ? 'winner' : 'loser')
+      != h2(game.player2)
+
+    #turn.turn
+    #board.board
+      //- preload pieces
+      img#crosshair.crosshair(src='/images/pieces/crosshair.gif' galleryimg='no' alt='')
+      img.piece(src='/images/pieces/whitepeg.gif' galleryimg='no' alt='')
+      img.piece(src='/images/pieces/blackpeg.gif' galleryimg='no' alt='')
+      img.piece(src='/images/pieces/eselink.gif' galleryimg='no' alt='')
+      img.piece(src='/images/pieces/wswlink.gif' galleryimg='no' alt='')
+      img.piece(src='/images/pieces/sselink.gif' galleryimg='no' alt='')
+      img.piece(src='/images/pieces/sswlink.gif' galleryimg='no' alt='')
+      img#boardImage(src='/images/pieces/board.gif' galleryimg='no' alt='')
+
+    #boardglass1.boardglass
+    #boardglass2.boardglass(style='display: none')
+    #markerglass.markerglass
+      img#newwhitepeg.crosshair(src='/images/pieces/newwhitepeg.gif' galleryimg='no' alt='')
+      img#newblackpeg.crosshair(src='/images/pieces/newblackpeg.gif' galleryimg='no' alt='')
+
+    #underbar
+      if game.tournament && game.tournament.trim() !== ''
+        a(href=`http://www.littlegolem.net/jsp/tournament/tournament.jsp?trnid=${game.tournament}`)
+          != `${game.tournament}&nbsp;(LG)`
+        | &nbsp;|&nbsp;
+      a(href=`http://www.littlegolem.net/jsp/game/game.jsp?gid=${game.lg_game_num}`) This&nbsp;game&nbsp;(LG)
+      | &nbsp;|&nbsp;
+      a(href=`/jtwixt/gen?gameid=${params && params.gid}`) Download&nbsp;JTwixt&nbsp;file
+
+    #sidebar.sidebar
+      table
+        tr
+          td
+            #moves
+        tr
+          td
+            #userMoves
+        tr
+          td
+            a#backLink(href='' accesskey='b' onclick='backButton(); return false;') Back
+            | &nbsp;
+            a#nextLink(href='' accesskey='n' onclick='nextButton(); return false;') Next
+
+    #comments
+      #current_comments
+        each comment in (game.comments || [])
+          .commentHeader
+            include ../comment/_comment_header
+          != prepareComment(comment.comment)
+          br
+          br
+      if game.isInProgress()
+        .commentHeader Game is in progress.
+      else if !session || !session.user_id
+        .commentHeader You must be logged in to add comments.
+      else
+        #addCommentLink
+          a(href='' onclick='return showAddCommentBox();') Add a comment
+        #addComment(style='display: none')
+          .commentHeader Add a comment:
+          form#comment_form(action='/comment' method='post')
+            input(type='hidden' name='game' value=game.id)
+            input(type='hidden' id='button_pressed' name='button_pressed' value='Comment')
+            textarea.commentTextArea(id='new_comment' name='new_comment' rows='8' onkeyup='checkStateChange()' onfocus='commentsInFocus(true)' onblur='commentsInFocus(false)')
+            input#comment_button(type='submit' value='No Comment' onclick='removePreview(); setButtonPressed(this, "Comment"); return hideAddCommentBox();')
+            input#preview_button(type='submit' value='Preview' onclick='removePreview(); setButtonPressed(this, "Preview"); return true;' disabled='true')
+
+    if parser
+      input(type='hidden' id='movesJson' name='movesJson' value=JSON.stringify(parser.getMovesList()))
+
+  noscript
+    .noscript JavaScript was not detected. This site requires JavaScript to be enabled in your browser.
+
+block append scripts
+  script.
+    (function () {
+      var form = document.getElementById('comment_form');
+      if (!form) return;
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var buttonPressed = document.getElementById('button_pressed').value;
+        var data = new FormData(form);
+        var body = new URLSearchParams();
+        data.forEach(function (v, k) { body.append(k, v); });
+        fetch('/comment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body.toString()
+        })
+        .then(function (r) { return r.text(); })
+        .then(function (html) {
+          var container = document.getElementById('current_comments');
+          if (container && html.trim()) {
+            container.insertAdjacentHTML('beforeend', html);
+          }
+          // After a real Comment submission (not Preview), reset the UI
+          if (buttonPressed !== 'Preview') {
+            document.getElementById('new_comment').value = '';
+            checkStateChange();
+            document.getElementById('addComment').style.display = 'none';
+            document.getElementById('addCommentLink').style.display = 'inline';
+          }
+        })
+        .catch(function (err) { console.error('Comment submit error:', err); });
+      });
+    })();

@@ -1,0 +1,15 @@
+- var author = locals.author || comment.author || null
+| On&nbsp;
+= comment.created_on ? new Date(comment.created_on).toISOString().slice(0,10) + ' at ' + new Date(comment.created_on).toISOString().slice(11,16) + ',' : ''
+| &nbsp;
+b
+  != h2(author ? author.name : '')
+| &nbsp;
+if author
+  a(href=`/user/info/${author.id}?back_to=${params && params.back_to || ''}&ret_gid=${params && params.gid || ''}`)
+    img.info(src='/images/info.gif' alt='(info)' width='9' height='9')
+| &nbsp;
+if preview
+  | considered saying:
+else
+  | said:

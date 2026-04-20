@@ -1,7 +1,0 @@
-ssh yippy.local
-  (type password)
-
-cd /opt/local/apache2/bin
-sudo apache2ctl -k start
-  (type password)
-
