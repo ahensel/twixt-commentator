@@ -4,12 +4,12 @@ html
     meta(http-equiv='Content-Type' content='text/html; charset=utf-8')
     title Twixt Commentator Registration
     link(rel='stylesheet' href='/stylesheets/twixt.css' media='all')
-    script(src='/javascripts/prototype.js')
+
     link(href='/favicon.ico' rel='icon' type='image/x-icon')
     link(href='/favicon.ico' rel='shortcut icon' type='image/x-icon')
     script.
-      Event.observe(window, 'load', function() {
-        var u = $('user_name');
+      window.addEventListener('load', () => {
+        const u = document.getElementById('user_name');
         if (u) u.focus();
       });
   body.admin_page

@@ -1,78 +1,64 @@
 function scrollToBottom() {
-  $('comments').scrollTop = 0; // IE needs this
-  $('comments').scrollTop = $('comments').scrollHeight;
+  const comments = document.getElementById('comments');
+  comments.scrollTop = 0; // ensure scroll resets before jumping to bottom
+  comments.scrollTop = comments.scrollHeight;
 }
+
 function showAddCommentBox() {
-  $('new_comment').value='';
+  document.getElementById('new_comment').value = '';
   checkStateChange();
-  $('addCommentLink').style.display = 'none';
-  $('addComment').style.display = 'inline';
-  $('new_comment').focus();
+  document.getElementById('addCommentLink').style.display = 'none';
+  document.getElementById('addComment').style.display = 'inline';
+  document.getElementById('new_comment').focus();
   scrollToBottom();
   return false;
 }
+
 function hideAddCommentBox() {
-  $('addComment').style.display = 'none';
-  $('addCommentLink').style.display = 'inline';
+  document.getElementById('addComment').style.display = 'none';
+  document.getElementById('addCommentLink').style.display = 'inline';
   return commentBoxHasComments();
 }
+
 function commentBoxHasComments() {
-  return ($('new_comment').value.replace(/\s*/, '').length > 0);
+  return document.getElementById('new_comment').value.replace(/\s*/, '').length > 0;
 }
-// workaround for Rail's non-support of multiple buttons on a form: set hidden field
+
+// Multiple submit buttons share a form: track which was clicked via a hidden field.
 function setButtonPressed(button, name) {
-  Form.getInputs(button.form, null, 'button_pressed')[0].value = name;
+  button.form.elements['button_pressed'].value = name;
 }
+
 function removePreview() {
-  if ($('preview') != null) {
-    $('preview').parentNode.removeChild($('preview'));
-  }
+  const preview = document.getElementById('preview');
+  if (preview != null) preview.parentNode.removeChild(preview);
 }
+
 function checkStateChange() {
-  if (commentBoxHasComments()) {
-    $('comment_button').value = 'Comment';
-    $('preview_button').disabled = false;
-  }
-  else {
-    $('comment_button').value = 'No Comment';
-    $('preview_button').disabled = true;
-  }
+  const hasComments = commentBoxHasComments();
+  document.getElementById('comment_button').value = hasComments ? 'Comment' : 'No Comment';
+  document.getElementById('preview_button').disabled = !hasComments;
 }
+
 function commentsInFocus(state) {
-  $('addComment').focused = state;
+  document.getElementById('addComment').focused = state;
 }
 
-// If user types Backspace key, focus must go back to "Add Comments" box immediately, or the browser
-// will interpret this like the "Back" button -- which may potentially lose the user's work!
+// If the user types Backspace, focus must return to the comment box immediately,
+// otherwise the browser interprets it as the Back button — potentially losing their work.
 function keyIntercept(evt) {
-  var addCommentElement = $('addComment');
-  if (addCommentElement != null && addCommentElement.style.display == 'inline' && !addCommentElement.focused) {
-    if (evt == null) {
-      evt = event;
-    }
-    if (evt.keyCode == 8 || (!evt.altKey && !evt.ctrlKey && !evt.metaKey)) {
-      $('new_comment').focus();
-
-      if (evt.keyCode == 8) {
-        evt.returnValue = false;
-        Event.stop(evt);
+  const addCommentElement = document.getElementById('addComment');
+  if (addCommentElement != null &&
+      addCommentElement.style.display === 'inline' &&
+      !addCommentElement.focused) {
+    if (evt.key === 'Backspace' || (!evt.altKey && !evt.ctrlKey && !evt.metaKey)) {
+      document.getElementById('new_comment').focus();
+      if (evt.key === 'Backspace') {
+        evt.preventDefault();
+        evt.stopPropagation();
         return false;
       }
     }
   }
-  /*
-  else {
-    if (evt == null) {
-      evt = event;
-    }
-    if (evt.keyCode == 78) {
-      next();
-    }
-    else if (evt.keyCode == 66) {
-      back();
-    }
-  }
-  */
-  
   return true;
 }

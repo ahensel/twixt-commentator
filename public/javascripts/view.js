@@ -1,35 +1,38 @@
-var LINK_REMOVAL = 0;
-var PENCIL_AND_PAPER = 1;
-var linkCrossingPolicy = PENCIL_AND_PAPER;
+// Lightweight getElementById shorthand — NOT Prototype's $().
+// Use document.getElementById directly if you prefer explicitness.
+const $ = id => document.getElementById(id);
 
-var turn = 1;
-var twixtGame = new TwixtController(24);
-var cutLink = null;
-var holdingForMarkers = false;
-var numLinkableMarkers = 0;
-var currentMoveNum = null;   // current move in the mainline, not the variation
-var currentMoves = new TwixtMoves();
-var bg = 1;
+const LINK_REMOVAL    = 0;
+const PENCIL_AND_PAPER = 1;
+let linkCrossingPolicy = PENCIL_AND_PAPER;
 
-document.onmousedown = clickOnBoard;
-document.onmousemove = mouseOverBoard;
-document.onkeydown = function(e) { keyIntercept(e); };
-document.onkeypress = function(e) { keyIntercept(e); };
+let turn = 1;
+let twixtGame = new TwixtController(24);
+let cutLink = null;
+let holdingForMarkers = false;
+let numLinkableMarkers = 0;
+let currentMoveNum = null;   // current move in the mainline, not the variation
+let currentMoves = new TwixtMoves();
+let bg = 1;
 
-Event.observe(window, 'load', function() { disableSelections(); positionElements(); showMovesOnLoad(); });
+// These are set by positionElements() and read by setCommentDivTop().
+let leftMargin, topMargin;
+
+document.addEventListener('mousedown', clickOnBoard);
+document.addEventListener('mousemove', mouseOverBoard);
+document.addEventListener('keydown',  e => keyIntercept(e));
+document.addEventListener('keypress', e => keyIntercept(e));
+
+window.addEventListener('load', () => {
+  disableSelections();
+  positionElements();
+  showMovesOnLoad();
+});
 
 function disableSelection(target) {
-  if (typeof target.onselectstart!="undefined") {
-    target.onselectstart = function() {return false;};  // IE
-    target.style.KhtmlUserSelect = "none";  // Safari
-  }
-  else if (typeof target.style.MozUserSelect != "undefined") {
-    target.style.MozUserSelect = "none";   //Firefox
-  }
-  else {  // All others
-    target.onmousedown = function() {return false;};
-  }
+  target.style.userSelect = 'none';
 }
+
 function disableSelections() {
   disableSelection($('board'));
   disableSelection($('newwhitepeg'));
@@ -40,189 +43,148 @@ function disableSelections() {
 
 function positionElements() {
   leftMargin = 10;
-  topMargin = 80;
+  topMargin  = 80;
 
-  var boardSize = twixtGame.board.size;  // 24
-  var boardWidth = 46 + boardSize * 18;  // 478
-  var boardHeight = 44 + boardSize * 18; // 476
-  
-  var ts = $('turn').style;
-  ts.left = leftMargin + 'px';
-  ts.top = topMargin + 'px';
+  const boardSize   = twixtGame.board.size;  // 24
+  const boardWidth  = 46 + boardSize * 18;   // 478
+  const boardHeight = 44 + boardSize * 18;   // 476
 
-  var bs = $('board').style;
-  bs.left = leftMargin + 'px';
-  bs.top = topMargin + 20 + 'px';
-  bs.width = boardWidth + 'px';
-  bs.height = boardHeight + 'px';
-  
-  var bg1s = $('boardglass1').style;
-  bg1s.left = leftMargin + 1 + 'px';
-  bg1s.top = topMargin + 21 + 'px';
-  bg1s.width = boardWidth + 'px';
-  bg1s.height = boardHeight + 'px';
-  
-  var bg2s = $('boardglass2').style;
-  bg2s.left = leftMargin + 1 + 'px';
-  bg2s.top = topMargin + 21 + 'px';
-  bg2s.width = boardWidth + 'px';
-  bg2s.height = boardHeight + 'px';
-  
-  var mgs = $('markerglass').style;
-  mgs.left = leftMargin + 1 + 'px';
-  mgs.top = topMargin + 21 + 'px';
-  mgs.width = boardWidth + 'px';
-  mgs.height = boardHeight + 'px';
-  
-  var sbs = $('sidebar').style;
-  sbs.left = (leftMargin + boardWidth + 10) + 'px';
-  sbs.top = topMargin + 20 + 'px';
-  sbs.right = '10px';
-  sbs.display = 'inline';
-  
-  var ubs = $('underbar').style;
-  ubs.left = leftMargin + 'px';
-  ubs.top = (topMargin + boardHeight + 30) + 'px';
-  ubs.width = boardWidth + 'px';
+  Object.assign($('turn').style, { left: `${leftMargin}px`, top: `${topMargin}px` });
 
-  var cs = $('comments').style;
-  cs.left = (leftMargin + boardWidth + 10) + 'px';
-  cs.bottom = '10px';
-  cs.right = '10px';
-  cs.display = 'inline';
+  Object.assign($('board').style, {
+    left: `${leftMargin}px`, top: `${topMargin + 20}px`,
+    width: `${boardWidth}px`, height: `${boardHeight}px`,
+  });
+
+  Object.assign($('boardglass1').style, {
+    left: `${leftMargin + 1}px`, top: `${topMargin + 21}px`,
+    width: `${boardWidth}px`, height: `${boardHeight}px`,
+  });
+
+  Object.assign($('boardglass2').style, {
+    left: `${leftMargin + 1}px`, top: `${topMargin + 21}px`,
+    width: `${boardWidth}px`, height: `${boardHeight}px`,
+  });
+
+  Object.assign($('markerglass').style, {
+    left: `${leftMargin + 1}px`, top: `${topMargin + 21}px`,
+    width: `${boardWidth}px`, height: `${boardHeight}px`,
+  });
+
+  Object.assign($('sidebar').style, {
+    left: `${leftMargin + boardWidth + 10}px`, top: `${topMargin + 20}px`,
+    right: '10px', display: 'inline',
+  });
+
+  Object.assign($('underbar').style, {
+    left: `${leftMargin}px`, top: `${topMargin + boardHeight + 30}px`,
+    width: `${boardWidth}px`,
+  });
+
+  Object.assign($('comments').style, {
+    left: `${leftMargin + boardWidth + 10}px`, bottom: '10px',
+    right: '10px', display: 'inline',
+  });
+
   setCommentDivTop();
 }
 
 function setCommentDivTop() {
-  var cs = $('comments').style;
-  cs.top = topMargin + 30 + $('sidebar').offsetHeight + 'px';
-  
-  // compensate for IE's shortcomings
-  if(typeof(window.innerWidth) == 'number') {
-    // Not IE; we're good
-  }
-  else {
-    // Uh-oh, IE
-    var height = 0;
-    var width  = 0;
-    
-    if (document.documentElement && (document.documentElement.clientWidth || document.documentElement.clientHeight)) {
-      //IE 6+ in 'standards compliant mode'
-      height = document.documentElement.clientHeight;
-      width  = document.documentElement.clientWidth;
-    } else if (document.body && (document.body.clientWidth || document.body.clientHeight)) {
-      //IE 4 compatible
-      height = document.body.clientHeight;
-      width  = document.body.clientWidth;
-    }
-    var top  = $('comments').offsetTop;
-    var left = $('comments').offsetLeft;
-
-    var newWidth = width - left - 10;
-    var newHeight = height - top - 10;
-
-    if (newHeight > 0) {
-      cs.height = newHeight + 'px';
-    }
-    if (newWidth > 0) {
-      cs.width  = newWidth + 'px';
-      $(sidebar).style.width = newWidth + 'px';
-    }
-  }
+  $('comments').style.top = `${topMargin + 30 + $('sidebar').offsetHeight}px`;
 }
 
 function showMovesOnLoad() {
-  var movesJson = $F('movesJson');
-  if (movesJson != null && movesJson.length > 0) {
-    var moves = eval(movesJson);
-    
-    var swapped = (moves.length > 1 && moves[1].type == 2);
-    if (swapped) {
-      var tmp = moves[0].x;
-      moves[0].x = moves[0].y;
-      moves[0].y = tmp;
-      moves[0].player = 3 - moves[0].player;
-    }
-    
-    currentMoves.settingUp = true;
-    var gameIsInProgress = true;
-    moves.each(function (move) {
-      if (move.type == 1) {
-        turn = 2 - move.player;
-        placePeg(move.x, move.y);
-      }
-      else if (move.type == 2) {
-        currentMoves.swapFirstMove();
-      }
-      else if (move.type == 3) {
-        currentMoves.finalMove(new ResignMove());
-        gameIsInProgress = false;
-      }
-      else if (move.type == 4) {
-        currentMoves.finalMove(new DrawMove());
-        gameIsInProgress = false;
-      }
-      else if (move.type == 5) {
-        currentMoves.finalMove(new ForfeitMove());
-        gameIsInProgress = false;
-      }
-      else if (move.type == 6) {
-        currentMoves.finalMove(new LostMove());
-        gameIsInProgress = false;
-      }
-    });
-    currentMoves.settingUp = false;
-    currentMoveNum = currentMoves.moves.length - (gameIsInProgress? 0:1);
-    
-    showMovesText();
+  const movesJsonEl = $('movesJson');
+  if (!movesJsonEl) return;
+
+  const movesJson = movesJsonEl.value;
+  if (!movesJson || movesJson.length === 0) return;
+
+  const moves = JSON.parse(movesJson);
+
+  const swapped = (moves.length > 1 && moves[1].type === 2);
+  if (swapped) {
+    const tmp = moves[0].x;
+    moves[0].x = moves[0].y;
+    moves[0].y = tmp;
+    moves[0].player = 3 - moves[0].player;
   }
+
+  currentMoves.settingUp = true;
+  let gameIsInProgress = true;
+
+  moves.forEach(move => {
+    if (move.type === 1) {
+      turn = 2 - move.player;
+      placePeg(move.x, move.y);
+    } else if (move.type === 2) {
+      currentMoves.swapFirstMove();
+    } else if (move.type === 3) {
+      currentMoves.finalMove(new ResignMove());
+      gameIsInProgress = false;
+    } else if (move.type === 4) {
+      currentMoves.finalMove(new DrawMove());
+      gameIsInProgress = false;
+    } else if (move.type === 5) {
+      currentMoves.finalMove(new ForfeitMove());
+      gameIsInProgress = false;
+    } else if (move.type === 6) {
+      currentMoves.finalMove(new LostMove());
+      gameIsInProgress = false;
+    }
+  });
+
+  currentMoves.settingUp = false;
+  currentMoveNum = currentMoves.moves.length - (gameIsInProgress ? 0 : 1);
+
+  showMovesText();
 }
 
 function showMovesText() {
-  var movesTextDiv = $('moves');
-  
-  var moveNum = 1;
-  currentMoves.getMoves().each(function (move) {
-    var className = (moveNum % 2 == 0)? 'black' : 'white';
-    var moveText = moveNum + "." + move.getText();
+  const movesTextDiv = $('moves');
+  let moveNum = 1;
 
-    movesTextDiv.innerHTML += " <a id='move_" + moveNum + "' class='" + className + 
-      "' href='' onclick='jumpTo(" + moveNum + "); return false;'>" + moveText + 
-      "</a> ";
-
-    moveNum ++;
+  currentMoves.getMoves().forEach(move => {
+    const className = (moveNum % 2 === 0) ? 'black' : 'white';
+    const moveText  = `${moveNum}.${move.getText()}`;
+    movesTextDiv.innerHTML +=
+      ` <a id='move_${moveNum}' class='${className}' href='' ` +
+      `onclick='jumpTo(${moveNum}); return false;'>${moveText}</a> `;
+    moveNum++;
   });
+
   setCommentDivTop();
 }
 
 function getUserMovesFirstNum() {
-  var moveNum = currentMoveNum;
-  
+  let moveNum = currentMoveNum;
   if (moveNum > 0) {
-    var move = currentMoves.getMoves()[moveNum - 1];
-    if (!(move.peg || move.getText() == 'swap')) {
+    const move = currentMoves.getMoves()[moveNum - 1];
+    if (!(move.peg || move.getText() === 'swap')) {
       // back off from "resign", "forfeit", "draw", "loss"
-      moveNum --;
+      moveNum--;
     }
   }
   return moveNum + 1;
 }
 
 function showUserMovesText() {
-  var userMovesText = '';
+  let userMovesText = '';
 
   if (currentMoves.hasUserMoves()) {
     userMovesText += "|<span class='userMoves'>";
-    var moveNum = getUserMovesFirstNum();
+    let moveNum = getUserMovesFirstNum();
 
-    currentMoves.getUserMoves().each(function (move) {
-      var className = (moveNum % 2 == 0)? 'black' : 'white';
-      var moveText = moveNum + "." + move.getText();
-      userMovesText += "<span class='" + className + "'>" + moveText + "</span> ";
-      moveNum ++;
+    currentMoves.getUserMoves().forEach(move => {
+      const className = (moveNum % 2 === 0) ? 'black' : 'white';
+      const moveText  = `${moveNum}.${move.getText()}`;
+      userMovesText += `<span class='${className}'>${moveText}</span> `;
+      moveNum++;
     });
-    userMovesText += "</span>";
+
+    userMovesText += '</span>';
   }
+
   $('userMoves').innerHTML = userMovesText;
   setCommentDivTop();
 }
@@ -231,13 +193,11 @@ function jumpTo(moveNum) {
   uncolorMove(currentMoveNum);
   currentMoves.clearUserMoves();
   $('userMoves').innerHTML = '';
-
   showAllMoves(moveNum, null);
 }
 
 function cJumpMain(firstMoveNum, commentMoves) {
   if (firstMoveNum > currentMoves.getMoves().length) {
-    // can't jump to a move beyond the end of the game. So continue numbering from end.
     firstMoveNum = currentMoves.getMoves().length;
   }
   uncolorMove(currentMoveNum);
@@ -246,57 +206,48 @@ function cJumpMain(firstMoveNum, commentMoves) {
 }
 
 function cJump(firstMoveNum, moves) {
-  var nextMoveNum = null;
+  let nextMoveNum = null;
   if (currentMoveNum != null) {
     nextMoveNum = currentMoveNum + currentMoves.getUserMoves().length + 1;
   }
 
-  if (nextMoveNum == firstMoveNum) {
-    // no overlap, continue from current
+  if (nextMoveNum === firstMoveNum) {
     placeCommentPegs(moves);
-  }
-  else if (nextMoveNum > firstMoveNum && overlapMovesMatch(firstMoveNum, nextMoveNum, moves)) {
-    // overlap, but overlap matches
+  } else if (nextMoveNum > firstMoveNum && overlapMovesMatch(firstMoveNum, nextMoveNum, moves)) {
     if (nextMoveNum <= firstMoveNum + moves.length) {
       placeCommentPegs(moves.slice(nextMoveNum - firstMoveNum));
-    }
-    else {
+    } else {
       if (currentMoves.hasUserMoves()) {
         uncolorMove(currentMoveNum);
-        // going backwards
-        for (var i = 0; i < (nextMoveNum - (firstMoveNum + moves.length)); i++) {
+        for (let i = 0; i < (nextMoveNum - (firstMoveNum + moves.length)); i++) {
           if (currentMoves.hasUserMoves()) {
             currentMoves.popMove();
-          }
-          else {
-            currentMoveNum --;
+          } else {
+            currentMoveNum--;
           }
         }
         showAllMoves(currentMoveNum, null);
-      }
-      else {
+      } else {
         jumpTo(firstMoveNum - 1);
         placeCommentPegs(moves);
       }
     }
-  }
-  else if (nextMoveNum > firstMoveNum && firstMoveNum > currentMoves.getMoves().length) {
-    // no overlap, but beyond the mainline variation, so back up and go down this path
-    for (var i = 0; i < (nextMoveNum - firstMoveNum); i++) {
+  } else if (nextMoveNum > firstMoveNum && firstMoveNum > currentMoves.getMoves().length) {
+    for (let i = 0; i < (nextMoveNum - firstMoveNum); i++) {
       currentMoves.popMove();
     }
     showAllMoves(currentMoveNum, moves);
-  }
-  else {
+  } else {
     cJumpMain(firstMoveNum, moves);
-  }  
+  }
 }
 
 function overlapMovesMatch(firstMoveNum, nextMoveNum, moves) {
-  for (var moveNum = firstMoveNum; moveNum < Math.min(nextMoveNum, firstMoveNum + moves.length); moveNum++) {
-    var shownMove = (moveNum <= currentMoveNum)? currentMoves.getMoves()[moveNum - 1] :
-                                                 currentMoves.getUserMoves()[moveNum - currentMoveNum - 1];
-    if (shownMove.getText().toUpperCase() != moves[moveNum - firstMoveNum].toUpperCase()) {
+  for (let moveNum = firstMoveNum; moveNum < Math.min(nextMoveNum, firstMoveNum + moves.length); moveNum++) {
+    const shownMove = (moveNum <= currentMoveNum)
+      ? currentMoves.getMoves()[moveNum - 1]
+      : currentMoves.getUserMoves()[moveNum - currentMoveNum - 1];
+    if (shownMove.getText().toUpperCase() !== moves[moveNum - firstMoveNum].toUpperCase()) {
       return false;
     }
   }
@@ -304,94 +255,80 @@ function overlapMovesMatch(firstMoveNum, nextMoveNum, moves) {
 }
 
 function placeCommentPegs(moves) {
-  var errors = getCommentPegErrors(moves);
-  
-  if (errors.length == 0) {
-    moves.each(function(move) {
-      placePegByNotation(move);
-    });
+  const errors = getCommentPegErrors(moves);
+  if (errors.length === 0) {
+    moves.forEach(move => placePegByNotation(move));
     showUserMovesText();
-  }
-  else {
+  } else {
     alert(errors);
   }
 }
 
 function getCommentPegErrors(moves) {
-  var errors = '';
-  var movesSoFar = 0;
-  moves.each(function(move) {
+  let errors = '';
+  let movesSoFar = 0;
+  moves.forEach(move => {
     errors += getNextCommentPegError(move, movesSoFar);
-    movesSoFar ++;
+    movesSoFar++;
   });
   return errors;
 }
 
 function getNextCommentPegError(pegString, movesSoFar) {
-  if (pegString == "swap") {
-    var pegsSoFar = twixtGame.board.getAllPegs().length + movesSoFar;
-    if (pegsSoFar == 0) {
-      return "- Cannot swap as the first move of the game.";
-    }
-    else if (pegsSoFar > 1) {
-      return "- Cannot swap. There is more than one peg on the board.";
-    }
-    else {
-      return "";
-    }
+  if (pegString === 'swap') {
+    const pegsSoFar = twixtGame.board.getAllPegs().length + movesSoFar;
+    if (pegsSoFar === 0) return '- Cannot swap as the first move of the game.';
+    if (pegsSoFar >  1) return '- Cannot swap. There is more than one peg on the board.';
+    return '';
   }
-  
-  var x = pegString.toUpperCase().charCodeAt(0) - 64;
-  var y = parseInt(pegString.substr(1), 10);
+
+  const x = pegString.toUpperCase().charCodeAt(0) - 64;
+  const y = parseInt(pegString.substr(1), 10);
 
   if (twixtGame.board.getPeg(x, y) != null) {
-    return "- Peg " + pegString + " cannot be placed because there is already a peg on that spot.\n";
+    return `- Peg ${pegString} cannot be placed because there is already a peg on that spot.\n`;
   }
-  else if (!twixtGame.board.isLegalSpot(x,y, (turn + movesSoFar + 1) % 2)) {
-    return "- Illegal spot for peg: " + pegString + "\n";
+  if (!twixtGame.board.isLegalSpot(x, y, (turn + movesSoFar + 1) % 2)) {
+    return `- Illegal spot for peg: ${pegString}\n`;
   }
-  else {
-    return "";
-  }
+  return '';
 }
 
 function placePegByNotation(pegString) {
-  if (pegString.toLowerCase() == "swap") {
+  if (pegString.toLowerCase() === 'swap') {
     swapFirstPeg();
-  }
-  else {
-    var x = pegString.toUpperCase().charCodeAt(0) - 64;
-    var y = parseInt(pegString.substr(1), 10);
-
-    if (twixtGame.board.getPeg(x, y) == null && twixtGame.board.isLegalSpot(x,y, turn)) {
+  } else {
+    const x = pegString.toUpperCase().charCodeAt(0) - 64;
+    const y = parseInt(pegString.substr(1), 10);
+    if (twixtGame.board.getPeg(x, y) == null && twixtGame.board.isLegalSpot(x, y, turn)) {
       placePeg(x, y);
     }
   }
 }
 
-// only used by comment clicking; on other occasions, it's handled more efficiently
+// only used by comment clicking; on other occasions handled more efficiently
 function swapFirstPeg() {
-  var pegs = twixtGame.board.getAllPegs();
-  if (pegs.length == 1) {
-    var peg = pegs[0];
+  const pegs = twixtGame.board.getAllPegs();
+  if (pegs.length === 1) {
+    const peg = pegs[0];
     clearBoard();
     turn = 1 - turn;
     placePeg(peg.y, peg.x);
-    
-    // unfortunately, it erroneously put the peg on the user moves stack; must correct that.
+
+    // it erroneously put the peg on the user moves stack; correct that.
     currentMoves.popMove();
-    var firstMove = (currentMoves.hasUserMoves())? currentMoves.userMoves[0] : currentMoves.moves[0];
-    var peg1 = firstMove.peg;
+    const firstMove = currentMoves.hasUserMoves() ? currentMoves.userMoves[0] : currentMoves.moves[0];
+    const peg1 = firstMove.peg;
     if (!peg1.swapped) {
       peg1.swapped = true;
-      var tmp = peg1.x;
+      const tmp = peg1.x;
       peg1.x = peg1.y;
       peg1.y = tmp;
     }
-    if (currentMoves.hasUserMoves() || (currentMoves.moves.length > 1 && currentMoves.moves[1].getText().toLowerCase() != "swap")) {
+    if (currentMoves.hasUserMoves() ||
+        (currentMoves.moves.length > 1 && currentMoves.moves[1].getText().toLowerCase() !== 'swap')) {
       currentMoves.userMoves.push(new SwapMove());
-    }
-    else {
+    } else {
       uncolorMove(currentMoveNum);
       currentMoveNum++;
       colorMove(currentMoveNum, '#ff8080');
@@ -400,24 +337,21 @@ function swapFirstPeg() {
 }
 
 function showMovesUpTo(moves, moveNum) {
-  for(var i = 0; i < moveNum; i++) {
-    var move = moves[i];
+  for (let i = 0; i < moveNum; i++) {
+    const move = moves[i];
     if (move.peg) {
-      if (move.peg.swapped && 
-          ((!currentMoves.hasUserMoves() && moveNum == 1) ||
-            (currentMoves.hasUserMoves() && (currentMoveNum + currentMoves.userMoves.length == 1)))) {
-        // jump to move 1: show the peg in its original unswapped position.
+      if (move.peg.swapped &&
+          ((!currentMoves.hasUserMoves() && moveNum === 1) ||
+           (currentMoves.hasUserMoves() && (currentMoveNum + currentMoves.userMoves.length === 1)))) {
+        // jump to move 1: show the peg in its original unswapped position
         placePeg(move.peg.y, move.peg.x);
-      }
-      else {
-        if (i == 0 && move.peg.swapped) {
-          // switch color for swapped first peg.
-          turn = 1 - turn;
+      } else {
+        if (i === 0 && move.peg.swapped) {
+          turn = 1 - turn; // switch color for swapped first peg
         }
         placePeg(move.peg.x, move.peg.y);
       }
-    }
-    else if (move.getText == 'swap') {
+    } else if (move.getText === 'swap') {
       nextTurn();
     }
   }
@@ -428,61 +362,60 @@ function showAllMoves(moveNum, commentMoves) {
   colorMove(moveNum, '#ff8080');
 
   currentMoves.jumpingTo = true;
-  bg = 3 - bg;  // 1 --> 2, 2 --> 1 (double buffering)
+  bg = 3 - bg;  // 1 → 2, 2 → 1 (double buffering)
 
   clearBoard();
-  
-  var moves = currentMoves.getMoves();
+
+  const moves = currentMoves.getMoves();
 
   // make sure swapping is figured out
-  var firstMove = (moveNum > 0)? moves[0] : (currentMoves.hasUserMoves()? currentMoves.userMoves[0] : null);
-  var secondMove = (moveNum > 1)? moves[1] :
-                   (moveNum == 1)? (currentMoves.hasUserMoves()? currentMoves.userMoves[0] : null) :
-                   (moveNum == 0)? ((currentMoves.userMoves.length > 1)? currentMoves.userMoves[1] : null) : null;
+  const firstMove  = (moveNum > 0)
+    ? moves[0]
+    : (currentMoves.hasUserMoves() ? currentMoves.userMoves[0] : null);
+  const secondMove = (moveNum > 1)
+    ? moves[1]
+    : (moveNum === 1) ? (currentMoves.hasUserMoves() ? currentMoves.userMoves[0] : null)
+    : (moveNum === 0) ? ((currentMoves.userMoves.length > 1) ? currentMoves.userMoves[1] : null)
+    : null;
+
   if (firstMove && secondMove) {
-    var swapped = (secondMove.getText() == 'swap');
-    var peg1 = firstMove.peg;
-    if (peg1.swapped != swapped) {
+    const swapped = (secondMove.getText() === 'swap');
+    const peg1 = firstMove.peg;
+    if (peg1.swapped !== swapped) {
       peg1.swapped = swapped;
-      var tmp = peg1.x;
+      const tmp = peg1.x;
       peg1.x = peg1.y;
       peg1.y = tmp;
     }
   }
-  
-  // show mainline moves
+
   showMovesUpTo(moves, moveNum);
   currentMoveNum = moveNum;
 
-  // add user moves
   if (currentMoves.hasUserMoves()) {
-    var userMoves = currentMoves.getUserMoves();
+    const userMoves = currentMoves.getUserMoves();
     showMovesUpTo(userMoves, userMoves.length);
   }
-  
+
   currentMoves.jumpingTo = false;
 
-  // add comment moves
   if (commentMoves != null) {
-    var errors = getCommentPegErrors(commentMoves);
-
-    if (errors.length == 0) {
-      commentMoves.each(function(move) {
-        placePegByNotation(move);
-      });
-    }
-    else {
+    const errors = getCommentPegErrors(commentMoves);
+    if (errors.length === 0) {
+      commentMoves.forEach(move => placePegByNotation(move));
+    } else {
       alert(errors);
     }
   }
+
   showUserMovesText();
 
   // double buffering to eliminate flicker on slow machines
-  $('boardglass' + bg).style.display = 'inline';
-  $('boardglass' + (3-bg)).style.display = 'none';
-  
+  $(`boardglass${bg}`).style.display        = 'inline';
+  $(`boardglass${3 - bg}`).style.display    = 'none';
+
   // Safari loses the new peg marker unless we put its div back on top
-  $('markerglass').style.zIndex = $('boardglass' + bg).style.zIndex + 1;
+  $('markerglass').style.zIndex = $(`boardglass${bg}`).style.zIndex + 1;
 }
 
 function uncolorMove(moveNum) {
@@ -491,10 +424,8 @@ function uncolorMove(moveNum) {
 
 function colorMove(moveNum, color) {
   if (moveNum != null && moveNum > 0) {
-    var moveElement = $('move_' + moveNum);
-    if (moveElement) {
-      moveElement.style.backgroundColor = color;
-    }
+    const el = $(`move_${moveNum}`);
+    if (el) el.style.backgroundColor = color;
   }
 }
 
@@ -502,8 +433,7 @@ function backButton() {
   if (currentMoves.hasUserMoves()) {
     currentMoves.popMove();
     showAllMoves(currentMoveNum, null);
-  }
-  else if (currentMoveNum > 0) {
+  } else if (currentMoveNum > 0) {
     showAllMoves(currentMoveNum - 1, null);
   }
 }
@@ -520,271 +450,197 @@ function clearBoard() {
   cutLink = null;
   holdingForMarkers = false;
   numLinkableMarkers = 0;
-  
-  var b = $('boardglass' + bg);
-  for (var i = b.childNodes.length-1; i>=0; i--) {
-    var childNode = b.childNodes[i];
-    b.removeChild(childNode);
-  }
-  
+
+  const b = $(`boardglass${bg}`);
+  while (b.firstChild) b.removeChild(b.firstChild);
+
   $('newwhitepeg').style.display = 'none';
   $('newblackpeg').style.display = 'none';
 }
 
-// -----------------------------------------------------
+// ─── Mouse / board interaction ────────────────────────────────────────────────
 
 function mouseOverBoard(evt) {
-  if (evt == null) {
-    evt = event;
-  }
-  var pixelX = (document.all)? evt.clientX - 2 : evt.pageX;
-  var pixelY = (document.all)? evt.clientY - 2 : evt.pageY;
+  const pixelX = evt.pageX;
+  const pixelY = evt.pageY;
 
-  if (isPegSpot(pixelX, pixelY))
-  {
-    if (linkCrossingPolicy == LINK_REMOVAL) {
-      eraseCutLink();
-    }
-    
-    var x = xCoord(pixelX);
-    var y = yCoord(pixelY);
+  if (isPegSpot(pixelX, pixelY)) {
+    if (linkCrossingPolicy === LINK_REMOVAL) eraseCutLink();
 
-    var peg = twixtGame.board.getPeg(x, y);
+    const x = xCoord(pixelX);
+    const y = yCoord(pixelY);
+    const peg = twixtGame.board.getPeg(x, y);
 
-    if (!holdingForMarkers && twixtGame.board.isLegalSpot(x,y, turn)) {
+    if (!holdingForMarkers && twixtGame.board.isLegalSpot(x, y, turn)) {
       if (peg == null) {
         drawCrosshair(x, y, turn);
-      }
-      else {
+      } else {
         drawTickMarks(xPixels(x), yPixels(y), '#808080');
       }
-    }
-    else {
+    } else {
       eraseCrosshair();
     }
-  }
-  else
-  {
+  } else {
     eraseCrosshair();
 
-    if (linkCrossingPolicy == LINK_REMOVAL) {
-      var link = getRemovableLink(pixelX, pixelY, turn);
-
-      if (link != null) {
-        drawCutLink(link);
-      }
-      else {
-        eraseCutLink();
-      }
+    if (linkCrossingPolicy === LINK_REMOVAL) {
+      const link = getRemovableLink(pixelX, pixelY, turn);
+      if (link != null) drawCutLink(link);
+      else              eraseCutLink();
     }
   }
   return true;
 }
 
 function clickOnBoard(evt) {
-  if (evt == null) {
-    evt = event;
-  }
-  var pixelX = (document.all)? evt.clientX - 2 : evt.pageX;
-  var pixelY = (document.all)? evt.clientY - 2 : evt.pageY;
+  const pixelX = evt.pageX;
+  const pixelY = evt.pageY;
 
-  if (isPegSpot(pixelX, pixelY))
-  {
-    var x = xCoord(pixelX);
-    var y = yCoord(pixelY);
-    var peg = twixtGame.board.getPeg(x, y);
+  if (isPegSpot(pixelX, pixelY)) {
+    const x = xCoord(pixelX);
+    const y = yCoord(pixelY);
+    const peg = twixtGame.board.getPeg(x, y);
 
-    if (peg == null && !holdingForMarkers && twixtGame.board.isLegalSpot(x,y, turn)) {
+    if (peg == null && !holdingForMarkers && twixtGame.board.isLegalSpot(x, y, turn)) {
       placePeg(x, y);
       showUserMovesText();
-    }
-    else if (linkCrossingPolicy == LINK_REMOVAL && peg != null && peg.color == turn) {
+    } else if (linkCrossingPolicy === LINK_REMOVAL && peg != null && peg.color === turn) {
       placeLinks(peg, false);
-
-      if (holdingForMarkers && numLinkableMarkers == 0) {
+      if (holdingForMarkers && numLinkableMarkers === 0) {
         nextTurn();
         holdingForMarkers = false;
       }
     }
-  }
-  else if (linkCrossingPolicy == LINK_REMOVAL && cutLink != null) {
+  } else if (linkCrossingPolicy === LINK_REMOVAL && cutLink != null) {
     executeCutLink();
   }
-
   return true;
 }
 
-function placePeg(x, y)
-{
-  var peg = twixtGame.placePeg(x, y, turn);
-  
+function placePeg(x, y) {
+  const peg = twixtGame.placePeg(x, y, turn);
   drawPeg(peg);
   placeLinks(peg, true);
-
-  if (numLinkableMarkers == 0) {
-    nextTurn();
-  }
-  else {
-    holdingForMarkers = true;
-  }
+  if (numLinkableMarkers === 0) nextTurn();
+  else holdingForMarkers = true;
 }
 
-function placeLinks(peg, isNew)
-{
+function placeLinks(peg, isNew) {
   twixtGame.addLinksTo(peg, isNew);
   drawLinks(peg);
-  if (linkCrossingPolicy == LINK_REMOVAL) {
-    eraseLinkableMarkersAround(peg);
-  }
+  if (linkCrossingPolicy === LINK_REMOVAL) eraseLinkableMarkersAround(peg);
 }
 
-function executeCutLink()
-{
-  var link = cutLink;
+function executeCutLink() {
+  const link = cutLink;
   link.remove();
   twixtGame.removeLink(link);
-
   eraseCutLink();
   eraseLink(link);
   drawLinkableMarkers(link);
 }
 
-function nextTurn()
-{  
-  if (!currentMoves.settingUp && !currentMoves.jumpingTo &&   // if user clicked on the Twixt board
-    currentMoves.userMoves.length == 0 &&                     // and it's the first user move (not in a variation already)
-    currentMoveNum < currentMoves.moves.length &&             // and the next move isn't "resign"
-    currentMoves.moves[currentMoveNum].getText() == twixtGame.move.getText())   // and it's the same move as in the game
-  { 
+function nextTurn() {
+  if (!currentMoves.settingUp && !currentMoves.jumpingTo &&
+      currentMoves.userMoves.length === 0 &&
+      currentMoveNum < currentMoves.moves.length &&
+      currentMoves.moves[currentMoveNum].getText() === twixtGame.move.getText()) {
     uncolorMove(currentMoveNum);
-    currentMoveNum ++;
+    currentMoveNum++;
     colorMove(currentMoveNum, '#ff8080');
-  }
-  else {
+  } else {
     currentMoves.commitMove(twixtGame);
   }
   turn = 1 - turn;
-
   showTitle();
-  if (linkCrossingPolicy == LINK_REMOVAL) {
+  if (linkCrossingPolicy === LINK_REMOVAL) {
     drawLinkableMarkersInBox(1, 1, twixtGame.board.size, twixtGame.board.size, turn);
   }
 }
 
 function showTitle() {
-  $('turn').innerHTML = ((turn==1)?'White' : 'Black') + "'s turn:";
+  $('turn').innerHTML = `${turn === 1 ? 'White' : 'Black'}'s turn:`;
 }
 
-function drawLinks(peg)
-{
-  var links = peg.getLinks();
-  for (var i=0; i<links.length; i++) {
-    drawLink(links[i]);
-  }
+// ─── Drawing ──────────────────────────────────────────────────────────────────
+
+function drawLinks(peg) {
+  peg.getLinks().forEach(link => drawLink(link));
 }
 
-function getLinkAt(x, y, dx, dy, turn)
-{
-    var peg = twixtGame.board.getPeg(x, y);
-    if (peg != null && peg.color == turn) {
-      return peg.getLink(dx, dy);
-    }
-    return null;
+function getLinkAt(x, y, dx, dy, color) {
+  const peg = twixtGame.board.getPeg(x, y);
+  if (peg != null && peg.color === color) return peg.getLink(dx, dy);
+  return null;
 }
 
-function getRemovableLink(pixelX, pixelY, turn)
-{
-  var xd = xDelta(pixelX);  // pixel distance to nearest peg spot
-  var yd = yDelta(pixelY);
-  var sxd = sign(xd);
-  var syd = sign(yd);
-  var x = xCoord(pixelX - xd);  // nearest peg spot coordinates (doesn't need to contain a peg)
-  var y = yCoord(pixelY - yd);
+function getRemovableLink(pixelX, pixelY, color) {
+  const xd  = xDelta(pixelX);
+  const yd  = yDelta(pixelY);
+  const sxd = sign(xd);
+  const syd = sign(yd);
+  const x   = xCoord(pixelX - xd);
+  const y   = yCoord(pixelY - yd);
 
-  // find nearby link - warning: heavy logic follows...
-  if (Math.abs(xd) > Math.abs(yd)) { // Nearer horizontal
-    return getLinkAt(x, y-1, sxd, 2, turn) || getLinkAt(x + sxd, y-1, -sxd, 2, turn) ||
-      (yd != 0 ? (getLinkAt(x, y, 2 * sxd, syd, turn) || getLinkAt(x + sxd, y, -2 * sxd, syd, turn)) : null);
-  }
-  else if (Math.abs(xd) < Math.abs(yd)) { // Nearer vertical
-    return getLinkAt(x-1, y, 2, syd, turn) || getLinkAt(x-1, y + syd, 2, -syd, turn) ||
-      (xd != 0 ? (getLinkAt(x, y, sxd, 2 * syd, turn) || getLinkAt(x, y + syd, sxd, -2 * syd, turn)) : null);
-  }
-  else if (xd != 0 && yd != 0) { // On 45-degree diagonal, but not right on the peg
-    return getLinkAt(x, y + syd, sxd, -2 * syd, turn) || getLinkAt(x + sxd, y, -2 * sxd, syd, turn);
+  if (Math.abs(xd) > Math.abs(yd)) {
+    return getLinkAt(x, y - 1, sxd, 2, color) || getLinkAt(x + sxd, y - 1, -sxd, 2, color) ||
+      (yd !== 0 ? (getLinkAt(x, y, 2 * sxd, syd, color) || getLinkAt(x + sxd, y, -2 * sxd, syd, color)) : null);
+  } else if (Math.abs(xd) < Math.abs(yd)) {
+    return getLinkAt(x - 1, y, 2, syd, color) || getLinkAt(x - 1, y + syd, 2, -syd, color) ||
+      (xd !== 0 ? (getLinkAt(x, y, sxd, 2 * syd, color) || getLinkAt(x, y + syd, sxd, -2 * syd, color)) : null);
+  } else if (xd !== 0 && yd !== 0) {
+    return getLinkAt(x, y + syd, sxd, -2 * syd, color) || getLinkAt(x + sxd, y, -2 * sxd, syd, color);
   }
   return null;
 }
 
-function sign(x) {
-  return (x < 0)? -1:1;
-}
+function sign(x) { return (x < 0) ? -1 : 1; }
 
 function isPegSpot(pixelX, pixelY) {
-  var xd = xDelta(pixelX);
-  var yd = yDelta(pixelY);
-  // peg is a circle
-  var distSquared = xd*xd + yd*yd;
-  return (distSquared < 43);
+  const xd = xDelta(pixelX);
+  const yd = yDelta(pixelY);
+  return (xd * xd + yd * yd) < 43;
 }
 
-function boardOffsetX() {
-  return $('board').offsetLeft;
-}
-function boardOffsetY() {
-  return $('board').offsetTop;
-}
+function boardOffsetX() { return $('board').offsetLeft; }
+function boardOffsetY() { return $('board').offsetTop; }
 
-function xDelta(pixelX) {
-  return pixelX - xPixels(xCoord(pixelX)) - boardOffsetX();
-}
-function yDelta(pixelY) {
-  return pixelY - yPixels(yCoord(pixelY)) - boardOffsetY();
-}
-function xCoord(pixelX) {
-  return Math.round((pixelX - 14 - boardOffsetX()) / 18);
-}
-function yCoord(pixelY) {
-  return Math.round((pixelY - 13 - boardOffsetY()) / 18);
-}
-function xPixels(x) {
-  return 14 + 18*x;
-}
-function yPixels(y) {
-  return 13 + 18*y;
-}
+function xDelta(pixelX) { return pixelX - xPixels(xCoord(pixelX)) - boardOffsetX(); }
+function yDelta(pixelY) { return pixelY - yPixels(yCoord(pixelY)) - boardOffsetY(); }
+function xCoord(pixelX) { return Math.round((pixelX - 14 - boardOffsetX()) / 18); }
+function yCoord(pixelY) { return Math.round((pixelY - 13 - boardOffsetY()) / 18); }
+function xPixels(x)     { return 14 + 18 * x; }
+function yPixels(y)     { return 13 + 18 * y; }
 
 function drawPeg(peg) {
-  var pegColor = (peg.color == 0)? 'black': 'white';
-  var leftPos = xPixels(peg.x) - 6;
-  var topPos = yPixels(peg.y) - 6;
-  var image = addImgToBoard('/images/pieces/' + pegColor + 'peg.gif', 'peg', leftPos, topPos, 13, 13);
+  const pegColor = (peg.color === 0) ? 'black' : 'white';
+  const image = addImgToBoard(
+    `/images/pieces/${pegColor}peg.gif`, 'peg',
+    xPixels(peg.x) - 6, yPixels(peg.y) - 6, 13, 13
+  );
   eraseCrosshair();
-
   overlayNewPegMarker(image, pegColor);
 }
 
 function overlayNewPegMarker(image, pegColor) {
   $('newwhitepeg').style.display = 'none';
   $('newblackpeg').style.display = 'none';
-  var newpeg = 'new' + pegColor + 'peg';
-  $(newpeg).style.left = image.style.left;
-  $(newpeg).style.top = image.style.top;
-  $(newpeg).style.display = 'inline';
+  const newpeg = $(`new${pegColor}peg`);
+  newpeg.style.left    = image.style.left;
+  newpeg.style.top     = image.style.top;
+  newpeg.style.display = 'inline';
 }
 
-function getMarkerName(x, y) {
-  return 'marker_' + x + '_' + y;
-}
+function getMarkerName(x, y) { return `marker_${x}_${y}`; }
 
-function drawLinkableMarkersInBox(minX, minY, maxX, maxY, color)
-{
-  for (var x = minX; x <= maxX; x++) {
-    for (var y = minY; y <= maxY; y++) {
-      if (twixtGame.isLinkable(x, y) && twixtGame.board.getPeg(x, y).color == color) {
-        var markerName = getMarkerName(x, y);
-        if ($(markerName) == null) {
-          addImgToBoard('/images/pieces/linkablemarker.gif', markerName, xPixels(x) - 6, yPixels(y) - 6, 13, 13);
+function drawLinkableMarkersInBox(minX, minY, maxX, maxY, color) {
+  for (let x = minX; x <= maxX; x++) {
+    for (let y = minY; y <= maxY; y++) {
+      if (twixtGame.isLinkable(x, y) && twixtGame.board.getPeg(x, y).color === color) {
+        const markerName = getMarkerName(x, y);
+        if (!$(markerName)) {
+          addImgToBoard('/images/pieces/linkablemarker.gif', markerName,
+            xPixels(x) - 6, yPixels(y) - 6, 13, 13);
           numLinkableMarkers++;
         }
       }
@@ -792,86 +648,73 @@ function drawLinkableMarkersInBox(minX, minY, maxX, maxY, color)
   }
 }
 
-function drawLinkableMarkers(link)
-{
-  drawLinkableMarkersInBox(link.minX() - 1, link.minY() - 1, link.maxX() + 1, link.maxY() + 1, link.peg1.color);
+function drawLinkableMarkers(link) {
+  drawLinkableMarkersInBox(link.minX() - 1, link.minY() - 1,
+                            link.maxX() + 1, link.maxY() + 1, link.peg1.color);
 }
 
-function eraseLinkableMarkersAround(peg)
-{
-  for (var x = peg.x - 3; x <= peg.x + 3; x++) {
-    for (var y = peg.y - 3; y <= peg.y + 3; y++) {
-      var markerName = getMarkerName(x, y);
-      var m = $(markerName);
-      if (m != null) {
-        if (!twixtGame.isLinkable(x, y)) {
-          var b = document.getElementById('board');
-          b.removeChild(m);
-          numLinkableMarkers--;
-        }
+function eraseLinkableMarkersAround(peg) {
+  for (let x = peg.x - 3; x <= peg.x + 3; x++) {
+    for (let y = peg.y - 3; y <= peg.y + 3; y++) {
+      const m = $(getMarkerName(x, y));
+      if (m != null && !twixtGame.isLinkable(x, y)) {
+        $('board').removeChild(m);
+        numLinkableMarkers--;
       }
     }
   }
 }
 
 function eraseCrosshair() {
-  var ch = $('crosshair');
-  if (ch != null) {
-    ch.style.display = "none";
-  }
+  const ch = $('crosshair');
+  if (ch) ch.style.display = 'none';
   eraseTickMarks();
 }
 
 function eraseTickMarks() {
-  eraseTickMark('vtick');
-  eraseTickMark('vtick2');
-  eraseTickMark('htick');
-  eraseTickMark('htick2');
+  ['vtick', 'vtick2', 'htick', 'htick2'].forEach(id => {
+    const tick = $(id);
+    if (tick) tick.style.display = 'none';
+  });
 }
 
-function eraseTickMark(id) {
-  var tick = $(id);
-  if (tick != null) {
-    tick.style.display = 'none';
-  }
-}
-
-function drawCrosshair(x, y, color) {
-  var ch = $('crosshair');
-  if (ch != null) {
-    var leftPos = xPixels(x);
-    var topPos = yPixels(y);
-    ch.style.left = (leftPos - 6) + 'px';
-    ch.style.top = (topPos - 6) + 'px';
+function drawCrosshair(x, y) {
+  const ch = $('crosshair');
+  if (ch) {
+    const leftPos = xPixels(x);
+    const topPos  = yPixels(y);
+    ch.style.left    = `${leftPos - 6}px`;
+    ch.style.top     = `${topPos - 6}px`;
     ch.style.display = 'inline';
+    drawTickMarks(leftPos, topPos, '#cc0000');
   }
-  drawTickMarks(leftPos, topPos, '#cc0000');
 }
 
 function drawTickMarks(leftPos, topPos, color) {
-  var tickStyle = '1px solid ' + color;
-  var vtick = getVtick('vtick');
-  vtick.style.left = leftPos + 'px';
+  const tickStyle = `1px solid ${color}`;
+
+  const vtick = getVtick('vtick');
+  vtick.style.left       = `${leftPos}px`;
   vtick.style.borderLeft = tickStyle;
-  
-  var vtick2 = getVtick('vtick2');
-  vtick2.style.left = leftPos + 'px';
-  vtick2.style.top = '464px';
+
+  const vtick2 = getVtick('vtick2');
+  vtick2.style.left       = `${leftPos}px`;
+  vtick2.style.top        = '464px';
   vtick2.style.borderLeft = tickStyle;
-  
-  var htick = getHtick('htick');
-  htick.style.top = topPos + 'px';
+
+  const htick = getHtick('htick');
+  htick.style.top       = `${topPos}px`;
   htick.style.borderTop = tickStyle;
 
-  var htick2 = getHtick('htick2');
-  htick2.style.top = topPos + 'px';
-  htick2.style.left = '466px';
+  const htick2 = getHtick('htick2');
+  htick2.style.top       = `${topPos}px`;
+  htick2.style.left      = '466px';
   htick2.style.borderTop = tickStyle;
 }
 
 function getVtick(id) {
-  var vtick = $(id);
-  if (vtick == null) {
+  let vtick = $(id);
+  if (!vtick) {
     vtick = buildTickMark(id);
     vtick.style.height = '11px';
   }
@@ -880,102 +723,80 @@ function getVtick(id) {
 }
 
 function getHtick(id) {
-  var htick = $(id);
-  if (htick == null) {
+  let htick = $(id);
+  if (!htick) {
     htick = buildTickMark(id);
-    htick.style.width  = '11px';
+    htick.style.width = '11px';
   }
   htick.style.display = 'inline';
   return htick;
 }
 
 function buildTickMark(id) {
-  var tick = document.createElement("DIV");
-  tick.setAttribute("id", id);
-  tick.style.position = "absolute";
-  tick.style.left = "1px";
-  tick.style.top  = "1px";
-  tick.style.width  = "0px";
-  tick.style.height = "0px";
-  var b = $('board');
-  if (b != null) b.appendChild(tick);  // race conditions on loading
+  const tick = document.createElement('div');
+  tick.id = id;
+  Object.assign(tick.style, { position: 'absolute', left: '1px', top: '1px', width: '0', height: '0' });
+  const b = $('board');
+  if (b) b.appendChild(tick);  // guard against race conditions on loading
   return tick;
 }
 
 function eraseCutLink() {
-  if (cutLink != null)
-  {
-    var linkElement = $('cut' + cutLink.getLinkName());
+  if (cutLink != null) {
+    const linkElement = $(`cut${cutLink.getLinkName()}`);
     cutLink = null;
-    if (linkElement != null) {
-      $('boardglass' + bg).removeChild(linkElement);
-    }
+    if (linkElement) $(`boardglass${bg}`).removeChild(linkElement);
     eraseTickMarks();
   }
 }
 
 function eraseLink(link) {
-  var linkElement = $('link' + link.getLinkName());
-  if (linkElement != null) {
-    $('boardglass' + bg).removeChild(linkElement);
-  }
+  const linkElement = $(`link${link.getLinkName()}`);
+  if (linkElement) $(`boardglass${bg}`).removeChild(linkElement);
 }
 
-function drawLink(link) {
-  drawLinkGeneral(link, 'link');
-}
-
+function drawLink(link)    { drawLinkGeneral(link, 'link'); }
 function drawCutLink(link) {
-  if (cutLink != null && link.getLinkName() != cutLink.getLinkName()) {
-    eraseCutLink();
-  }
+  if (cutLink != null && link.getLinkName() !== cutLink.getLinkName()) eraseCutLink();
   drawLinkGeneral(link, 'cut');
-  drawTickMarks((xPixels(link.peg1.x) + xPixels(link.peg2.x))/2, (yPixels(link.peg1.y) + yPixels(link.peg2.y))/2, 'red');
+  drawTickMarks(
+    (xPixels(link.peg1.x) + xPixels(link.peg2.x)) / 2,
+    (yPixels(link.peg1.y) + yPixels(link.peg2.y)) / 2,
+    'red'
+  );
   cutLink = link;
 }
 
-function drawLinkGeneral(link, linkType)
-{
-  var id = linkType + link.getLinkName() + "-" + bg;
-  if ($(id) != null) return;
+function drawLinkGeneral(link, linkType) {
+  const id = `${linkType}${link.getLinkName()}-${bg}`;
+  if ($(id)) return;
 
-  var dx = sign(link.peg1.y - link.peg2.y) * (link.peg1.x - link.peg2.x);
+  const dx = sign(link.peg1.y - link.peg2.y) * (link.peg1.x - link.peg2.x);
+  const linkImg = `/images/pieces/${
+    dx === -2 ? 'wsw' : dx === -1 ? 'ssw' : dx === 1 ? 'sse' : 'ese'
+  }${linkType}.gif`;
 
-  var linkImg = '/images/pieces/' +
-                ((dx == -2)? 'wsw':
-                 (dx == -1)? 'ssw':
-                 (dx ==  1)? 'sse':
-                             'ese') + linkType + '.gif';
-  var leftPos = xPixels(link.minX());
-  var topPos = yPixels(link.minY());
-
-  if (Math.abs(dx) == 1) {
-    addImgToBoard(linkImg, id, leftPos + 2, topPos + 5, 15, 27);
-  }
-  else {
-    addImgToBoard(linkImg, id, leftPos + 5, topPos + 2, 27, 15);
+  if (Math.abs(dx) === 1) {
+    addImgToBoard(linkImg, id, xPixels(link.minX()) + 2, yPixels(link.minY()) + 5, 15, 27);
+  } else {
+    addImgToBoard(linkImg, id, xPixels(link.minX()) + 5, yPixels(link.minY()) + 2, 27, 15);
   }
 }
 
-function addImgToBoard(imgfile, id, leftPos, topPos, width, height)
-{
-  var b = $('boardglass' + bg);
+function addImgToBoard(imgfile, id, leftPos, topPos, width, height) {
+  const b = $(`boardglass${bg}`);
 
-  // Safari needs this, so the box doesn't grow
-  var boardSize = twixtGame.board.size;
-  var boardWidth = 46 + boardSize * 18;
-  b.style.width = boardWidth + "px";
+  // Prevent the containing box from growing (needed in some browsers)
+  b.style.width = `${46 + twixtGame.board.size * 18}px`;
 
-  var img = document.createElement("IMG");
-  img.setAttribute("src", imgfile);
-  img.setAttribute("width", width);
-  img.setAttribute("height", height);
-  img.setAttribute("id", id);
-  img.style.position = "absolute";
-  img.style.left = leftPos + "px";
-  img.style.top = topPos + "px";
+  const img = document.createElement('img');
+  img.src    = imgfile;
+  img.width  = width;
+  img.height = height;
+  img.id     = id;
+  Object.assign(img.style, { position: 'absolute', left: `${leftPos}px`, top: `${topPos}px` });
+
   b.appendChild(img);
   disableSelection(img);
-
   return img;
 }

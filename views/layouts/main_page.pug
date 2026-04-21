@@ -4,13 +4,13 @@ html
     meta(http-equiv='Content-Type' content='text/html; charset=utf-8')
     title Twixt Commentator
     link(rel='stylesheet' href='/stylesheets/twixt.css' media='all')
-    script(src='/javascripts/prototype.js')
+
     link(href='/favicon.ico' rel='icon' type='image/x-icon')
     link(href='/favicon.ico' rel='shortcut icon' type='image/x-icon')
     link(rel='alternate' type='application/rss+xml' title='Twixt Commentator RSS' href='/rss_feed/all_comments.rss')
     script.
-      Event.observe(window, 'load', function() {
-        var f = $('new_gid');
+      window.addEventListener('load', () => {
+        const f = document.getElementById('new_gid');
         if (f) f.focus();
       });
   body.main_page

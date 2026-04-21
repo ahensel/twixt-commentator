@@ -1,5 +1,0 @@
-#!/bin/sh
-cat peg.js link.js move.js twixtboard.js twixtcontroller.js twixtmoves.js view.js comments.js > catted_twixt.js
-java -jar ../../lib/yuicompressor-2.4.2.jar catted_twixt.js -o twixt_min.js
-rm catted_twixt.js
-
