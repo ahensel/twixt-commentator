@@ -141,17 +141,13 @@ function showMovesOnLoad() {
 }
 
 function showMovesText() {
-  const movesTextDiv = $('moves');
-  let moveNum = 1;
-
-  currentMoves.getMoves().forEach(move => {
+  $('moves').innerHTML = currentMoves.getMoves().map((move, index) => {
+    const moveNum = index + 1;
     const className = (moveNum % 2 === 0) ? 'black' : 'white';
     const moveText  = `${moveNum}.${move.getText()}`;
-    movesTextDiv.innerHTML +=
-      ` <a id='move_${moveNum}' class='${className}' href='' ` +
-      `onclick='jumpTo(${moveNum}); return false;'>${moveText}</a> `;
-    moveNum++;
-  });
+    return `<a id='move_${moveNum}' class='${className}' href='' ` +
+           `onclick='jumpTo(${moveNum}); return false;'>${moveText}</a> `;
+  }).join(' ');
 
   setCommentDivTop();
 }
