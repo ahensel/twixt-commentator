@@ -26,7 +26,13 @@ class Peg {
   }
 
   getLinkIndex(dx, dy) {
-    return ((dx > 0) ? 2 : 0) + ((dy > 0) ? 3 : 2) + dy;
+    //    0     2
+    //  1         3
+    //       *
+    //  4         6
+    //    5     7
+    // (opposite links add up to 7)
+    return (dx > 0 ? 2 : 0) + (dy > 0 ? 3 : 2) + dy;
   }
 
   addLink(link) {
@@ -42,15 +48,10 @@ class Peg {
   }
 
   getLinks() {
-    const links = [];
-    for (let i = 0; i < 8; i++) {
-      const link = this.links[i];
-      if (link != null) links.push(link);
-    }
-    return links;
+    return this.links.filter(link => !!link);
   }
 
   hasLink(dx, dy) {
-    return this.getLink(dx, dy) != null;
+    return !!this.getLink(dx, dy);
   }
 }
