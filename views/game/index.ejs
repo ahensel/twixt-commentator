@@ -1,15 +1,21 @@
 <% layout('layouts/game') %>
 
-<form action="/game" method="post">
-  Game number:&nbsp;<input class="boxed" type="text" name="new_gid" value="<%= params && params.gid ? params.gid : '' %>" size="7" maxlength="7">
-  <input type="submit" value="Go">
-  &nbsp;<a href="/?page=<%= params && params.main_page || '' %>">Main Page</a>
-</form>
+<div class="gameNumberForm">
+  <form action="/game" method="post">
+    Game number:&nbsp;<input class="boxed" type="text" name="new_gid" value="<%= params && params.gid ? params.gid : '' %>" size="7" maxlength="7">
+    <input type="submit" value="Go">
+    &nbsp;<a href="/?page=<%= params && params.main_page || '' %>">Main Page</a>
+  </form>
+</div>
 
 <% if (game) { %>
-  <img src="/images/pieces/whitepeg.gif" alt="White:">
-  <span class="<%= game.winner === 1 ? 'winner' : 'loser' %>"><%- h2(game.player1) %></span>&nbsp;&nbsp;<img src="/images/pieces/blackpeg.gif" alt="Black:">
-  <span class="<%= game.winner === 2 ? 'winner' : 'loser' %>"><%- h2(game.player2) %></span>
+  <div class="gamePlayers">
+    <img src="/images/pieces/whitepeg.gif" alt="White:">
+    <span class="<%= game.winner === 1 ? 'winner' : 'loser' %>"><%- h2(game.player1) %></span>
+    &nbsp;&nbsp;
+    <img src="/images/pieces/blackpeg.gif" alt="Black:">
+    <span class="<%= game.winner === 2 ? 'winner' : 'loser' %>"><%- h2(game.player2) %></span>
+  </div>
 
   <div id="turn" class="turn"></div>
   <div id="board" class="board">

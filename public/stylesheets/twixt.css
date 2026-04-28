@@ -15,6 +15,7 @@
   --color-user-bg:   #ff8080;
   --color-header:    #a0a0ff;
   --color-preview:   #c0c0ff;
+  --color-focus:     #275ec5;
   --font-stack:      Arial, Helvetica, sans-serif;
   --font-moves:      'Trebuchet MS', Arial, Helvetica, sans-serif;
 }
@@ -84,11 +85,10 @@ a:hover {
 }
 
 a:focus,
-input:focus,
-textarea:focus,
 select:focus {
-  outline: 2px solid var(--color-link);
+  outline: 1px solid var(--color-focus);
   outline-offset: 0;
+  border-radius: 4px;
 }
 
 a.white {
@@ -230,6 +230,15 @@ div.turn {
   font-weight: bold;
   font-size: 15px;
   height: 25px;
+}
+
+div.gameNumberForm {
+  margin-left: 10px;
+}
+
+div.gamePlayers {
+  margin-top: 15px;
+  margin-left: 10px;
 }
 
 div.sidebar {
