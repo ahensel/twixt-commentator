@@ -22,7 +22,7 @@ Info:&nbsp;
 <% if (!user.info || user.info.trim() === '') { %>
   None
 <% } else { %>
-  <blockquote><%- xssize(user.info) %></blockquote>
+  <div><%- xssize(user.info) %></div>
 <% } %>
 <br>
 <% if (params && params.back_to) { %>

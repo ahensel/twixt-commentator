@@ -19,7 +19,7 @@
           : 'Does not play on Little Golem';
 
         const infoText = user.info
-          ? '<blockquote>' + user.info.replace(/\n/g, '<br/>') + '</blockquote>'
+          ? '<div class="info-scroll boxed">' + user.info + '</div>'
           : 'None';
 
         overlay = document.createElement('div');
@@ -27,12 +27,11 @@
         overlay.innerHTML =
           '<div class="user-info-modal">' +
             '<a class="close-btn" href="#" onclick="return closeUserInfoModal()">&times;</a>' +
-            '<p>Name:&nbsp;<b>' + user.name + '</b></p>' +
-            '<p>' + lgText + '</p>' +
-            '<p>Account created on:&nbsp;' + user.created_on + '</p>' +
-            '<div class="info-scroll">' +
-              '<p>Info:&nbsp;' + infoText + '</p>' +
-            '</div>' +
+            '<span>Name:&nbsp;<b>' + user.name + '</b></span><br/>' +
+            '<span>' + lgText + '</span><br/>' +
+            '<span>Account created on:&nbsp;' + user.created_on + '</span><br/>' +
+            'Info: ' + 
+            infoText +
           '</div>';
 
         document.body.appendChild(overlay);

@@ -412,6 +412,8 @@ div.pleaseRegister {
   flex: 1;
   overflow-y: auto;
   margin-top: 10px;
+  white-space: pre-wrap;
+  padding: 5px;
 }
 
 .user-info-modal blockquote {
