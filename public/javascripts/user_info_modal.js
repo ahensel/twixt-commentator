@@ -61,17 +61,17 @@
 
   // Intercept clicks on info icons
   document.addEventListener('click', function (e) {
-    const infoImg = e.target;
-    // Walk up to find the <a> if the click landed on the <img>
-    if (infoImg.tagName === 'IMG' && infoImg.classList.contains('info')) {
-      const link = infoImg.parentElement;
-      if (link && link.getAttribute('href') && link.getAttribute('href').indexOf('/user/info/') === 0) {
+    // Walk up the DOM tree to find the <a> linking to /user/info/
+    let el = e.target;
+    while (el && el !== document.body) {
+      if (el.tagName === 'A' && el.getAttribute('href') && el.getAttribute('href').indexOf('/user/info/') === 0) {
         e.preventDefault();
-        // Extract user id from the URL path: /user/info/<id>?...
-        const path = link.getAttribute('href').split('?')[0];
+        const path = el.getAttribute('href').split('?')[0];
         const userId = path.split('/').pop();
         if (userId) showModal(userId);
+        return;
       }
+      el = el.parentElement;
     }
   });
 
