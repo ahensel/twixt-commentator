@@ -30,7 +30,9 @@
             '<p>Name:&nbsp;<b>' + user.name + '</b></p>' +
             '<p>' + lgText + '</p>' +
             '<p>Account created on:&nbsp;' + user.created_on + '</p>' +
-            '<p>Info:&nbsp;' + infoText + '</p>' +
+            '<div class="info-scroll">' +
+              '<p>Info:&nbsp;' + infoText + '</p>' +
+            '</div>' +
           '</div>';
 
         document.body.appendChild(overlay);

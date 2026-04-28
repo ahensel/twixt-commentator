@@ -386,7 +386,8 @@ div.pleaseRegister {
   min-width: 300px;
   max-width: 500px;
   max-height: 80vh;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   position: relative;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
@@ -405,6 +406,12 @@ div.pleaseRegister {
 
 .user-info-modal .close-btn:hover {
   color: var(--color-error);
+}
+
+.user-info-modal .info-scroll {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 10px;
 }
 
 .user-info-modal blockquote {
