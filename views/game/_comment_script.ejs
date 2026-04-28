@@ -1,21 +1,22 @@
 <script>
-(function () {
-  var form = document.getElementById('comment_form');
+(() => {
+  const form = document.getElementById('comment_form');
   if (!form) return;
-  form.addEventListener('submit', function (e) {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
-    var buttonPressed = document.getElementById('button_pressed').value;
-    var data = new FormData(form);
-    var body = new URLSearchParams();
-    data.forEach(function (v, k) { body.append(k, v); });
+    const buttonPressed = document.getElementById('button_pressed').value;
+    const data = new FormData(form);
+    const body = new URLSearchParams();
+    data.forEach((v, k) => body.append(k, v));
+
     fetch('/comment', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: body.toString()
     })
-    .then(function (r) { return r.text(); })
-    .then(function (html) {
-      var container = document.getElementById('current_comments');
+    .then(r => r.text())
+    .then((html) => {
+      const container = document.getElementById('current_comments');
       if (container && html.trim()) {
         container.insertAdjacentHTML('beforeend', html);
       }
@@ -27,7 +28,8 @@
         document.getElementById('addCommentLink').style.display = 'inline';
       }
     })
-    .catch(function (err) { console.error('Comment submit error:', err); });
+    .catch((err) => console.error('Comment submit error:', err));
   });
 })();
 </script>
+

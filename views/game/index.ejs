@@ -57,7 +57,7 @@
 
   <div id="comments">
     <div id="current_comments">
-      <% (game.comments || []).forEach(function(comment) { %>
+      <% (game.comments || []).forEach((comment) => { %>
         <div class="commentHeader">
           <%- include('../comment/_comment_header', { comment: comment, author: comment.author, preview: false }) %>
         </div>

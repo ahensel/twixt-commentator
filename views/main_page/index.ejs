@@ -21,7 +21,7 @@ A forum to view, comment on, and read other people's comments on finished Twixt 
       </tr>
     </thead>
     <tbody>
-      <% commentedGames.forEach(function(game, i) { %>
+      <% commentedGames.forEach((game, i) => { %>
         <tr class="<%= i % 2 === 0 ? 'even' : 'odd' %>">
           <td class="main" style="text-align: right;">
             <a href="/game/<%= game.lg_game_num %>?main_page=<%= params && params.page || '' %>"><%= game.lg_game_num %></a>
@@ -45,7 +45,7 @@ A forum to view, comment on, and read other people's comments on finished Twixt 
           <td class="main" style="text-align: center;">
             <%= game.last_commented_on ? new Date(game.last_commented_on).toISOString().slice(0,16).replace('T',' ') : '' %>
           </td>
-          <% var author = authorMap[game.last_commented_by]; %>
+          <% const author = authorMap[game.last_commented_by]; %>
           <td class="main">
             <% if (author) { %>
               <%- h2(author.name) %>&nbsp;<a href="/user/info/<%= author.id %>?back_to=main_page&main_page=<%= params && params.page || '' %>"><img class="info" src="/images/info.gif" alt="(info)" width="9" height="9"></a>
@@ -56,7 +56,7 @@ A forum to view, comment on, and read other people's comments on finished Twixt 
     </tbody>
   </table>
 </p>
-Page:&nbsp;<% pages.forEach(function(p) { %>
+Page:&nbsp;<% pages.forEach((p) => { %>
   <% if (p.page === null) { %>
     ...&nbsp;
   <% } else if (p.current) { %>
@@ -67,3 +67,4 @@ Page:&nbsp;<% pages.forEach(function(p) { %>
 <% }); %>
 <br>
 <a href="/faq">FAQ</a>&nbsp;|&nbsp;<a href="/rss_feed/all_comments.rss">RSS</a>
+

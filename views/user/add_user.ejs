@@ -4,7 +4,7 @@
   <fieldset class="boxed">
     <% if (errors && errors.length) { %>
       <ul class="error">
-        <% errors.forEach(function(e) { %>
+        <% errors.forEach((e) => { %>
           <li><%= e %></li>
         <% }); %>
       </ul>
@@ -61,3 +61,4 @@
     </form>
   </fieldset>
 </div>
+

@@ -1,8 +1,7 @@
 <%
-  var loginNotice = session && session.login_notice;
+  const loginNotice = session && session.login_notice;
   if (session && session.login_notice) { delete session.login_notice; }
-%>
-<% if (!session || !session.user_id) { %>
+  if (!session || !session.user_id) { %>
   <div class="loginBox">
     <form action="/user/login" method="post">
       <input type="hidden" name="back_to" value="<%= params && params.controller ? params.controller : (params && params.back_to ? params.back_to : '') %>">
@@ -40,10 +39,10 @@
       </table>
     </form>
   </div>
-<% } else { %>
-  <% const user = currentUser? currentUser.dataValues : ''; %>
+<% } else {
+  const user = currentUser? currentUser.dataValues : ''; %>
   <div class="loginBox">
-    Welcome,&nbsp;<b><%- h2(currentUser.name) %></b>&nbsp;<a href="/user/info/<%= session.user_id %>?back_to=<%= params && (params.controller || params.back_to) || '' %>&ret_gid=<%= params && params.gid || '' %>&main_page=<%= params && params.page || '' %>"><img class="info" src="/images/info.gif" alt="(info)" width="9" height="9"></a><br>
+    Welcome,&nbsp;<b><%- h2(user.name) %></b>&nbsp;<a href="/user/info/<%= session.user_id %>?back_to=<%= params && (params.controller || params.back_to) || '' %>&ret_gid=<%= params && params.gid || '' %>&main_page=<%= params && params.page || '' %>"><img class="info" src="/images/info.gif" alt="(info)" width="9" height="9"></a><br>
     <a href="/user/profile/<%= session.user_id %>?ret_gid=<%= params && params.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&main_page=<%= params && params.page || '' %>">Profile</a>&nbsp;|&nbsp;<a href="/user/logout?ret_gid=<%= params && params.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&main_page=<%= params && params.page || '' %>">Log out</a>
   </div>
 <% } %>
