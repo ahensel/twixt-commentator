@@ -1,49 +1,62 @@
 /* CSS for this site is pretty much snarfed directly from Little Golem, to provide a familiar look */
 
+/* ── Custom Properties ─────────────────────────────────────────── */
+:root {
+  --color-bg:        #ffffff;
+  --color-text:      #000000;
+  --color-link:      #5050ff;
+  --color-border:    #000000;
+  --color-error:     #ff0000;
+  --color-heading:   navy;
+  --color-board:     #efffef;
+  --color-even-row:  #cccccc;
+  --color-odd-row:   #eeeeee;
+  --color-moves-bg:  #b0b0b0;
+  --color-user-bg:   #ff8080;
+  --color-header:    #a0a0ff;
+  --color-preview:   #c0c0ff;
+  --font-stack:      Arial, Helvetica, sans-serif;
+  --font-moves:      'Trebuchet MS', Arial, Helvetica, sans-serif;
+}
+
+/* ── Reset & Base ──────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-stack);
   font-size: 11pt;
-  background-color: #ffffff;
+  background-color: var(--color-bg);
+  margin: 0;
 }
 
-table.main {
-  border-right: 1px solid #000000;
-  border-top: 1px solid #000000;
-  border-bottom: 1px solid #000000;
+/* ── Page-level body margins ───────────────────────────────────── */
+body.main_page,
+body.about_page {
+  margin-left: 25px;
+  margin-right: 25px;
 }
 
-td {
-  color: #000000;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 10pt; 
+/* ── Typography ────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-heading);
+  font-family: var(--font-stack);
+  font-weight: bold;
 }
 
-td.main {
-  border-left: 1px solid #000000;
-  padding-left: 5px;
-  padding-right: 5px;
+h1 {
+  font-size: 30pt;
+  text-align: center;
 }
 
-tr.even {
-  background-color: #cccccc;
-}
-tr.odd {
-  background-color: #eeeeee;
+h2 {
+  font-size: 20pt;
+  padding: 5px;
 }
 
-th {
-  font-size: 10pt;
-}
-
-th.main {
-  border-left: 1px solid #000000;
-  border-bottom: 1px solid #000000;
-  padding-left: 5px;
-  padding-right: 5px;  
-}
-
-p {     
-  font-size: 11pt;  
+p {
+  font-size: 11pt;
 }
 
 .news {
@@ -52,90 +65,150 @@ p {
   font-weight: bold;  
 }
 
-.err {
-  color: #ff0000;
-  font-weight: bold
-}
-
-h1, h2, h3, h4, h5, h6 {
-  color: navy;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold
-}
-h1 {
-  font-size: 30pt;
-  text-align: center
-}
-h2 {
-  font-size: 20pt;
-  padding: 5px;
-}
-a {
-  color: #5050ff;
-  text-decoration: none;
-}
-a:visited {
-  color: #5050ff;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-
-a.white {
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 10pt;
-}
-a.black {
-  color: #000000;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 10pt;
-}
-a.white:hover {
-  text-decoration: underline;
-}
-a.black:hover {
-  text-decoration: underline;
-}
-
-span.white {
-  color: #ffffff;
-  font-weight: bold;
-  font-size: 10pt;
-}
-span.black {
-  color: #000000;
-  font-weight: bold;
-  font-size: 10pt;
-}
-
 pre {
   font-size: 9pt;
 }
 
-/* the following are attributes for the JavaScript Twixt Board */
+/* ── Links ─────────────────────────────────────────────────────── */
+a {
+  color: var(--color-link);
+  text-decoration: none;
+}
 
-div.board, .boardglass, .markerglass {
+a:visited {
+  color: var(--color-link);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--color-link);
+  outline-offset: 0;
+}
+
+a.white {
+  color: var(--color-bg);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 10pt;
+}
+
+a.black {
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 10pt;
+}
+
+a.white:hover,
+a.black:hover {
+  text-decoration: underline;
+}
+
+/* ── Utility text classes ──────────────────────────────────────── */
+span.white {
+  color: var(--color-bg);
+  font-weight: bold;
+  font-size: 10pt;
+}
+
+span.black {
+  color: var(--color-text);
+  font-weight: bold;
+  font-size: 10pt;
+}
+
+/* ── Error / Required ──────────────────────────────────────────── */
+.err {
+  color: var(--color-error);
+  font-weight: bold;
+}
+
+.text-error {
+  color: var(--color-error);
+}
+
+/* ── Tables ────────────────────────────────────────────────────── */
+table.main {
+  border-right: 1px solid var(--color-border);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+td {
+  color: var(--color-text);
+  font-family: var(--font-stack);
+  font-size: 10pt;
+}
+
+td.main {
+  border-left: 1px solid var(--color-border);
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+td.text-right  { text-align: right; }
+td.text-center { text-align: center; }
+td.italic      { font-style: italic; }
+td.bold       { font-weight: bold; }
+
+th {
+  font-size: 10pt;
+}
+
+th.main {
+  border-left: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+tr.even { background-color: var(--color-even-row); }
+tr.odd  { background-color: var(--color-odd-row); }
+
+/* ── Borders & Boxes ───────────────────────────────────────────── */
+.boxed {
+  border: 1px solid var(--color-border);
+}
+
+.info {
+  border: none;
+}
+
+/* ── Visibility utilities ──────────────────────────────────────── */
+.hidden {
+  display: none;
+}
+
+/* ── Padding utility ───────────────────────────────────────────── */
+.p-5 {
+  padding: 5px;
+}
+
+/* ── Board (JavaScript Twixt Board) ───────────────────────────── */
+div.board,
+.boardglass,
+.markerglass {
   position: absolute;
   cursor: pointer;
 }
 
 div.board {
-  background-color: #efffef;
-  border: 1px solid #000000;
+  box-sizing: content-box;
+  background-color: var(--color-board);
+  border: 1px solid var(--color-border);
   top: 100px;
   left: 10px;
   width: 478px;
   height: 476px;
 }
 
-div.boardglass {
-  background-color: transparent;
-}
-
+div.boardglass,
 div.markerglass {
   background-color: transparent;
 }
@@ -147,9 +220,9 @@ div.noscript {
   width: 338px;
   font-weight: bold;
   font-size: 20px;
-  border: 1px solid #ff0000;
+  border: 1px solid var(--color-error);
   padding: 10px;
-  background-color: #ffffff;
+  background-color: var(--color-bg);
 }
 
 div.turn {
@@ -161,9 +234,9 @@ div.turn {
 
 div.sidebar {
   position: absolute;
-  border: 1px solid #000000;
+  border: 1px solid var(--color-border);
   padding: 10px;
-  background-color: #ffffff;
+  background-color: var(--color-bg);
   display: none;
 }
 
@@ -174,24 +247,25 @@ div#underbar {
   width: 478px;
 }
 
-div#moves, span.moves {
-  font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
-  background-color: #b0b0b0;
+div#moves,
+span.moves {
+  font-family: var(--font-moves);
+  background-color: var(--color-moves-bg);
   padding-left: 1px;
   padding-right: 1px;
 }
 
 span.userMoves {
-  font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
-  background-color: #ff8080;
+  font-family: var(--font-moves);
+  background-color: var(--color-user-bg);
   padding-right: 1px;
 }
 
 div#comments {
   position: absolute;
-  border: 1px solid #000000;
+  border: 1px solid var(--color-border);
   padding: 10px;
-  background-color: #ffffff;
+  background-color: var(--color-bg);
   display: none;
   overflow: auto;
 }
@@ -207,7 +281,7 @@ img.piece {
   display: none;
 }
 
-/* other css */
+/* ── Game results ──────────────────────────────────────────────── */
 .winner {
   font-size: 12pt;
   font-weight: normal;
@@ -219,38 +293,40 @@ img.piece {
   font-weight: normal;
 }
 
-.commentHeader, .previewHeader {
+/* ── Comments ──────────────────────────────────────────────────── */
+.commentHeader,
+.previewHeader {
   font-size: 10pt;
   font-weight: normal;
   margin-left: -10px;
   padding-left: 10px;
 }
+
 .commentHeader {
-  background-color: #a0a0ff;  
+  background-color: var(--color-header);
 }
+
 .previewHeader {
-  background-color: #c0c0ff;
+  background-color: var(--color-preview);
 }
 
 .commentTextArea {
   width: 100%;
   font-size: 10pt;
-  font-family: Arial, Helvetica, sans-serif;
-  border: 1px solid #000000;
+  font-family: var(--font-stack);
+  border: 1px solid var(--color-border);
 }
 
 div#current_comments {
   font-size: 10pt;  
 }
 
+/* ── Login box ─────────────────────────────────────────────────── */
 div.loginBox {
   position: absolute;
   text-align: right;
   right: 10px;
   top: 10px;
-}
-
-div.loginBox div {
 }
 
 div.loginBox label {
@@ -266,23 +342,6 @@ div.loginBox input {
 }
 
 div.pleaseRegister {
-  border: 1px solid #000000;
+  border: 1px solid var(--color-border);
   padding: 4px;
-}
-
-.boxed {
-  border: 1px solid #000000;
-}
-
-.info {
-  border: none;
-}
-
-body.main_page {
-  margin-left: 25px;
-  margin-right: 25px;
-}
-body.about_page {
-  margin-left: 25px;
-  margin-right: 25px;
 }

@@ -23,16 +23,16 @@ A forum to view, comment on, and read other people's comments on finished Twixt 
     <tbody>
       <% commentedGames.forEach((game, i) => { %>
         <tr class="<%= i % 2 === 0 ? 'even' : 'odd' %>">
-          <td class="main" style="text-align: right;">
+          <td class="main text-right">
             <a href="/game/<%= game.lg_game_num %>?main_page=<%= params && params.page || '' %>"><%= game.lg_game_num %></a>
           </td>
-          <td class="main" style="font-style: <%= game.isDraw() ? 'italic' : 'normal' %>">
+          <td class="main<%= game.isDraw() ? ' italic' : '' %>">
             <%- h2(game.winnerName()) %>
           </td>
-          <td class="main" style="font-style: <%= game.isDraw() ? 'italic' : 'normal' %>">
+          <td class="main<%= game.isDraw() ? ' italic' : '' %>">
             <%- h2(game.loserName()) %>
           </td>
-          <td class="main" style="text-align: center;<%= game.isResignation() ? '' : ' font-weight: bold;' %>">
+          <td class="main text-center<%= game.isResignation() ? '' : ' bold' %>">
             <%= game.result %>
           </td>
           <td class="main">
@@ -42,7 +42,7 @@ A forum to view, comment on, and read other people's comments on finished Twixt 
               &nbsp;
             <% } %>
           </td>
-          <td class="main" style="text-align: center;">
+          <td class="main text-center">
             <%= game.last_commented_on ? new Date(game.last_commented_on).toISOString().slice(0,16).replace('T',' ') : '' %>
           </td>
           <% const author = authorMap[game.last_commented_by]; %>

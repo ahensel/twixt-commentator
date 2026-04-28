@@ -37,7 +37,7 @@
         &nbsp;Player on Little Golem?
       </label>
       <br>
-      <div id="name_on_lg_div" style="<%= user.on_lg ? 'padding: 5px; display: block;' : 'padding: 5px; display: none;' %>">
+      <div id="name_on_lg_div" class="p-5<%= user.on_lg ? '' : ' hidden' %>">
         <label for="user_name_on_lg">Name on Little Golem, if different from above:</label>
         <br>
         <input id="user_name_on_lg" class="boxed" type="text" name="name_on_lg" value="<%= user.name_on_lg || '' %>" size="40">

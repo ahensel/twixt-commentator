@@ -16,21 +16,21 @@
           <td><label for="user_name">Name:</label></td>
           <td>
             <input id="user_name" class="boxed" type="text" name="name" size="40">
-            <span style="color: #ff0000">&nbsp;(Required)</span>
+            <span class="text-error">&nbsp;(Required)</span>
           </td>
         </tr>
         <tr>
           <td><label for="user_password">Password:</label></td>
           <td>
             <input id="user_password" class="boxed" type="password" name="password" size="40">
-            <span style="color: #ff0000">&nbsp;(Required)</span>
+            <span class="text-error">&nbsp;(Required)</span>
           </td>
         </tr>
         <tr>
           <td><label for="user_password_confirmation">Confirm:</label></td>
           <td>
             <input id="user_password_confirmation" class="boxed" type="password" name="password_confirmation" size="40">
-            <span style="color: #ff0000">&nbsp;(Required)</span>
+            <span class="text-error">&nbsp;(Required)</span>
           </td>
         </tr>
       </table>
@@ -40,7 +40,7 @@
         &nbsp;Player on Little Golem?
       </label>
       <br>
-      <div id="name_on_lg_div" style="padding: 5px; display: none;">
+      <div id="name_on_lg_div" class="p-5 hidden">
         <label for="user_name_on_lg">Name on Little Golem, if different from above:</label>
         <br>
         <input id="user_name_on_lg" class="boxed" type="text" name="name_on_lg" size="40">
