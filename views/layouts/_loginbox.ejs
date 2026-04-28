@@ -1,0 +1,49 @@
+<%
+  var loginNotice = session && session.login_notice;
+  if (session && session.login_notice) { delete session.login_notice; }
+%>
+<% if (!session || !session.user_id) { %>
+  <div class="loginBox">
+    <form action="/user/login" method="post">
+      <input type="hidden" name="back_to" value="<%= params && params.controller ? params.controller : (params && params.back_to ? params.back_to : '') %>">
+      <input type="hidden" name="ret_gid" value="<%= params && params.gid ? params.gid : (params && params.ret_gid ? params.ret_gid : '') %>">
+      <input type="hidden" name="main_page" value="<%= params && params.page ? params.page : (params && params.main_page ? params.main_page : '') %>">
+      <table>
+        <tr>
+          <td>
+            <div class="boxed">
+              <table>
+                <tr>
+                  <td><label for="name">Name:</label></td>
+                  <td><input id="name" class="boxed" type="text" name="name" value="<%= params && params.name ? params.name : '' %>"></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><label for="password">Password:</label></td>
+                  <td><input class="boxed" type="password" name="password"></td>
+                  <td><input type="submit" value="Log in"></td>
+                </tr>
+              </table>
+              <% if (loginNotice) { %>
+                &nbsp;<span class="err"><%= loginNotice %></span>
+              <% } %>
+            </div>
+          </td>
+          <td>
+            <div class="pleaseRegister">
+              <a href="/user/add_user?back_to=<%= params && params.back_to || params && params.controller || '' %>&ret_gid=<%= params && params.gid || params && params.ret_gid || '' %>&main_page=<%= params && params.page || params && params.main_page || '' %>">Register</a><br>
+              to add<br>
+              comments.
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+<% } else { %>
+  <% const user = currentUser? currentUser.dataValues : ''; %>
+  <div class="loginBox">
+    Welcome,&nbsp;<b><%- h2(currentUser.name) %></b>&nbsp;<a href="/user/info/<%= session.user_id %>?back_to=<%= params && (params.controller || params.back_to) || '' %>&ret_gid=<%= params && params.gid || '' %>&main_page=<%= params && params.page || '' %>"><img class="info" src="/images/info.gif" alt="(info)" width="9" height="9"></a><br>
+    <a href="/user/profile/<%= session.user_id %>?ret_gid=<%= params && params.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&main_page=<%= params && params.page || '' %>">Profile</a>&nbsp;|&nbsp;<a href="/user/logout?ret_gid=<%= params && params.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&main_page=<%= params && params.page || '' %>">Log out</a>
+  </div>
+<% } %>

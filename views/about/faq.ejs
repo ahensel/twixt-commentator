@@ -1,0 +1,41 @@
+<% layout('layouts/about') %>
+
+<h2>Twixt Commentator FAQ (Fake Asked Questions)</h2>
+<p><b>About Twixt Commentator</b></p>
+<p>I've learned a lot about Twixt by following other players' games on Little Golem. However, it was always like watching a sports game with the sound turned off: no commentary, no analysis, no explanations. You just had to guess.</p>
+<p>Twixt Commentator aims to fix that. Now commentary can be attached to a game, thereby making it easier for people to learn and improve their Twixt skills.</p>
+<p>Some people like to use Twixt Commentator as a convenient way to analyze their in-progress games. This was not the original intent of the site, but I can't stop you. You can't add comments to a game until it is over, however.</p>
+<p>Even if you don't plan to comment on a game, Twixt Commentator makes it possible to step through a game quickly. Little Golem also lets you step through games, but each click is a round trip to the server, generating an image file every time, which can try your patience.</p>
+<p>Twixt Commentator sticks to familiar Little Golem styles. It is like a mix of two Little Golem pages:</p>
+<ul>
+  <li>It is like a Little Golem forum, except that every topic is a game, and the comments are all accompanied by a Twixt board so that you can follow along. Game moves in the comments are automatically converted into clickable links to the game.</li>
+  <li>It is also like viewing a Little Golem game, except that you can add comments, and you can freely explore variations that did not happen in the game.</li>
+</ul>
+<p><b>What do R, F, L, and D mean in the End column?</b></p>
+<p>These are shorthand codes for how the game ended. Most games end in resignation (R). A game can also end by Forfeit (somebody ran out of time), Loss (the opponent actually connected his sides of the board), or Draw (which must be agreed upon).</p>
+<p><b>How do you cancel a comment?</b></p>
+<p>When the comment box is empty, the "Comment" button turns into a "No Comment" button. A quick keyboard shortcut to empty the comment box is Ctrl+A, Backspace.</p>
+<p><b>How do I make automatically clickable moves in the comments?</b></p>
+<p>Anything that looks like a Twixt move (such as 23.L4, 1.i6, 2.swap, 37.resign, 27.???, etc. (the move number is required)) is automatically highlighted and becomes clickable. You can type them in just like that; they will be recognized. The most reliable way is to cut-and-paste your variation from the text that appears when you can recreate your variation on the board.</p>
+<p>Watch out&mdash;moves in the comments can be ambiguous. Make it clear what variation you are talking about. Twixt Commentator makes its best guess, which means:</p>
+<ol>
+  <li>If the numbering sequence fits with previous numbering in the comments, it assumes you mean a continuation of that. For example, "23.g7 24.g8" will result in a link on "23.g7", and a separate link on "24.g8" that tries to guarantee "23.g7" first. If you write "23.g7, and then 24.g8 or 24.g6", then both "24.g8" and "24.g6" will try to place the "23.g7" peg first. I have found this to be the best compromise. This logic does not cross comment boundaries.</li>
+  <li>If the numbering does not follow in the text, for example "24.f6 23.g7 25.g8", then the link on "25.g8" will begin on move 25, and the first thing it does when you click on "25.g8" is check to see if the board is currently at move 24, and if so, continue from there.</li>
+  <li>Otherwise, it assumes that you mean a branch off of the main variation.</li>
+</ol>
+<p>Because of this ambiguity, whenever you really do mean a main branch off of the main variation, you should put a vertical bar (|) in front of your moves. For example,</p>
+<p>|23.g7</p>
+<p>means that 23.g7 follows whatever move 22 was in the actual game. There is no ambiguity here. Also, you can avoid ambiguity by including your entire variation in your comment.</p>
+<p>I recommend using "Preview" and testing all of your moves.</p>
+<p>Also, you can use some safe HTML tags, such as &lt;i&gt; and &lt;b&gt;, but not others, such as &lt;script&gt;.</p>
+<p><b>Time Zones</b></p>
+<p>The time zone is UTC, even though the server is in the Eastern US Time Zone.</p>
+<p><b>What if I forget my password?</b></p>
+<p>Since I don't keep anyone's e-mail address, and the password is stored with one-way encryption, there is really no way for me to recover your password. The only secure thing is to... remember your password!</p>
+<p><b>About JTwixt</b></p>
+<p>There is a "Download JTwixt file" link under every game board. JTwixt is a separate Java program that you can use to analyze board positions. It is much more powerful for analyzing Twixt game trees and keeping notes about branches.</p>
+<p><b>Who's behind this site?</b></p>
+<p>This site is a personal project of Alan Hensel, originally made for the purposes of learning Ruby on Rails. Since this is just a personal project, I don't guarantee any improvements in the future. Ultimately, I'll do what strikes my fancy. If you have any questions I didn't cover, you can reach me at<br>
+<img src="/images/email.png"><br>
+Have fun!</p>
+<a href="/">Main page</a>

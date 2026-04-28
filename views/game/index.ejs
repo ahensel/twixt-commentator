@@ -1,0 +1,99 @@
+<% layout('layouts/game') %>
+
+<form action="/game" method="post">
+  Game number:&nbsp;<input class="boxed" type="text" name="new_gid" value="<%= params && params.gid ? params.gid : '' %>" size="7" maxlength="7">
+  <input type="submit" value="Go">
+  &nbsp;<a href="/?page=<%= params && params.main_page || '' %>">Main Page</a>
+</form>
+
+<% if (game) { %>
+  <img src="/images/pieces/whitepeg.gif" alt="White:">
+  <span class="<%= game.winner === 1 ? 'winner' : 'loser' %>"><%- h2(game.player1) %></span>&nbsp;&nbsp;<img src="/images/pieces/blackpeg.gif" alt="Black:">
+  <span class="<%= game.winner === 2 ? 'winner' : 'loser' %>"><%- h2(game.player2) %></span>
+
+  <div id="turn" class="turn"></div>
+  <div id="board" class="board">
+    <%# preload pieces %>
+    <img id="crosshair" class="crosshair" src="/images/pieces/crosshair.gif" galleryimg="no" alt="">
+    <img class="piece" src="/images/pieces/whitepeg.gif" galleryimg="no" alt="">
+    <img class="piece" src="/images/pieces/blackpeg.gif" galleryimg="no" alt="">
+    <img class="piece" src="/images/pieces/eselink.gif" galleryimg="no" alt="">
+    <img class="piece" src="/images/pieces/wswlink.gif" galleryimg="no" alt="">
+    <img class="piece" src="/images/pieces/sselink.gif" galleryimg="no" alt="">
+    <img class="piece" src="/images/pieces/sswlink.gif" galleryimg="no" alt="">
+    <img id="boardImage" src="/images/pieces/board.gif" galleryimg="no" alt="">
+  </div>
+
+  <div id="boardglass1" class="boardglass"></div>
+  <div id="boardglass2" class="boardglass" style="display: none"></div>
+  <div id="markerglass" class="markerglass">
+    <img id="newwhitepeg" class="crosshair" src="/images/pieces/newwhitepeg.gif" galleryimg="no" alt="">
+    <img id="newblackpeg" class="crosshair" src="/images/pieces/newblackpeg.gif" galleryimg="no" alt="">
+  </div>
+
+  <div id="underbar">
+    <% if (game.tournament && game.tournament.trim() !== '' && game.tournament.trim() !== 'twixt') { %>
+      <a href="http://www.littlegolem.net/jsp/tournament/tournament.jsp?trnid=<%= game.tournament %>"><%- game.tournament + '&nbsp;(LG)' %></a> |
+    <% } %>
+    <a href="http://www.littlegolem.net/jsp/game/game.jsp?gid=<%= game.lg_game_num %>">This&nbsp;game&nbsp;(LG)</a> |
+    <a href="/jtwixt/gen?gameid=<%= params && params.gid %>">Download&nbsp;JTwixt&nbsp;file</a>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <table>
+      <tr>
+        <td><div id="moves"></div></td>
+      </tr>
+      <tr>
+        <td><div id="userMoves"></div></td>
+      </tr>
+      <tr>
+        <td>
+          <a id="backLink" href="" accesskey="b" onclick="backButton(); return false;">Back</a>&nbsp;<a id="nextLink" href="" accesskey="n" onclick="nextButton(); return false;">Next</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div id="comments">
+    <div id="current_comments">
+      <% (game.comments || []).forEach(function(comment) { %>
+        <div class="commentHeader">
+          <%- include('../comment/_comment_header', { comment: comment, author: comment.author, preview: false }) %>
+        </div>
+        <%- prepareComment(comment.comment) %>
+        <br>
+        <br>
+      <% }); %>
+    </div>
+    <% if (game.isInProgress()) { %>
+      <div class="commentHeader">Game is in progress.</div>
+    <% } else if (!session || !session.user_id) { %>
+      <div class="commentHeader">You must be logged in to add comments.</div>
+    <% } else { %>
+      <div id="addCommentLink">
+        <a href="" onclick="return showAddCommentBox();">Add a comment</a>
+      </div>
+      <div id="addComment" style="display: none">
+        <div class="commentHeader">Add a comment:</div>
+        <form id="comment_form" action="/comment" method="post">
+          <input type="hidden" name="game" value="<%= game.id %>">
+          <input type="hidden" id="button_pressed" name="button_pressed" value="Comment">
+          <textarea class="commentTextArea" id="new_comment" name="new_comment" rows="8" onkeyup="checkStateChange()" onfocus="commentsInFocus(true)" onblur="commentsInFocus(false)"></textarea>
+          <input id="comment_button" type="submit" value="No Comment" onclick="removePreview(); setButtonPressed(this, 'Comment'); return hideAddCommentBox();">
+          <input id="preview_button" type="submit" value="Preview" onclick="removePreview(); setButtonPressed(this, 'Preview'); return true;" disabled="true">
+        </form>
+      </div>
+    <% } %>
+  </div>
+
+  <% if (parser) { %>
+    <input type="hidden" id="movesJson" name="movesJson" value="<%= JSON.stringify(parser.getMovesList()) %>">
+  <% } %>
+<% } %>
+
+<noscript>
+  <div class="noscript">JavaScript was not detected. This site requires JavaScript to be enabled in your browser.</div>
+</noscript>
+
+<% block('scripts', include('_comment_script')); %>

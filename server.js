@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const ejsMate = require('ejs-mate');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 
@@ -18,7 +19,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // ── View engine ──────────────────────────────────────────────────────────────
-app.set('view engine', 'pug');
+app.engine('ejs', ejsMate);
+app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // ── Static assets ────────────────────────────────────────────────────────────
@@ -35,7 +37,7 @@ app.use(session({
   name: '_twixt_session_id',
 }));
 
-// ── Expose helpers and session to all Pug templates via res.locals ───────────
+// ── Expose helpers and session to all EJS templates via res.locals ───────────
 app.use(async (req, res, next) => {
   res.locals.h2 = h2;
   res.locals.xssize = xssize;

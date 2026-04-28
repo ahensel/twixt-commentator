@@ -1,0 +1,60 @@
+<% layout('layouts/admin') %>
+
+<div>
+  <fieldset class="boxed">
+    <% if (errors && errors.length) { %>
+      <ul class="error">
+        <% errors.forEach(function(e) { %>
+          <li><%= e %></li>
+        <% }); %>
+      </ul>
+    <% } %>
+    <legend>Your User Profile</legend>
+    <form action="/user/profile/<%= user.id %>" method="post">
+      <table>
+        <tr>
+          <td><label for="user_name">Name:</label></td>
+          <td>
+            <input id="user_name" class="boxed" type="text" name="name" value="<%= user.name %>" size="40">
+          </td>
+        </tr>
+        <tr>
+          <td><label for="user_password">Password:</label></td>
+          <td>
+            <input id="user_password" class="boxed" type="password" name="password" size="40">
+          </td>
+        </tr>
+        <tr>
+          <td><label for="user_password_confirmation">Confirm:</label></td>
+          <td>
+            <input id="user_password_confirmation" class="boxed" type="password" name="password_confirmation" size="40">
+          </td>
+        </tr>
+      </table>
+      <hr>
+      <label>
+        <input type="checkbox" name="on_lg" <%= user.on_lg ? 'checked="checked"' : '' %> onchange="$('name_on_lg_div').style.display = (this.checked ? 'block' : 'none'); return true;">
+        &nbsp;Player on Little Golem?
+      </label>
+      <br>
+      <div id="name_on_lg_div" style="<%= user.on_lg ? 'padding: 5px; display: block;' : 'padding: 5px; display: none;' %>">
+        <label for="user_name_on_lg">Name on Little Golem, if different from above:</label>
+        <br>
+        <input id="user_name_on_lg" class="boxed" type="text" name="name_on_lg" value="<%= user.name_on_lg || '' %>" size="40">
+        <br>
+      </div>
+      Info:<br>
+      <textarea class="boxed" name="info"><%= user.info || '' %></textarea>
+      <hr>
+      <input type="hidden" name="back_to" value="<%= params && params.back_to ? params.back_to : '' %>">
+      <% if (params && params.main_page) { %>
+        <input type="hidden" name="main_page" value="<%= params.main_page %>">
+      <% } %>
+      <% if (params && params.ret_gid) { %>
+        <input type="hidden" name="ret_gid" value="<%= params.ret_gid %>">
+      <% } %>
+      <input class="submit" type="submit" value="Change">
+      &nbsp;<a href="/<%= params && params.back_to === 'game' ? 'game/' + (params.ret_gid || '') : '' %>">Cancel</a>
+    </form>
+  </fieldset>
+</div>

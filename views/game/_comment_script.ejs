@@ -1,0 +1,33 @@
+<script>
+(function () {
+  var form = document.getElementById('comment_form');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var buttonPressed = document.getElementById('button_pressed').value;
+    var data = new FormData(form);
+    var body = new URLSearchParams();
+    data.forEach(function (v, k) { body.append(k, v); });
+    fetch('/comment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString()
+    })
+    .then(function (r) { return r.text(); })
+    .then(function (html) {
+      var container = document.getElementById('current_comments');
+      if (container && html.trim()) {
+        container.insertAdjacentHTML('beforeend', html);
+      }
+      // After a real Comment submission (not Preview), reset the UI
+      if (buttonPressed !== 'Preview') {
+        document.getElementById('new_comment').value = '';
+        checkStateChange();
+        document.getElementById('addComment').style.display = 'none';
+        document.getElementById('addCommentLink').style.display = 'inline';
+      }
+    })
+    .catch(function (err) { console.error('Comment submit error:', err); });
+  });
+})();
+</script>

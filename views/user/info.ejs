@@ -1,0 +1,30 @@
+<% layout('layouts/admin') %>
+
+Name:&nbsp;<b><%- h2(user.name) %></b>
+<% if (session && session.user_id && user.id === session.user_id) { %>
+  &nbsp;(current user)
+<% } %>
+<br>
+<% if (user.on_lg) { %>
+  Plays on Little Golem
+  <% if (user.name_on_lg && user.name_on_lg.trim() !== '' && user.name_on_lg !== user.name) { %>
+    &nbsp;as&nbsp;<b><%- h2(user.name_on_lg) %></b>
+  <% } else { %>
+    &nbsp;(under same name)
+  <% } %>
+<% } else { %>
+  Does not play on Little Golem
+<% } %>
+<br>
+Account created on:&nbsp;<%= user.created_on ? new Date(user.created_on).toISOString().slice(0,10) : '' %>
+<br>
+Info:&nbsp;
+<% if (!user.info || user.info.trim() === '') { %>
+  None
+<% } else { %>
+  <blockquote><%- xssize(user.info) %></blockquote>
+<% } %>
+<br>
+<% if (params && params.back_to) { %>
+  <a href="/<%= params.back_to === 'game' ? 'game/' + (params.ret_gid || '') : '' %>?page=<%= params.main_page || '' %>">Back</a>
+<% } %>

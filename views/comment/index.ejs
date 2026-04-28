@@ -1,0 +1,19 @@
+<% if (comment) { %>
+  <div id="preview">
+    <% if (preview) { %>
+      <div class="previewHeader">
+        <%- include('_comment_header', { comment: comment, author: author.dataValues, preview: true }) %>
+      </div>
+    <% } else { %>
+      <div class="commentHeader">
+        <%- include('_comment_header', { comment: comment, author: author.dataValues, preview: false }) %>
+      </div>
+    <% } %>
+    <%- prepareComment(comment.comment) %>
+    <br>
+    <br>
+  </div>
+  <script>
+    scrollToBottom();
+  </script>
+<% } %>
