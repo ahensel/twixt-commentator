@@ -86,9 +86,9 @@ a:hover {
 
 a:focus,
 select:focus {
-  outline: 1px solid var(--color-focus);
+  outline: 2px solid var(--color-focus);
   outline-offset: 0;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 a.white {
@@ -353,4 +353,14 @@ div.loginBox input {
 div.pleaseRegister {
   border: 1px solid var(--color-border);
   padding: 4px;
+}
+
+/* ── Admin page ─────────────────────────────────────────────────── */
+.admin_page {
+  margin: 10px 10px 10px 10px;
+}
+
+.admin_page .userInfo {
+  width: 350px;
+  height: 310px;
 }
