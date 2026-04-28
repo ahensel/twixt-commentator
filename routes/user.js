@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require('../models');
+const { sanitizeHtml } = require('../lib/helpers/applicationHelper');
 
 // Helper: reconstruct the "back" redirect URL from hidden form params,
 // mirroring Rails' go_back action.
@@ -71,6 +72,22 @@ router.post('/login', async (req, res) => {
 router.get('/logout', (req, res) => {
   req.session.user_id = null;
   res.redirect(buildBackUrl(req.query));
+});
+
+// GET /user/info/:id.json — JSON endpoint for the popup modal
+// NOTE: must come BEFORE /info/:id so Express doesn't match "123.json" as the :id param
+router.get('/info/:id.json', async (req, res) => {
+  const user = await User.findByPk(req.params.id);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+  const d = user.dataValues;
+  res.json({
+    id: d.id,
+    name: d.name,
+    on_lg: d.on_lg,
+    name_on_lg: d.name_on_lg || '',
+    info: sanitizeHtml(d.info || ''),
+    created_on: d.created_on ? new Date(d.created_on).toISOString().slice(0, 10) : '',
+  });
 });
 
 // GET /user/info/:id

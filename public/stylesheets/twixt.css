@@ -364,3 +364,49 @@ div.pleaseRegister {
   width: 350px;
   height: 310px;
 }
+
+/* ── User info modal popup ──────────────────────────────────────── */
+.user-info-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.user-info-modal {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  padding: 20px;
+  min-width: 300px;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.user-info-modal .close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 18pt;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--color-text);
+  text-decoration: none;
+  line-height: 1;
+}
+
+.user-info-modal .close-btn:hover {
+  color: var(--color-error);
+}
+
+.user-info-modal blockquote {
+  white-space: pre-wrap;
+}
