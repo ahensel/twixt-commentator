@@ -129,6 +129,7 @@ span.black {
 .err {
   color: var(--color-error);
   font-weight: bold;
+  margin-left: 10px;
 }
 
 .text-error {

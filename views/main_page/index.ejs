@@ -1,61 +1,60 @@
 <% layout('layouts/main_page') %>
-
 <h2>Twixt Commentator</h2>
 A forum to view, comment on, and read other people's comments on finished Twixt games from&nbsp;<a href="http://littlegolem.net/">Little Golem</a>.&nbsp;Enjoy!
-<p>
-  <form action="/game" method="post">
-    View Little Golem Twixt Game:&nbsp;<input id="new_gid" class="boxed" type="text" name="new_gid" size="7" maxlength="7">
-    <input type="submit" value="Go">
-  </form>
-  <h3>Commented Games</h3>
-  <table class="main" cellspacing="0">
-    <thead>
-      <tr>
-        <th class="main">Game #</th>
-        <th class="main">Winner</th>
-        <th class="main">Loser</th>
-        <th class="main">End</th>
-        <th class="main">Tournament</th>
-        <th class="main">Last Comment</th>
-        <th class="main">Author</th>
+<br/>
+<br/>
+<form action="/game" method="post">
+  View Little Golem Twixt Game:&nbsp;<input id="new_gid" class="boxed" type="text" name="new_gid" size="7" maxlength="7">
+  <input type="submit" value="Go">
+</form>
+<h3>Commented Games</h3>
+<table class="main" cellspacing="0">
+  <thead>
+    <tr>
+      <th class="main">Game #</th>
+      <th class="main">Winner</th>
+      <th class="main">Loser</th>
+      <th class="main">End</th>
+      <th class="main">Tournament</th>
+      <th class="main">Last Comment</th>
+      <th class="main">Author</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% commentedGames.forEach((game, i) => { %>
+      <tr class="<%= i % 2 === 0 ? 'even' : 'odd' %>">
+        <td class="main text-right">
+          <a href="/game/<%= game.lg_game_num %>?main_page=<%= params && params.page || '' %>"><%= game.lg_game_num %></a>
+        </td>
+        <td class="main<%= game.isDraw() ? ' italic' : '' %>">
+          <%- h2(game.winnerName()) %>
+        </td>
+        <td class="main<%= game.isDraw() ? ' italic' : '' %>">
+          <%- h2(game.loserName()) %>
+        </td>
+        <td class="main text-center<%= game.isResignation() ? '' : ' bold' %>">
+          <%= game.result %>
+        </td>
+        <td class="main">
+          <% if (game.tournament && game.tournament.trim() !== '') { %>
+            <%= game.tournament %>
+          <% } else { %>
+            &nbsp;
+          <% } %>
+        </td>
+        <td class="main text-center">
+          <%= game.last_commented_on ? new Date(game.last_commented_on).toISOString().slice(0,16).replace('T',' ') : '' %>
+        </td>
+        <% const author = authorMap[game.last_commented_by]; %>
+        <td class="main">
+          <% if (author) { %>
+            <%- h2(author.name) %>&nbsp;<a href="/user/info/<%= author.id %>?back_to=main_page&main_page=<%= params && params.page || '' %>"><img class="info" src="/images/info.gif" alt="(info)" width="9" height="9"></a>
+          <% } %>
+        </td>
       </tr>
-    </thead>
-    <tbody>
-      <% commentedGames.forEach((game, i) => { %>
-        <tr class="<%= i % 2 === 0 ? 'even' : 'odd' %>">
-          <td class="main text-right">
-            <a href="/game/<%= game.lg_game_num %>?main_page=<%= params && params.page || '' %>"><%= game.lg_game_num %></a>
-          </td>
-          <td class="main<%= game.isDraw() ? ' italic' : '' %>">
-            <%- h2(game.winnerName()) %>
-          </td>
-          <td class="main<%= game.isDraw() ? ' italic' : '' %>">
-            <%- h2(game.loserName()) %>
-          </td>
-          <td class="main text-center<%= game.isResignation() ? '' : ' bold' %>">
-            <%= game.result %>
-          </td>
-          <td class="main">
-            <% if (game.tournament && game.tournament.trim() !== '') { %>
-              <%= game.tournament %>
-            <% } else { %>
-              &nbsp;
-            <% } %>
-          </td>
-          <td class="main text-center">
-            <%= game.last_commented_on ? new Date(game.last_commented_on).toISOString().slice(0,16).replace('T',' ') : '' %>
-          </td>
-          <% const author = authorMap[game.last_commented_by]; %>
-          <td class="main">
-            <% if (author) { %>
-              <%- h2(author.name) %>&nbsp;<a href="/user/info/<%= author.id %>?back_to=main_page&main_page=<%= params && params.page || '' %>"><img class="info" src="/images/info.gif" alt="(info)" width="9" height="9"></a>
-            <% } %>
-          </td>
-        </tr>
-      <% }); %>
-    </tbody>
-  </table>
-</p>
+    <% }); %>
+  </tbody>
+</table>
 Page:&nbsp;<% pages.forEach((p) => { %>
   <% if (p.page === null) { %>
     ...&nbsp;
@@ -65,6 +64,8 @@ Page:&nbsp;<% pages.forEach((p) => { %>
     <a href="<%= p.url %>"><%= p.label %></a>&nbsp;
   <% } %>
 <% }); %>
-<br>
-<a href="/faq">FAQ</a>&nbsp;|&nbsp;<a href="/rss_feed/all_comments.rss">RSS</a>
-
+<br/>
+<br/>
+<p>
+  <a href="/faq">FAQ</a>&nbsp;|&nbsp;<a href="/rss_feed/all_comments.rss">RSS</a>
+</p>

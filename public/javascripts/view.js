@@ -36,6 +36,7 @@ window.addEventListener('load', () => {
 });
 
 function disableSelection(target) {
+  if (!target) return;
   target.style.userSelect = 'none';
 }
 
@@ -48,6 +49,8 @@ function disableSelections() {
 }
 
 function positionElements() {
+  if (!$('board')) return;
+
   leftMargin = 10;
   topMargin  = 80;
 
@@ -667,8 +670,8 @@ function isPegSpot(pixelX, pixelY) {
   return (xd * xd + yd * yd) < (PEG_SIZE * PEG_SIZE / 4 + 1);
 }
 
-function boardOffsetX() { return $('board').offsetLeft; }
-function boardOffsetY() { return $('board').offsetTop; }
+function boardOffsetX() { return $('board')?.offsetLeft; }
+function boardOffsetY() { return $('board')?.offsetTop; }
 
 function xDelta(pixelX) { return pixelX - xPixels(xCoord(pixelX)) - boardOffsetX(); }
 function yDelta(pixelY) { return pixelY - yPixels(yCoord(pixelY)) - boardOffsetY(); }

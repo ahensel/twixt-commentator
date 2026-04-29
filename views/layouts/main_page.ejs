@@ -16,7 +16,7 @@
     </script>
   </head>
   <body class="main_page">
-    <p class="err"><%= flash && flash.error ? flash.error : '' %></p>
+    <div class="err"><%= flash && flash.error ? flash.error : '' %></div>
     <%- include('_loginbox') %>
     <%- body %>
   </body>
