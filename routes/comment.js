@@ -1,5 +1,4 @@
-// Translated from comment_controller.rb
-// This endpoint is called via Ajax (Prototype.js form_remote_tag equivalent).
+// This endpoint is called via Ajax.
 // It returns an HTML fragment that is inserted into #current_comments.
 
 const express = require('express');

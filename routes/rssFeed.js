@@ -1,5 +1,3 @@
-// Translated from rss_feed_controller.rb
-
 const express = require('express');
 const router = express.Router();
 const { Comment, Game, User } = require('../models');

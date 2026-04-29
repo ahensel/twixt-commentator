@@ -1,5 +1,3 @@
-// Translated from main_page_controller.rb + main_page_helper.rb pagination
-
 const express = require('express');
 const router = express.Router();
 const { Game, User } = require('../models');

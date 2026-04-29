@@ -22,7 +22,7 @@ const Game = sequelize.define('Game', {
   timestamps: false,
 });
 
-// Instance helpers mirroring game.rb
+// Instance helpers mirroring game.js
 Game.prototype.winnerName = function () {
   return this.winner !== 2 ? this.player1 : this.player2;
 };
@@ -52,7 +52,7 @@ const Comment = sequelize.define('Comment', {
 
 const crypto = require('crypto');
 
-const PEPPER = '|!$:x~,,>;^!|';   // same value as user.rb
+const PEPPER = '|!$:x~,,>;^!|';
 
 const User = sequelize.define('User', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },

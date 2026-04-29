@@ -1,5 +1,3 @@
-// Translated from jtwixt_controller.rb
-
 const express = require('express');
 const router = express.Router();
 const https = require('https');
