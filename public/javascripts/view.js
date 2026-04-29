@@ -174,7 +174,7 @@ function showUserMovesText() {
     currentMoves.getUserMoves().forEach(move => {
       const className = (moveNum % 2 === 0) ? 'black' : 'white';
       const moveText  = `${moveNum}.${move.getText()}`;
-      userMovesText += `<span class='${className}'>${moveText}</span> `;
+      userMovesText += `<span id='userMove_${moveNum}' class='${className}'>${moveText}</span> `;
       moveNum++;
     });
 
@@ -425,6 +425,39 @@ function colorMove(moveNum, color) {
   }
 }
 
+function highlightMoveInSidebar(peg) {
+  if (!peg) return;
+  const pegName = peg.getPegName();
+
+  if (currentMoves.hasUserMoves()) {
+    const firstUserMoveNum = getUserMovesFirstNum();
+    const userMoves = currentMoves.getUserMoves();
+    for (let i = 0; i < userMoves.length; i++) {
+      if (userMoves[i].peg?.getPegName() === pegName) {
+        $(`userMove_${i + firstUserMoveNum}`)?.classList.add('hoveredPeg');
+        return;
+      }
+    }
+  }
+
+  const mainMoves = currentMoves.getMoves();
+  for (let i = 0; i <= currentMoveNum; i++) {
+    if (mainMoves[i].peg?.getPegName() === pegName) {
+      $(`move_${i + 1}`)?.classList.add('hoveredPeg');
+      return;
+    }
+  }
+}
+
+function unhighlightMoveInSidebar() {
+  const hovered = document.getElementsByClassName('hoveredPeg');
+  if (hovered) {
+    for (const el of hovered) {
+      el.classList.remove('hoveredPeg');
+    }
+  }
+}
+
 function backButton() {
   if (currentMoves.hasUserMoves()) {
     currentMoves.popMove();
@@ -457,6 +490,8 @@ function clearBoard() {
 // ─── Mouse / board interaction ────────────────────────────────────────────────
 
 function mouseOverBoard(evt) {
+  unhighlightMoveInSidebar();
+
   const pixelX = evt.pageX;
   const pixelY = evt.pageY;
 
@@ -472,6 +507,7 @@ function mouseOverBoard(evt) {
         drawCrosshair(x, y, turn);
       } else {
         drawTickMarks(xPixels(x), yPixels(y), '#808080');
+        highlightMoveInSidebar(peg);
       }
     } else {
       eraseCrosshair();
