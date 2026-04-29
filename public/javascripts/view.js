@@ -6,6 +6,14 @@ const LINK_REMOVAL    = 0;
 const PENCIL_AND_PAPER = 1;
 let linkCrossingPolicy = PENCIL_AND_PAPER;
 
+const GRID_SPACING = 18;
+const PEG_SIZE = 13;
+// const LINK_LENGTH = GRID_SPACING * Math.sqrt(5) - PEG_SIZE;
+// const LINK_SHORT_DIM = Math.round(LINK_LENGTH / Math.sqrt(5)) + 3;  // 3 for a little overlap with pegs
+// const LINK_LONG_DIM = Math.round(LINK_LENGTH * 2 / Math.sqrt(5)) + 3;
+
+console.log('calculated short, long', LINK_SHORT_DIM, LINK_LONG_DIM);
+
 let turn = 1;
 let twixtGame = new TwixtController(24);
 let cutLink = null;
@@ -46,8 +54,8 @@ function positionElements() {
   topMargin  = 80;
 
   const boardSize   = twixtGame.board.size;  // 24
-  const boardWidth  = 46 + boardSize * 18;   // 478
-  const boardHeight = 44 + boardSize * 18;   // 476
+  const boardWidth  = 46 + boardSize * GRID_SPACING;   // 478
+  const boardHeight = 44 + boardSize * GRID_SPACING;   // 476
 
   Object.assign($('turn').style, { left: `${leftMargin}px`, top: `${topMargin}px` });
 
@@ -658,7 +666,7 @@ function sign(x) { return (x < 0) ? -1 : 1; }
 function isPegSpot(pixelX, pixelY) {
   const xd = xDelta(pixelX);
   const yd = yDelta(pixelY);
-  return (xd * xd + yd * yd) < 43;
+  return (xd * xd + yd * yd) < (PEG_SIZE * PEG_SIZE / 4 + 1);
 }
 
 function boardOffsetX() { return $('board').offsetLeft; }
@@ -666,16 +674,16 @@ function boardOffsetY() { return $('board').offsetTop; }
 
 function xDelta(pixelX) { return pixelX - xPixels(xCoord(pixelX)) - boardOffsetX(); }
 function yDelta(pixelY) { return pixelY - yPixels(yCoord(pixelY)) - boardOffsetY(); }
-function xCoord(pixelX) { return Math.round((pixelX - 14 - boardOffsetX()) / 18); }
-function yCoord(pixelY) { return Math.round((pixelY - 13 - boardOffsetY()) / 18); }
-function xPixels(x)     { return 14 + 18 * x; }
-function yPixels(y)     { return 13 + 18 * y; }
+function xCoord(pixelX) { return Math.round((pixelX - 14 - boardOffsetX()) / GRID_SPACING); }
+function yCoord(pixelY) { return Math.round((pixelY - 13 - boardOffsetY()) / GRID_SPACING); }
+function xPixels(x)     { return 14 + GRID_SPACING * x; }
+function yPixels(y)     { return 13 + GRID_SPACING * y; }
 
 function drawPeg(peg) {
   const pegColor = (peg.color === 0) ? 'black' : 'white';
   const image = addImgToBoard(
     `/images/pieces/${pegColor}peg.gif`, `peg${peg.getPegName()}-${bg}`,
-    xPixels(peg.x) - 6, yPixels(peg.y) - 6, 13, 13
+    xPixels(peg.x) - 6, yPixels(peg.y) - 6, PEG_SIZE, PEG_SIZE
   );
   eraseCrosshair();
   overlayNewPegMarker(image, pegColor);
@@ -758,7 +766,7 @@ function drawTickMarks(leftPos, topPos, color) {
 
   const vtick2 = getVtick('vtick2');
   vtick2.style.left       = `${leftPos}px`;
-  vtick2.style.top        = '464px';
+  vtick2.style.top        = (twixtGame.boardSize * GRID_SPACING + 32) + 'px';
   vtick2.style.borderLeft = tickStyle;
 
   const htick = getHtick('htick');
@@ -767,7 +775,7 @@ function drawTickMarks(leftPos, topPos, color) {
 
   const htick2 = getHtick('htick2');
   htick2.style.top       = `${topPos}px`;
-  htick2.style.left      = '466px';
+  htick2.style.left      = (twixtGame.boardSize * GRID_SPACING + 34) + 'px';
   htick2.style.borderTop = tickStyle;
 }
 
@@ -846,7 +854,7 @@ function addImgToBoard(imgfile, id, leftPos, topPos, width, height) {
   const b = $(`boardglass${bg}`);
 
   // Prevent the containing box from growing (needed in some browsers)
-  b.style.width = `${46 + twixtGame.board.size * 18}px`;
+  b.style.width = `${46 + twixtGame.board.size * GRID_SPACING}px`;
 
   const img = document.createElement('img');
   img.src    = imgfile;
