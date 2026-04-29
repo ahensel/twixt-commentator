@@ -12,8 +12,6 @@ const PEG_SIZE = 13;
 // const LINK_SHORT_DIM = Math.round(LINK_LENGTH / Math.sqrt(5)) + 3;  // 3 for a little overlap with pegs
 // const LINK_LONG_DIM = Math.round(LINK_LENGTH * 2 / Math.sqrt(5)) + 3;
 
-console.log('calculated short, long', LINK_SHORT_DIM, LINK_LONG_DIM);
-
 let turn = 1;
 let twixtGame = new TwixtController(24);
 let cutLink = null;
