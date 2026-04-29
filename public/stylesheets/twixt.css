@@ -280,6 +280,15 @@ span.userMoves {
   background-color: var(--color-hp-bg);
 }
 
+.copy-moves-btn {
+  cursor: pointer;
+  float: left;
+  user-select: none;
+  font-size: 12pt;
+  margin-right: 4px;
+  width: 13px;
+}
+
 div#comments {
   position: absolute;
   border: 1px solid var(--color-border);

@@ -168,6 +168,7 @@ function showUserMovesText() {
   let userMovesText = '';
 
   if (currentMoves.hasUserMoves()) {
+    $('copyMovesBtn').style.display = 'inline';
     userMovesText += "|<span class='userMoves'>";
     let moveNum = getUserMovesFirstNum();
 
@@ -179,6 +180,9 @@ function showUserMovesText() {
     });
 
     userMovesText += '</span>';
+  }
+  else {
+    $('copyMovesBtn').style.display = 'none';
   }
 
   $('userMoves').innerHTML = userMovesText;
@@ -600,6 +604,21 @@ function nextTurn() {
 
 function showTitle() {
   $('turn').innerHTML = `${turn === 1 ? 'White' : 'Black'}'s turn:`;
+}
+
+// ─── Clipboard ────────────────────────────────────────────────────────────────
+
+function copyMovesToClipboard() {
+  const plainText = '|' + currentMoves.getUserMoves()
+    .map((move, index) => `${index + currentMoveNum + 1}.${move.getText()}`)
+    .join(' ');
+
+  navigator.clipboard.writeText(plainText).then(() => {
+    const btn = $('copyMovesBtn');
+    const original = btn.textContent;
+    btn.textContent = '✓';
+    setTimeout(() => { btn.textContent = original; }, 1000);
+  });
 }
 
 // ─── Drawing ──────────────────────────────────────────────────────────────────
