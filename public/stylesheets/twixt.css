@@ -12,6 +12,7 @@
   --color-even-row:  #cccccc;
   --color-odd-row:   #eeeeee;
   --color-moves-bg:  #b0b0b0;
+  --color-currm-bg:  #ff8080;
   --color-user-bg:   #ff8080;
   --color-hp-bg:     #80d080;
   --color-header:    #a0a0ff;
@@ -269,6 +270,10 @@ span.userMoves {
   font-family: var(--font-moves);
   background-color: var(--color-user-bg);
   padding-right: 1px;
+}
+
+.currentMove {
+  background-color: var(--color-currm-bg);
 }
 
 .hoveredPeg {

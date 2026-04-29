@@ -327,7 +327,7 @@ function swapFirstPeg() {
     } else {
       uncolorMove(currentMoveNum);
       currentMoveNum++;
-      colorMove(currentMoveNum, '#ff8080');
+      colorMove(currentMoveNum);
     }
   }
 }
@@ -355,7 +355,7 @@ function showMovesUpTo(moves, moveNum) {
 
 function showAllMoves(moveNum, commentMoves) {
   uncolorMove(currentMoveNum);
-  colorMove(moveNum, '#ff8080');
+  colorMove(moveNum);
 
   currentMoves.jumpingTo = true;
   bg = 3 - bg;  // 1 → 2, 2 → 1 (double buffering)
@@ -415,13 +415,16 @@ function showAllMoves(moveNum, commentMoves) {
 }
 
 function uncolorMove(moveNum) {
-  colorMove(moveNum, '#b0b0b0');
-}
-
-function colorMove(moveNum, color) {
   if (moveNum != null && moveNum > 0) {
     const el = $(`move_${moveNum}`);
-    if (el) el.style.backgroundColor = color;
+    if (el) el.classList.remove('currentMove');
+  }
+}
+
+function colorMove(moveNum) {
+  if (moveNum != null && moveNum > 0) {
+    const el = $(`move_${moveNum}`);
+    if (el) el.classList.add('currentMove');
   }
 }
 
@@ -502,12 +505,15 @@ function mouseOverBoard(evt) {
     const y = yCoord(pixelY);
     const peg = twixtGame.board.getPeg(x, y);
 
+    if (peg) {
+      highlightMoveInSidebar(peg);
+    }
+
     if (!holdingForMarkers && twixtGame.board.isLegalSpot(x, y, turn)) {
       if (peg == null) {
         drawCrosshair(x, y, turn);
       } else {
         drawTickMarks(xPixels(x), yPixels(y), '#808080');
-        highlightMoveInSidebar(peg);
       }
     } else {
       eraseCrosshair();
@@ -534,8 +540,9 @@ function clickOnBoard(evt) {
     const peg = twixtGame.board.getPeg(x, y);
 
     if (peg == null && !holdingForMarkers && twixtGame.board.isLegalSpot(x, y, turn)) {
-      placePeg(x, y);
+      const peg = placePeg(x, y);
       showUserMovesText();
+      highlightMoveInSidebar(peg);
     } else if (linkCrossingPolicy === LINK_REMOVAL && peg != null && peg.color === turn) {
       placeLinks(peg, false);
       if (holdingForMarkers && numLinkableMarkers === 0) {
@@ -555,6 +562,7 @@ function placePeg(x, y) {
   placeLinks(peg, true);
   if (numLinkableMarkers === 0) nextTurn();
   else holdingForMarkers = true;
+  return peg;
 }
 
 function placeLinks(peg, isNew) {
@@ -579,7 +587,7 @@ function nextTurn() {
       currentMoves.moves[currentMoveNum].getText() === twixtGame.move.getText()) {
     uncolorMove(currentMoveNum);
     currentMoveNum++;
-    colorMove(currentMoveNum, '#ff8080');
+    colorMove(currentMoveNum);
   } else {
     currentMoves.commitMove(twixtGame);
   }
