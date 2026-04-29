@@ -611,7 +611,7 @@ function yPixels(y)     { return 13 + 18 * y; }
 function drawPeg(peg) {
   const pegColor = (peg.color === 0) ? 'black' : 'white';
   const image = addImgToBoard(
-    `/images/pieces/${pegColor}peg.gif`, 'peg',
+    `/images/pieces/${pegColor}peg.gif`, `peg${peg.getPegName()}-${bg}`,
     xPixels(peg.x) - 6, yPixels(peg.y) - 6, 13, 13
   );
   eraseCrosshair();
@@ -646,7 +646,7 @@ function drawLinkableMarkersInBox(minX, minY, maxX, maxY, color) {
 
 function drawLinkableMarkers(link) {
   drawLinkableMarkersInBox(link.minX() - 1, link.minY() - 1,
-                            link.maxX() + 1, link.maxY() + 1, link.peg1.color);
+                           link.maxX() + 1, link.maxY() + 1, link.peg1.color);
 }
 
 function eraseLinkableMarkersAround(peg) {

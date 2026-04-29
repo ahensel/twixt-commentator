@@ -25,6 +25,10 @@ class Peg {
       : this.getXYnotation(this.x, this.y);
   }
 
+  getPegName() {
+    return `_${this.x}_${this.y}`;
+  }
+
   getLinkIndex(dx, dy) {
     //    0     2
     //  1         3

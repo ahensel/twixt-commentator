@@ -12,7 +12,7 @@ class Link {
   }
 
   getLinkName() {
-    return `_${this.peg1.x}_${this.peg1.y}_${this.peg2.x}_${this.peg2.y}`;
+    return this.peg1.getPegName() + this.peg2.getPegName();
   }
 
   getNotation() {

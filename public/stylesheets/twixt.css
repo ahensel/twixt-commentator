@@ -279,7 +279,7 @@ div#comments {
   overflow: auto;
 }
 
-img.crosshair {
+img.crosshair, img.newPeg {
   display: none;
   position: absolute;
   width: 13px;
