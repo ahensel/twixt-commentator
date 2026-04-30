@@ -52,7 +52,7 @@ const Comment = sequelize.define('Comment', {
 
 const crypto = require('crypto');
 
-const PEPPER = '|!$:x~,,>;^!|';
+const PEPPER = process.env.PEPPER;
 
 const User = sequelize.define('User', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
