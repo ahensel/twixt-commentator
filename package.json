@@ -1,7 +1,7 @@
 {
-  "name": "twixt-commentator-express",
+  "name": "twixt-commentator",
   "version": "1.0.0",
-  "description": "Twixt Commentator – Express.js port of the legacy Rails 2.2.2 app",
+  "description": "Twixt Commentator",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

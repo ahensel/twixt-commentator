@@ -93,11 +93,13 @@ app.use((err, req, res, next) => {
 });
 
 // ── Start ─────────────────────────────────────────────────────────────────────
+const HOST = process.env.HOST || 'localhost';
+
 sequelize.authenticate()
   .then(() => {
     console.log('Database connection established.');
-    app.listen(PORT, () => {
-      console.log(`Twixt Commentator running at http://localhost:${PORT}`);
+    app.listen(PORT, HOST, () => {
+      console.log(`Twixt Commentator running at http://${HOST}:${PORT}`);
     });
   })
   .catch(err => {

@@ -50,10 +50,6 @@ const Comment = sequelize.define('Comment', {
 
 // ─── User ─────────────────────────────────────────────────────────────────────
 
-const crypto = require('crypto');
-
-const PEPPER = process.env.PEPPER;
-
 const User = sequelize.define('User', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING },
@@ -68,9 +64,10 @@ const User = sequelize.define('User', {
   timestamps: false,
 });
 
+const crypto = require('crypto');
 User._encryptedPassword = function (password, salt) {
   return crypto.createHash('sha1')
-    .update(password + PEPPER + salt)
+    .update(password + process.env.PEPPER + salt)
     .digest('hex');
 };
 
