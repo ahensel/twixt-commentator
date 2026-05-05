@@ -2,6 +2,8 @@
 
 A website for analyzing and commenting on size 24 TwixtPP games from the popular board game site Little Golem.
 
+Hosted at [twixt-commentator.duckdns.org](http://twixt-commentator.duckdns.org/)
+
 ## History
 
 In 2007, this was a project for me to learn Ruby on Rails. It continued getting used, so I continued hosting and maintaining it.
