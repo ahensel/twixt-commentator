@@ -622,12 +622,31 @@ function copyMovesToClipboard() {
     .map((move, index) => `${index + currentMoveNum + 1}.${move.getText()}`)
     .join(' ');
 
-  navigator.clipboard.writeText(plainText).then(() => {
+  const onSuccess = () => {
     const btn = $('copyMovesBtn');
     const original = btn.textContent;
     btn.textContent = '✓';
     setTimeout(() => { btn.textContent = original; }, 1000);
-  });
+  };
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(plainText).then(onSuccess);
+  } else {
+    // Fallback for non-secure contexts (HTTP)
+    const textarea = document.createElement('textarea');
+    textarea.value = plainText;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      onSuccess();
+    } catch (e) {
+      console.error('Failed to copy to clipboard');
+    }
+    document.body.removeChild(textarea);
+  }
 }
 
 // ─── Drawing ──────────────────────────────────────────────────────────────────
