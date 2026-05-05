@@ -33,14 +33,14 @@ scp .env.prod "${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_DIR}/.env"
 
 echo "==> Installing production dependencies on server…"
 ssh "${REMOTE_USER}@${REMOTE_HOST}" \
-  "cd ${REMOTE_DIR} && npm install --omit=dev"
+  "bash -lc 'cd ${REMOTE_DIR} && npm install --omit=dev'"
 
 echo "==> Restarting app with pm2…"
 ssh "${REMOTE_USER}@${REMOTE_HOST}" \
-  "cd ${REMOTE_DIR} && pm2 startOrRestart ecosystem.config.js --env production && pm2 save"
+  "bash -lc 'cd ${REMOTE_DIR} && pm2 startOrRestart ecosystem.config.js --env production && pm2 save'"
 
 echo "==> Installing nginx config and reloading…"
-ssh "${REMOTE_USER}@${REMOTE_HOST}" bash <<EOF
+ssh "${REMOTE_USER}@${REMOTE_HOST}" bash -l <<EOF
   set -e
   NGINX_CONF=/etc/nginx/sites-available/twixt-commentator
   sudo cp ${REMOTE_DIR}/nginx/twixt-commentator.conf "\$NGINX_CONF"
