@@ -32,7 +32,12 @@ app.use(bodyParser.urlencoded({ extended: true, encoding: 'utf-8' }));
 app.use(bodyParser.json());
 
 app.use(session({
-  secret: '_twixt_session_secret',
+  secret: process.env.SESSION_SECRET || (() => {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('SESSION_SECRET must be set in production');
+    }
+    return 'dev-only-insecure-secret';
+  })(),
   resave: false,
   saveUninitialized: false,
   name: '_twixt_session_id',
