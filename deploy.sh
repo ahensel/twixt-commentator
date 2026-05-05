@@ -33,7 +33,7 @@ scp .env.prod "${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_DIR}/.env"
 
 echo "==> Installing production dependencies on server…"
 ssh "${REMOTE_USER}@${REMOTE_HOST}" \
-  "bash -lc 'cd ${REMOTE_DIR} && npm install --omit=dev'"
+  "bash -lc 'cd ${REMOTE_DIR} && npm ci --omit=dev'"
 
 echo "==> Restarting app with pm2…"
 ssh "${REMOTE_USER}@${REMOTE_HOST}" \
