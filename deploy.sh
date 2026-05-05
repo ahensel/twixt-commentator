@@ -40,7 +40,7 @@ ssh "${REMOTE_USER}@${REMOTE_HOST}" \
   "cd ${REMOTE_DIR} && pm2 startOrRestart ecosystem.config.js --env production && pm2 save"
 
 echo "==> Installing nginx config and reloading…"
-ssh -t "${REMOTE_USER}@${REMOTE_HOST}" bash <<EOF
+ssh "${REMOTE_USER}@${REMOTE_HOST}" bash <<EOF
   set -e
   NGINX_CONF=/etc/nginx/sites-available/twixt-commentator
   sudo cp ${REMOTE_DIR}/nginx/twixt-commentator.conf "\$NGINX_CONF"
