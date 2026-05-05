@@ -54,9 +54,9 @@ function positionElements() {
   leftMargin = 10;
   topMargin  = 80;
 
-  const boardSize   = twixtGame.board.size;  // 24
-  const boardWidth  = 46 + boardSize * GRID_SPACING;   // 478
-  const boardHeight = 44 + boardSize * GRID_SPACING;   // 476
+  const boardPixels = twixtGame.board.size * GRID_SPACING;
+  const boardWidth  = 46 + boardPixels;   // 478
+  const boardHeight = 44 + boardPixels;   // 476
 
   Object.assign($('turn').style, { left: `${leftMargin}px`, top: `${topMargin}px` });
 
@@ -778,6 +778,7 @@ function drawCrosshair(x, y) {
 }
 
 function drawTickMarks(leftPos, topPos, color) {
+  const boardPixels = twixtGame.board.size * GRID_SPACING;
   const tickStyle = `1px solid ${color}`;
 
   const vtick = getVtick('vtick');
@@ -786,7 +787,7 @@ function drawTickMarks(leftPos, topPos, color) {
 
   const vtick2 = getVtick('vtick2');
   vtick2.style.left       = `${leftPos}px`;
-  vtick2.style.top        = (twixtGame.boardSize * GRID_SPACING + 32) + 'px';
+  vtick2.style.top        = (boardPixels + 32) + 'px';
   vtick2.style.borderLeft = tickStyle;
 
   const htick = getHtick('htick');
@@ -795,7 +796,7 @@ function drawTickMarks(leftPos, topPos, color) {
 
   const htick2 = getHtick('htick2');
   htick2.style.top       = `${topPos}px`;
-  htick2.style.left      = (twixtGame.boardSize * GRID_SPACING + 34) + 'px';
+  htick2.style.left      = (boardPixels + 34) + 'px';
   htick2.style.borderTop = tickStyle;
 }
 
