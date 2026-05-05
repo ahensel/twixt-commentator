@@ -5,8 +5,10 @@
 #   ./deploy.sh
 #
 # Prerequisites on the remote server (one-time setup):
+#   sudo apt install -y nginx
 #   npm install -g pm2
 #   pm2 startup   # follow the printed instructions to enable auto-start on reboot
+#   sudo nginx -t && sudo systemctl enable nginx
 
 set -euo pipefail
 
@@ -36,5 +38,15 @@ ssh "${REMOTE_USER}@${REMOTE_HOST}" \
 echo "==> Restarting app with pm2…"
 ssh "${REMOTE_USER}@${REMOTE_HOST}" \
   "cd ${REMOTE_DIR} && pm2 startOrRestart ecosystem.config.js --env production && pm2 save"
+
+echo "==> Installing nginx config and reloading…"
+ssh -t "${REMOTE_USER}@${REMOTE_HOST}" bash <<EOF
+  set -e
+  NGINX_CONF=/etc/nginx/sites-available/twixt-commentator
+  sudo cp ${REMOTE_DIR}/nginx/twixt-commentator.conf "\$NGINX_CONF"
+  sudo ln -sf "\$NGINX_CONF" /etc/nginx/sites-enabled/twixt-commentator
+  sudo nginx -t
+  sudo systemctl reload nginx
+EOF
 
 echo "==> Done. Check status with: ssh ${REMOTE_USER}@${REMOTE_HOST} 'pm2 status'"
