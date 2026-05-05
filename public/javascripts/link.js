@@ -57,3 +57,5 @@ class Link {
   minY() { return Math.min(this.peg1.y, this.peg2.y); }
   maxY() { return Math.max(this.peg1.y, this.peg2.y); }
 }
+
+if (typeof module !== 'undefined') module.exports = { Link };

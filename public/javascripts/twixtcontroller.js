@@ -1,7 +1,7 @@
 class TwixtController {
   constructor(size) {
     this.board = new TwixtBoard(size);
-    this.move = new Move();
+    this.move = new EditMove();
     this.dx = [ 1,  2, 2, 1, -1, -2, -2, -1];
     this.dy = [-2, -1, 1, 2,  2,  1, -1, -2];
   }

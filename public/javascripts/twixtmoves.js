@@ -14,7 +14,7 @@ class TwixtMoves {
         this.userMoves.push(controller.move);
       }
     }
-    controller.move = new Move();
+    controller.move = new EditMove();
   }
 
   swapFirstMove() {

@@ -1,4 +1,83 @@
-class Move {
+// ─── Game-move constants ───────────────────────────────────────────────────────
+// These represent moves as recorded in the game log (parsed from LittleGolem).
+
+const PEG = 1;
+const SWAP = 2;
+const RESIGN = 3;
+const DRAW = 4;
+const FORFEIT = 5;
+const LOST = 6;
+
+class AbstractMove {
+  get color() {
+    if (this.player === 1) return 'white';
+    if (this.player === 2) return 'black';
+    return null;
+  }
+}
+
+class Move extends AbstractMove {
+  constructor(x, y, player) {
+    super();
+    this.x = x;
+    this.y = y;
+    this.player = player;
+    this.type = PEG;
+  }
+
+  get text() {
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
+    return letters[this.x] + String(this.y + 1);
+  }
+
+  // getText() alias used by front-end display code.
+  getText() { return this.text; }
+}
+
+Move.Peg     = PEG;
+Move.Swap    = SWAP;
+Move.Resign  = RESIGN;
+Move.Draw    = DRAW;
+Move.Forfeit = FORFEIT;
+Move.Lost    = LOST;
+
+class SwapMove extends AbstractMove {
+  constructor(player) { super(); this.player = player; this.type = SWAP; }
+  get text() { return 'swap'; }
+  getText()  { return this.text; }
+}
+
+class ResignMove extends AbstractMove {
+  constructor(player) { super(); this.player = player; this.type = RESIGN; }
+  get text() { return 'resign'; }
+  getText()  { return this.text; }
+}
+
+class DrawMove extends AbstractMove {
+  constructor(player) { super(); this.player = player; this.type = DRAW; }
+  get text() { return 'draw'; }
+  getText()  { return this.text; }
+}
+
+class ForfeitMove extends AbstractMove {
+  constructor(player) { super(); this.player = player; this.type = FORFEIT; }
+  get text() { return 'forfeit'; }
+  getText()  { return this.text; }
+}
+
+class LostMove extends AbstractMove {
+  constructor(player) { super(); this.player = player; this.type = LOST; }
+  get text() { return 'lost'; }
+  getText()  { return this.text; }
+}
+
+// ─── Editor move ──────────────────────────────────────────────────────────────
+// Tracks the link additions/removals and peg placement for a single interactive
+// editing step on the board.  This is a purely front-end concept used by
+// TwixtController and TwixtMoves to build the move notation displayed in the
+// sidebar and to support undo.
+
+class EditMove {
   constructor() {
     this.removedLinks = [];
     this.addedLinks = [];
@@ -50,8 +129,6 @@ class Move {
   }
 }
 
-class SwapMove   { getText() { return 'swap';    } }
-class ResignMove { getText() { return 'resign';  } }
-class DrawMove   { getText() { return 'draw';    } }
-class ForfeitMove{ getText() { return 'forfeit'; } }
-class LostMove   { getText() { return 'lost';    } }
+if (typeof module !== 'undefined') {
+  module.exports = { Move, SwapMove, ResignMove, DrawMove, ForfeitMove, LostMove, EditMove };
+}

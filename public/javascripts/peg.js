@@ -59,3 +59,5 @@ class Peg {
     return !!this.getLink(dx, dy);
   }
 }
+
+if (typeof module !== 'undefined') module.exports = { Peg };
