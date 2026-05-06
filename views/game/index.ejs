@@ -19,6 +19,88 @@
 
   <div id="turn" class="turn"></div>
   <div id="board" class="board">
+    <%# CSS-rendered game board %>
+    <div id="twixt-board" class="twixt-board">
+      <div class="border"></div>
+      <div class="crucial-diagonals">
+        <div class="top-shallow draw2diagonals"></div>
+        <div class="top-steep draw2diagonals"></div>
+        <div class="bottom-shallow draw2diagonals"></div>
+        <div class="bottom-steep draw2diagonals"></div>
+      </div>
+      <div class="holes-layer">
+        <div class="upper left corner"></div>
+        <div class="upper right corner"></div>
+        <div class="lower left corner"></div>
+        <div class="lower right corner"></div>
+      </div>
+      <div class="row-numbers left-side">
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+      </div>
+      <div class="row-numbers right-side">
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+      </div>
+      <div class="column-letters top-side">
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div>
+      </div>
+      <div class="column-letters2 top-side right-half">
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div>
+      </div>
+      <div class="column-letters bottom-side">
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div>
+      </div>
+      <div class="column-letters2 bottom-side right-half">
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div>
+      </div>
+    </div>
     <%# preload pieces %>
     <img id="crosshair" class="crosshair" src="/images/pieces/crosshair.gif" galleryimg="no" alt="">
     <img class="piece" src="/images/pieces/whitepeg.gif" galleryimg="no" alt="">
@@ -27,7 +109,6 @@
     <img class="piece" src="/images/pieces/wswlink.gif" galleryimg="no" alt="">
     <img class="piece" src="/images/pieces/sselink.gif" galleryimg="no" alt="">
     <img class="piece" src="/images/pieces/sswlink.gif" galleryimg="no" alt="">
-    <img id="boardImage" src="/images/pieces/board.gif" galleryimg="no" alt="">
   </div>
 
   <div id="boardglass1" class="boardglass"></div>

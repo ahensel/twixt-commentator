@@ -55,14 +55,18 @@ function positionElements() {
   topMargin  = 80;
 
   const boardPixels = twixtGame.board.size * GRID_SPACING;
-  const boardWidth  = 46 + boardPixels;   // 478
-  const boardHeight = 44 + boardPixels;   // 476
+  const boardWidth  = 45 + boardPixels;
+  const boardHeight = 45 + boardPixels;
 
   Object.assign($('turn').style, { left: `${leftMargin}px`, top: `${topMargin}px` });
 
   Object.assign($('board').style, {
     left: `${leftMargin}px`, top: `${topMargin + 20}px`,
     width: `${boardWidth}px`, height: `${boardHeight}px`,
+  });
+
+  Object.assign($('twixt-board').style, {
+    width: `${boardWidth}px`, height: `${boardHeight}px`
   });
 
   Object.assign($('boardglass1').style, {
@@ -694,16 +698,16 @@ function boardOffsetY() { return $('board')?.offsetTop; }
 
 function xDelta(pixelX) { return pixelX - xPixels(xCoord(pixelX)) - boardOffsetX(); }
 function yDelta(pixelY) { return pixelY - yPixels(yCoord(pixelY)) - boardOffsetY(); }
-function xCoord(pixelX) { return Math.round((pixelX - 14 - boardOffsetX()) / GRID_SPACING); }
-function yCoord(pixelY) { return Math.round((pixelY - 13 - boardOffsetY()) / GRID_SPACING); }
-function xPixels(x)     { return 14 + GRID_SPACING * x; }
-function yPixels(y)     { return 13 + GRID_SPACING * y; }
+function xCoord(pixelX) { return Math.round((pixelX - 12.5 - boardOffsetX()) / GRID_SPACING); }
+function yCoord(pixelY) { return Math.round((pixelY - 12.5 - boardOffsetY()) / GRID_SPACING); }
+function xPixels(x)     { return 12.5 + GRID_SPACING * x; }
+function yPixels(y)     { return 12.5 + GRID_SPACING * y; }
 
 function drawPeg(peg) {
   const pegColor = (peg.color === 0) ? 'black' : 'white';
   const image = addImgToBoard(
     `/images/pieces/${pegColor}peg.gif`, `peg${peg.getPegName()}-${bg}`,
-    xPixels(peg.x) - 6, yPixels(peg.y) - 6, PEG_SIZE, PEG_SIZE
+    xPixels(peg.x) - 7, yPixels(peg.y) - 7, PEG_SIZE, PEG_SIZE
   );
   eraseCrosshair();
   overlayNewPegMarker(image, pegColor);
@@ -787,7 +791,7 @@ function drawTickMarks(leftPos, topPos, color) {
 
   const vtick2 = getVtick('vtick2');
   vtick2.style.left       = `${leftPos}px`;
-  vtick2.style.top        = (boardPixels + 32) + 'px';
+  vtick2.style.top        = (boardPixels + 36) + 'px';
   vtick2.style.borderLeft = tickStyle;
 
   const htick = getHtick('htick');
@@ -865,9 +869,9 @@ function drawLinkGeneral(link, linkType) {
   }${linkType}.gif`;
 
   if (Math.abs(dx) === 1) {
-    addImgToBoard(linkImg, id, xPixels(link.minX()) + 2, yPixels(link.minY()) + 5, 15, 27);
+    addImgToBoard(linkImg, id, xPixels(link.minX()) + 1, yPixels(link.minY()) + 4, 15, 27);
   } else {
-    addImgToBoard(linkImg, id, xPixels(link.minX()) + 5, yPixels(link.minY()) + 2, 27, 15);
+    addImgToBoard(linkImg, id, xPixels(link.minX()) + 4, yPixels(link.minY()) + 1, 27, 15);
   }
 }
 

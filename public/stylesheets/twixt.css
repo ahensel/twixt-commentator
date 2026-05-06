@@ -8,7 +8,6 @@
   --color-border:    #000000;
   --color-error:     #ff0000;
   --color-heading:   navy;
-  --color-board:     #efffef;
   --color-even-row:  #cccccc;
   --color-odd-row:   #eeeeee;
   --color-moves-bg:  #b0b0b0;
@@ -203,17 +202,183 @@ div.board,
 
 div.board {
   box-sizing: content-box;
-  background-color: var(--color-board);
-  border: 1px solid var(--color-border);
   top: 100px;
   left: 10px;
-  width: 478px;
-  height: 476px;
+}
+
+/* ── CSS-rendered Twixt board (replaces board.gif) ─────────────── */
+div.board .twixt-board {
+  --diagonals-color: #8db43e;
+  --hole-color: #000;
+  --playing-area-color: #f2fff0;
+  --tb-border-color: #e6e6e6;
+  --lr-border-color: #a8a8a8;
+
+  font-family: var(--font-moves);
+  font-size: 12px;
+  font-weight: 700;
+  margin: 0;
+  overflow: hidden;
+  min-width: 144px;
+  min-height: 144px;
+  border: 1px solid var(--color-border);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 18px);
+  grid-template-rows: repeat(auto-fill, 18px);
+  padding: 21px;
+  z-index: 0;
+}
+
+div.board .border {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  background-color: var(--playing-area-color);
+  border: 18px solid;
+  border-color:
+    var(--tb-border-color) var(--lr-border-color);
+}
+
+div.board .crucial-diagonals {
+  position: relative;
+  grid-column: 2 / -2;
+  grid-row: 2 / -2;
+  margin: 9px;
+  overflow: hidden;
+  z-index: 1;
+}
+div.board .crucial-diagonals .top-shallow {
+  top: 0;
+  aspect-ratio: 2/1;
+}
+div.board .crucial-diagonals .top-steep {
+  top: 0;
+  aspect-ratio: 1/2;
+}
+div.board .crucial-diagonals .bottom-shallow {
+  bottom: 0;
+  aspect-ratio: 2/1;
+}
+div.board .crucial-diagonals .bottom-steep {
+  bottom: 0;
+  aspect-ratio: 1/2;
+}
+div.board .crucial-diagonals .draw2diagonals {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(
+      to top left,
+      transparent 0%,
+      transparent calc(50% - 0.8px),
+      var(--diagonals-color) 50%,
+      transparent calc(50% + 0.8px),
+      transparent 100%
+    ),
+    linear-gradient(
+      to top right,
+      transparent 0%,
+      transparent calc(50% - 0.8px),
+      var(--diagonals-color) 50%,
+      transparent calc(50% + 0.8px),
+      transparent 100%
+    );
+}
+
+div.board .holes-layer {
+  display: grid;
+  grid-column: 1/-1;
+  grid-row: 1/-1;
+  grid-template-columns: repeat(auto-fill, 18px);
+  grid-template-rows: repeat(auto-fill, 18px);
+  background: radial-gradient(
+      circle at center,
+      var(--hole-color) 0%,
+      var(--hole-color) 15%,
+      transparent 15%
+    )
+    0 0 / 18px 18px;
+  z-index: 2;
+}
+div.board .corner {
+  border: 9px solid;
+}
+div.board .corner.upper {
+  grid-row: 1 / 1;
+  border-bottom-color: var(--lr-border-color);
+  border-top-color: var(--tb-border-color);
+}
+div.board .corner.lower {
+  grid-row: -2 / -2;
+  border-bottom-color: var(--tb-border-color);
+  border-top-color: var(--lr-border-color);
+}
+div.board .corner.left {
+  grid-column: 1 / 1;
+  border-left-color: var(--lr-border-color);
+  border-right-color: var(--tb-border-color);
+}
+div.board .corner.right {
+  grid-column: -2 / -2;
+  border-left-color: var(--tb-border-color);
+  border-right-color: var(--lr-border-color);
+}
+
+div.board .left-side {
+  grid-column: 1;
+  margin-left: -27px;
+  text-align: right;
+}
+div.board .right-side {
+  grid-column: -1;
+  padding-left: 3px;
+  text-align: left;
+}
+div.board .row-numbers {
+  grid-row: 1 / -1;
+  line-height: 18px;
+  width: 24px;
+  overflow-y: hidden;
+  overflow-x: visible;
+  counter-reset: rownum;
+}
+div.board .row-numbers ::before {
+  counter-increment: rownum;
+  content: counter(rownum);
+}
+
+div.board .top-side {
+  grid-row: 1;
+  margin-top: -18px;
+}
+div.board .bottom-side {
+  grid-row: -1;
+}
+div.board .right-half {
+  margin-left: 468px;
+}
+div.board .column-letters, div.board .column-letters2 {
+  grid-column: 1 / -1;
+  line-height: 18px;
+  height: 18px;
+  overflow: hidden;
+  counter-reset: colnum;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 18px);
+  justify-items: center;
+}
+div.board .column-letters ::before {
+  counter-increment: colnum;
+  content: counter(colnum, lower-alpha);
+}
+div.board .column-letters2 ::before {
+  counter-increment: colnum;
+  content: counter(colnum, upper-alpha);
 }
 
 div.boardglass,
 div.markerglass {
   background-color: transparent;
+  z-index: 5;
 }
 
 div.noscript {
