@@ -28,7 +28,7 @@
 
 body {
   font-family: var(--font-stack);
-  font-size: 11pt;
+  font-size: 0.92rem;
   background-color: var(--color-bg);
   margin: 0;
 }
@@ -48,27 +48,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 30pt;
+  font-size: 2.5rem;
   text-align: center;
 }
 
 h2 {
-  font-size: 20pt;
+  font-size: 1.67rem;
   padding: 5px;
 }
 
 p {
-  font-size: 11pt;
+  font-size: 0.92rem;
 }
 
 .news {
-  font-size: 10pt;  
+  font-size: 0.83rem;
   text-align: left;
   font-weight: bold;  
 }
 
 pre {
-  font-size: 9pt;
+  font-size: 0.75rem;
 }
 
 /* ── Links ─────────────────────────────────────────────────────── */
@@ -96,14 +96,14 @@ a.white {
   color: var(--color-bg);
   text-decoration: none;
   font-weight: bold;
-  font-size: 10pt;
+  font-size: 0.83rem;
 }
 
 a.black {
   color: var(--color-text);
   text-decoration: none;
   font-weight: bold;
-  font-size: 10pt;
+  font-size: 0.83rem;
 }
 
 a.white:hover,
@@ -115,13 +115,13 @@ a.black:hover {
 span.white {
   color: var(--color-bg);
   font-weight: bold;
-  font-size: 10pt;
+  font-size: 0.83rem;
 }
 
 span.black {
   color: var(--color-text);
   font-weight: bold;
-  font-size: 10pt;
+  font-size: 0.83rem;
 }
 
 /* ── Error / Required ──────────────────────────────────────────── */
@@ -145,7 +145,7 @@ table.main {
 td {
   color: var(--color-text);
   font-family: var(--font-stack);
-  font-size: 10pt;
+  font-size: 0.83rem;
 }
 
 td.main {
@@ -160,7 +160,7 @@ td.italic      { font-style: italic; }
 td.bold       { font-weight: bold; }
 
 th {
-  font-size: 10pt;
+  font-size: 0.83rem;
 }
 
 th.main {
@@ -215,7 +215,7 @@ div.board .twixt-board {
   --lr-border-color: #a8a8a8;
 
   font-family: var(--font-moves);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 700;
   margin: 0;
   overflow: hidden;
@@ -341,7 +341,7 @@ div.board .row-numbers {
   overflow-x: visible;
   counter-reset: rownum;
 }
-div.board .row-numbers ::before {
+div.board .row-numbers div::before {
   counter-increment: rownum;
   content: counter(rownum);
 }
@@ -366,11 +366,11 @@ div.board .column-letters, div.board .column-letters2 {
   grid-template-columns: repeat(auto-fill, 18px);
   justify-items: center;
 }
-div.board .column-letters ::before {
+div.board .column-letters div::before {
   counter-increment: colnum;
   content: counter(colnum, lower-alpha);
 }
-div.board .column-letters2 ::before {
+div.board .column-letters2 div::before {
   counter-increment: colnum;
   content: counter(colnum, upper-alpha);
 }
@@ -390,7 +390,7 @@ div.noscript {
   left: 70px;
   width: 338px;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 1.25rem;
   border: 1px solid var(--color-error);
   padding: 10px;
   background-color: var(--color-bg);
@@ -399,7 +399,7 @@ div.noscript {
 div.turn {
   position: absolute;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 1rem;
   height: 25px;
 }
 
@@ -453,7 +453,7 @@ span.userMoves {
   cursor: pointer;
   float: left;
   user-select: none;
-  font-size: 12pt;
+  font-size: 1rem;
   margin-right: 4px;
   width: 13px;
 }
@@ -480,20 +480,20 @@ img.piece {
 
 /* ── Game results ──────────────────────────────────────────────── */
 .winner {
-  font-size: 12pt;
+  font-size: 1rem;
   font-weight: normal;
   text-decoration: underline;
 }
 
 .loser {
-  font-size: 12pt;
+  font-size: 1rem;
   font-weight: normal;
 }
 
 /* ── Comments ──────────────────────────────────────────────────── */
 .commentHeader,
 .previewHeader {
-  font-size: 10pt;
+  font-size: 0.83rem;
   font-weight: normal;
   margin-left: -10px;
   padding-left: 10px;
@@ -509,13 +509,13 @@ img.piece {
 
 .commentTextArea {
   width: 100%;
-  font-size: 10pt;
+  font-size: 0.83rem;
   font-family: var(--font-stack);
   border: 1px solid var(--color-border);
 }
 
 div#current_comments {
-  font-size: 10pt;  
+  font-size: 0.83rem;  
 }
 
 /* ── Login box ─────────────────────────────────────────────────── */
@@ -527,7 +527,7 @@ div.loginBox {
 }
 
 div.loginBox label {
-  font-size: 9pt;
+  font-size: 0.75rem;
   text-align: right;
   float: left;
   width: 5em;
@@ -535,7 +535,7 @@ div.loginBox label {
 }
 
 div.loginBox input {
-  font-size: 9pt;
+  font-size: 0.75rem;
 }
 
 div.pleaseRegister {
@@ -584,7 +584,7 @@ div.pleaseRegister {
   position: absolute;
   top: 8px;
   right: 12px;
-  font-size: 18pt;
+  font-size: 1.5rem;
   font-weight: bold;
   cursor: pointer;
   color: var(--color-text);
