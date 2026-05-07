@@ -61,8 +61,8 @@ function positionElements() {
   topMargin  = 80;
 
   const boardPixels = BOARD_SIZE * GRID_SPACING;
-  const boardWidth  = 45 + boardPixels;
-  const boardHeight = 45 + boardPixels;
+  const boardWidth  = 51 + boardPixels;
+  const boardHeight = 51 + boardPixels;
 
   Object.assign($('turn').style, { left: `${leftMargin}px`, top: `${topMargin}px` });
 
@@ -716,8 +716,8 @@ function xDelta(pixelX) { return pixelX - xPixels(xCoord(pixelX)) - boardOffsetX
 function yDelta(pixelY) { return pixelY - yPixels(yCoord(pixelY)) - boardOffsetY(); }
 function xCoord(pixelX) { return Math.round((pixelX - 12.5 - boardOffsetX()) / GRID_SPACING); }
 function yCoord(pixelY) { return Math.round((pixelY - 12.5 - boardOffsetY()) / GRID_SPACING); }
-function xPixels(x)     { return 12.5 + GRID_SPACING * x; }
-function yPixels(y)     { return 12.5 + GRID_SPACING * y; }
+function xPixels(x)     { return 15.5 + GRID_SPACING * x; }
+function yPixels(y)     { return 15.5 + GRID_SPACING * y; }
 
 function drawPeg(peg) {
   const pegColor = (peg.color === 0) ? 'black' : 'white';
@@ -807,7 +807,7 @@ function drawTickMarks(leftPos, topPos, color) {
 
   const vtick2 = getVtick('vtick2');
   vtick2.style.left       = `${leftPos}px`;
-  vtick2.style.top        = (boardPixels + 34) + 'px';
+  vtick2.style.top        = (boardPixels + 39) + 'px';
   vtick2.style.borderLeft = tickStyle;
 
   const htick = getHtick('htick');
@@ -816,7 +816,7 @@ function drawTickMarks(leftPos, topPos, color) {
 
   const htick2 = getHtick('htick2');
   htick2.style.top       = `${topPos}px`;
-  htick2.style.left      = (boardPixels + 34) + 'px';
+  htick2.style.left      = (boardPixels + 39) + 'px';
   htick2.style.borderTop = tickStyle;
 }
 

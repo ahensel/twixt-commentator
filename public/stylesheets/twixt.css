@@ -225,7 +225,7 @@ div.board .twixt-board {
   display: grid;
   grid-template-columns: repeat(auto-fill, 18px);
   grid-template-rows: repeat(auto-fill, 18px);
-  padding: 21px;
+  padding: 24px;
   z-index: 0;
 }
 
