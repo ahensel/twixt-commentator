@@ -26,7 +26,7 @@ class Move extends AbstractMove {
   }
 
   get text() {
-    const letters = 'abcdefghijklmnopqrstuvwxyz';
+    const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     return letters[this.x] + String(this.y + 1);
   }
 

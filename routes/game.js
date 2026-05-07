@@ -36,6 +36,18 @@ function parseGameNumber(gidStr, flash) {
   return n;
 }
 
+// LittleGolem SGF is encoding coordinates beyond 'z' (26) as simply further up the ASCII chart.
+// The problem is, in Size 48 games, this gets into codes above 127, which causes character encoding headaches.
+// This translates coordinates beyond 'z' to the range 'A-Z', which is in agreement with board coordinates.
+function fixSgfCoordinates(sgf) {
+  return sgf.replace(/([br])\[(.)(.)([\s\S]*?\])/g, (_, color, c1, c2, rest) => {
+    const fix = c => (c.charCodeAt(0) > 122 && c.charCodeAt(0) < 149)
+      ? String.fromCharCode(c.charCodeAt(0) - 58)
+      : c;
+    return `${color}[${fix(c1)}${fix(c2)}${rest}`;
+  });
+}
+
 async function getGameFromLittleGolem(gameNumber, flash) {
   const cacheBust = Math.random().toString();
   let response;
@@ -56,9 +68,10 @@ async function getGameFromLittleGolem(gameNumber, flash) {
     return { game: null, parser: null };
   }
 
-  const lgData = response.body.trim();
+  const lgData = fixSgfCoordinates(response.body.trim());
 
-  if (!lgData.includes('SZ[24]')) {
+  // if the EV[] (event) tag does not contain the string 'twixt' somewhere between the square brackets
+  if (!/EV\[[^\]]*twixt[^\]]*\]/i.test(lgData)) {
     flash.error = `Game ${gameNumber} is not a Twixt game.`;
     return { game: null, parser: null };
   }

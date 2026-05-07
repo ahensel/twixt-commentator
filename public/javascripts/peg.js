@@ -8,7 +8,7 @@ class Peg {
   }
 
   getXnotation(x) {
-    return ' abcdefghijklmnopqrstuvwx'.charAt(x);
+    return ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.charAt(x);
   }
 
   getYnotation(y) {

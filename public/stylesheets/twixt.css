@@ -375,10 +375,13 @@ div.board .column-letters2 ::before {
   content: counter(colnum, upper-alpha);
 }
 
-div.boardglass,
-div.markerglass {
+div.boardglass {
   background-color: transparent;
   z-index: 5;
+}
+div.markerglass {
+  background-color: transparent;
+  z-index: 10;
 }
 
 div.noscript {

@@ -179,6 +179,7 @@
 
   <% if (parser) { %>
     <input type="hidden" id="movesJson" name="movesJson" value="<%= JSON.stringify(parser.getMovesList()) %>">
+    <input type="hidden" id="boardSize" name="boardSize" value="<%= parser.getBoardSize() %>">
   <% } %>
 <% } %>
 

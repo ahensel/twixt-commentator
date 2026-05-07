@@ -12,8 +12,10 @@ const PEG_SIZE = 13;
 // const LINK_SHORT_DIM = Math.round(LINK_LENGTH / Math.sqrt(5)) + 3;  // 3 for a little overlap with pegs
 // const LINK_LONG_DIM = Math.round(LINK_LENGTH * 2 / Math.sqrt(5)) + 3;
 
+let BOARD_SIZE;
+
 let turn = 1;
-let twixtGame = new TwixtController(24);
+let twixtGame = null;
 let cutLink = null;
 let holdingForMarkers = false;
 let numLinkableMarkers = 0;
@@ -31,6 +33,10 @@ document.addEventListener('keypress', e => keyIntercept(e));
 
 window.addEventListener('load', () => {
   disableSelections();
+
+  BOARD_SIZE = parseInt($('boardSize').value, 10);
+  twixtGame = new TwixtController(BOARD_SIZE);
+
   positionElements();
   showMovesOnLoad();
 });
@@ -54,7 +60,7 @@ function positionElements() {
   leftMargin = 10;
   topMargin  = 80;
 
-  const boardPixels = twixtGame.board.size * GRID_SPACING;
+  const boardPixels = BOARD_SIZE * GRID_SPACING;
   const boardWidth  = 45 + boardPixels;
   const boardHeight = 45 + boardPixels;
 
@@ -287,6 +293,18 @@ function getCommentPegErrors(moves) {
   return errors;
 }
 
+function getXcoordinate(pegString) {
+}
+
+function getPegCoordinates(pegString) {
+  const xChar = pegString.substr(0, 1);
+  const x = (BOARD_SIZE < 27)? xChar.toUpperCase().charCodeAt(0) - 64 : 
+  ((xChar >= 'a')? xChar.charCodeAt(0) - 96 : xChar.charCodeAt(0) - 38);
+  const y = parseInt(pegString.substr(1), 10);
+
+  return [x, y];
+}
+
 function getNextCommentPegError(pegString, movesSoFar) {
   if (pegString === 'swap') {
     const pegsSoFar = twixtGame.board.getAllPegs().length + movesSoFar;
@@ -295,8 +313,7 @@ function getNextCommentPegError(pegString, movesSoFar) {
     return '';
   }
 
-  const x = pegString.toUpperCase().charCodeAt(0) - 64;
-  const y = parseInt(pegString.substr(1), 10);
+  const [x, y] = getPegCoordinates(pegString);
 
   if (twixtGame.board.getPeg(x, y) != null) {
     return `- Peg ${pegString} cannot be placed because there is already a peg on that spot.\n`;
@@ -311,8 +328,7 @@ function placePegByNotation(pegString) {
   if (pegString.toLowerCase() === 'swap') {
     swapFirstPeg();
   } else {
-    const x = pegString.toUpperCase().charCodeAt(0) - 64;
-    const y = parseInt(pegString.substr(1), 10);
+    const [x, y] = getPegCoordinates(pegString);
     if (twixtGame.board.getPeg(x, y) == null && twixtGame.board.isLegalSpot(x, y, turn)) {
       placePeg(x, y);
     }
@@ -428,7 +444,7 @@ function showAllMoves(moveNum, commentMoves) {
   $(`boardglass${3 - bg}`).style.display    = 'none';
 
   // Safari loses the new peg marker unless we put its div back on top
-  $('markerglass').style.zIndex = $(`boardglass${bg}`).style.zIndex + 1;
+  $('markerglass').style.zIndex = 10; //$(`boardglass${bg}`).style.zIndex + 1;
 }
 
 function uncolorMove(moveNum) {
@@ -495,7 +511,7 @@ function nextButton() {
 
 function clearBoard() {
   turn = 1;
-  twixtGame = new TwixtController(24);
+  twixtGame = new TwixtController(BOARD_SIZE);
   cutLink = null;
   holdingForMarkers = false;
   numLinkableMarkers = 0;
@@ -611,7 +627,7 @@ function nextTurn() {
   turn = 1 - turn;
   showTitle();
   if (linkCrossingPolicy === LINK_REMOVAL) {
-    drawLinkableMarkersInBox(1, 1, twixtGame.board.size, twixtGame.board.size, turn);
+    drawLinkableMarkersInBox(1, 1, BOARD_SIZE, BOARD_SIZE, turn);
   }
 }
 
@@ -782,7 +798,7 @@ function drawCrosshair(x, y) {
 }
 
 function drawTickMarks(leftPos, topPos, color) {
-  const boardPixels = twixtGame.board.size * GRID_SPACING;
+  const boardPixels = BOARD_SIZE * GRID_SPACING;
   const tickStyle = `1px solid ${color}`;
 
   const vtick = getVtick('vtick');
@@ -791,7 +807,7 @@ function drawTickMarks(leftPos, topPos, color) {
 
   const vtick2 = getVtick('vtick2');
   vtick2.style.left       = `${leftPos}px`;
-  vtick2.style.top        = (boardPixels + 36) + 'px';
+  vtick2.style.top        = (boardPixels + 34) + 'px';
   vtick2.style.borderLeft = tickStyle;
 
   const htick = getHtick('htick');
@@ -879,7 +895,7 @@ function addImgToBoard(imgfile, id, leftPos, topPos, width, height) {
   const b = $(`boardglass${bg}`);
 
   // Prevent the containing box from growing (needed in some browsers)
-  b.style.width = `${46 + twixtGame.board.size * GRID_SPACING}px`;
+  b.style.width = `${46 + BOARD_SIZE * GRID_SPACING}px`;
 
   const img = document.createElement('img');
   img.src    = imgfile;
