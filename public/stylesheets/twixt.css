@@ -92,36 +92,29 @@ select:focus {
   border-radius: 2px;
 }
 
-a.white {
-  color: var(--color-bg);
+/* ── Colored text/link variants ────────────────────────────────── */
+a.white,
+a.black,
+span.white,
+span.black {
   text-decoration: none;
   font-weight: bold;
   font-size: 0.83rem;
 }
 
-a.black {
+a.white,
+span.white {
+  color: var(--color-bg);
+}
+
+a.black,
+span.black {
   color: var(--color-text);
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 0.83rem;
 }
 
 a.white:hover,
 a.black:hover {
   text-decoration: underline;
-}
-
-/* ── Utility text classes ──────────────────────────────────────── */
-span.white {
-  color: var(--color-bg);
-  font-weight: bold;
-  font-size: 0.83rem;
-}
-
-span.black {
-  color: var(--color-text);
-  font-weight: bold;
-  font-size: 0.83rem;
 }
 
 /* ── Error / Required ──────────────────────────────────────────── */
@@ -148,12 +141,6 @@ td {
   font-size: 0.83rem;
 }
 
-td.main {
-  border-left: 1px solid var(--color-border);
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
 td.text-right  { text-align: right; }
 td.text-center { text-align: center; }
 td.italic      { font-style: italic; }
@@ -163,18 +150,23 @@ th {
   font-size: 0.83rem;
 }
 
+td.main,
 th.main {
   border-left: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
   padding-left: 5px;
   padding-right: 5px;
+}
+
+th.main {
+  border-bottom: 1px solid var(--color-border);
 }
 
 tr.even { background-color: var(--color-even-row); }
 tr.odd  { background-color: var(--color-odd-row); }
 
 /* ── Borders & Boxes ───────────────────────────────────────────── */
-.boxed {
+.boxed,
+.info {
   border: 1px solid var(--color-border);
 }
 
@@ -375,14 +367,13 @@ div.board .column-letters2 div::before {
   content: counter(colnum, upper-alpha);
 }
 
-div.boardglass {
-  background-color: transparent;
-  z-index: 5;
-}
+div.boardglass,
 div.markerglass {
   background-color: transparent;
-  z-index: 10;
 }
+
+div.boardglass { z-index: 5; }
+div.markerglass { z-index: 10; }
 
 div.noscript {
   position: absolute;
