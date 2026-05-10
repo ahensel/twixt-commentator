@@ -165,8 +165,7 @@ tr.even { background-color: var(--color-even-row); }
 tr.odd  { background-color: var(--color-odd-row); }
 
 /* ── Borders & Boxes ───────────────────────────────────────────── */
-.boxed,
-.info {
+.boxed {
   border: 1px solid var(--color-border);
 }
 

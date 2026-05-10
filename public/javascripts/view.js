@@ -736,6 +736,7 @@ function overlayNewPegMarker(image, pegColor) {
   newpeg.style.left    = image.style.left;
   newpeg.style.top     = image.style.top;
   newpeg.style.display = 'inline';
+  newpeg.draggable = false;
 }
 
 function getMarkerName(x, y) { return `marker_${x}_${y}`; }
