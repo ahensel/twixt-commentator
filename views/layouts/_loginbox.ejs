@@ -7,36 +7,26 @@
       <input type="hidden" name="back_to" value="<%= params && params.controller ? params.controller : (params && params.back_to ? params.back_to : '') %>">
       <input type="hidden" name="ret_gid" value="<%= params && params.gid ? params.gid : (params && params.ret_gid ? params.ret_gid : '') %>">
       <input type="hidden" name="main_page" value="<%= params && params.page ? params.page : (params && params.main_page ? params.main_page : '') %>">
-      <table>
-        <tr>
-          <td>
-            <div class="boxed">
-              <table>
-                <tr>
-                  <td><label for="name">Name:</label></td>
-                  <td><input id="name" class="boxed" type="text" name="name" value="<%= params && params.name ? params.name : '' %>"></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td><label for="password">Password:</label></td>
-                  <td><input class="boxed" type="password" name="password"></td>
-                  <td><input type="submit" value="Log in"></td>
-                </tr>
-              </table>
-              <% if (loginNotice) { %>
-                &nbsp;<span class="err"><%= loginNotice %></span>
-              <% } %>
-            </div>
-          </td>
-          <td>
-            <div class="please-register">
-              <a href="/user/add_user?back_to=<%= params && params.back_to || params && params.controller || '' %>&ret_gid=<%= params && params.gid || params && params.ret_gid || '' %>&main_page=<%= params && params.page || params && params.main_page || '' %>">Register</a><br>
-              to add<br>
-              comments.
-            </div>
-          </td>
-        </tr>
-      </table>
+      <div class="login-form-row">
+        <div class="boxed">
+          <div class="login-fields">
+            <label for="name">Name:</label>
+            <input id="name" class="boxed" type="text" name="name" value="<%= params && params.name ? params.name : '' %>">
+            <span></span>
+            <label for="password">Password:</label>
+            <input class="boxed" type="password" name="password">
+            <input type="submit" value="Log in">
+          </div>
+          <% if (loginNotice) { %>
+            &nbsp;<span class="err"><%= loginNotice %></span>
+          <% } %>
+        </div>
+        <div class="please-register">
+          <a href="/user/add_user?back_to=<%= params && params.back_to || params && params.controller || '' %>&ret_gid=<%= params && params.gid || params && params.ret_gid || '' %>&main_page=<%= params && params.page || params && params.main_page || '' %>">Register</a><br>
+          to add<br>
+          comments.
+        </div>
+      </div>
     </form>
   </div>
 <% } else {

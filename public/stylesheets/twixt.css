@@ -44,7 +44,6 @@ body.about-page {
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-heading);
   font-family: var(--font-stack);
-  font-weight: bold;
 }
 
 h1 {
@@ -64,7 +63,7 @@ p {
 .news {
   font-size: 0.83rem;
   text-align: left;
-  font-weight: bold;  
+  font-weight: bold;
 }
 
 pre {
@@ -237,42 +236,43 @@ div.board .crucial-diagonals {
   overflow: hidden;
   z-index: 1;
 }
+
 div.board .crucial-diagonals .top-shallow {
   top: 0;
   aspect-ratio: 2/1;
 }
+
 div.board .crucial-diagonals .top-steep {
   top: 0;
   aspect-ratio: 1/2;
 }
+
 div.board .crucial-diagonals .bottom-shallow {
   bottom: 0;
   aspect-ratio: 2/1;
 }
+
 div.board .crucial-diagonals .bottom-steep {
   bottom: 0;
   aspect-ratio: 1/2;
 }
+
 div.board .crucial-diagonals .draw2diagonals {
   position: absolute;
   left: 0;
   width: 100%;
-  background: linear-gradient(
-      to top left,
+  background: linear-gradient(to top left,
       transparent 0%,
       transparent calc(50% - 0.8px),
       var(--diagonals-color) 50%,
       transparent calc(50% + 0.8px),
-      transparent 100%
-    ),
-    linear-gradient(
-      to top right,
+      transparent 100%),
+    linear-gradient(to top right,
       transparent 0%,
       transparent calc(50% - 0.8px),
       var(--diagonals-color) 50%,
       transparent calc(50% + 0.8px),
-      transparent 100%
-    );
+      transparent 100%);
 }
 
 div.board .holes-layer {
@@ -281,33 +281,35 @@ div.board .holes-layer {
   grid-row: 1/-1;
   grid-template-columns: repeat(auto-fill, 18px);
   grid-template-rows: repeat(auto-fill, 18px);
-  background: radial-gradient(
-      circle at center,
+  background: radial-gradient(circle at center,
       var(--hole-color) 0%,
       var(--hole-color) 15%,
-      transparent 15%
-    )
-    0 0 / 18px 18px;
+      transparent 15%) 0 0 / 18px 18px;
   z-index: 2;
 }
+
 div.board .corner {
   border: 9px solid;
 }
+
 div.board .corner.upper {
   grid-row: 1 / 1;
   border-bottom-color: var(--lr-border-color);
   border-top-color: var(--tb-border-color);
 }
+
 div.board .corner.lower {
   grid-row: -2 / -2;
   border-bottom-color: var(--tb-border-color);
   border-top-color: var(--lr-border-color);
 }
+
 div.board .corner.left {
   grid-column: 1 / 1;
   border-left-color: var(--lr-border-color);
   border-right-color: var(--tb-border-color);
 }
+
 div.board .corner.right {
   grid-column: -2 / -2;
   border-left-color: var(--tb-border-color);
@@ -319,11 +321,13 @@ div.board .left-side {
   margin-left: -27px;
   text-align: right;
 }
+
 div.board .right-side {
   grid-column: -1;
   padding-left: 3px;
   text-align: left;
 }
+
 div.board .row-numbers {
   grid-row: 1 / -1;
   line-height: 18px;
@@ -332,6 +336,7 @@ div.board .row-numbers {
   overflow-x: visible;
   counter-reset: rownum;
 }
+
 div.board .row-numbers div::before {
   counter-increment: rownum;
   content: counter(rownum);
@@ -341,9 +346,11 @@ div.board .top-side {
   grid-row: 1;
   margin-top: -18px;
 }
+
 div.board .bottom-side {
   grid-row: -1;
 }
+
 div.board .right-half {
   margin-left: 468px;
 }
@@ -357,10 +364,12 @@ div.board .column-letters, div.board .column-letters2 {
   grid-template-columns: repeat(auto-fill, 18px);
   justify-items: center;
 }
+
 div.board .column-letters div::before {
   counter-increment: colnum;
   content: counter(colnum, lower-alpha);
 }
+
 div.board .column-letters2 div::before {
   counter-increment: colnum;
   content: counter(colnum, upper-alpha);
@@ -505,7 +514,7 @@ img.piece {
 }
 
 div#current-comments {
-  font-size: 0.83rem;  
+  font-size: 0.83rem;
 }
 
 /* ── Login box ─────────────────────────────────────────────────── */
@@ -528,9 +537,28 @@ div.login-box input {
   font-size: 0.75rem;
 }
 
+div.login-box .login-form-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+div.login-box .login-form-row .boxed {
+  padding: 1px 2px 1px 2px;
+}
+
+div.login-box .login-fields {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 3px 6px;
+  align-items: center;
+  padding: 4px;
+}
+
 div.please-register {
   border: 1px solid var(--color-border);
   padding: 4px;
+  font-size: 0.83rem;
 }
 
 /* ── Admin page ─────────────────────────────────────────────────── */
