@@ -188,7 +188,7 @@ function showUserMovesText() {
 
   if (currentMoves.hasUserMoves()) {
     $('copyMovesBtn').style.display = 'inline';
-    userMovesText += "|<span class='userMoves'>";
+    userMovesText += "|<span class='user-moves'>";
     let moveNum = getUserMovesFirstNum();
 
     currentMoves.getUserMoves().forEach(move => {
@@ -204,14 +204,14 @@ function showUserMovesText() {
     $('copyMovesBtn').style.display = 'none';
   }
 
-  $('userMoves').innerHTML = userMovesText;
+  $('user-moves').innerHTML = userMovesText;
   setCommentDivTop();
 }
 
 function jumpTo(moveNum) {
   uncolorMove(currentMoveNum);
   currentMoves.clearUserMoves();
-  $('userMoves').innerHTML = '';
+  $('user-moves').innerHTML = '';
   showAllMoves(moveNum, null);
 }
 
@@ -450,14 +450,14 @@ function showAllMoves(moveNum, commentMoves) {
 function uncolorMove(moveNum) {
   if (moveNum != null && moveNum > 0) {
     const el = $(`move_${moveNum}`);
-    if (el) el.classList.remove('currentMove');
+    if (el) el.classList.remove('current-move');
   }
 }
 
 function colorMove(moveNum) {
   if (moveNum != null && moveNum > 0) {
     const el = $(`move_${moveNum}`);
-    if (el) el.classList.add('currentMove');
+    if (el) el.classList.add('current-move');
   }
 }
 
@@ -470,7 +470,7 @@ function highlightMoveInSidebar(peg) {
     const userMoves = currentMoves.getUserMoves();
     for (let i = 0; i < userMoves.length; i++) {
       if (userMoves[i].peg?.getPegName() === pegName) {
-        $(`userMove_${i + firstUserMoveNum}`)?.classList.add('hoveredPeg');
+        $(`userMove_${i + firstUserMoveNum}`)?.classList.add('hovered-peg');
         return;
       }
     }
@@ -479,17 +479,17 @@ function highlightMoveInSidebar(peg) {
   const mainMoves = currentMoves.getMoves();
   for (let i = 0; i <= currentMoveNum; i++) {
     if (mainMoves[i].peg?.getPegName() === pegName) {
-      $(`move_${i + 1}`)?.classList.add('hoveredPeg');
+      $(`move_${i + 1}`)?.classList.add('hovered-peg');
       return;
     }
   }
 }
 
 function unhighlightMoveInSidebar() {
-  const hovered = document.getElementsByClassName('hoveredPeg');
+  const hovered = document.getElementsByClassName('hovered-peg');
   if (hovered) {
     for (const el of hovered) {
-      el.classList.remove('hoveredPeg');
+      el.classList.remove('hovered-peg');
     }
   }
 }

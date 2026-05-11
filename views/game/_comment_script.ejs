@@ -16,7 +16,7 @@
     })
     .then(r => r.text())
     .then((html) => {
-      const container = document.getElementById('current_comments');
+      const container = document.getElementById('current-comments');
       if (container && html.trim()) {
         container.insertAdjacentHTML('beforeend', html);
       }

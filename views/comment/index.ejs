@@ -1,7 +1,7 @@
 <% if (comment) { %>
   <% if (preview) { %>
     <div id="preview">
-      <div class="previewHeader">
+      <div class="preview-header">
         <%- include('_comment_header', { comment: comment, author: author.dataValues, preview: true }) %>
       </div>
       <%- prepareComment(comment.comment) %>
@@ -9,7 +9,7 @@
       <br/>
     </div>
   <% } else { %>
-    <div class="commentHeader">
+    <div class="comment-header">
       <%- include('_comment_header', { comment: comment, author: author.dataValues, preview: false }) %>
     </div>
     <%- prepareComment(comment.comment) %>

@@ -34,8 +34,8 @@ body {
 }
 
 /* ── Page-level body margins ───────────────────────────────────── */
-body.main_page,
-body.about_page {
+body.main-page,
+body.about-page {
   margin-left: 25px;
   margin-right: 25px;
 }
@@ -393,11 +393,11 @@ div.turn {
   height: 25px;
 }
 
-div.gameNumberForm {
+div.game-number-form {
   margin-left: 10px;
 }
 
-div.gamePlayers {
+div.game-players {
   margin-top: 15px;
   margin-left: 10px;
 }
@@ -425,17 +425,17 @@ span.moves {
   padding-right: 1px;
 }
 
-span.userMoves {
+span.user-moves {
   font-family: var(--font-moves);
   background-color: var(--color-user-bg);
   padding-right: 1px;
 }
 
-.currentMove {
+.current-move {
   background-color: var(--color-currm-bg);
 }
 
-.hoveredPeg {
+.hovered-peg {
   background-color: var(--color-hp-bg);
 }
 
@@ -457,7 +457,7 @@ div#comments {
   overflow: auto;
 }
 
-img.crosshair, img.newPeg {
+img.crosshair, img.new-peg {
   display: none;
   position: absolute;
   width: 13px;
@@ -481,42 +481,42 @@ img.piece {
 }
 
 /* ── Comments ──────────────────────────────────────────────────── */
-.commentHeader,
-.previewHeader {
+.comment-header,
+.preview-header {
   font-size: 0.83rem;
   font-weight: normal;
   margin-left: -10px;
   padding-left: 10px;
 }
 
-.commentHeader {
+.comment-header {
   background-color: var(--color-header);
 }
 
-.previewHeader {
+.preview-header {
   background-color: var(--color-preview);
 }
 
-.commentTextArea {
+.comment-textarea {
   width: 100%;
   font-size: 0.83rem;
   font-family: var(--font-stack);
   border: 1px solid var(--color-border);
 }
 
-div#current_comments {
+div#current-comments {
   font-size: 0.83rem;  
 }
 
 /* ── Login box ─────────────────────────────────────────────────── */
-div.loginBox {
+div.login-box {
   position: absolute;
   text-align: right;
   right: 10px;
   top: 10px;
 }
 
-div.loginBox label {
+div.login-box label {
   font-size: 0.75rem;
   text-align: right;
   float: left;
@@ -524,21 +524,21 @@ div.loginBox label {
   margin-right: 0.5em;
 }
 
-div.loginBox input {
+div.login-box input {
   font-size: 0.75rem;
 }
 
-div.pleaseRegister {
+div.please-register {
   border: 1px solid var(--color-border);
   padding: 4px;
 }
 
 /* ── Admin page ─────────────────────────────────────────────────── */
-.admin_page {
+.admin-page {
   margin: 10px 10px 10px 10px;
 }
 
-.admin_page .userInfo {
+.admin-page .user-info {
   width: 350px;
   height: 310px;
 }

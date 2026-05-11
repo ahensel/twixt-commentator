@@ -1,6 +1,6 @@
 <% layout('layouts/game') %>
 
-<div class="gameNumberForm">
+<div class="game-number-form">
   <form action="/game" method="post">
     Game number:&nbsp;<input class="boxed" type="text" name="new_gid" value="<%= params && params.gid ? params.gid : '' %>" size="7" maxlength="7">
     <input type="submit" value="Go">
@@ -9,7 +9,7 @@
 </div>
 
 <% if (game) { %>
-  <div class="gamePlayers">
+  <div class="game-players">
     <img src="/images/pieces/whitepeg.gif" alt="White:">
     <span class="<%= game.winner === 1 ? 'winner' : 'loser' %>"><%- h2(game.player1) %></span>
     &nbsp;&nbsp;
@@ -114,8 +114,8 @@
   <div id="boardglass1" class="boardglass"></div>
   <div id="boardglass2" class="boardglass hidden"></div>
   <div id="markerglass" class="markerglass">
-    <img id="newwhitepeg" class="newPeg" src="/images/pieces/newwhitepeg.gif" galleryimg="no" alt="">
-    <img id="newblackpeg" class="newPeg" src="/images/pieces/newblackpeg.gif" galleryimg="no" alt="">
+    <img id="newwhitepeg" class="new-peg" src="/images/pieces/newwhitepeg.gif" galleryimg="no" alt="">
+    <img id="newblackpeg" class="new-peg" src="/images/pieces/newblackpeg.gif" galleryimg="no" alt="">
   </div>
 
   <div id="underbar">
@@ -134,7 +134,7 @@
       <tr>
         <td>
           <span id="copyMovesBtn" style="display: none" class="copy-moves-btn" onclick="copyMovesToClipboard()" title="Copy variation moves to clipboard">⧉</span>
-          <span id="userMoves"></span>
+          <span id="user-moves"></span>
         </td>
       </tr>
       <tr>
@@ -146,9 +146,9 @@
   </div>
 
   <div id="comments">
-    <div id="current_comments">
+    <div id="current-comments">
       <% (game.comments || []).forEach((comment) => { %>
-        <div class="commentHeader">
+        <div class="comment-header">
           <%- include('../comment/_comment_header', { comment: comment, author: comment.author, preview: false }) %>
         </div>
         <%- prepareComment(comment.comment) %>
@@ -157,19 +157,19 @@
       <% }); %>
     </div>
     <% if (game.isInProgress()) { %>
-      <div class="commentHeader">Game is in progress.</div>
+      <div class="comment-header">Game is in progress.</div>
     <% } else if (!session || !session.user_id) { %>
-      <div class="commentHeader">You must be logged in to add comments.</div>
+      <div class="comment-header">You must be logged in to add comments.</div>
     <% } else { %>
       <div id="addCommentLink">
         <a href="" onclick="return showAddCommentBox();">Add a comment</a>
       </div>
       <div id="addComment" class="hidden">
-        <div class="commentHeader">Add a comment:</div>
+        <div class="comment-header">Add a comment:</div>
         <form id="comment_form" action="/comment" method="post">
           <input type="hidden" name="game" value="<%= game.id %>">
           <input type="hidden" id="button_pressed" name="button_pressed" value="Comment">
-          <textarea class="commentTextArea" id="new_comment" name="new_comment" rows="8" onkeyup="checkStateChange()" onfocus="commentsInFocus(true)" onblur="commentsInFocus(false)"></textarea>
+          <textarea class="comment-textarea" id="new_comment" name="new_comment" rows="8" onkeyup="checkStateChange()" onfocus="commentsInFocus(true)" onblur="commentsInFocus(false)"></textarea>
           <input id="comment_button" type="submit" value="No Comment" onclick="removePreview(); setButtonPressed(this, 'Comment'); return hideAddCommentBox();">
           <input id="preview_button" type="submit" value="Preview" onclick="removePreview(); setButtonPressed(this, 'Preview'); return true;" disabled="true">
         </form>
