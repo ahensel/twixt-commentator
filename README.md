@@ -51,12 +51,9 @@ Required variables for local development:
 ```dotenv
 # A random string used to pepper password hashes — any value works locally
 PEPPER='some-local-pepper-string'
-
-# Optional — only needed if you want a non-default session secret
-# SESSION_SECRET='some-local-session-secret'
 ```
 
-The database credentials for development are hard-coded in `config/config.js` (root user, no password, database `twixt_development`). Change them there if your local MySQL setup differs.
+The database credentials for development are hard-coded in `config/config.js` (root user, no password, database `twixt_development`) if they are not present in `.env`.
 
 ### 3. Create the Database
 
@@ -101,7 +98,7 @@ twixt-commentator/
 ├── routes/          # Express route handlers
 ├── views/           # EJS templates with ejs-mate layout inheritance
 ├── server.js        # App entry point
-└── .env             # Local secrets — never commit this file
+└── .env             # Environment secrets — never commit this file
 ```
 
 ## Copyright
