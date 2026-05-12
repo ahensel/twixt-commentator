@@ -35,6 +35,10 @@ echo "==> Installing production dependencies on server…"
 ssh "${REMOTE_USER}@${REMOTE_HOST}" \
   "bash -lc 'cd ${REMOTE_DIR} && npm ci --omit=dev'"
 
+echo "==> Running database migrations…"
+ssh "${REMOTE_USER}@${REMOTE_HOST}" \
+  "bash -lc 'cd ${REMOTE_DIR} && npx sequelize-cli db:migrate'"
+
 echo "==> Restarting app with pm2…"
 ssh "${REMOTE_USER}@${REMOTE_HOST}" \
   "bash -lc 'cd ${REMOTE_DIR} && pm2 startOrRestart ecosystem.config.js --env production && pm2 save'"

@@ -12,6 +12,7 @@ A forum to view, comment on, and read other people's comments on finished Twixt 
   <thead>
     <tr>
       <th class="main">Game #</th>
+      <th class="main">Size</th>
       <th class="main">Winner</th>
       <th class="main">Loser</th>
       <th class="main">End</th>
@@ -25,6 +26,9 @@ A forum to view, comment on, and read other people's comments on finished Twixt 
       <tr class="<%= i % 2 === 0 ? 'even' : 'odd' %>">
         <td class="main text-right">
           <a href="/game/<%= game.lg_game_num %>?main_page=<%= params && params.page || '' %>"><%= game.lg_game_num %></a>
+        </td>
+        <td class="main text-center">
+          <%= game.board_size || '' %>
         </td>
         <td class="main<%= game.isDraw() ? ' italic' : '' %>">
           <%- h2(game.winnerName()) %>

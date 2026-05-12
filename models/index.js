@@ -17,6 +17,7 @@ const Game = sequelize.define('Game', {
   player2: { type: DataTypes.STRING },
   winner: { type: DataTypes.INTEGER },
   tournament: { type: DataTypes.STRING },
+  board_size: { type: DataTypes.INTEGER },
 }, {
   tableName: 'games',
   timestamps: false,

@@ -106,6 +106,7 @@ async function getGameFromLittleGolem(gameNumber, flash) {
         player2: parser.getPlayer2(),
         winner: 0,
         tournament: parser.getTournament(),
+        board_size: parser.getBoardSize(),
       });
       return { game: inProgressGame, parser };
     }
@@ -120,6 +121,7 @@ async function getGameFromLittleGolem(gameNumber, flash) {
     player2: parser.getPlayer2(),
     winner: board.hasWonPlayer(1) ? 1 : board.hasWonPlayer(2) ? 2 : 0,
     tournament: parser.getTournament(),
+    board_size: parser.getBoardSize(),
     created_on: new Date(),
   });
 
