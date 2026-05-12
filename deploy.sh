@@ -37,7 +37,7 @@ ssh "${REMOTE_USER}@${REMOTE_HOST}" \
 
 echo "==> Running database migrations…"
 ssh "${REMOTE_USER}@${REMOTE_HOST}" \
-  "bash -lc 'cd ${REMOTE_DIR} && npx sequelize-cli db:migrate'"
+  "bash -lc 'cd ${REMOTE_DIR} && set -a && source .env && set +a && npx sequelize-cli db:migrate --env production'"
 
 echo "==> Restarting app with pm2…"
 ssh "${REMOTE_USER}@${REMOTE_HOST}" \
