@@ -127,22 +127,15 @@
   </div>
 
   <div id="sidebar" class="sidebar">
-    <table>
-      <tr>
-        <td><div id="moves"></div></td>
-      </tr>
-      <tr>
-        <td>
-          <span id="copyMovesBtn" style="display: none" class="copy-moves-btn" onclick="copyMovesToClipboard()" title="Copy variation moves to clipboard">⧉</span>
-          <span id="user-moves"></span>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <a id="backLink" href="" accesskey="b" onclick="backButton(); return false;">Back</a>&nbsp;<a id="nextLink" href="" accesskey="n" onclick="nextButton(); return false;">Next</a>
-        </td>
-      </tr>
-    </table>
+    <div id="moves"></div>
+    <div>
+      <span id="copyMovesBtn" style="display: none" class="copy-moves-btn" onclick="copyMovesToClipboard()" title="Copy variation moves to clipboard">⧉</span>
+      <span id="user-moves"></span>
+    </div>
+    <div class="back-next">
+      <a id="backLink" href="" accesskey="b" onclick="backButton(); return false;">Back</a>
+      <a id="nextLink" href="" accesskey="n" onclick="nextButton(); return false;">Next</a>
+    </div>
   </div>
 
   <div id="comments">

@@ -414,9 +414,18 @@ div.game-players {
 div.sidebar {
   position: absolute;
   border: 1px solid var(--color-border);
-  padding: 10px;
+  padding: 9px;
   background-color: var(--color-bg);
+  font-size: 0.83rem;
   display: none;
+}
+
+div.sidebar div {
+  margin: 4px;
+}
+
+div.sidebar div.back-next {
+  padding-top: 4px;
 }
 
 div#underbar {
