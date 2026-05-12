@@ -38,22 +38,17 @@ cd twixt-commentator
 npm install
 ```
 
-### 2. Environment Variables
+### 2. Environment Variables (optional)
 
-The app reads from a `.env` file in the project root (excluded from version control). Create one from the example:
+The app reads from a `.env` file in the project root (excluded from version control). You can create one from the example:
 
 ```bash
 cp .env.example .env
 ```
 
-Required variables for local development:
+If `.env` doesn't exist, or a variable is not defined in it, Commentator proceeds with defaults.
 
-```dotenv
-# A random string used to pepper password hashes — any value works locally
-PEPPER='some-local-pepper-string'
-```
-
-The database credentials for development are hard-coded in `config/config.js` (root user, no password, database `twixt_development`) if they are not present in `.env`.
+For example, the database credentials for development are hard-coded in `config/config.js` (root user, no password, database `twixt_development`) if they are not present in `.env`.
 
 ### 3. Create the Database
 
@@ -79,6 +74,8 @@ npx sequelize-cli db:migrate:undo:all
 ```
 
 ### 5. Run the Dev Server
+
+First, start MySQL if it is not already running. Then start the Node server:
 
 ```bash
 npm run dev

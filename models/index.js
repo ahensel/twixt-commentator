@@ -67,7 +67,7 @@ const User = sequelize.define('User', {
 const crypto = require('crypto');
 User._encryptedPassword = function (password, salt) {
   return crypto.createHash('sha1')
-    .update(password + process.env.PEPPER + salt)
+    .update(password + (process.env.PEPPER || '') + salt)
     .digest('hex');
 };
 
