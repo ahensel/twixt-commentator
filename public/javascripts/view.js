@@ -6,11 +6,20 @@ const LINK_REMOVAL    = 0;
 const PENCIL_AND_PAPER = 1;
 let linkCrossingPolicy = PENCIL_AND_PAPER;
 
-const GRID_SPACING = 18;
+const root = document.documentElement;
+const styles = getComputedStyle(root);
+const GRID_MARGIN = parseInt(styles.getPropertyValue('--grid-margin'), 10);
+const GRID_SPACING = parseInt(styles.getPropertyValue('--grid-spacing'), 10);
 const PEG_SIZE = 13;
+// links are on the hypotenuse of a 1-2-sqrt(5) right triangle.
 // const LINK_LENGTH = GRID_SPACING * Math.sqrt(5) - PEG_SIZE;
 // const LINK_SHORT_DIM = Math.round(LINK_LENGTH / Math.sqrt(5)) + 3;  // 3 for a little overlap with pegs
 // const LINK_LONG_DIM = Math.round(LINK_LENGTH * 2 / Math.sqrt(5)) + 3;
+// We could calculate link image dimensions this way, but the fact is that the link images are 15x27 pixels.
+const LINK_SHORT_DIM = 15;
+const LINK_LONG_DIM = 27;
+const LINK_SHORT_OFFSET = (GRID_SPACING - LINK_SHORT_DIM) / 2;
+const LINK_LONG_OFFSET = (GRID_SPACING * 2 - LINK_LONG_DIM) / 2;
 
 let BOARD_SIZE;
 
@@ -57,12 +66,13 @@ function disableSelections() {
 function positionElements() {
   if (!$('board')) return;
 
+  // absolute positioning of the board on the page
   leftMargin = 10;
   topMargin  = 80;
 
   const boardPixels = BOARD_SIZE * GRID_SPACING;
-  const boardWidth  = 51 + boardPixels;
-  const boardHeight = 51 + boardPixels;
+  const boardWidth  = (GRID_MARGIN * 2) + boardPixels + 3;  // +2 for 1px border, +1 fudge factor
+  const boardHeight = boardWidth;
 
   Object.assign($('turn').style, { left: `${leftMargin}px`, top: `${topMargin}px` });
 
@@ -293,13 +303,10 @@ function getCommentPegErrors(moves) {
   return errors;
 }
 
-function getXcoordinate(pegString) {
-}
-
 function getPegCoordinates(pegString) {
   const xChar = pegString.substr(0, 1);
   const x = (BOARD_SIZE < 27)? xChar.toUpperCase().charCodeAt(0) - 64 : 
-  ((xChar >= 'a')? xChar.charCodeAt(0) - 96 : xChar.charCodeAt(0) - 38);
+    ((xChar >= 'a')? xChar.charCodeAt(0) - 96 : xChar.charCodeAt(0) - 38);
   const y = parseInt(pegString.substr(1), 10);
 
   return [x, y];
@@ -714,16 +721,16 @@ function boardOffsetY() { return $('board')?.offsetTop; }
 
 function xDelta(pixelX) { return pixelX - xPixels(xCoord(pixelX)) - boardOffsetX(); }
 function yDelta(pixelY) { return pixelY - yPixels(yCoord(pixelY)) - boardOffsetY(); }
-function xCoord(pixelX) { return Math.round((pixelX - 12.5 - boardOffsetX()) / GRID_SPACING); }
-function yCoord(pixelY) { return Math.round((pixelY - 12.5 - boardOffsetY()) / GRID_SPACING); }
-function xPixels(x)     { return 15.5 + GRID_SPACING * x; }
-function yPixels(y)     { return 15.5 + GRID_SPACING * y; }
+function xCoord(pixelX) { return Math.round((pixelX - 18 - boardOffsetX()) / GRID_SPACING); }
+function yCoord(pixelY) { return Math.round((pixelY - 18 - boardOffsetY()) / GRID_SPACING); }
+function xPixels(x)     { return (GRID_MARGIN - GRID_SPACING/2) + GRID_SPACING * x; }
+function yPixels(y)     { return (GRID_MARGIN - GRID_SPACING/2) + GRID_SPACING * y; }
 
 function drawPeg(peg) {
   const pegColor = (peg.color === 0) ? 'black' : 'white';
   const image = addImgToBoard(
     `/images/pieces/${pegColor}peg.gif`, `peg${peg.getPegName()}-${bg}`,
-    xPixels(peg.x) - 7, yPixels(peg.y) - 7, PEG_SIZE, PEG_SIZE
+    xPixels(peg.x) - (PEG_SIZE/2), yPixels(peg.y) - (PEG_SIZE/2), PEG_SIZE, PEG_SIZE
   );
   eraseCrosshair();
   overlayNewPegMarker(image, pegColor);
@@ -748,7 +755,7 @@ function drawLinkableMarkersInBox(minX, minY, maxX, maxY, color) {
         const markerName = getMarkerName(x, y);
         if (!$(markerName)) {
           addImgToBoard('/images/pieces/linkablemarker.gif', markerName,
-            xPixels(x) - 6, yPixels(y) - 6, 13, 13);
+            xPixels(x) - (PEG_SIZE/2), yPixels(y) - (PEG_SIZE/2), PEG_SIZE, PEG_SIZE);
           numLinkableMarkers++;
         }
       }
@@ -791,8 +798,8 @@ function drawCrosshair(x, y) {
   if (ch) {
     const leftPos = xPixels(x);
     const topPos  = yPixels(y);
-    ch.style.left    = `${leftPos - 6}px`;
-    ch.style.top     = `${topPos - 6}px`;
+    ch.style.left    = `${leftPos - 5.5}px`;
+    ch.style.top     = `${topPos - 5.5}px`;
     ch.style.display = 'inline';
     drawTickMarks(leftPos, topPos, '#cc0000');
   }
@@ -886,9 +893,11 @@ function drawLinkGeneral(link, linkType) {
   }${linkType}.gif`;
 
   if (Math.abs(dx) === 1) {
-    addImgToBoard(linkImg, id, xPixels(link.minX()) + 1, yPixels(link.minY()) + 4, 15, 27);
+    addImgToBoard(linkImg, id, xPixels(link.minX()) + LINK_SHORT_OFFSET, yPixels(link.minY()) + LINK_LONG_OFFSET,
+      LINK_SHORT_DIM, LINK_LONG_DIM);
   } else {
-    addImgToBoard(linkImg, id, xPixels(link.minX()) + 4, yPixels(link.minY()) + 1, 27, 15);
+    addImgToBoard(linkImg, id, xPixels(link.minX()) + LINK_LONG_OFFSET, yPixels(link.minY()) + LINK_SHORT_OFFSET,
+      LINK_LONG_DIM, LINK_SHORT_DIM);
   }
 }
 
@@ -896,7 +905,7 @@ function addImgToBoard(imgfile, id, leftPos, topPos, width, height) {
   const b = $(`boardglass${bg}`);
 
   // Prevent the containing box from growing (needed in some browsers)
-  b.style.width = `${46 + BOARD_SIZE * GRID_SPACING}px`;
+  // b.style.width = `${46 + BOARD_SIZE * GRID_SPACING}px`;
 
   const img = document.createElement('img');
   img.src    = imgfile;
