@@ -678,6 +678,44 @@ function copyMovesToClipboard() {
 
 // ─── Drawing ──────────────────────────────────────────────────────────────────
 
+// Inline images, because board pieces are small
+const blackpeg_img = 'data:image/webp;base64,UklGRmAAAABXRUJQVlA4TFMAAAAvDAADECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryA4NIkhpN1a+BCwJIDkAA+Jf1yUJE/wPWFDDMqthmZodyV/I2xeP6y4fKXdn3gWFWBawpAAA=';
+const whitepeg_img = 'data:image/webp;base64,UklGRnYAAABXRUJQVlA4TGoAAAAvDAADEDdAJm2bqqSu38ikbVOV1PUbmbRtqpK6fpv/AAC3qfxXUYFVbNtKzrMA+o8G8AAMAaCCnf4hnlSI6L/atm0Yjz15A9gWA2C0tjW47HG6G81E7i3iQ9IZ/5EMqoaMTmPZvfn16S8A';
+
+const eselink_img = 'data:image/webp;base64,UklGRlIAAABXRUJQVlA4TEUAAAAvGoADECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryg6JIUiMuAzgAB1f8y1t+eUf0X2HSBkw6b0nC8sa8y/UR22HGNxgA';
+const sselink_img = 'data:image/webp;base64,UklGRlIAAABXRUJQVlA4TEUAAAAvDoAGECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKrycyiKJKm5JCAhBPzbG75IoCL6LyRIMPqkQlA7pdI+wv5lHjmMlgIA';
+const sswlink_img = 'data:image/webp;base64,UklGRlQAAABXRUJQVlA4TEcAAAAvDoAGECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryg5o2kpxLANID+edPb679OqL/QoIEu0MEHaUxKp7uo9xr/9i69zpAAAA=';
+const wswlink_img = 'data:image/webp;base64,UklGRlIAAABXRUJQVlA4TEYAAAAvGoADECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryg5pIkqK5AwM4AAevf3lDRB7RfwUBASDiDGoPZbbwV/X58OvzmIEC';
+
+const esecut_img = 'data:image/webp;base64,UklGRmAAAABXRUJQVlA4TFMAAAAvGoADEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryU0FRJEnNHWAg/sFBFJL9u8kIiOi/wrZtkMJ4j1iYk/s5Eh9z5bGSXiwdX+nvB7ZY4rw0CAA=';
+const ssecut_img = 'data:image/webp;base64,UklGRl4AAABXRUJQVlA4TFEAAAAvDoAGEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryUznYNJLk6Gxugdwx8fzJ9KQP4RXRf6Jpm1TN7Y4cDCqekqW+DHsq0lRD5i/qNzx31CwA';
+const sswcut_img = 'data:image/webp;base64,UklGRlwAAABXRUJQVlA4TE8AAAAvDoAGEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryU0FNJFsNsY9CwEn2b+ZeSR/Rf7JJG7s3fxisWaqOMp/mEJGe4lNflLTnf+4V7QUwAA==';
+const wswcut_img = 'data:image/webp;base64,UklGRmQAAABXRUJQVlA4TFcAAAAvGoADEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryU4FVJNmJNmAA/xMHKITu/LsJC4joP9mkTdpOJY9gGEuGeDGkmMBH+//xO1mYGHjJyGMDYwNwGAIA';
+
+const linkablemarker_img = 'data:image/webp;base64,UklGRioAAABXRUJQVlA4TB4AAAAvDAADEA8Q8z8z8x84CLJtNn/JI0ziDhH9T25k5ng=';
+
+const LINK_IMAGES = {
+  eselink_img, sselink_img, sswlink_img, wswlink_img,
+  esecut_img, ssecut_img, sswcut_img, wswcut_img
+}
+
+const PEG_IMAGES = [blackpeg_img, whitepeg_img];
+
+// useful functions for drawing
+function boardOffsetX() { return $('board')?.offsetLeft; }
+function boardOffsetY() { return $('board')?.offsetTop; }
+
+function xDelta(pixelX) { return pixelX - xPixels(xCoord(pixelX)) - boardOffsetX(); }
+function yDelta(pixelY) { return pixelY - yPixels(yCoord(pixelY)) - boardOffsetY(); }
+function xCoord(pixelX) { return Math.round((pixelX - 18 - boardOffsetX()) / GRID_SPACING); }
+function yCoord(pixelY) { return Math.round((pixelY - 18 - boardOffsetY()) / GRID_SPACING); }
+function xPixels(x)     { return (GRID_MARGIN - GRID_SPACING/2) + GRID_SPACING * x; }
+function yPixels(y)     { return (GRID_MARGIN - GRID_SPACING/2) + GRID_SPACING * y; }
+
+function sign(x) { return (x < 0) ? -1 : 1; }
+
+// actual drawing functions
+
 function drawLinks(peg) {
   peg.getLinks().forEach(link => drawLink(link));
 }
@@ -708,38 +746,25 @@ function getRemovableLink(pixelX, pixelY, color) {
   return null;
 }
 
-function sign(x) { return (x < 0) ? -1 : 1; }
-
 function isPegSpot(pixelX, pixelY) {
   const xd = xDelta(pixelX);
   const yd = yDelta(pixelY);
   return (xd * xd + yd * yd) < (PEG_SIZE * PEG_SIZE / 4 + 1);
 }
 
-function boardOffsetX() { return $('board')?.offsetLeft; }
-function boardOffsetY() { return $('board')?.offsetTop; }
-
-function xDelta(pixelX) { return pixelX - xPixels(xCoord(pixelX)) - boardOffsetX(); }
-function yDelta(pixelY) { return pixelY - yPixels(yCoord(pixelY)) - boardOffsetY(); }
-function xCoord(pixelX) { return Math.round((pixelX - 18 - boardOffsetX()) / GRID_SPACING); }
-function yCoord(pixelY) { return Math.round((pixelY - 18 - boardOffsetY()) / GRID_SPACING); }
-function xPixels(x)     { return (GRID_MARGIN - GRID_SPACING/2) + GRID_SPACING * x; }
-function yPixels(y)     { return (GRID_MARGIN - GRID_SPACING/2) + GRID_SPACING * y; }
-
 function drawPeg(peg) {
-  const pegColor = (peg.color === 0) ? 'black' : 'white';
-  const image = addImgToBoard(
-    `/images/pieces/${pegColor}peg.gif`, `peg${peg.getPegName()}-${bg}`,
+  const image = addInlineImgToBoard(
+    PEG_IMAGES[peg.color], `peg${peg.getPegName()}-${bg}`,
     xPixels(peg.x) - (PEG_SIZE/2), yPixels(peg.y) - (PEG_SIZE/2), PEG_SIZE, PEG_SIZE
   );
   eraseCrosshair();
-  overlayNewPegMarker(image, pegColor);
+  overlayNewPegMarker(image, peg.color);
 }
 
 function overlayNewPegMarker(image, pegColor) {
   $('newwhitepeg').style.display = 'none';
   $('newblackpeg').style.display = 'none';
-  const newpeg = $(`new${pegColor}peg`);
+  const newpeg = $(`new${['black', 'white'][pegColor]}peg`);
   newpeg.style.left    = image.style.left;
   newpeg.style.top     = image.style.top;
   newpeg.style.display = 'inline';
@@ -754,7 +779,7 @@ function drawLinkableMarkersInBox(minX, minY, maxX, maxY, color) {
       if (twixtGame.isLinkable(x, y) && twixtGame.board.getPeg(x, y).color === color) {
         const markerName = getMarkerName(x, y);
         if (!$(markerName)) {
-          addImgToBoard('/images/pieces/linkablemarker.gif', markerName,
+          addInlineImgToBoard(linkablemarker_img, markerName,
             xPixels(x) - (PEG_SIZE/2), yPixels(y) - (PEG_SIZE/2), PEG_SIZE, PEG_SIZE);
           numLinkableMarkers++;
         }
@@ -888,32 +913,40 @@ function drawLinkGeneral(link, linkType) {
   if ($(id)) return;
 
   const dx = sign(link.peg1.y - link.peg2.y) * (link.peg1.x - link.peg2.x);
-  const linkImg = `/images/pieces/${
-    dx === -2 ? 'wsw' : dx === -1 ? 'ssw' : dx === 1 ? 'sse' : 'ese'
-  }${linkType}.gif`;
+
+  const linkImg = LINK_IMAGES[['wsw','ssw','','sse','ese'][dx+2] + linkType + '_img'];
+  const leftPos = xPixels(link.minX());
+  const topPos = yPixels(link.minY());
 
   if (Math.abs(dx) === 1) {
-    addImgToBoard(linkImg, id, xPixels(link.minX()) + LINK_SHORT_OFFSET, yPixels(link.minY()) + LINK_LONG_OFFSET,
+    addInlineImgToBoard(linkImg, id,
+      leftPos + LINK_SHORT_OFFSET, topPos + LINK_LONG_OFFSET,
       LINK_SHORT_DIM, LINK_LONG_DIM);
   } else {
-    addImgToBoard(linkImg, id, xPixels(link.minX()) + LINK_LONG_OFFSET, yPixels(link.minY()) + LINK_SHORT_OFFSET,
+    addInlineImgToBoard(linkImg, id,
+      leftPos + LINK_LONG_OFFSET, topPos + LINK_SHORT_OFFSET,
       LINK_LONG_DIM, LINK_SHORT_DIM);
   }
 }
 
-function addImgToBoard(imgfile, id, leftPos, topPos, width, height) {
+function addInlineImgToBoard(imgfile, id, leftPos, topPos, width, height)
+{
   const b = $(`boardglass${bg}`);
 
-  // Prevent the containing box from growing (needed in some browsers)
-  // b.style.width = `${46 + BOARD_SIZE * GRID_SPACING}px`;
-
   const img = document.createElement('img');
-  img.src    = imgfile;
-  img.width  = width;
-  img.height = height;
-  img.id     = id;
-  Object.assign(img.style, { position: 'absolute', left: `${leftPos}px`, top: `${topPos}px` });
-
+  Object.assign(img, {
+    src: imgfile,
+    draggable: false,
+    oncontextmenu: 'return false;',
+    width,
+    height,
+    id
+  });
+  Object.assign(img.style, {
+    position: 'absolute',
+    left: `${leftPos}px`,
+    top: `${topPos}px`
+  });
   b.appendChild(img);
   disableSelection(img);
   return img;
