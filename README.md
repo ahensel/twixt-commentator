@@ -35,7 +35,7 @@ Contributions are welcome! Please open an issue or pull request on GitHub.
 ```bash
 git clone https://github.com/ahensel/twixt-commentator.git
 cd twixt-commentator
-npm install
+npm ci
 ```
 
 ### 2. Environment Variables (optional)
