@@ -1,6 +1,6 @@
 # Twixt Commentator
 
-A website for analyzing and commenting on size 24 TwixtPP games from the popular board game site Little Golem.
+A website for analyzing and commenting on TwixtPP games from the popular board game site Little Golem.
 
 Hosted at [twixt-commentator.duckdns.org](http://twixt-commentator.duckdns.org/)
 
