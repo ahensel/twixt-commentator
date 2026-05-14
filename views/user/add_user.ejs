@@ -11,29 +11,23 @@
     <% } %>
     <legend>New User Registration for Twixt Commentator</legend>
     <form action="/user/add_user" method="post">
-      <table>
-        <tr>
-          <td><label for="user_name">Name:</label></td>
-          <td>
+      <div class="user-form-grid">
+        <label for="user_name">Name:</label>
+        <div>
             <input id="user_name" class="boxed" type="text" name="name" size="40">
             <span class="text-error">&nbsp;(Required)</span>
-          </td>
-        </tr>
-        <tr>
-          <td><label for="user_password">Password:</label></td>
-          <td>
+        </div>
+        <label for="user_password">Password:</label>
+        <div>
             <input id="user_password" class="boxed" type="password" name="password" size="40">
             <span class="text-error">&nbsp;(Required)</span>
-          </td>
-        </tr>
-        <tr>
-          <td><label for="user_password_confirmation">Confirm:</label></td>
-          <td>
+        </div>
+        <label for="user_password_confirmation">Confirm:</label>
+        <div>
             <input id="user_password_confirmation" class="boxed" type="password" name="password_confirmation" size="40">
             <span class="text-error">&nbsp;(Required)</span>
-          </td>
-        </tr>
-      </table>
+        </div>
+      </div>
       <hr>
       <label>
         <input type="checkbox" name="on_lg" onchange="$('name_on_lg_div').style.display = (this.checked ? 'block' : 'none'); return true;">
@@ -61,4 +55,5 @@
     </form>
   </fieldset>
 </div>
+
 

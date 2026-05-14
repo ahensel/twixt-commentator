@@ -11,26 +11,14 @@
     <% } %>
     <legend>Your User Profile</legend>
     <form action="/user/profile/<%= user.id %>" method="post">
-      <table>
-        <tr>
-          <td><label for="user_name">Name:</label></td>
-          <td>
-            <input id="user_name" class="boxed" type="text" name="name" value="<%= user.name %>" size="40">
-          </td>
-        </tr>
-        <tr>
-          <td><label for="user_password">Password:</label></td>
-          <td>
-            <input id="user_password" class="boxed" type="password" name="password" size="40">
-          </td>
-        </tr>
-        <tr>
-          <td><label for="user_password_confirmation">Confirm:</label></td>
-          <td>
-            <input id="user_password_confirmation" class="boxed" type="password" name="password_confirmation" size="40">
-          </td>
-        </tr>
-      </table>
+      <div class="user-form-grid">
+        <label for="user_name">Name:</label>
+        <input id="user_name" class="boxed" type="text" name="name" value="<%= user.name %>" size="40">
+        <label for="user_password">Password:</label>
+        <input id="user_password" class="boxed" type="password" name="password" size="40">
+        <label for="user_password_confirmation">Confirm:</label>
+        <input id="user_password_confirmation" class="boxed" type="password" name="password_confirmation" size="40">
+      </div>
       <hr>
       <label>
         <input type="checkbox" name="on_lg" <%= user.on_lg ? 'checked="checked"' : '' %> onchange="$('name_on_lg_div').style.display = (this.checked ? 'block' : 'none'); return true;">
@@ -58,4 +46,5 @@
     </form>
   </fieldset>
 </div>
+
 

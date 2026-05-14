@@ -583,6 +583,21 @@ div.login-box .login-fields {
   padding: 4px;
 }
 
+/* ── Form grid (profile & add_user) ────────────────────────────── */
+.user-form-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 6px;
+  align-items: center;
+  padding: 4px;
+  font-size: 0.83rem;
+}
+
+.user-form-grid .boxed {
+  padding: 1px 2px 1px 2px;
+  width: 275px;
+}
+
 div.please-register {
   border: 1px solid var(--color-border);
   padding: 4px;
