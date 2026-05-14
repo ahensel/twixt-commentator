@@ -583,7 +583,7 @@ div.login-box .login-fields {
   padding: 4px;
 }
 
-/* ── Form grid (profile & add_user) ────────────────────────────── */
+/* ── User, password, confirm password (profile & add_user) ──────── */
 .user-form-grid {
   display: grid;
   grid-template-columns: auto 1fr;
