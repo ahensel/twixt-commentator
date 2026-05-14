@@ -48,6 +48,9 @@ window.addEventListener('load', () => {
 
   positionElements();
   showMovesOnLoad();
+
+  Object.assign($('white-player-label'), { src: whitepeg_img });
+  Object.assign($('black-player-label'), { src: blackpeg_img });
 });
 
 function disableSelection(target) {
@@ -705,12 +708,13 @@ const PEG_IMAGES = [blackpeg_img, whitepeg_img];
 function boardOffsetX() { return $('board')?.offsetLeft; }
 function boardOffsetY() { return $('board')?.offsetTop; }
 
-function xDelta(pixelX) { return pixelX - xPixels(xCoord(pixelX)) - boardOffsetX(); }
-function yDelta(pixelY) { return pixelY - yPixels(yCoord(pixelY)) - boardOffsetY(); }
-function xCoord(pixelX) { return Math.round((pixelX - 18 - boardOffsetX()) / GRID_SPACING); }
-function yCoord(pixelY) { return Math.round((pixelY - 18 - boardOffsetY()) / GRID_SPACING); }
-function xPixels(x)     { return (GRID_MARGIN - GRID_SPACING/2) + GRID_SPACING * x; }
-function yPixels(y)     { return (GRID_MARGIN - GRID_SPACING/2) + GRID_SPACING * y; }
+const GRID_ZERO = GRID_MARGIN - GRID_SPACING/2;
+function xDelta(pixelX) { return pixelX - boardOffsetX() - xPixels(xCoord(pixelX)); }
+function yDelta(pixelY) { return pixelY - boardOffsetY() - yPixels(yCoord(pixelY)); }
+function xCoord(pixelX) { return Math.round((pixelX - boardOffsetX() - GRID_ZERO) / GRID_SPACING); }
+function yCoord(pixelY) { return Math.round((pixelY - boardOffsetY() - GRID_ZERO) / GRID_SPACING); }
+function xPixels(x)     { return GRID_ZERO + GRID_SPACING * x; }
+function yPixels(y)     { return GRID_ZERO + GRID_SPACING * y; }
 
 function sign(x) { return (x < 0) ? -1 : 1; }
 
@@ -929,8 +933,7 @@ function drawLinkGeneral(link, linkType) {
   }
 }
 
-function addInlineImgToBoard(imgfile, id, leftPos, topPos, width, height)
-{
+function addInlineImgToBoard(imgfile, id, leftPos, topPos, width, height) {
   const b = $(`boardglass${bg}`);
 
   const img = document.createElement('img');

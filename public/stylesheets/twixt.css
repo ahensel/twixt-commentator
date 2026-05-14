@@ -485,10 +485,6 @@ img.crosshair, img.new-peg {
   height: 13px;
 }
 
-img.piece {
-  display: none;
-}
-
 /* ── Game results ──────────────────────────────────────────────── */
 .winner {
   font-size: 1rem;

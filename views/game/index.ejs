@@ -10,10 +10,10 @@
 
 <% if (game) { %>
   <div class="game-players">
-    <img src="/images/pieces/whitepeg.gif" alt="White:">
+    <img id="white-player-label" alt="White:">
     <span class="<%= game.winner === 1 ? 'winner' : 'loser' %>"><%- h2(game.player1) %></span>
     &nbsp;&nbsp;
-    <img src="/images/pieces/blackpeg.gif" alt="Black:">
+    <img id="black-player-label" alt="Black:">
     <span class="<%= game.winner === 2 ? 'winner' : 'loser' %>"><%- h2(game.player2) %></span>
   </div>
 
@@ -101,7 +101,6 @@
         <div></div><div></div>
       </div>
     </div>
-    <%# preload pieces %>
     <img id="crosshair" class="crosshair" src="/images/pieces/crosshair.gif" galleryimg="no" alt="">
   </div>
 
