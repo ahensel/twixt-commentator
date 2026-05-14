@@ -55,7 +55,7 @@ window.addEventListener('load', () => {
 
 function disableSelection(target) {
   if (!target) return;
-  target.style.userSelect = 'none';
+  target.classList.add('no-select');
 }
 
 function disableSelections() {
@@ -200,7 +200,7 @@ function showUserMovesText() {
   let userMovesText = '';
 
   if (currentMoves.hasUserMoves()) {
-    $('copyMovesBtn').style.display = 'inline';
+    $('copyMovesBtn').classList.remove('hidden');
     userMovesText += "|<span class='user-moves'>";
     let moveNum = getUserMovesFirstNum();
 
@@ -214,7 +214,7 @@ function showUserMovesText() {
     userMovesText += '</span>';
   }
   else {
-    $('copyMovesBtn').style.display = 'none';
+    $('copyMovesBtn').classList.add('hidden');
   }
 
   $('user-moves').innerHTML = userMovesText;
@@ -450,11 +450,11 @@ function showAllMoves(moveNum, commentMoves) {
   showUserMovesText();
 
   // double buffering to eliminate flicker on slow machines
-  $(`boardglass${bg}`).style.display        = 'inline';
-  $(`boardglass${3 - bg}`).style.display    = 'none';
+  $(`boardglass${bg}`).classList.remove('hidden');
+  $(`boardglass${3 - bg}`).classList.add('hidden');
 
   // Safari loses the new peg marker unless we put its div back on top
-  $('markerglass').style.zIndex = 10; //$(`boardglass${bg}`).style.zIndex + 1;
+  $('markerglass').style.zIndex = 10;
 }
 
 function uncolorMove(moveNum) {
@@ -529,8 +529,8 @@ function clearBoard() {
   const b = $(`boardglass${bg}`);
   while (b.firstChild) b.removeChild(b.firstChild);
 
-  $('newwhitepeg').style.display = 'none';
-  $('newblackpeg').style.display = 'none';
+  $('newwhitepeg').classList.add('hidden');
+  $('newblackpeg').classList.add('hidden');
 }
 
 // ─── Mouse / board interaction ────────────────────────────────────────────────
@@ -766,12 +766,12 @@ function drawPeg(peg) {
 }
 
 function overlayNewPegMarker(image, pegColor) {
-  $('newwhitepeg').style.display = 'none';
-  $('newblackpeg').style.display = 'none';
+  $('newwhitepeg').classList.add('hidden');
+  $('newblackpeg').classList.add('hidden');
   const newpeg = $(`new${['black', 'white'][pegColor]}peg`);
   newpeg.style.left    = image.style.left;
   newpeg.style.top     = image.style.top;
-  newpeg.style.display = 'inline';
+  newpeg.classList.remove('hidden');
   newpeg.draggable = false;
 }
 
@@ -811,14 +811,14 @@ function eraseLinkableMarkersAround(peg) {
 
 function eraseCrosshair() {
   const ch = $('crosshair');
-  if (ch) ch.style.display = 'none';
+  if (ch) ch.classList.add('hidden');
   eraseTickMarks();
 }
 
 function eraseTickMarks() {
   ['vtick', 'vtick2', 'htick', 'htick2'].forEach(id => {
     const tick = $(id);
-    if (tick) tick.style.display = 'none';
+    if (tick) tick.classList.add('hidden');
   });
 }
 
@@ -829,7 +829,7 @@ function drawCrosshair(x, y) {
     const topPos  = yPixels(y);
     ch.style.left    = `${leftPos - 5.5}px`;
     ch.style.top     = `${topPos - 5.5}px`;
-    ch.style.display = 'inline';
+    ch.classList.remove('hidden');
     drawTickMarks(leftPos, topPos, '#cc0000');
   }
 }
@@ -861,9 +861,9 @@ function getVtick(id) {
   let vtick = $(id);
   if (!vtick) {
     vtick = buildTickMark(id);
-    vtick.style.height = '11px';
+    vtick.classList.add('vtick');
   }
-  vtick.style.display = 'inline';
+  vtick.classList.remove('hidden');
   return vtick;
 }
 
@@ -871,16 +871,16 @@ function getHtick(id) {
   let htick = $(id);
   if (!htick) {
     htick = buildTickMark(id);
-    htick.style.width = '11px';
+    htick.classList.add('htick');
   }
-  htick.style.display = 'inline';
+  htick.classList.remove('hidden');
   return htick;
 }
 
 function buildTickMark(id) {
   const tick = document.createElement('div');
   tick.id = id;
-  Object.assign(tick.style, { position: 'absolute', left: '1px', top: '1px', width: '0', height: '0' });
+  tick.classList.add('tick-mark');
   const b = $('board');
   if (b) b.appendChild(tick);  // guard against race conditions on loading
   return tick;

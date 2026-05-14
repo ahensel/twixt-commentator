@@ -180,6 +180,27 @@ tr.odd  { background-color: var(--color-odd-row); }
   display: none;
 }
 
+.no-select {
+  user-select: none;
+}
+
+/* ── Tick marks ────────────────────────────────────────────────── */
+.tick-mark {
+  position: absolute;
+  left: 1px;
+  top: 1px;
+  width: 0;
+  height: 0;
+}
+
+.vtick {
+  height: 11px;
+}
+
+.htick {
+  width: 11px;
+}
+
 /* ── Padding utility ───────────────────────────────────────────── */
 .p-5 {
   padding: 5px;
@@ -479,7 +500,6 @@ div#comments {
 }
 
 img.crosshair, img.new-peg {
-  display: none;
   position: absolute;
   width: 13px;
   height: 13px;
