@@ -65,7 +65,7 @@ class TwixtController {
         const dy = this.dy[i];
         if (peg.hasLink(dx, dy) &&
             this.doLinksCross(x1, y1, x2, y2, x, y, x + dx, y + dy)) {
-          if (this.board.linkXingPolicy !== TwixtBoard.PENCIL_AND_PAPER) {
+          if (this.board.linkXingPolicy === TwixtBoard.LINK_REMOVAL) {
             return true;
           } else if (peg.color !== this.board.getPeg(x1, y1).color) {
             return true;
