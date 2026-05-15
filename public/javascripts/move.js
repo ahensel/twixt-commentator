@@ -48,25 +48,25 @@ class SwapMove extends AbstractMove {
 }
 
 class ResignMove extends AbstractMove {
-  constructor(player) { super(); this.player = player; this.type = RESIGN; }
+  constructor(player) { super(); this.player = player; this.type = RESIGN; this.isFinalMove = true; }
   get text() { return 'resign'; }
   getText()  { return this.text; }
 }
 
 class DrawMove extends AbstractMove {
-  constructor(player) { super(); this.player = player; this.type = DRAW; }
+  constructor(player) { super(); this.player = player; this.type = DRAW; this.isFinalMove = true; }
   get text() { return 'draw'; }
   getText()  { return this.text; }
 }
 
 class ForfeitMove extends AbstractMove {
-  constructor(player) { super(); this.player = player; this.type = FORFEIT; }
+  constructor(player) { super(); this.player = player; this.type = FORFEIT; this.isFinalMove = true; }
   get text() { return 'forfeit'; }
   getText()  { return this.text; }
 }
 
 class LostMove extends AbstractMove {
-  constructor(player) { super(); this.player = player; this.type = LOST; }
+  constructor(player) { super(); this.player = player; this.type = LOST; this.isFinalMove = true; }
   get text() { return 'lost'; }
   getText()  { return this.text; }
 }

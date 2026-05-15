@@ -20,14 +20,17 @@ const LINK_LONG_OFFSET = (GRID_SPACING * 2 - LINK_LONG_DIM) / 2;
 // ─── Centralized mutable board state ──────────────────────────────────────────
 
 const BoardState = {
-  turn: 1,
-  twixtGame: null,
+  turn: 1,  // 1 = White's turn, 0 = Black's turn
+  bg: 1,    // board glass, for double buffering, to eliminate flicker. 1 or 2.
+
+  twixtGame: null,  // TwixtController object, created on load
+  currentMoves: new TwixtMoves(),  // tracks both main line and user variation
+  currentMoveNum: null,   // current move in the main line, not the variation
+
+  // Link removal state tracking
   cutLink: null,
   holdingForMarkers: false,
   numLinkableMarkers: 0,
-  currentMoveNum: null,   // current move in the mainline, not the variation
-  currentMoves: new TwixtMoves(),
-  bg: 1,  // board glass, for double buffering, to eliminate flicker. 1 or 2.
 
   // Layout values set by positionElements() and read by setCommentDivTop().
   leftMargin: null,
@@ -148,8 +151,6 @@ function showMovesOnLoad() {
   }
 
   BoardState.currentMoves.settingUp = true;
-  let gameIsInProgress = true;
-
   moves.forEach(move => {
     if (move.type === Move.Peg) {
       BoardState.turn = 2 - move.player;
@@ -158,43 +159,44 @@ function showMovesOnLoad() {
       BoardState.currentMoves.swapFirstMove();
     } else if (move.type === Move.Resign) {
       BoardState.currentMoves.finalMove(new ResignMove());
-      gameIsInProgress = false;
     } else if (move.type === Move.Draw) {
       BoardState.currentMoves.finalMove(new DrawMove());
-      gameIsInProgress = false;
     } else if (move.type === Move.Forfeit) {
       BoardState.currentMoves.finalMove(new ForfeitMove());
-      gameIsInProgress = false;
     } else if (move.type === Move.Lost) {
       BoardState.currentMoves.finalMove(new LostMove());
-      gameIsInProgress = false;
     }
   });
-
   BoardState.currentMoves.settingUp = false;
-  BoardState.currentMoveNum = BoardState.currentMoves.moves.length - (gameIsInProgress ? 0 : 1);
+
+  BoardState.currentMoveNum = BoardState.currentMoves.moves.length - (BoardState.currentMoves.gameIsInProgress() ? 0 : 1);
 
   showMovesText();
 }
 
-function showMovesText() {
-  $('moves').innerHTML = BoardState.currentMoves.getMoves().map((move, index) => {
-    const moveNum = index + 1;
-    const className = ['black', 'white'][moveNum % 2];
+function buildMovesText(moves, firstNum, fn) {
+  return moves.map((move, index) => {
+    const moveNum = firstNum + index;
     const moveText  = `${moveNum}.${move.getText()}`;
-    return `<a id='move_${moveNum}' class='${className}' href='' ` +
-           `onclick='jumpTo(${moveNum}); return false;'>${moveText}</a> `;
+    const className = ['black', 'white'][moveNum % 2];
+    return fn(moveText, moveNum, className);
   }).join(' ');
+}
 
+function showMovesText() {
+  $('moves').innerHTML = buildMovesText(BoardState.currentMoves.getMoves(), 1,
+    (moveText, moveNum, className) => {
+      return `<a id='move_${moveNum}' class='${className}' href='' ` +
+             `onclick='jumpTo(${moveNum}); return false;'>${moveText}</a>`;
+    });
   setCommentDivTop();
 }
 
 function getUserMovesFirstNum() {
   let moveNum = BoardState.currentMoveNum;
   if (moveNum > 0) {
-    const lastMove = BoardState.currentMoves.getMoves()[moveNum - 1];
-    if (!(lastMove.peg || lastMove.getText() === 'swap')) {
-      // back off from "resign", "forfeit", "draw", "loss"
+    const move = BoardState.currentMoves.getMoves()[moveNum - 1];
+    if (move.isFinalMove) { // "resign", "forfeit", "draw", "loss"
       moveNum--;
     }
   }
@@ -206,15 +208,13 @@ function showUserMovesText() {
 
   if (BoardState.currentMoves.hasUserMoves()) {
     $('copyMovesBtn').classList.remove('hidden');
-    const firstNum = getUserMovesFirstNum();
 
     userMovesText = "|<span class='user-moves'>" +
-      BoardState.currentMoves.getUserMoves().map((move, index) => {
-        const moveNum = firstNum + index;
-        const className = ['black', 'white'][moveNum % 2];
-        const moveText  = `${moveNum}.${move.getText()}`;
-        return `<span id='userMove_${moveNum}' class='${className}'>${moveText}</span>`;
-      }).join(' ') + '</span>';
+      buildMovesText(BoardState.currentMoves.getUserMoves(), getUserMovesFirstNum(),
+        (moveText, moveNum, className) => {
+          return `<span id='userMove_${moveNum}' class='${className}'>${moveText}</span>`;
+        }) +
+      '</span>';
   }
   else {
     $('copyMovesBtn').classList.add('hidden');
@@ -282,7 +282,9 @@ function overlapMovesMatch(firstMoveNum, nextMoveNum, moves) {
     const shownMove = (moveNum <= BoardState.currentMoveNum)
       ? BoardState.currentMoves.getMoves()[moveNum - 1]
       : BoardState.currentMoves.getUserMoves()[moveNum - BoardState.currentMoveNum - 1];
-    if (shownMove.getText().toUpperCase() !== moves[moveNum - firstMoveNum].toUpperCase()) {
+    const shownMoveCoord = getPegCoordinates(shownMove.getText()).join(',');
+    const commentMoveCoord = getPegCoordinates(moves[moveNum - firstMoveNum]).join(',');
+    if (shownMoveCoord !== commentMoveCoord) {
       return false;
     }
   }
@@ -549,7 +551,7 @@ function mouseOverBoard(evt) {
 
     if (!BoardState.holdingForMarkers && BoardState.isLegalSpot(x, y)) {
       if (peg == null) {
-        drawCrosshair(x, y, BoardState.turn);
+        drawCrosshair(x, y);
       } else {
         drawTickMarks(xPixels(x), yPixels(y), '#808080');
       }
@@ -629,24 +631,22 @@ function nextTurn() {
   } else {
     BoardState.currentMoves.commitMove(BoardState.twixtGame);
   }
-  BoardState.turn = 1 - BoardState.turn;
-  showTitle();
+  flipTurn();
   if (BoardState.hasLinkRemoval()) {
     drawLinkableMarkersInBox(1, 1, BoardState.twixtGame.board.size, BoardState.twixtGame.board.size, BoardState.turn);
   }
 }
 
-function showTitle() {
-  $('turn').innerHTML = `${BoardState.turn === 1 ? 'White' : 'Black'}'s turn:`;
+function flipTurn() {
+  BoardState.turn = 1 - BoardState.turn;
+  $('turn').innerHTML = `${['Black', 'White'][BoardState.turn]}'s turn:`;
 }
 
 // ─── Clipboard ────────────────────────────────────────────────────────────────
 
 function copyMovesToClipboard() {
-  const firstNum = getUserMovesFirstNum();
-  const plainText = '|' + BoardState.currentMoves.getUserMoves()
-    .map((move, index) => `${firstNum + index}.${move.getText()}`)
-    .join(' ');
+  const plainText = '|' + buildMovesText(BoardState.currentMoves.getUserMoves(), getUserMovesFirstNum(),
+    (moveText) => moveText);
 
   const onSuccess = () => {
     const btn = $('copyMovesBtn');

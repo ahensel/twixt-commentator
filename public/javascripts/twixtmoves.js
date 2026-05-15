@@ -30,4 +30,5 @@ class TwixtMoves {
   hasUserMoves()     { return this.userMoves.length > 0; }
   popMove()          { return this.userMoves.pop(); }
   clearUserMoves()   { this.userMoves = []; }
+  gameIsInProgress() { return !this.moves[this.moves.length - 1]?.isFinalMove; }
 }
