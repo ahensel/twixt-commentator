@@ -517,7 +517,7 @@ function nextButton() {
 
 function clearBoard() {
   BoardState.turn = 1;
-  BoardState.twixtGame = new TwixtController(BoardState.twixtGame.board.size);
+  BoardState.twixtGame = new TwixtController(BoardState.twixtGame.board.size, BoardState.twixtGame.board.linkXingPolicy);
   BoardState.cutLink = null;
   BoardState.holdingForMarkers = false;
   BoardState.numLinkableMarkers = 0;
