@@ -187,18 +187,26 @@ tr.odd  { background-color: var(--color-odd-row); }
 /* ── Tick marks ────────────────────────────────────────────────── */
 .tick-mark {
   position: absolute;
-  left: 1px;
-  top: 1px;
   width: 0;
   height: 0;
 }
 
 .vtick {
   height: 11px;
+  border-left: 1px solid;
 }
 
 .htick {
   width: 11px;
+  border-top: 1px solid;
+}
+
+.tick-mouse-hole, .tick-mouse-link {
+  border-color: #cc0000;
+}
+
+.tick-mouse-peg {
+  border-color: #808080;
 }
 
 /* ── Padding utility ───────────────────────────────────────────── */

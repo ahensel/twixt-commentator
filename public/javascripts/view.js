@@ -425,7 +425,7 @@ function showAllMoves(moveNum, commentMoves) {
     const peg1 = firstMove.peg;
     if (peg1.swapped !== swapped) {
       peg1.swapped = swapped;
-      [peg1.x, peg1.y] = [peg1.y, peg2.x];
+      [peg1.x, peg1.y] = [peg1.y, peg1.x];
     }
   }
 
@@ -553,7 +553,7 @@ function mouseOverBoard(evt) {
       if (peg == null) {
         drawCrosshair(x, y);
       } else {
-        drawTickMarks(xPixels(x), yPixels(y), '#808080');
+        drawTickMarks(xPixels(x), yPixels(y), 'tick-mouse-peg');
       }
     } else {
       eraseCrosshair();
@@ -824,51 +824,42 @@ function drawCrosshair(x, y) {
     ch.style.left    = `${leftPos - 5.5}px`;
     ch.style.top     = `${topPos - 5.5}px`;
     ch.classList.remove('hidden');
-    drawTickMarks(leftPos, topPos, '#cc0000');
+    drawTickMarks(leftPos, topPos, 'tick-mouse-hole');
   }
 }
 
-function drawTickMarks(leftPos, topPos, color) {
-  const boardPixels = BoardState.twixtGame.board.size * GRID_SPACING;
-  const tickStyle = `1px solid ${color}`;
+function drawTickMarks(leftPos, topPos, tickClass) {
+  const boardWidth = BoardState.twixtGame.board.size * GRID_SPACING + GRID_MARGIN*2;
 
-  const vtick = getVtick('vtick');
-  vtick.style.left       = `${leftPos}px`;
-  vtick.style.borderLeft = tickStyle;
+  const vtick = getVtick('vtick', leftPos, 1);
+  const vtick2 = getVtick('vtick2', leftPos, boardWidth - 9);
+  const htick = getHtick('htick', 1, topPos);
+  const htick2 = getHtick('htick2', boardWidth - 9, topPos);
 
-  const vtick2 = getVtick('vtick2');
-  vtick2.style.left       = `${leftPos}px`;
-  vtick2.style.top        = (boardPixels + 39) + 'px';
-  vtick2.style.borderLeft = tickStyle;
-
-  const htick = getHtick('htick');
-  htick.style.top       = `${topPos}px`;
-  htick.style.borderTop = tickStyle;
-
-  const htick2 = getHtick('htick2');
-  htick2.style.top       = `${topPos}px`;
-  htick2.style.left      = (boardPixels + 39) + 'px';
-  htick2.style.borderTop = tickStyle;
+  [vtick, vtick2, htick, htick2].forEach(tick => {
+    tick.classList.remove('tick-mouse-hole', 'tick-mouse-peg', 'tick-mouse-link');
+    tick.classList.add(tickClass);
+  });
 }
 
-function getVtick(id) {
-  let vtick = $(id);
-  if (!vtick) {
-    vtick = buildTickMark(id);
-    vtick.classList.add('vtick');
-  }
-  vtick.classList.remove('hidden');
+function getVtick(id, left, top) {
+  const vtick = getTick(id, left, top);
+  vtick.classList.add('vtick');
   return vtick;
 }
 
-function getHtick(id) {
-  let htick = $(id);
-  if (!htick) {
-    htick = buildTickMark(id);
-    htick.classList.add('htick');
-  }
-  htick.classList.remove('hidden');
+function getHtick(id, left, top) {
+  const htick = getTick(id, left, top);
+  htick.classList.add('htick');
   return htick;
+}
+
+function getTick(id, left, top) {
+  const tick = $(id) || buildTickMark(id);
+  tick.style.left = left + 'px';
+  tick.style.top = top + 'px';
+  tick.classList.remove('hidden');
+  return tick;
 }
 
 function buildTickMark(id) {
@@ -901,7 +892,7 @@ function drawCutLink(link) {
   drawTickMarks(
     (xPixels(link.peg1.x) + xPixels(link.peg2.x)) / 2,
     (yPixels(link.peg1.y) + yPixels(link.peg2.y)) / 2,
-    'red'
+    'tick-mouse-link'
   );
   BoardState.cutLink = link;
 }
