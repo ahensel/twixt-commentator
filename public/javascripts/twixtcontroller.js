@@ -1,6 +1,6 @@
 class TwixtController {
-  constructor(size) {
-    this.board = new TwixtBoard(size);
+  constructor(size, linkXingPolicy) {
+    this.board = new TwixtBoard(size, linkXingPolicy);
     this.move = new EditMove();
     this.dx = [ 1,  2, 2, 1, -1, -2, -2, -1];
     this.dy = [-2, -1, 1, 2,  2,  1, -1, -2];
@@ -65,7 +65,7 @@ class TwixtController {
         const dy = this.dy[i];
         if (peg.hasLink(dx, dy) &&
             this.doLinksCross(x1, y1, x2, y2, x, y, x + dx, y + dy)) {
-          if (linkCrossingPolicy !== PENCIL_AND_PAPER) {
+          if (this.board.linkXingPolicy !== TwixtBoard.PENCIL_AND_PAPER) {
             return true;
           } else if (peg.color !== this.board.getPeg(x1, y1).color) {
             return true;

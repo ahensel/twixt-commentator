@@ -1,6 +1,10 @@
 class TwixtBoard {
-  constructor(size) {
+  static LINK_REMOVAL     = 0;
+  static PENCIL_AND_PAPER = 1;
+
+  constructor(size, linkXingPolicy) {
     this.size = size;
+    this.linkXingPolicy = linkXingPolicy ?? this.PENCIL_AND_PAPER;
     this.board = [];
     for (let i = 1; i <= size; i++) {
       this.board[i] = [];

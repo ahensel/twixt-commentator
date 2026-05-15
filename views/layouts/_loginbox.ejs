@@ -11,10 +11,10 @@
         <div class="boxed">
           <div class="login-fields">
             <label for="name">Name:</label>
-            <input id="name" class="boxed" type="text" name="name" value="<%= params && params.name ? params.name : '' %>">
+            <input id="name" class="boxed" type="text" name="name" value="<%= params && params.name ? params.name : '' %>" autocomplete="username">
             <span></span>
             <label for="password">Password:</label>
-            <input class="boxed" type="password" name="password">
+            <input class="boxed" type="password" name="password" autocomplete="current-password">
             <input type="submit" value="Log in">
           </div>
           <% if (loginNotice) { %>
