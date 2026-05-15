@@ -4,7 +4,7 @@ class TwixtBoard {
 
   constructor(size, linkXingPolicy) {
     this.size = size;
-    this.linkXingPolicy = linkXingPolicy ?? this.PENCIL_AND_PAPER;
+    this.linkXingPolicy = linkXingPolicy ?? TwixtBoard.PENCIL_AND_PAPER;
     this.board = [];
     for (let i = 1; i <= size; i++) {
       this.board[i] = [];
