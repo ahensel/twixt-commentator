@@ -158,6 +158,7 @@ function showMovesOnLoad() {
   BoardState.currentMoveNum = BoardState.currentMoves.moves.length - (BoardState.currentMoves.gameIsInProgress() ? 0 : 1);
 
   showMovesText();
+  updateBackNextButtons();
 }
 
 function buildMovesText(moves, firstNum, fn) {
@@ -433,6 +434,7 @@ function showAllMoves(moveNum, commentMoves) {
   }
 
   showUserMovesText();
+  updateBackNextButtons();
 
   BoardState.revealNewBoardglass();
 }
@@ -482,6 +484,16 @@ function unhighlightMoveInSidebar() {
       el.classList.remove('hovered-peg');
     }
   }
+}
+
+function updateBackNextButtons() {
+  const backDisabled = !BoardState.currentMoves.hasUserMoves() && BoardState.currentMoveNum <= 0;
+  const nextDisabled = BoardState.currentMoves.hasUserMoves() || BoardState.currentMoveNum >= BoardState.currentMoves.moves.length;
+
+  $('backLink').classList.toggle('disabled', backDisabled);
+  $('nextLink').classList.toggle('disabled', nextDisabled);
+  if (backDisabled) $('backLink').blur();
+  if (nextDisabled) $('nextLink').blur();
 }
 
 function backButton() {
@@ -564,6 +576,7 @@ function clickOnBoard(evt) {
     if (peg == null && !BoardState.holdingForMarkers && BoardState.isLegalSpot(x, y)) {
       const peg = placePeg(x, y);
       showUserMovesText();
+      updateBackNextButtons();
       highlightMoveInSidebar(peg);
     } else if (BoardState.hasLinkRemoval() && peg != null && peg.color === BoardState.turn) {
       placeLinks(peg, false);
