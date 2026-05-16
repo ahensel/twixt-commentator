@@ -45,7 +45,18 @@ const BoardState = {
   },
   hasLinkRemoval: () => {
     return BoardState.twixtGame.board.linkXingPolicy === TwixtBoard.LINK_REMOVAL;
-  }
+  },
+  boardglass: () => {
+    return $(`boardglass${BoardState.bg}`);
+  },
+  revealNewBoardglass: () => {
+    // double buffering to eliminate flicker on slow machines
+    $(`boardglass${BoardState.bg}`).classList.remove('hidden');
+    $(`boardglass${3 - BoardState.bg}`).classList.add('hidden');
+  },
+  switchDrawingBoardglass: () => {
+    BoardState.bg = 3 - BoardState.bg;  // 1 → 2, 2 → 1 (double buffering)
+  },
 };
 
 document.addEventListener('mousedown', clickOnBoard);
@@ -92,25 +103,6 @@ function positionElements() {
 
   Object.assign($('board').style, {
     left: `${BoardState.leftMargin}px`, top: `${BoardState.topMargin + 20}px`,
-    width: `${boardWidth}px`, height: `${boardHeight}px`,
-  });
-
-  Object.assign($('twixt-board').style, {
-    width: `${boardWidth}px`, height: `${boardHeight}px`
-  });
-
-  Object.assign($('boardglass1').style, {
-    left: `${BoardState.leftMargin + 1}px`, top: `${BoardState.topMargin + 21}px`,
-    width: `${boardWidth}px`, height: `${boardHeight}px`,
-  });
-
-  Object.assign($('boardglass2').style, {
-    left: `${BoardState.leftMargin + 1}px`, top: `${BoardState.topMargin + 21}px`,
-    width: `${boardWidth}px`, height: `${boardHeight}px`,
-  });
-
-  Object.assign($('markerglass').style, {
-    left: `${BoardState.leftMargin + 1}px`, top: `${BoardState.topMargin + 21}px`,
     width: `${boardWidth}px`, height: `${boardHeight}px`,
   });
 
@@ -404,8 +396,8 @@ function showAllMoves(moveNum, commentMoves) {
   colorMove(moveNum);
 
   BoardState.currentMoves.jumpingTo = true;
-  BoardState.bg = 3 - BoardState.bg;  // 1 → 2, 2 → 1 (double buffering)
 
+  BoardState.switchDrawingBoardglass();
   clearBoard();
 
   const moves = BoardState.currentMoves.getMoves();
@@ -450,9 +442,7 @@ function showAllMoves(moveNum, commentMoves) {
 
   showUserMovesText();
 
-  // double buffering to eliminate flicker on slow machines
-  $(`boardglass${BoardState.bg}`).classList.remove('hidden');
-  $(`boardglass${3 - BoardState.bg}`).classList.add('hidden');
+  BoardState.revealNewBoardglass();
 }
 
 function uncolorMove(moveNum) {
@@ -524,7 +514,7 @@ function clearBoard() {
   BoardState.holdingForMarkers = false;
   BoardState.numLinkableMarkers = 0;
 
-  $(`boardglass${BoardState.bg}`).replaceChildren();
+  BoardState.boardglass().replaceChildren();
 
   $('newwhitepeg').classList.add('hidden');
   $('newblackpeg').classList.add('hidden');
@@ -796,7 +786,7 @@ function eraseLinkableMarkersAround(peg) {
     for (let y = peg.y - 3; y <= peg.y + 3; y++) {
       const m = $(getMarkerName(x, y));
       if (m != null && !BoardState.twixtGame.isLinkable(x, y)) {
-        $(`boardglass${BoardState.bg}`).removeChild(m);
+        BoardState.boardglass().removeChild(m);
         BoardState.numLinkableMarkers--;
       }
     }
@@ -871,18 +861,22 @@ function buildTickMark(id) {
   return tick;
 }
 
+function getLinkId(link, linkType) {
+  return `${linkType}${link.getLinkName()}-${BoardState.bg}`;
+}
+
 function eraseCutLink() {
   if (BoardState.cutLink != null) {
-    const linkElement = $(`cut${BoardState.cutLink.getLinkName()}-${BoardState.bg}`);
+    const linkElement = $(getLinkId(BoardState.cutLink, 'cut'));
     BoardState.cutLink = null;
-    if (linkElement) $(`boardglass${BoardState.bg}`).removeChild(linkElement);
+    if (linkElement) BoardState.boardglass().removeChild(linkElement);
     eraseTickMarks();
   }
 }
 
 function eraseLink(link) {
-  const linkElement = $(`link${link.getLinkName()}-${BoardState.bg}`);
-  if (linkElement) $(`boardglass${BoardState.bg}`).removeChild(linkElement);
+  const linkElement = $(getLinkId(link, 'link'));
+  if (linkElement) BoardState.boardglass().removeChild(linkElement);
 }
 
 function drawLink(link)    { drawLinkGeneral(link, 'link'); }
@@ -898,7 +892,7 @@ function drawCutLink(link) {
 }
 
 function drawLinkGeneral(link, linkType) {
-  const id = `${linkType}${link.getLinkName()}-${BoardState.bg}`;
+  const id = getLinkId(link, linkType);
   if ($(id)) return;
 
   const dx = Math.sign(link.peg1.y - link.peg2.y) * (link.peg1.x - link.peg2.x);
@@ -919,7 +913,7 @@ function drawLinkGeneral(link, linkType) {
 }
 
 function addInlineImgToBoard(imgfile, id, leftPos, topPos, width, height) {
-  const b = $(`boardglass${BoardState.bg}`);
+  const b = BoardState.boardglass();
 
   const img = document.createElement('img');
   Object.assign(img, {
