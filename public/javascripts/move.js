@@ -65,7 +65,7 @@ class LostMove extends AbstractMove {
 // Tracks the link additions/removals and peg placement for a single interactive
 // editing step on the board.  This is a purely front-end concept used by
 // TwixtController and TwixtMoves to build the move notation displayed in the
-// sidebar and to support undo.
+// moves-panel and to support undo.
 
 class EditMove {
   constructor() {

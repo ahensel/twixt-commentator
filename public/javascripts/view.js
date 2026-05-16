@@ -59,10 +59,6 @@ const BoardState = {
   holdingForMarkers: false,
   numLinkableMarkers: 0,
 
-  // Layout values set by positionElements() and read by setCommentDivTop().
-  leftMargin: null,
-  topMargin: null,
-
   // Helper methods
   isLegalSpot: (x, y) => {
     return BoardState.twixtGame.board.isLegalSpot(x, y, BoardState.turn);
@@ -118,41 +114,30 @@ function disableSelections() {
 function positionElements() {
   if (!$('board')) return;
 
-  // absolute positioning of the board on the page
-  BoardState.leftMargin = 10;
-  BoardState.topMargin  = 80;
-
   const boardPixels = BoardState.twixtGame.board.size * GRID.SPACING;
   const boardWidth  = (GRID.MARGIN * 2) + boardPixels + 3;  // +2 for 1px border, +1 fudge factor
   const boardHeight = boardWidth;
 
-  Object.assign($('turn').style, { left: `${BoardState.leftMargin}px`, top: `${BoardState.topMargin}px` });
+  // absolute positioning of the board on the page
+  const leftMargin = 10;
+  const topMargin  = 80;
+
+  Object.assign($('turn').style, { left: `${leftMargin}px`, top: `${topMargin}px` });
 
   Object.assign($('board').style, {
-    left: `${BoardState.leftMargin}px`, top: `${BoardState.topMargin + 20}px`,
+    left: `${leftMargin}px`, top: `${topMargin + 20}px`,
     width: `${boardWidth}px`, height: `${boardHeight}px`,
   });
 
   Object.assign($('sidebar').style, {
-    left: `${BoardState.leftMargin + boardWidth + 10}px`, top: `${BoardState.topMargin + 20}px`,
+    left: `${leftMargin + boardWidth + 10}px`, top: `${topMargin + 20}px`,
     right: '10px',
   });
 
   Object.assign($('underbar').style, {
-    left: `${BoardState.leftMargin}px`, top: `${BoardState.topMargin + boardHeight + 30}px`,
+    left: `${leftMargin}px`, top: `${topMargin + boardHeight + 30}px`,
     width: `${boardWidth}px`,
   });
-
-  Object.assign($('comments').style, {
-    left: `${BoardState.leftMargin + boardWidth + 10}px`, bottom: '10px',
-    right: '10px',
-  });
-
-  setCommentDivTop();
-}
-
-function setCommentDivTop() {
-  $('comments').style.top = `${BoardState.topMargin + 30 + $('sidebar').offsetHeight}px`;
 }
 
 function showMovesOnLoad() {
@@ -208,7 +193,6 @@ function showMovesText() {
       return `<a id='move_${moveNum}' class='${className}' href='' ` +
              `onclick='jumpTo(${moveNum}); return false;'>${moveText}</a>`;
     });
-  setCommentDivTop();
 }
 
 function getUserMovesFirstNum() {
@@ -240,7 +224,6 @@ function showUserMovesText() {
   }
 
   $('user-moves').innerHTML = userMovesText;
-  setCommentDivTop();
 }
 
 function jumpTo(moveNum) {

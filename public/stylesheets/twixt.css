@@ -454,18 +454,29 @@ div.game-players {
 
 div.sidebar {
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  bottom: 10px;
+}
+
+div.sidebar div:last-child {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+div.moves-panel {
   border: 1px solid var(--color-border);
   padding: 9px;
   background-color: var(--color-bg);
   font-size: 0.83rem;
-  display: inline;
 }
 
-div.sidebar div {
+div.moves-panel div {
   margin: 4px;
 }
 
-div.sidebar div.back-next {
+div.moves-panel div.back-next {
   padding-top: 4px;
 }
 
@@ -508,11 +519,9 @@ span.user-moves {
 }
 
 div#comments {
-  position: absolute;
   border: 1px solid var(--color-border);
   padding: 10px;
   background-color: var(--color-bg);
-  display: inline;
   overflow: auto;
 }
 

@@ -120,47 +120,49 @@
   </div>
 
   <div id="sidebar" class="sidebar">
-    <div id="moves"></div>
-    <div>
-      <span id="copyMovesBtn" class="copy-moves-btn hidden" onclick="copyMovesToClipboard()" title="Copy variation moves to clipboard">⧉</span>
-      <span id="user-moves"></span>
+    <div id="moves-panel" class="moves-panel">
+      <div id="moves"></div>
+      <div>
+        <span id="copyMovesBtn" class="copy-moves-btn hidden" onclick="copyMovesToClipboard()" title="Copy variation moves to clipboard">⧉</span>
+        <span id="user-moves"></span>
+      </div>
+      <div class="back-next">
+        <a id="backLink" href="" accesskey="b" onclick="backButton(); return false;">Back</a>
+        <a id="nextLink" href="" accesskey="n" onclick="nextButton(); return false;">Next</a>
+      </div>
     </div>
-    <div class="back-next">
-      <a id="backLink" href="" accesskey="b" onclick="backButton(); return false;">Back</a>
-      <a id="nextLink" href="" accesskey="n" onclick="nextButton(); return false;">Next</a>
-    </div>
-  </div>
 
-  <div id="comments">
-    <div id="current-comments">
-      <% (game.comments || []).forEach((comment) => { %>
-        <div class="comment-header">
-          <%- include('../comment/_comment_header', { comment: comment, author: comment.author, preview: false }) %>
+    <div id="comments">
+      <div id="current-comments">
+        <% (game.comments || []).forEach((comment) => { %>
+          <div class="comment-header">
+            <%- include('../comment/_comment_header', { comment: comment, author: comment.author, preview: false }) %>
+          </div>
+          <%- prepareComment(comment.comment) %>
+          <br>
+          <br>
+        <% }); %>
+      </div>
+      <% if (game.isInProgress()) { %>
+        <div class="comment-header">Game is in progress.</div>
+      <% } else if (!session || !session.user_id) { %>
+        <div class="comment-header">You must be logged in to add comments.</div>
+      <% } else { %>
+        <div id="addCommentLink">
+          <a href="" onclick="return showAddCommentBox();">Add a comment</a>
         </div>
-        <%- prepareComment(comment.comment) %>
-        <br>
-        <br>
-      <% }); %>
+        <div id="addComment" class="hidden">
+          <div class="comment-header">Add a comment:</div>
+          <form id="comment_form" action="/comment" method="post">
+            <input type="hidden" name="game" value="<%= game.id %>">
+            <input type="hidden" id="button_pressed" name="button_pressed" value="Comment">
+            <textarea class="comment-textarea" id="new_comment" name="new_comment" rows="8" onkeyup="checkStateChange()" onfocus="commentsInFocus(true)" onblur="commentsInFocus(false)"></textarea>
+            <input id="comment_button" type="submit" value="No Comment" onclick="removePreview(); setButtonPressed(this, 'Comment'); return hideAddCommentBox();">
+            <input id="preview_button" type="submit" value="Preview" onclick="removePreview(); setButtonPressed(this, 'Preview'); return true;" disabled="true">
+          </form>
+        </div>
+      <% } %>
     </div>
-    <% if (game.isInProgress()) { %>
-      <div class="comment-header">Game is in progress.</div>
-    <% } else if (!session || !session.user_id) { %>
-      <div class="comment-header">You must be logged in to add comments.</div>
-    <% } else { %>
-      <div id="addCommentLink">
-        <a href="" onclick="return showAddCommentBox();">Add a comment</a>
-      </div>
-      <div id="addComment" class="hidden">
-        <div class="comment-header">Add a comment:</div>
-        <form id="comment_form" action="/comment" method="post">
-          <input type="hidden" name="game" value="<%= game.id %>">
-          <input type="hidden" id="button_pressed" name="button_pressed" value="Comment">
-          <textarea class="comment-textarea" id="new_comment" name="new_comment" rows="8" onkeyup="checkStateChange()" onfocus="commentsInFocus(true)" onblur="commentsInFocus(false)"></textarea>
-          <input id="comment_button" type="submit" value="No Comment" onclick="removePreview(); setButtonPressed(this, 'Comment'); return hideAddCommentBox();">
-          <input id="preview_button" type="submit" value="Preview" onclick="removePreview(); setButtonPressed(this, 'Preview'); return true;" disabled="true">
-        </form>
-      </div>
-    <% } %>
   </div>
 
   <% if (parser) { %>
