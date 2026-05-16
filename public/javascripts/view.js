@@ -107,8 +107,6 @@ function positionElements() {
   const leftMargin = 10;
   const topMargin  = 80;
 
-  Object.assign($('turn').style, { left: `${leftMargin}px`, top: `${topMargin}px` });
-
   Object.assign($('board').style, {
     left: `${leftMargin}px`, top: `${topMargin + 20}px`,
     width: `${boardWidth}px`, height: `${boardHeight}px`,

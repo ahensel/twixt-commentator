@@ -1,14 +1,14 @@
 <% layout('layouts/game') %>
 
-<div class="game-number-form">
-  <form action="/game" method="post">
-    Game number:&nbsp;<input class="boxed" type="text" name="new_gid" value="<%= params && params.gid ? params.gid : '' %>" size="7" maxlength="7">
-    <input type="submit" value="Go">
-    &nbsp;<a href="/?page=<%= params && params.main_page || '' %>">Main Page</a>
-  </form>
-</div>
-
-<% if (game) { %>
+<div class="game-header">
+  <div class="game-number-form">
+    <form action="/game" method="post">
+      Game number:&nbsp;<input class="boxed" type="text" name="new_gid" value="<%= params && params.gid ? params.gid : '' %>" size="7" maxlength="7">
+      <input type="submit" value="Go">
+      &nbsp;<a href="/?page=<%= params && params.main_page || '' %>">Main Page</a>
+    </form>
+  </div>
+  <% if (game) { %>
   <div class="game-players">
     <img id="white-player-label" alt="White:">
     <span class="<%= game.winner === 1 ? 'winner' : 'loser' %>"><%- h2(game.player1) %></span>
@@ -18,6 +18,10 @@
   </div>
 
   <div id="turn" class="turn"></div>
+  <% } %>
+</div>
+
+<% if (game) { %>
   <div id="board" class="board">
     <div id="boardglass1" class="boardglass"></div>
     <div id="boardglass2" class="boardglass hidden"></div>
