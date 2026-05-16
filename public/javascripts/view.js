@@ -87,8 +87,6 @@ document.addEventListener('mousemove', mouseOverBoard);
 document.addEventListener('keydown',  e => keyIntercept(e));
 
 window.addEventListener('load', () => {
-  disableSelections();
-
   BoardState.twixtGame = new TwixtController(parseInt($('boardSize').value, 10), TwixtBoard.PENCIL_AND_PAPER);
 
   positionElements();
@@ -97,19 +95,6 @@ window.addEventListener('load', () => {
   Object.assign($('white-player-label'), { src: whitepeg_img });
   Object.assign($('black-player-label'), { src: blackpeg_img });
 });
-
-function disableSelection(target) {
-  if (!target) return;
-  target.classList.add('no-select');
-}
-
-function disableSelections() {
-  disableSelection($('board'));
-  disableSelection($('newwhitepeg'));
-  disableSelection($('newblackpeg'));
-  disableSelection($('backLink'));
-  disableSelection($('nextLink'));
-}
 
 function positionElements() {
   if (!$('board')) return;
@@ -899,8 +884,6 @@ function drawLinkGeneral(link, linkType) {
 }
 
 function addInlineImgToBoard(imgfile, id, leftPos, topPos, width, height) {
-  const b = BoardState.boardglass();
-
   const img = document.createElement('img');
   Object.assign(img, {
     src: imgfile,
@@ -915,7 +898,8 @@ function addInlineImgToBoard(imgfile, id, leftPos, topPos, width, height) {
     left: `${leftPos}px`,
     top: `${topPos}px`
   });
-  b.appendChild(img);
-  disableSelection(img);
+
+  BoardState.boardglass().appendChild(img);
+
   return img;
 }

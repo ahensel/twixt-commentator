@@ -180,10 +180,6 @@ tr.odd  { background-color: var(--color-odd-row); }
   display: none;
 }
 
-.no-select {
-  user-select: none;
-}
-
 /* ── Tick marks ────────────────────────────────────────────────── */
 .tick-mark {
   position: absolute;
@@ -220,6 +216,7 @@ div.board,
 .markerglass {
   position: absolute;
   cursor: pointer;
+  user-select: none;
 }
 
 div.board {
