@@ -455,6 +455,7 @@ div.sidebar {
   flex-direction: column;
   gap: 10px;
   bottom: 10px;
+  right: 10px;
 }
 
 div.sidebar div:last-child {
@@ -479,9 +480,7 @@ div.moves-panel div.back-next {
 
 div#underbar {
   position: absolute;
-  top: 586px;
   left: 10px;
-  width: 478px;
 }
 
 div#moves,

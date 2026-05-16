@@ -116,11 +116,10 @@ function positionElements() {
 
   Object.assign($('sidebar').style, {
     left: `${leftMargin + boardWidth + 10}px`, top: `${topMargin + 20}px`,
-    right: '10px',
   });
 
   Object.assign($('underbar').style, {
-    left: `${leftMargin}px`, top: `${topMargin + boardHeight + 30}px`,
+    top: `${topMargin + boardHeight + 30}px`,
     width: `${boardWidth}px`,
   });
 }
