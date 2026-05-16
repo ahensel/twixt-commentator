@@ -1,21 +1,48 @@
+// Inline images, because board pieces are small
+const blackpeg_img = 'data:image/webp;base64,UklGRmAAAABXRUJQVlA4TFMAAAAvDAADECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryA4NIkhpN1a+BCwJIDkAA+Jf1yUJE/wPWFDDMqthmZodyV/I2xeP6y4fKXdn3gWFWBawpAAA=';
+const whitepeg_img = 'data:image/webp;base64,UklGRnYAAABXRUJQVlA4TGoAAAAvDAADEDdAJm2bqqSu38ikbVOV1PUbmbRtqpK6fpv/AAC3qfxXUYFVbNtKzrMA+o8G8AAMAaCCnf4hnlSI6L/atm0Yjz15A9gWA2C0tjW47HG6G81E7i3iQ9IZ/5EMqoaMTmPZvfn16S8A';
+
+const eselink_img = 'data:image/webp;base64,UklGRlIAAABXRUJQVlA4TEUAAAAvGoADECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryg6JIUiMuAzgAB1f8y1t+eUf0X2HSBkw6b0nC8sa8y/UR22HGNxgA';
+const sselink_img = 'data:image/webp;base64,UklGRlIAAABXRUJQVlA4TEUAAAAvDoAGECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKrycyiKJKm5JCAhBPzbG75IoCL6LyRIMPqkQlA7pdI+wv5lHjmMlgIA';
+const sswlink_img = 'data:image/webp;base64,UklGRlQAAABXRUJQVlA4TEcAAAAvDoAGECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryg5o2kpxLANID+edPb679OqL/QoIEu0MEHaUxKp7uo9xr/9i69zpAAAA=';
+const wswlink_img = 'data:image/webp;base64,UklGRlIAAABXRUJQVlA4TEYAAAAvGoADECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryg5pIkqK5AwM4AAevf3lDRB7RfwUBASDiDGoPZbbwV/X58OvzmIEC';
+
+const esecut_img = 'data:image/webp;base64,UklGRmAAAABXRUJQVlA4TFMAAAAvGoADEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryU0FRJEnNHWAg/sFBFJL9u8kIiOi/wrZtkMJ4j1iYk/s5Eh9z5bGSXiwdX+nvB7ZY4rw0CAA=';
+const ssecut_img = 'data:image/webp;base64,UklGRl4AAABXRUJQVlA4TFEAAAAvDoAGEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryUznYNJLk6Gxugdwx8fzJ9KQP4RXRf6Jpm1TN7Y4cDCqekqW+DHsq0lRD5i/qNzx31CwA';
+const sswcut_img = 'data:image/webp;base64,UklGRlwAAABXRUJQVlA4TE8AAAAvDoAGEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryU0FNJFsNsY9CwEn2b+ZeSR/Rf7JJG7s3fxisWaqOMp/mEJGe4lNflLTnf+4V7QUwAA==';
+const wswcut_img = 'data:image/webp;base64,UklGRmQAAABXRUJQVlA4TFcAAAAvGoADEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryU4FVJNmJNmAA/xMHKITu/LsJC4joP9mkTdpOJY9gGEuGeDGkmMBH+//xO1mYGHjJyGMDYwNwGAIA';
+
+const linkablemarker_img = 'data:image/webp;base64,UklGRioAAABXRUJQVlA4TB4AAAAvDAADEA8Q8z8z8x84CLJtNn/JI0ziDhH9T25k5ng=';
+
 // Lightweight getElementById shorthand — NOT Prototype's $().
 // Use document.getElementById directly if you prefer explicitness.
 const $ = id => document.getElementById(id);
 
-const root = document.documentElement;
-const styles = getComputedStyle(root);
-const GRID_MARGIN = parseInt(styles.getPropertyValue('--grid-margin'), 10);
-const GRID_SPACING = parseInt(styles.getPropertyValue('--grid-spacing'), 10);
-const PEG_SIZE = 13;
-// links are on the hypotenuse of a 1-2-sqrt(5) right triangle.
-// const LINK_LENGTH = GRID_SPACING * Math.sqrt(5) - PEG_SIZE;
-// const LINK_SHORT_DIM = Math.round(LINK_LENGTH / Math.sqrt(5)) + 3;  // 3 for a little overlap with pegs
-// const LINK_LONG_DIM = Math.round(LINK_LENGTH * 2 / Math.sqrt(5)) + 3;
-// We could calculate link image dimensions this way, but the fact is that the link images are 15x27 pixels.
-const LINK_SHORT_DIM = 15;
-const LINK_LONG_DIM = 27;
-const LINK_SHORT_OFFSET = (GRID_SPACING - LINK_SHORT_DIM) / 2;
-const LINK_LONG_OFFSET = (GRID_SPACING * 2 - LINK_LONG_DIM) / 2;
+const styles = getComputedStyle(document.documentElement);
+const GRID = {
+  MARGIN: parseInt(styles.getPropertyValue('--grid-margin'), 10),
+  SPACING: parseInt(styles.getPropertyValue('--grid-spacing'), 10),
+  ZERO: () => GRID.MARGIN - GRID.SPACING/2,
+};
+const PEG = {
+  SIZE: 13,
+  IMAGES: [blackpeg_img, whitepeg_img],
+};
+const LINK = {
+  // links are on the hypotenuse of a 1-2-sqrt(5) right triangle.
+  // const LINK_LENGTH = GRID.SPACING * Math.sqrt(5) - PEG.SIZE;
+  // const LINK.SHORT_DIM = Math.round(LINK_LENGTH / Math.sqrt(5)) + 3;  // 3 for a little overlap with pegs
+  // const LINK.LONG_DIM = Math.round(LINK_LENGTH * 2 / Math.sqrt(5)) + 3;
+  // We could calculate link image dimensions this way, but the fact is that the link images are 15x27 pixels.
+  SHORT_DIM: 15,
+  LONG_DIM: 27,
+  SHORT_OFFSET: () => (GRID.SPACING - LINK.SHORT_DIM) / 2,
+  LONG_OFFSET: () => (GRID.SPACING * 2 - LINK.LONG_DIM) / 2,
+  IMAGES: {
+    eselink_img, sselink_img, sswlink_img, wswlink_img,
+    esecut_img, ssecut_img, sswcut_img, wswcut_img
+  }
+};
 
 // ─── Centralized mutable board state ──────────────────────────────────────────
 
@@ -95,8 +122,8 @@ function positionElements() {
   BoardState.leftMargin = 10;
   BoardState.topMargin  = 80;
 
-  const boardPixels = BoardState.twixtGame.board.size * GRID_SPACING;
-  const boardWidth  = (GRID_MARGIN * 2) + boardPixels + 3;  // +2 for 1px border, +1 fudge factor
+  const boardPixels = BoardState.twixtGame.board.size * GRID.SPACING;
+  const boardWidth  = (GRID.MARGIN * 2) + boardPixels + 3;  // +2 for 1px border, +1 fudge factor
   const boardHeight = boardWidth;
 
   Object.assign($('turn').style, { left: `${BoardState.leftMargin}px`, top: `${BoardState.topMargin}px` });
@@ -108,7 +135,7 @@ function positionElements() {
 
   Object.assign($('sidebar').style, {
     left: `${BoardState.leftMargin + boardWidth + 10}px`, top: `${BoardState.topMargin + 20}px`,
-    right: '10px', display: 'inline',
+    right: '10px',
   });
 
   Object.assign($('underbar').style, {
@@ -118,7 +145,7 @@ function positionElements() {
 
   Object.assign($('comments').style, {
     left: `${BoardState.leftMargin + boardWidth + 10}px`, bottom: '10px',
-    right: '10px', display: 'inline',
+    right: '10px',
   });
 
   setCommentDivTop();
@@ -667,40 +694,16 @@ function copyMovesToClipboard() {
 
 // ─── Drawing ──────────────────────────────────────────────────────────────────
 
-// Inline images, because board pieces are small
-const blackpeg_img = 'data:image/webp;base64,UklGRmAAAABXRUJQVlA4TFMAAAAvDAADECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryA4NIkhpN1a+BCwJIDkAA+Jf1yUJE/wPWFDDMqthmZodyV/I2xeP6y4fKXdn3gWFWBawpAAA=';
-const whitepeg_img = 'data:image/webp;base64,UklGRnYAAABXRUJQVlA4TGoAAAAvDAADEDdAJm2bqqSu38ikbVOV1PUbmbRtqpK6fpv/AAC3qfxXUYFVbNtKzrMA+o8G8AAMAaCCnf4hnlSI6L/atm0Yjz15A9gWA2C0tjW47HG6G81E7i3iQ9IZ/5EMqoaMTmPZvfn16S8A';
-
-const eselink_img = 'data:image/webp;base64,UklGRlIAAABXRUJQVlA4TEUAAAAvGoADECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryg6JIUiMuAzgAB1f8y1t+eUf0X2HSBkw6b0nC8sa8y/UR22HGNxgA';
-const sselink_img = 'data:image/webp;base64,UklGRlIAAABXRUJQVlA4TEUAAAAvDoAGECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKrycyiKJKm5JCAhBPzbG75IoCL6LyRIMPqkQlA7pdI+wv5lHjmMlgIA';
-const sswlink_img = 'data:image/webp;base64,UklGRlQAAABXRUJQVlA4TEcAAAAvDoAGECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryg5o2kpxLANID+edPb679OqL/QoIEu0MEHaUxKp7uo9xr/9i69zpAAAA=';
-const wswlink_img = 'data:image/webp;base64,UklGRlIAAABXRUJQVlA4TEYAAAAvGoADECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryg5pIkqK5AwM4AAevf3lDRB7RfwUBASDiDGoPZbbwV/X58OvzmIEC';
-
-const esecut_img = 'data:image/webp;base64,UklGRmAAAABXRUJQVlA4TFMAAAAvGoADEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryU0FRJEnNHWAg/sFBFJL9u8kIiOi/wrZtkMJ4j1iYk/s5Eh9z5bGSXiwdX+nvB7ZY4rw0CAA=';
-const ssecut_img = 'data:image/webp;base64,UklGRl4AAABXRUJQVlA4TFEAAAAvDoAGEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryUznYNJLk6Gxugdwx8fzJ9KQP4RXRf6Jpm1TN7Y4cDCqekqW+DHsq0lRD5i/qNzx31CwA';
-const sswcut_img = 'data:image/webp;base64,UklGRlwAAABXRUJQVlA4TE8AAAAvDoAGEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryU0FNJFsNsY9CwEn2b+ZeSR/Rf7JJG7s3fxisWaqOMp/mEJGe4lNflLTnf+4V7QUwAA==';
-const wswcut_img = 'data:image/webp;base64,UklGRmQAAABXRUJQVlA4TFcAAAAvGoADEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryU4FVJNmJNmAA/xMHKITu/LsJC4joP9mkTdpOJY9gGEuGeDGkmMBH+//xO1mYGHjJyGMDYwNwGAIA';
-
-const linkablemarker_img = 'data:image/webp;base64,UklGRioAAABXRUJQVlA4TB4AAAAvDAADEA8Q8z8z8x84CLJtNn/JI0ziDhH9T25k5ng=';
-
-const LINK_IMAGES = {
-  eselink_img, sselink_img, sswlink_img, wswlink_img,
-  esecut_img, ssecut_img, sswcut_img, wswcut_img
-}
-
-const PEG_IMAGES = [blackpeg_img, whitepeg_img];
-
 // useful functions for drawing
 function boardOffsetX() { return $('board')?.offsetLeft; }
 function boardOffsetY() { return $('board')?.offsetTop; }
 
-const GRID_ZERO = GRID_MARGIN - GRID_SPACING/2;
 function xDelta(pixelX) { return pixelX - boardOffsetX() - xPixels(xCoord(pixelX)); }
 function yDelta(pixelY) { return pixelY - boardOffsetY() - yPixels(yCoord(pixelY)); }
-function xCoord(pixelX) { return Math.round((pixelX - boardOffsetX() - GRID_ZERO) / GRID_SPACING); }
-function yCoord(pixelY) { return Math.round((pixelY - boardOffsetY() - GRID_ZERO) / GRID_SPACING); }
-function xPixels(x)     { return GRID_ZERO + GRID_SPACING * x; }
-function yPixels(y)     { return GRID_ZERO + GRID_SPACING * y; }
+function xCoord(pixelX) { return Math.round((pixelX - boardOffsetX() - GRID.ZERO()) / GRID.SPACING); }
+function yCoord(pixelY) { return Math.round((pixelY - boardOffsetY() - GRID.ZERO()) / GRID.SPACING); }
+function xPixels(x)     { return GRID.ZERO() + GRID.SPACING * x; }
+function yPixels(y)     { return GRID.ZERO() + GRID.SPACING * y; }
 
 // actual drawing functions
 
@@ -737,13 +740,13 @@ function getRemovableLink(pixelX, pixelY, color) {
 function isPegSpot(pixelX, pixelY) {
   const xd = xDelta(pixelX);
   const yd = yDelta(pixelY);
-  return (xd * xd + yd * yd) < (PEG_SIZE * PEG_SIZE / 4 + 1);
+  return (xd * xd + yd * yd) < (PEG.SIZE * PEG.SIZE / 4 + 1);
 }
 
 function drawPeg(peg) {
   const image = addInlineImgToBoard(
-    PEG_IMAGES[peg.color], `peg${peg.getPegName()}-${BoardState.bg}`,
-    xPixels(peg.x) - (PEG_SIZE/2), yPixels(peg.y) - (PEG_SIZE/2), PEG_SIZE, PEG_SIZE
+    PEG.IMAGES[peg.color], `peg${peg.getPegName()}-${BoardState.bg}`,
+    xPixels(peg.x) - (PEG.SIZE/2), yPixels(peg.y) - (PEG.SIZE/2), PEG.SIZE, PEG.SIZE
   );
   eraseCrosshair();
   overlayNewPegMarker(image, peg.color);
@@ -768,7 +771,7 @@ function drawLinkableMarkersInBox(minX, minY, maxX, maxY, color) {
         const markerName = getMarkerName(x, y);
         if (!$(markerName)) {
           addInlineImgToBoard(linkablemarker_img, markerName,
-            xPixels(x) - (PEG_SIZE/2), yPixels(y) - (PEG_SIZE/2), PEG_SIZE, PEG_SIZE);
+            xPixels(x) - (PEG.SIZE/2), yPixels(y) - (PEG.SIZE/2), PEG.SIZE, PEG.SIZE);
           BoardState.numLinkableMarkers++;
         }
       }
@@ -819,7 +822,7 @@ function drawCrosshair(x, y) {
 }
 
 function drawTickMarks(leftPos, topPos, tickClass) {
-  const boardWidth = BoardState.twixtGame.board.size * GRID_SPACING + GRID_MARGIN*2;
+  const boardWidth = BoardState.twixtGame.board.size * GRID.SPACING + GRID.MARGIN*2;
 
   const vtick = getVtick('vtick', leftPos, 1);
   const vtick2 = getVtick('vtick2', leftPos, boardWidth - 9);
@@ -897,18 +900,18 @@ function drawLinkGeneral(link, linkType) {
 
   const dx = Math.sign(link.peg1.y - link.peg2.y) * (link.peg1.x - link.peg2.x);
 
-  const linkImg = LINK_IMAGES[['wsw','ssw','','sse','ese'][dx+2] + linkType + '_img'];
+  const linkImg = LINK.IMAGES[['wsw','ssw','','sse','ese'][dx+2] + linkType + '_img'];
   const leftPos = xPixels(link.minX());
   const topPos = yPixels(link.minY());
 
   if (Math.abs(dx) === 1) {
     addInlineImgToBoard(linkImg, id,
-      leftPos + LINK_SHORT_OFFSET, topPos + LINK_LONG_OFFSET,
-      LINK_SHORT_DIM, LINK_LONG_DIM);
+      leftPos + LINK.SHORT_OFFSET(), topPos + LINK.LONG_OFFSET(),
+      LINK.SHORT_DIM, LINK.LONG_DIM);
   } else {
     addInlineImgToBoard(linkImg, id,
-      leftPos + LINK_LONG_OFFSET, topPos + LINK_SHORT_OFFSET,
-      LINK_LONG_DIM, LINK_SHORT_DIM);
+      leftPos + LINK.LONG_OFFSET(), topPos + LINK.SHORT_OFFSET(),
+      LINK.LONG_DIM, LINK.SHORT_DIM);
   }
 }
 

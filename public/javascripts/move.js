@@ -1,13 +1,3 @@
-// ─── Game-move constants ───────────────────────────────────────────────────────
-// These represent moves as recorded in the game log (parsed from LittleGolem).
-
-const PEG = 1;
-const SWAP = 2;
-const RESIGN = 3;
-const DRAW = 4;
-const FORFEIT = 5;
-const LOST = 6;
-
 class AbstractMove {
   get color() {
     if (this.player === 1) return 'white';
@@ -22,7 +12,7 @@ class Move extends AbstractMove {
     this.x = x;
     this.y = y;
     this.player = player;
-    this.type = PEG;
+    this.type = Move.Peg;
   }
 
   get text() {
@@ -34,39 +24,39 @@ class Move extends AbstractMove {
   getText() { return this.text; }
 }
 
-Move.Peg     = PEG;
-Move.Swap    = SWAP;
-Move.Resign  = RESIGN;
-Move.Draw    = DRAW;
-Move.Forfeit = FORFEIT;
-Move.Lost    = LOST;
+Move.Peg     = 1;
+Move.Swap    = 2;
+Move.Resign  = 3;
+Move.Draw    = 4;
+Move.Forfeit = 5;
+Move.Lost    = 6;
 
 class SwapMove extends AbstractMove {
-  constructor(player) { super(); this.player = player; this.type = SWAP; }
+  constructor(player) { super(); this.player = player; this.type = Move.Swap; }
   get text() { return 'swap'; }
   getText()  { return this.text; }
 }
 
 class ResignMove extends AbstractMove {
-  constructor(player) { super(); this.player = player; this.type = RESIGN; this.isFinalMove = true; }
+  constructor(player) { super(); this.player = player; this.type = Move.Resign; this.isFinalMove = true; }
   get text() { return 'resign'; }
   getText()  { return this.text; }
 }
 
 class DrawMove extends AbstractMove {
-  constructor(player) { super(); this.player = player; this.type = DRAW; this.isFinalMove = true; }
+  constructor(player) { super(); this.player = player; this.type = Move.Draw; this.isFinalMove = true; }
   get text() { return 'draw'; }
   getText()  { return this.text; }
 }
 
 class ForfeitMove extends AbstractMove {
-  constructor(player) { super(); this.player = player; this.type = FORFEIT; this.isFinalMove = true; }
+  constructor(player) { super(); this.player = player; this.type = Move.Forfeit; this.isFinalMove = true; }
   get text() { return 'forfeit'; }
   getText()  { return this.text; }
 }
 
 class LostMove extends AbstractMove {
-  constructor(player) { super(); this.player = player; this.type = LOST; this.isFinalMove = true; }
+  constructor(player) { super(); this.player = player; this.type = Move.Lost; this.isFinalMove = true; }
   get text() { return 'lost'; }
   getText()  { return this.text; }
 }
