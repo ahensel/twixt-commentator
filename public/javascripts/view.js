@@ -22,6 +22,7 @@ const styles = getComputedStyle(document.documentElement);
 const GRID = {
   MARGIN: parseInt(styles.getPropertyValue('--grid-margin'), 10),
   SPACING: parseInt(styles.getPropertyValue('--grid-spacing'), 10),
+  TICK_SIZE: parseInt(styles.getPropertyValue('--tick-size'), 10),
   ZERO: () => GRID.MARGIN - GRID.SPACING/2,
 };
 const PEG = {
@@ -87,9 +88,9 @@ document.addEventListener('mousemove', mouseOverBoard);
 document.addEventListener('keydown',  e => keyIntercept(e));
 
 window.addEventListener('load', () => {
-  BoardState.twixtGame = new TwixtController(parseInt($('boardSize').value, 10), TwixtBoard.PENCIL_AND_PAPER);
-
-  setBoardSize(BoardState.twixtGame.board.size);
+  const size = parseInt($('boardSize').value, 10);
+  BoardState.twixtGame = new TwixtController(size, TwixtBoard.PENCIL_AND_PAPER);
+  setBoardSize(size);
   showMovesOnLoad();
 
   Object.assign($('white-player-label'), { src: whitepeg_img });
@@ -97,14 +98,13 @@ window.addEventListener('load', () => {
 });
 
 function setBoardSize(size) {
-  if (!$('board')) return;
+  const board = $('board');
+  if (!board) return;
 
-  const boardPixels = size * GRID.SPACING;
-  const boardWidth  = (GRID.MARGIN * 2) + boardPixels + 3;  // +2 for 1px border, +1 fudge factor
-  const boardHeight = boardWidth;
+  const boardPixels  = (GRID.MARGIN * 2) + (GRID.SPACING * size) + 2;  // +2 for 1px border
 
-  Object.assign($('board').style, {
-    width: `${boardWidth}px`, height: `${boardHeight}px`,
+  Object.assign(board.style, {
+    width: `${boardPixels}px`, height: `${boardPixels}px`,
   });
 }
 
@@ -775,20 +775,20 @@ function drawCrosshair(x, y) {
   if (ch) {
     const leftPos = xPixels(x);
     const topPos  = yPixels(y);
-    ch.style.left    = `${leftPos - PEG.SIZE/2 + 1}px`;  // +1 for 1-pixel border
-    ch.style.top     = `${topPos - PEG.SIZE/2 + 1}px`;
+    ch.style.left = `${leftPos - PEG.SIZE/2 + 1}px`;  // +1 for 1-pixel border
+    ch.style.top  = `${topPos - PEG.SIZE/2 + 1}px`;
     ch.classList.remove('hidden');
     drawTickMarks(leftPos, topPos, 'tick-mouse-hole');
   }
 }
 
 function drawTickMarks(leftPos, topPos, tickClass) {
-  const boardWidth = BoardState.twixtGame.board.size * GRID.SPACING + GRID.MARGIN*2;
+  const boardPixels = (BoardState.twixtGame.board.size * GRID.SPACING) + (GRID.MARGIN * 2);
 
-  const vtick = getVtick('vtick', leftPos, 1);
-  const vtick2 = getVtick('vtick2', leftPos, boardWidth - 9);
-  const htick = getHtick('htick', 1, topPos);
-  const htick2 = getHtick('htick2', boardWidth - 9, topPos);
+  const vtick = getVtick('vtick', leftPos, 0);
+  const vtick2 = getVtick('vtick2', leftPos, boardPixels - GRID.TICK_SIZE);
+  const htick = getHtick('htick', 0, topPos);
+  const htick2 = getHtick('htick2', boardPixels - GRID.TICK_SIZE, topPos);
 
   [vtick, vtick2, htick, htick2].forEach(tick => {
     tick.classList.remove('tick-mouse-hole', 'tick-mouse-peg', 'tick-mouse-link');
@@ -820,8 +820,7 @@ function buildTickMark(id) {
   const tick = document.createElement('div');
   tick.id = id;
   tick.classList.add('tick-mark');
-  const b = $('board');
-  if (b) b.appendChild(tick);  // guard against race conditions on loading
+  BoardState.boardglass().appendChild(tick);  // guard against race conditions on loading
   return tick;
 }
 
