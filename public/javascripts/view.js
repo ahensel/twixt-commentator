@@ -87,38 +87,25 @@ document.addEventListener('mousemove', mouseOverBoard);
 document.addEventListener('keydown',  e => keyIntercept(e));
 
 window.addEventListener('load', () => {
+  document.body.classList.add('game-page');
   BoardState.twixtGame = new TwixtController(parseInt($('boardSize').value, 10), TwixtBoard.PENCIL_AND_PAPER);
 
-  positionElements();
+  setBoardSize(BoardState.twixtGame.board.size);
   showMovesOnLoad();
 
   Object.assign($('white-player-label'), { src: whitepeg_img });
   Object.assign($('black-player-label'), { src: blackpeg_img });
 });
 
-function positionElements() {
+function setBoardSize(size) {
   if (!$('board')) return;
 
-  const boardPixels = BoardState.twixtGame.board.size * GRID.SPACING;
+  const boardPixels = size * GRID.SPACING;
   const boardWidth  = (GRID.MARGIN * 2) + boardPixels + 3;  // +2 for 1px border, +1 fudge factor
   const boardHeight = boardWidth;
 
-  // absolute positioning of the board on the page
-  const leftMargin = 10;
-  const topMargin  = 80;
-
   Object.assign($('board').style, {
-    left: `${leftMargin}px`, top: `${topMargin + 20}px`,
     width: `${boardWidth}px`, height: `${boardHeight}px`,
-  });
-
-  Object.assign($('sidebar').style, {
-    left: `${leftMargin + boardWidth + 10}px`, top: `${topMargin + 20}px`,
-  });
-
-  Object.assign($('underbar').style, {
-    top: `${topMargin + boardHeight + 30}px`,
-    width: `${boardWidth}px`,
   });
 }
 
@@ -529,8 +516,8 @@ function clearBoard() {
 function mouseOverBoard(evt) {
   unhighlightMoveInSidebar();
 
-  const pixelX = evt.pageX;
-  const pixelY = evt.pageY;
+  const pixelX = evt.offsetX;
+  const pixelY = evt.offsetY;
 
   if (isPegSpot(pixelX, pixelY)) {
     if (BoardState.hasLinkRemoval()) eraseCutLink();
@@ -565,8 +552,8 @@ function mouseOverBoard(evt) {
 }
 
 function clickOnBoard(evt) {
-  const pixelX = evt.pageX;
-  const pixelY = evt.pageY;
+  const pixelX = evt.offsetX;
+  const pixelY = evt.offsetY;
 
   if (isPegSpot(pixelX, pixelY)) {
     const x = xCoord(pixelX);
@@ -673,13 +660,10 @@ function copyMovesToClipboard() {
 // ─── Drawing ──────────────────────────────────────────────────────────────────
 
 // useful functions for drawing
-function boardOffsetX() { return $('board')?.offsetLeft; }
-function boardOffsetY() { return $('board')?.offsetTop; }
-
-function xDelta(pixelX) { return pixelX - boardOffsetX() - xPixels(xCoord(pixelX)); }
-function yDelta(pixelY) { return pixelY - boardOffsetY() - yPixels(yCoord(pixelY)); }
-function xCoord(pixelX) { return Math.round((pixelX - boardOffsetX() - GRID.ZERO()) / GRID.SPACING); }
-function yCoord(pixelY) { return Math.round((pixelY - boardOffsetY() - GRID.ZERO()) / GRID.SPACING); }
+function xDelta(pixelX) { return pixelX - xPixels(xCoord(pixelX)); }
+function yDelta(pixelY) { return pixelY - yPixels(yCoord(pixelY)); }
+function xCoord(pixelX) { return Math.round((pixelX - GRID.ZERO()) / GRID.SPACING); }
+function yCoord(pixelY) { return Math.round((pixelY - GRID.ZERO()) / GRID.SPACING); }
 function xPixels(x)     { return GRID.ZERO() + GRID.SPACING * x; }
 function yPixels(y)     { return GRID.ZERO() + GRID.SPACING * y; }
 
@@ -792,8 +776,8 @@ function drawCrosshair(x, y) {
   if (ch) {
     const leftPos = xPixels(x);
     const topPos  = yPixels(y);
-    ch.style.left    = `${leftPos - 5.5}px`;
-    ch.style.top     = `${topPos - 5.5}px`;
+    ch.style.left    = `${leftPos - PEG.SIZE/2 + 1}px`;  // +1 for 1-pixel border
+    ch.style.top     = `${topPos - PEG.SIZE/2 + 1}px`;
     ch.classList.remove('hidden');
     drawTickMarks(leftPos, topPos, 'tick-mouse-hole');
   }

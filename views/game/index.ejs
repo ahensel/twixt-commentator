@@ -22,7 +22,10 @@
 </div>
 
 <% if (game) { %>
+<div class="game-details">
+  <div class="board-side">
   <div id="board" class="board">
+    <img id="crosshair" class="crosshair hidden" src="/images/pieces/crosshair.gif" galleryimg="no" alt="">
     <div id="boardglass1" class="boardglass"></div>
     <div id="boardglass2" class="boardglass hidden"></div>
     <div id="markerglass" class="markerglass">
@@ -112,7 +115,6 @@
         <div></div><div></div>
       </div>
     </div>
-    <img id="crosshair" class="crosshair hidden" src="/images/pieces/crosshair.gif" galleryimg="no" alt="">
   </div>
 
   <div id="underbar">
@@ -121,6 +123,7 @@
     <% } %>
     <a href="http://www.littlegolem.net/jsp/game/game.jsp?gid=<%= game.lg_game_num %>">This&nbsp;game&nbsp;(LG)</a> |
     <a href="/jtwixt/gen?gameid=<%= params && params.gid %>">Download&nbsp;JTwixt&nbsp;file</a>
+  </div>
   </div>
 
   <div id="sidebar" class="sidebar">
@@ -168,7 +171,7 @@
       <% } %>
     </div>
   </div>
-
+</div>
   <% if (parser) { %>
     <input type="hidden" id="movesJson" name="movesJson" value="<%= JSON.stringify(parser.getMovesList()) %>">
     <input type="hidden" id="boardSize" name="boardSize" value="<%= parser.getBoardSize() %>">

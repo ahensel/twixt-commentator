@@ -36,6 +36,12 @@ body {
   margin: 0;
 }
 
+body.game-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 /* ── Page-level body margins ───────────────────────────────────── */
 body.main-page,
 body.about-page {
@@ -126,6 +132,10 @@ a.black:hover {
   margin-left: 10px;
 }
 
+.err:empty {
+  display: none;
+}
+
 .text-error {
   color: var(--color-error);
 }
@@ -211,26 +221,46 @@ tr.odd  { background-color: var(--color-odd-row); }
 }
 
 /* ── Board (JavaScript Twixt Board) ───────────────────────────── */
-div.board,
-.boardglass,
-.markerglass {
-  position: absolute;
-  cursor: pointer;
-  user-select: none;
+
+div.game-header {
+  margin-top: 15px;
+  flex: 0;
+}
+
+/* board + underbar + sidebar */
+div.game-details {
+  display: flex;
+  position: relative;
+  width: 100%;
+  top: -5px;
+  flex: 1;
+}
+
+/* board + underbar */
+div.board-side {
+  flex: 0 0 auto;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 div.board {
-  box-sizing: content-box;
-  top: 100px;
-  left: 10px;
+  position: relative;
 }
 
-.boardglass, .markerglass {
+div.boardglass,
+div.markerglass {
+  position: absolute;
+  cursor: pointer;
+  user-select: none;
   width: 100%;
   height: 100%;
   left: 1px;
   top: 1px;
+  background-color: transparent;
 }
+
+div.boardglass { z-index: 5; }
+div.markerglass { z-index: 10; }
 
 /* ── CSS-rendered Twixt board (replaces board.gif) ─────────────── */
 div.board .twixt-board {
@@ -390,7 +420,7 @@ div.board .bottom-side {
 }
 
 div.board .right-half {
-  margin-left: 468px;
+  margin-left: calc(var(--grid-spacing) * 26); /* capital letters on the right */
 }
 div.board .column-letters, div.board .column-letters2 {
   grid-column: 1 / -1;
@@ -412,14 +442,6 @@ div.board .column-letters2 div::before {
   counter-increment: colnum;
   content: counter(colnum, upper-alpha);
 }
-
-div.boardglass,
-div.markerglass {
-  background-color: transparent;
-}
-
-div.boardglass { z-index: 5; }
-div.markerglass { z-index: 10; }
 
 div.noscript {
   position: absolute;
@@ -450,12 +472,13 @@ div.game-players {
 }
 
 div.sidebar {
-  position: absolute;
+  position: relative;
+  margin-right: 10px;
+  margin-bottom: 5px;
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 10px;
-  bottom: 10px;
-  right: 10px;
 }
 
 div.sidebar div:last-child {
@@ -487,8 +510,8 @@ div.moves-panel div.back-next a.disabled {
 }
 
 div#underbar {
-  position: absolute;
-  left: 10px;
+  position: relative;
+  margin-top: 5px;
 }
 
 div#moves,
