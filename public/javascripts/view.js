@@ -83,8 +83,6 @@ const BoardState = {
   },
 };
 
-document.addEventListener('mousedown', clickOnBoard);
-document.addEventListener('mousemove', mouseOverBoard);
 document.addEventListener('keydown',  e => keyIntercept(e));
 
 window.addEventListener('load', () => {
@@ -95,6 +93,9 @@ window.addEventListener('load', () => {
 
   Object.assign($('white-player-label'), { src: whitepeg_img });
   Object.assign($('black-player-label'), { src: blackpeg_img });
+
+  $('topglass').addEventListener('mousedown', clickOnBoard);
+  $('topglass').addEventListener('mousemove', mouseOverBoard);
 });
 
 function setBoardSize(size) {
@@ -886,10 +887,10 @@ function addInlineImgToBoard(imgfile, id, leftPos, topPos, width, height) {
     id
   });
   Object.assign(img.style, {
-    position: 'absolute',
     left: `${leftPos}px`,
     top: `${topPos}px`
   });
+  img.classList.add('piece');
 
   BoardState.boardglass().appendChild(img);
 

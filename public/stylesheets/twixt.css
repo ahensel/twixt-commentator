@@ -557,10 +557,16 @@ div#comments {
   overflow: auto;
 }
 
+img.piece {
+  position: absolute;
+  user-select: none;
+}
+
 img.crosshair, img.new-peg {
   position: absolute;
   width: 13px;
   height: 13px;
+  user-select: none;
 }
 
 /* ── Game results ──────────────────────────────────────────────── */
