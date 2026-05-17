@@ -87,7 +87,6 @@ document.addEventListener('mousemove', mouseOverBoard);
 document.addEventListener('keydown',  e => keyIntercept(e));
 
 window.addEventListener('load', () => {
-  document.body.classList.add('game-page');
   BoardState.twixtGame = new TwixtController(parseInt($('boardSize').value, 10), TwixtBoard.PENCIL_AND_PAPER);
 
   setBoardSize(BoardState.twixtGame.board.size);
