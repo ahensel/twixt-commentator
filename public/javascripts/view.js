@@ -775,8 +775,8 @@ function drawCrosshair(x, y) {
   if (ch) {
     const leftPos = xPixels(x);
     const topPos  = yPixels(y);
-    ch.style.left = `${leftPos - PEG.SIZE/2 + 1}px`;  // +1 for 1-pixel border
-    ch.style.top  = `${topPos - PEG.SIZE/2 + 1}px`;
+    ch.style.left = `${leftPos - PEG.SIZE/2}px`;
+    ch.style.top  = `${topPos - PEG.SIZE/2}px`;
     ch.classList.remove('hidden');
     drawTickMarks(leftPos, topPos, 'tick-mouse-hole');
   }
@@ -820,7 +820,7 @@ function buildTickMark(id) {
   const tick = document.createElement('div');
   tick.id = id;
   tick.classList.add('tick-mark');
-  BoardState.boardglass().appendChild(tick);  // guard against race conditions on loading
+  $('markerglass').appendChild(tick);
   return tick;
 }
 
