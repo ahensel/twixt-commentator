@@ -18,6 +18,9 @@
     .then((html) => {
       const container = document.getElementById('current-comments');
       if (container && html.trim()) {
+        // Remove any existing preview before inserting the new one to prevent
+        // duplicates when Preview is clicked multiple times in quick succession
+        removePreview();
         container.insertAdjacentHTML('beforeend', html);
       }
       // After a real Comment submission (not Preview), reset the UI
