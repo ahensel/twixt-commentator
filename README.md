@@ -67,12 +67,6 @@ This creates all tables in the correct order:
 npx sequelize-cli db:migrate
 ```
 
-To undo all migrations (drops all tables):
-
-```bash
-npx sequelize-cli db:migrate:undo:all
-```
-
 ### 5. Run the Dev Server
 
 First, start MySQL if it is not already running. Then start the Node server:

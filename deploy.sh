@@ -53,4 +53,4 @@ ssh "${REMOTE_USER}@${REMOTE_HOST}" bash -l <<EOF
   sudo systemctl reload nginx
 EOF
 
-echo "==> Done. Check status with: ssh ${REMOTE_USER}@${REMOTE_HOST} 'pm2 status'"
+echo "==> Done."
