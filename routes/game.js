@@ -128,6 +128,48 @@ async function getGameFromLittleGolem(gameNumber, flash) {
   return { game: savedGame, parser };
 }
 
+// GET /game/blank — blank board (no DB, no comments)
+router.get('/blank', (req, res) => {
+  let size = parseInt(req.query.size, 10);
+  if (isNaN(size) || size < 8) size = 8;
+  if (size > 52) size = 52;
+
+  const player1 = req.query.player1 || 'Player1';
+  const player2 = req.query.player2 || 'Player2';
+
+  // Build a minimal object that satisfies the game/index.ejs template
+  const game = {
+    player1,
+    player2,
+    winner: 0,
+    result: '',
+    tournament: '',
+    board_size: size,
+    comments: [],
+    isInProgress: () => false,
+    isDraw: () => false,
+    isResignation: () => false,
+    isForfeit: () => false,
+    winnerName: () => player1,
+    loserName: () => player2,
+    isBlank: true,
+  };
+
+  // Build a minimal parser-like object so the view can read board size and moves
+  const parser = {
+    getMovesList: () => [],
+    getBoardSize: () => size,
+  };
+
+  res.render('game/index', {
+    game,
+    parser,
+    flash: {},
+    params: { controller: 'game', gid: 'blank', ...req.query },
+    session: req.session,
+  });
+});
+
 // GET /game/:gid
 router.get('/:gid', async (req, res) => {
   const flash = req.flash ? { error: req.flash.getError() } : {};

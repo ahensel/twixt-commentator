@@ -11,10 +11,10 @@
   <% if (game) { %>
   <div class="game-players">
     <img id="white-player-label" alt="White:">
-    <span class="<%= game.winner === 1 ? 'winner' : 'loser' %>"><%- h2(game.player1) %></span>
+    <span class="<%= game.isBlank ? '' : (game.winner === 1 ? 'winner' : 'loser') %>"><%- h2(game.player1) %></span>
     &nbsp;&nbsp;
     <img id="black-player-label" alt="Black:">
-    <span class="<%= game.winner === 2 ? 'winner' : 'loser' %>"><%- h2(game.player2) %></span>
+    <span class="<%= game.isBlank ? '' : (game.winner === 2 ? 'winner' : 'loser') %>"><%- h2(game.player2) %></span>
   </div>
 
   <div id="turn" class="turn"></div>
@@ -119,11 +119,13 @@
   </div>
 
   <div id="underbar">
+    <% if (!game.isBlank) { %>
     <% if (game.tournament && game.tournament.trim() !== '' && game.tournament.trim() !== 'twixt') { %>
       <a href="http://www.littlegolem.net/jsp/tournament/tournament.jsp?trnid=<%= game.tournament %>"><%- game.tournament + '&nbsp;(LG)' %></a> |
     <% } %>
     <a href="http://www.littlegolem.net/jsp/game/game.jsp?gid=<%= game.lg_game_num %>">This&nbsp;game&nbsp;(LG)</a> |
     <a href="/jtwixt/gen?gameid=<%= params && params.gid %>">Download&nbsp;JTwixt&nbsp;file</a>
+    <% } %>
   </div>
   </div>
 
@@ -141,6 +143,9 @@
     </div>
 
     <div id="comments">
+      <% if (game.isBlank) { %>
+        <div class="comment-header">Comments are not available for blank boards.</div>
+      <% } else { %>
       <div id="current-comments">
         <% (game.comments || []).forEach((comment) => { %>
           <div class="comment-header">
@@ -169,6 +174,7 @@
             <input id="preview_button" type="submit" value="Preview" onclick="removePreview(); setButtonPressed(this, 'Preview'); return true;" disabled="true">
           </form>
         </div>
+      <% } %>
       <% } %>
     </div>
   </div>

@@ -7,6 +7,62 @@ A forum to view, comment on, and read other people's comments on finished Twixt 
   View Little Golem Twixt Game:&nbsp;<input id="new_gid" class="boxed" type="text" name="new_gid" size="7" maxlength="7">
   <input type="submit" value="Go">
 </form>
+<br/>
+<button id="new-blank-board-btn" class="blank-board-btn" onclick="openBlankBoardModal(); return false;">New Blank Board</button>
+
+<!-- Blank Board Modal -->
+<div id="blank-board-overlay" class="blank-board-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="blank-board-title">
+  <div class="blank-board-modal">
+    <h3 id="blank-board-title">New Blank Board</h3>
+    <form id="blank-board-form" onsubmit="submitBlankBoardForm(); return false;">
+      <table class="blank-board-form-table">
+        <tr>
+          <td><label for="blank-player1">Player 1 (White):</label></td>
+          <td><input id="blank-player1" class="boxed" type="text" name="player1" value="Player1" size="20" maxlength="40"></td>
+        </tr>
+        <tr>
+          <td><label for="blank-player2">Player 2 (Black):</label></td>
+          <td><input id="blank-player2" class="boxed" type="text" name="player2" value="Player2" size="20" maxlength="40"></td>
+        </tr>
+        <tr>
+          <td><label for="blank-board-size">Board Size:</label></td>
+          <td>
+            <input id="blank-board-size" class="boxed" type="number" name="size" value="24" min="8" max="52" size="4">
+            <span class="blank-board-hint">(8–52)</span>
+          </td>
+        </tr>
+      </table>
+      <div class="blank-board-buttons">
+        <input type="submit" value="OK">
+        <input type="button" value="Cancel" onclick="closeBlankBoardModal();">
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+function openBlankBoardModal() {
+  document.getElementById('blank-board-overlay').classList.remove('hidden');
+  document.getElementById('blank-player1').focus();
+}
+function closeBlankBoardModal() {
+  document.getElementById('blank-board-overlay').classList.add('hidden');
+}
+function submitBlankBoardForm() {
+  const player1 = encodeURIComponent(document.getElementById('blank-player1').value || 'Player1');
+  const player2 = encodeURIComponent(document.getElementById('blank-player2').value || 'Player2');
+  let size = parseInt(document.getElementById('blank-board-size').value, 10);
+  if (isNaN(size) || size < 8) size = 8;
+  if (size > 52) size = 52;
+  window.location.href = `/game/blank?player1=${player1}&player2=${player2}&size=${size}`;
+}
+document.getElementById('blank-board-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeBlankBoardModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeBlankBoardModal();
+});
+</script>
 <h3>Commented Games</h3>
 <table class="main" cellspacing="0">
   <thead>

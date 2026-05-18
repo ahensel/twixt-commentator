@@ -91,6 +91,8 @@ window.addEventListener('load', () => {
   setBoardSize(size);
   showMovesOnLoad();
 
+  $('turn').innerHTML = `${['Black', 'White'][BoardState.turn]}'s turn:`;
+
   Object.assign($('white-player-label'), { src: whitepeg_img });
   Object.assign($('black-player-label'), { src: blackpeg_img });
 
