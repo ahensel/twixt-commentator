@@ -61,8 +61,8 @@ const BoardState = {
   numLinkableMarkers: 0,
 
   // Helper methods
-  isLegalSpot: (x, y) => {
-    return BoardState.twixtGame.board.isLegalSpot(x, y, BoardState.turn);
+  isLegalSpot: (x, y, turn) => {
+    return BoardState.twixtGame.board.isLegalSpot(x, y, turn ?? BoardState.turn);
   },
   getPeg: (x, y) => {
     return BoardState.twixtGame.board.getPeg(x, y);
@@ -305,7 +305,7 @@ function getNextCommentPegError(pegString, movesSoFar) {
   if (BoardState.getPeg(x, y) != null) {
     return `- Peg ${pegString} cannot be placed because there is already a peg on that spot.\n`;
   }
-  if (!BoardState.twixtGame.board.isLegalSpot(x, y, (BoardState.turn + movesSoFar + 1) % 2)) {
+  if (!BoardState.twixtGame.board.isLegalSpot(x, y, (BoardState.turn + movesSoFar) % 2)) {
     return `- Illegal spot for peg: ${pegString}\n`;
   }
   return '';
