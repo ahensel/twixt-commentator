@@ -175,6 +175,9 @@ function getUserMovesFirstNum() {
       moveNum--;
     }
   }
+  else if (moveNum < 0) {
+    return 1;
+  }
   return moveNum + 1;
 }
 
@@ -607,8 +610,7 @@ function executeCutLink() {
 function nextTurn() {
   if (!BoardState.currentMoves.settingUp && !BoardState.currentMoves.jumpingTo &&
       BoardState.currentMoves.userMoves.length === 0 &&
-      BoardState.currentMoveNum < BoardState.currentMoves.moves.length &&
-      BoardState.currentMoves.moves[BoardState.currentMoveNum].getText() === BoardState.twixtGame.move.getText()) {
+      BoardState.currentMoves.moves[BoardState.currentMoveNum]?.getText() === BoardState.twixtGame.move.getText()) {
     uncolorMove(BoardState.currentMoveNum);
     BoardState.currentMoveNum++;
     colorMove(BoardState.currentMoveNum);
