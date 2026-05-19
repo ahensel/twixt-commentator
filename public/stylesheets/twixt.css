@@ -40,7 +40,7 @@ body {
 body.game-page {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 /* ── Page-level body margins ───────────────────────────────────── */
@@ -235,6 +235,7 @@ div.game-details {
   width: 100%;
   top: -5px;
   flex: 1;
+  min-height: 0;
 }
 
 /* board + underbar */
@@ -483,12 +484,9 @@ div.sidebar {
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-height: 0;
+  height: 100%;
   gap: 10px;
-}
-
-div.sidebar div:last-child {
-  flex-grow: 1;
-  overflow-y: auto;
 }
 
 div.moves-panel {
@@ -496,6 +494,7 @@ div.moves-panel {
   padding: 9px;
   background-color: var(--color-bg);
   font-size: 0.83rem;
+  flex-shrink: 0;
 }
 
 div.moves-panel div {
@@ -555,6 +554,9 @@ div#comments {
   padding: 10px;
   background-color: var(--color-bg);
   overflow: auto;
+  flex: 1;
+  min-height: 0;
+  margin-bottom: 5px;
 }
 
 img.piece {
