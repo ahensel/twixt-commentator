@@ -386,28 +386,29 @@ function showAllMoves(moveNum, commentMoves) {
   clearBoard();
 
   const moves = BoardState.currentMoves.getMoves();
+  if (moves.length > 0) {
+    // make sure swapping is figured out
+    const firstMove  = (moveNum > 0)
+      ? moves[0]
+      : (BoardState.currentMoves.hasUserMoves() ? BoardState.currentMoves.userMoves[0] : null);
+    const secondMove = (moveNum > 1)
+      ? moves[1]
+      : (moveNum === 1) ? (BoardState.currentMoves.hasUserMoves() ? BoardState.currentMoves.userMoves[0] : null)
+      : (moveNum === 0) ? ((BoardState.currentMoves.userMoves.length > 1) ? BoardState.currentMoves.userMoves[1] : null)
+      : null;
 
-  // make sure swapping is figured out
-  const firstMove  = (moveNum > 0)
-    ? moves[0]
-    : (BoardState.currentMoves.hasUserMoves() ? BoardState.currentMoves.userMoves[0] : null);
-  const secondMove = (moveNum > 1)
-    ? moves[1]
-    : (moveNum === 1) ? (BoardState.currentMoves.hasUserMoves() ? BoardState.currentMoves.userMoves[0] : null)
-    : (moveNum === 0) ? ((BoardState.currentMoves.userMoves.length > 1) ? BoardState.currentMoves.userMoves[1] : null)
-    : null;
-
-  if (firstMove && secondMove) {
-    const swapped = (secondMove.getText() === 'swap');
-    const peg1 = firstMove.peg;
-    if (peg1.swapped !== swapped) {
-      peg1.swapped = swapped;
-      [peg1.x, peg1.y] = [peg1.y, peg1.x];
+    if (firstMove && secondMove) {
+      const swapped = (secondMove.getText() === 'swap');
+      const peg1 = firstMove.peg;
+      if (peg1.swapped !== swapped) {
+        peg1.swapped = swapped;
+        [peg1.x, peg1.y] = [peg1.y, peg1.x];
+      }
     }
-  }
 
-  showMovesUpTo(moves, moveNum);
-  BoardState.currentMoveNum = moveNum;
+    showMovesUpTo(moves, moveNum);
+    BoardState.currentMoveNum = moveNum;
+  }
 
   if (BoardState.currentMoves.hasUserMoves()) {
     const userMoves = BoardState.currentMoves.getUserMoves();
