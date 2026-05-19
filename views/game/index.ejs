@@ -143,9 +143,6 @@
     </div>
 
     <div id="comments">
-      <% if (game.isBlank) { %>
-        <div class="comment-header">Comments are not available for blank boards.</div>
-      <% } else { %>
       <div id="current-comments">
         <% (game.comments || []).forEach((comment) => { %>
           <div class="comment-header">
@@ -167,14 +164,18 @@
         <div id="addComment" class="hidden">
           <div class="comment-header">Add a comment:</div>
           <form id="comment_form" action="/comment" method="post">
-            <input type="hidden" name="game" value="<%= game.id %>">
+            <input type="hidden" name="game" value="<%= game.id || 'blank' %>">
             <input type="hidden" id="button_pressed" name="button_pressed" value="Comment">
+            <% if (game.isBlank && !game.id) { %>
+            <input type="hidden" name="player1" value="<%= game.player1 %>">
+            <input type="hidden" name="player2" value="<%= game.player2 %>">
+            <input type="hidden" name="board_size" value="<%= game.board_size %>">
+            <% } %>
             <textarea class="comment-textarea" id="new_comment" name="new_comment" rows="8" onkeyup="checkStateChange()" onfocus="commentsInFocus(true)" onblur="commentsInFocus(false)"></textarea>
             <input id="comment_button" type="submit" value="No Comment" onclick="removePreview(); setButtonPressed(this, 'Comment'); return hideAddCommentBox();">
             <input id="preview_button" type="submit" value="Preview" onclick="removePreview(); setButtonPressed(this, 'Preview'); return true;" disabled="true">
           </form>
         </div>
-      <% } %>
       <% } %>
     </div>
   </div>

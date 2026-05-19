@@ -13,6 +13,15 @@ function buildBackUrl(params) {
   if (!backTo) return '/';
 
   if (backTo === 'game' && retGid) {
+    if (retGid === 'blank') {
+      // Reconstruct the blank board URL with its player/size params
+      const qs = new URLSearchParams();
+      if (params.player1) qs.set('player1', params.player1);
+      if (params.player2) qs.set('player2', params.player2);
+      if (params.size)    qs.set('size',    params.size);
+      const qstr = qs.toString();
+      return `/game/blank${qstr ? '?' + qstr : ''}`;
+    }
     return `/game/${retGid}`;
   }
   if (backTo === 'main_page') {

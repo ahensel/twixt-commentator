@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const https = require('https');
+const { Op } = require('sequelize');
 const { Game } = require('../models');
 const { LittleGolemParser } = require('../lib/domain/LittleGolemParser');
 
@@ -128,7 +129,7 @@ async function getGameFromLittleGolem(gameNumber, flash) {
   return { game: savedGame, parser };
 }
 
-// GET /game/blank — blank board (no DB, no comments)
+// GET /game/blank — unsaved blank board (no DB, no comments)
 router.get('/blank', (req, res) => {
   let size = parseInt(req.query.size, 10);
   if (isNaN(size) || size < 8) size = 8;
@@ -166,6 +167,39 @@ router.get('/blank', (req, res) => {
     parser,
     flash: {},
     params: { controller: 'game', gid: 'blank', ...req.query },
+    session: req.session,
+  });
+});
+
+// GET /game/blank/:id — saved blank board with comments
+router.get('/blank/:id', async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id)) {
+    return res.status(404).send('Not found');
+  }
+
+  const game = await Game.findOne({
+    where: { id, lg_game_num: { [Op.is]: null } },
+    include: [{ association: 'comments', include: [{ association: 'author' }] }],
+  });
+
+  if (!game) {
+    return res.status(404).send('Blank game not found');
+  }
+
+  // Mark as blank so the template suppresses LG-specific UI
+  game.isBlank = true;
+
+  const parser = {
+    getMovesList: () => [],
+    getBoardSize: () => game.board_size || 24,
+  };
+
+  res.render('game/index', {
+    game,
+    parser,
+    flash: {},
+    params: { controller: 'game', gid: `blank/${id}`, ...req.query },
     session: req.session,
   });
 });

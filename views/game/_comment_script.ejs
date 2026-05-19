@@ -14,21 +14,33 @@
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: body.toString()
     })
-    .then(r => r.text())
-    .then((html) => {
+    .then(r => {
+      // Capture the new game id (returned on first blank-board comment) before consuming body
+      const newGameId = r.headers.get('X-New-Game-Id');
+      return r.text().then(html => ({ html, newGameId }));
+    })
+    .then(({ html, newGameId }) => {
       const container = document.getElementById('current-comments');
       if (container && html.trim()) {
-        // Remove any existing preview before inserting the new one to prevent
-        // duplicates when Preview is clicked multiple times in quick succession
         removePreview();
         container.insertAdjacentHTML('beforeend', html);
       }
-      // After a real Comment submission (not Preview), reset the UI
       if (buttonPressed !== 'Preview') {
+        // If this was the first comment on an unsaved blank board, update state
+        if (newGameId) {
+          form.elements['game'].value = newGameId;
+          // Remove the one-shot player/board_size fields — no longer needed
+          ['player1', 'player2', 'board_size'].forEach(name => {
+            const el = form.elements[name];
+            if (el) el.parentNode.removeChild(el);
+          });
+          // Update the browser URL to the saved-game URL without reloading
+          history.pushState(null, '', `/game/blank/${newGameId}`);
+        }
         document.getElementById('new_comment').value = '';
         checkStateChange();
-        document.getElementById('addComment').style.display = 'none';
-        document.getElementById('addCommentLink').style.display = 'inline';
+        document.getElementById('addComment').classList.add('hidden');
+        document.getElementById('addCommentLink').classList.remove('hidden');
       }
     })
     .catch((err) => console.error('Comment submit error:', err));

@@ -7,6 +7,9 @@
       <input type="hidden" name="back_to" value="<%= params && params.controller ? params.controller : (params && params.back_to ? params.back_to : '') %>">
       <input type="hidden" name="ret_gid" value="<%= params && params.gid ? params.gid : (params && params.ret_gid ? params.ret_gid : '') %>">
       <input type="hidden" name="main_page" value="<%= params && params.page ? params.page : (params && params.main_page ? params.main_page : '') %>">
+      <input type="hidden" name="player1" value="<%= params && params.player1 ? params.player1 : '' %>">
+      <input type="hidden" name="player2" value="<%= params && params.player2 ? params.player2 : '' %>">
+      <input type="hidden" name="size" value="<%= params && params.size ? params.size : '' %>">
       <div class="login-form-row">
         <div class="boxed">
           <div class="login-fields">
@@ -33,6 +36,6 @@
   const user = currentUser? currentUser.dataValues : ''; %>
   <div class="login-box">
     Welcome,&nbsp;<b><%- h2(user.name) %></b>&nbsp;<a href="/user/info/<%= session.user_id %>?back_to=<%= params && (params.controller || params.back_to) || '' %>&ret_gid=<%= params && params.gid || '' %>&main_page=<%= params && params.page || '' %>"><img class="info" src="/images/info.gif" alt="(info)" width="9" height="9"></a><br>
-    <a href="/user/profile/<%= session.user_id %>?ret_gid=<%= params && params.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&main_page=<%= params && params.page || '' %>">Profile</a>&nbsp;|&nbsp;<a href="/user/logout?ret_gid=<%= params && params.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&main_page=<%= params && params.page || '' %>">Log out</a>
+    <a href="/user/profile/<%= session.user_id %>?ret_gid=<%= params && params.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&main_page=<%= params && params.page || '' %>">Profile</a>&nbsp;|&nbsp;<a href="/user/logout?ret_gid=<%= params && params.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&main_page=<%= params && params.page || '' %>&player1=<%= params && params.player1 || '' %>&player2=<%= params && params.player2 || '' %>&size=<%= params && params.size || '' %>">Log out</a>
   </div>
 <% } %>

@@ -81,11 +81,20 @@ document.addEventListener('keydown', function(e) {
     <% commentedGames.forEach((game, i) => { %>
       <tr class="<%= i % 2 === 0 ? 'even' : 'odd' %>">
         <td class="main text-right">
-          <a href="/game/<%= game.lg_game_num %>?main_page=<%= params && params.page || '' %>"><%= game.lg_game_num %></a>
+          <% if (game.lg_game_num == null) { %>
+            <a href="/game/blank/<%= game.id %>?main_page=<%= params && params.page || '' %>">blank/<%= game.id %></a>
+          <% } else { %>
+            <a href="/game/<%= game.lg_game_num %>?main_page=<%= params && params.page || '' %>"><%= game.lg_game_num %></a>
+          <% } %>
         </td>
         <td class="main text-center">
           <%= game.board_size || '' %>
         </td>
+        <% if (game.lg_game_num == null) { %>
+        <td class="main"><%- h2(game.player1) %></td>
+        <td class="main"><%- h2(game.player2) %></td>
+        <td class="main text-center"></td>
+        <% } else { %>
         <td class="main<%= game.isDraw() ? ' italic' : '' %>">
           <%- h2(game.winnerName()) %>
         </td>
@@ -95,6 +104,7 @@ document.addEventListener('keydown', function(e) {
         <td class="main text-center<%= game.isResignation() ? '' : ' bold' %>">
           <%= game.result %>
         </td>
+        <% } %>
         <td class="main">
           <% if (game.tournament && game.tournament.trim() !== '') { %>
             <%= game.tournament %>

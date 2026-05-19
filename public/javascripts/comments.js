@@ -7,16 +7,16 @@ function scrollToBottom() {
 function showAddCommentBox() {
   document.getElementById('new_comment').value = '';
   checkStateChange();
-  document.getElementById('addCommentLink').style.display = 'none';
-  document.getElementById('addComment').style.display = 'inline';
+  document.getElementById('addCommentLink').classList.add('hidden');
+  document.getElementById('addComment').classList.remove('hidden');
   document.getElementById('new_comment').focus();
   scrollToBottom();
   return false;
 }
 
 function hideAddCommentBox() {
-  document.getElementById('addComment').style.display = 'none';
-  document.getElementById('addCommentLink').style.display = 'inline';
+  document.getElementById('addComment').classList.add('hidden');
+  document.getElementById('addCommentLink').classList.remove('hidden');
   return commentBoxHasComments();
 }
 
