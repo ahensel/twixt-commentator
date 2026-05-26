@@ -101,6 +101,12 @@ select:focus {
   border-radius: 2px;
 }
 
+button,
+input[type="button"],
+input[type="submit"] {
+  cursor: pointer;
+}
+
 /* ── Colored text/link variants ────────────────────────────────── */
 a.white,
 a.black,
@@ -737,21 +743,6 @@ div.please-register {
 
 .user-info-modal blockquote {
   white-space: pre-wrap;
-}
-
-/* ── Blank Board button ─────────────────────────────────────────── */
-.blank-board-btn {
-  font-family: var(--font-stack);
-  font-size: 0.83rem;
-  background-color: var(--color-bg);
-  border: 1px solid var(--color-border);
-  color: var(--color-link);
-  cursor: pointer;
-  padding: 2px 8px;
-}
-
-.blank-board-btn:hover {
-  text-decoration: underline;
 }
 
 /* ── Blank Board modal ──────────────────────────────────────────── */
