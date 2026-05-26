@@ -119,8 +119,12 @@
   </div>
 
   <div id="underbar">
-    <% if (!game.isBlank) { %>
-    <% if (game.tournament && game.tournament.trim() !== '' && game.tournament.trim() !== 'twixt') { %>
+    <% if (game.isBlank) {
+      if (game.link_policy === 'R') { %>
+      <span class='underbar-status'>Link Removal is <b>ON</b></span>
+      <% }
+    } else {
+      if (game.tournament && game.tournament.trim() !== '' && game.tournament.trim() !== 'twixt') { %>
       <a href="http://www.littlegolem.net/jsp/tournament/tournament.jsp?trnid=<%= game.tournament %>"><%- game.tournament + '&nbsp;(LG)' %></a> |
     <% } %>
     <a href="http://www.littlegolem.net/jsp/game/game.jsp?gid=<%= game.lg_game_num %>">This&nbsp;game&nbsp;(LG)</a> |

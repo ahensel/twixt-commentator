@@ -708,6 +708,7 @@ function clickOnBoard(evt) {
       placeLinks(peg, false);
       if (BoardState.holdingForMarkers && BoardState.numLinkableMarkers === 0) {
         nextTurn();
+        showUserMovesText();
         BoardState.holdingForMarkers = false;
       }
     }

@@ -518,6 +518,10 @@ div#underbar {
   margin-top: 5px;
 }
 
+div#underbar .underbar-status {
+  font-size: 0.75rem;
+}
+
 div#moves,
 span.moves {
   font-family: var(--font-moves);
