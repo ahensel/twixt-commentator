@@ -30,7 +30,7 @@
         if (newGameId) {
           form.elements['game'].value = newGameId;
           // Remove the one-shot player/board_size fields — no longer needed
-          ['player1', 'player2', 'board_size'].forEach(name => {
+          ['player1', 'player2', 'board_size', 'link_policy'].forEach(name => {
             const el = form.elements[name];
             if (el) el.parentNode.removeChild(el);
           });

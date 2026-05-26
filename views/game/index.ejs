@@ -170,6 +170,7 @@
             <input type="hidden" name="player1" value="<%= game.player1 %>">
             <input type="hidden" name="player2" value="<%= game.player2 %>">
             <input type="hidden" name="board_size" value="<%= game.board_size %>">
+            <input type="hidden" name="link_policy" value="<%= game.link_policy || '' %>">
             <% } %>
             <textarea class="comment-textarea" id="new_comment" name="new_comment" rows="8" onkeyup="checkStateChange()" onfocus="commentsInFocus(true)" onblur="commentsInFocus(false)"></textarea>
             <input id="comment_button" type="submit" value="No Comment" onclick="removePreview(); setButtonPressed(this, 'Comment'); return hideAddCommentBox();">
@@ -183,6 +184,7 @@
   <% if (parser) { %>
     <input type="hidden" id="movesJson" name="movesJson" value="<%= JSON.stringify(parser.getMovesList()) %>">
     <input type="hidden" id="boardSize" name="boardSize" value="<%= parser.getBoardSize() %>">
+    <input type="hidden" id="linkPolicy" name="linkPolicy" value="<%= game.link_policy || '' %>">
   <% } %>
 <% } %>
 

@@ -44,6 +44,7 @@ router.post('/', async (req, res) => {
         player2: req.body.player2 || 'Player2',
         winner: 0,
         board_size: boardSize,
+        link_policy: req.body.link_policy === 'R' ? 'R' : null,
         created_on: new Date(),
       });
 

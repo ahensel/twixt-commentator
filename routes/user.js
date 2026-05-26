@@ -18,7 +18,8 @@ function buildBackUrl(params) {
       const qs = new URLSearchParams();
       if (params.player1) qs.set('player1', params.player1);
       if (params.player2) qs.set('player2', params.player2);
-      if (params.size)    qs.set('size',    params.size);
+      if (params.size)        qs.set('size',        params.size);
+      if (params.link_policy) qs.set('link_policy', params.link_policy);
       const qstr = qs.toString();
       return `/game/blank${qstr ? '?' + qstr : ''}`;
     }

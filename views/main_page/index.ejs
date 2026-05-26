@@ -31,6 +31,12 @@ A forum to view, comment on, and read other people's comments on finished Twixt 
             <span class="blank-board-hint">(8–52)</span>
           </td>
         </tr>
+        <tr>
+          <td><label for="blank-link-removal">Link Removal:</label></td>
+          <td>
+            <input id="blank-link-removal" type="checkbox" name="link_removal">
+          </td>
+        </tr>
       </table>
       <div class="blank-board-buttons">
         <input type="submit" value="OK">
@@ -54,7 +60,8 @@ function submitBlankBoardForm() {
   let size = parseInt(document.getElementById('blank-board-size').value, 10);
   if (isNaN(size) || size < 8) size = 8;
   if (size > 52) size = 52;
-  window.location.href = `/game/blank?player1=${player1}&player2=${player2}&size=${size}`;
+  const linkPolicy = document.getElementById('blank-link-removal').checked ? 'R' : '';
+  window.location.href = `/game/blank?player1=${player1}&player2=${player2}&size=${size}&link_policy=${linkPolicy}`;
 }
 document.getElementById('blank-board-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeBlankBoardModal();

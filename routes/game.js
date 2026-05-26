@@ -137,6 +137,7 @@ router.get('/blank', (req, res) => {
 
   const player1 = req.query.player1 || 'Player1';
   const player2 = req.query.player2 || 'Player2';
+  const link_policy = req.query.link_policy === 'R' ? 'R' : null;
 
   // Build a minimal object that satisfies the game/index.ejs template
   const game = {
@@ -146,6 +147,7 @@ router.get('/blank', (req, res) => {
     result: '',
     tournament: '',
     board_size: size,
+    link_policy,
     comments: [],
     isInProgress: () => false,
     isDraw: () => false,
