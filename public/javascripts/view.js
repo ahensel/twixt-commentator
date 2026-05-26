@@ -86,14 +86,13 @@ const BoardState = {
 document.addEventListener('keydown',  e => keyIntercept(e));
 
 window.addEventListener('load', () => {
+  if (!$('board')) return;
   const size = parseInt($('boardSize').value, 10);
-  const policyVal = $('linkPolicy')?.value;
-  const policy = policyVal === 'R' ? TwixtBoard.LINK_REMOVAL : TwixtBoard.PENCIL_AND_PAPER;
-  BoardState.twixtGame = new TwixtController(size, policy);
+  const linkPolicy = $('linkPolicy')?.value === 'R' ? TwixtBoard.LINK_REMOVAL : TwixtBoard.PENCIL_AND_PAPER;
+  BoardState.twixtGame = new TwixtController(size, linkPolicy);
   setBoardSize(size);
   showMovesOnLoad();
-
-  $('turn').innerHTML = `${['Black', 'White'][BoardState.turn]}'s turn:`;
+  showTurn();
 
   Object.assign($('white-player-label'), { src: whitepeg_img });
   Object.assign($('black-player-label'), { src: blackpeg_img });
@@ -319,14 +318,13 @@ function parseLinkNotation(notation, prefix) {
 
   let x1, y1, x2, y2;
   if (isCaseA) {
-    const isBackslash = (prefix === '\\');
     if (prefix === '-') {
       const link1 = BoardState.getPeg(xVal, yVal - 1)?.getLink(1, 2);
       if (link1) return link1;
       const link2 = BoardState.getPeg(xVal, yVal + 1)?.getLink(1, -2);
       if (link2) return link2;
       return null;
-    } else if (isBackslash) {
+    } else if (prefix === '\\') {
       x1 = xVal; y1 = yVal - 1;
       x2 = xVal + 1; y2 = yVal + 1;
     } else {
@@ -334,14 +332,13 @@ function parseLinkNotation(notation, prefix) {
       x2 = xVal + 1; y2 = yVal - 1;
     }
   } else {
-    const isBackslash = (prefix === '\\');
     if (prefix === '-') {
       const link1 = BoardState.getPeg(xVal - 1, yVal)?.getLink(2, 1);
       if (link1) return link1;
       const link2 = BoardState.getPeg(xVal - 1, yVal + 1)?.getLink(2, -1);
       if (link2) return link2;
       return null;
-    } else if (isBackslash) {
+    } else if (prefix === '\\') {
       x1 = xVal - 1; y1 = yVal;
       x2 = xVal + 1; y2 = yVal + 1;
     } else {
@@ -758,9 +755,13 @@ function nextTurn() {
   }
 }
 
+function showTurn() {
+  $('turn').innerHTML = `${['Black', 'White'][BoardState.turn]}'s turn:`;
+}
+
 function flipTurn() {
   BoardState.turn = 1 - BoardState.turn;
-  $('turn').innerHTML = `${['Black', 'White'][BoardState.turn]}'s turn:`;
+  showTurn();
 }
 
 // ─── Clipboard ────────────────────────────────────────────────────────────────
