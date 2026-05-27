@@ -27,6 +27,15 @@
 <p>means that 23.g7 follows whatever move 22 was in the actual game. There is no ambiguity here. Also, you can avoid ambiguity by including your entire variation in your comment.</p>
 <p>I recommend using "Preview" and testing all of your moves.</p>
 <p>In Size 24 games, moves are case-insensitive, so 20.D12 is the same as 20.d12. But on larger boards (sizes 30 and 48), moves are NOT case-insensitive, since the notation on the right side of the board is uppercase.</p>
+<p>Blank boards support link removal, and with that comes link removal notation, which can seem cryptic at first, so here is an explanation.
+  The notation uses the coordinates of link centers. One of those coordinates will always fall at a halfway point on the grid, so to avoid
+  typing ".5" or "½", an apostrophe is used as shorthand — for example, e'8 or e8' refer to a link center location. Link removal is denoted
+  by "-", but link addition must also specify direction, so "/" and "" are used instead. For example, -e8' refers to removing the link
+  between f8 and d9, or between f9 and d8 — unambiguous because links cannot cross when link removal is on. For link addition, /e'8 adds
+  the link between e7 and f9, while \e8' adds the link between e9 and f7. The link notation sequence follows order of operations, always
+  beginning with link removal and ending with peg placement. While links can technically be added after placing a peg, Commentator
+  optimizes the sequence so that peg placement always comes last, and expects that ordering in the comments.
+</p>
 <p>Also, you can use some safe HTML tags, such as &lt;i&gt; and &lt;b&gt;, but not others, such as &lt;script&gt;.</p>
 <p><b>Time Zones</b></p>
 <p>The time zone is UTC, even though the server is in the Eastern US Time Zone.</p>
