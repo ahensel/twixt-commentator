@@ -99,7 +99,7 @@ window.addEventListener('load', () => {
 
   $('topglass').addEventListener('mousedown', clickOnBoard);
   $('topglass').addEventListener('mousemove', mouseOverBoard);
-  $('topglass').addEventListener('blur', eraseCrosshair);
+  $('topglass').addEventListener('mouseout', eraseCrosshair);
 });
 
 function setBoardSize(size) {
