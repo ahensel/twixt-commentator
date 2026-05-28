@@ -35,9 +35,6 @@
       <textarea class="boxed user-info" name="info"><%= user.info || '' %></textarea>
       <hr>
       <input type="hidden" name="back_to" value="<%= params && params.back_to ? params.back_to : '' %>">
-      <% if (params && params.main_page) { %>
-        <input type="hidden" name="main_page" value="<%= params.main_page %>">
-      <% } %>
       <% if (params && params.ret_gid) { %>
         <input type="hidden" name="ret_gid" value="<%= params.ret_gid %>">
       <% } %>

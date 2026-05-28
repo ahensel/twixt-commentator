@@ -8,7 +8,6 @@ const { sanitizeHtml } = require('../lib/helpers/applicationHelper');
 function buildBackUrl(params) {
   const backTo = params.back_to;
   const retGid = params.ret_gid;
-  const mainPage = params.main_page;
 
   if (!backTo) return '/';
 
@@ -24,9 +23,6 @@ function buildBackUrl(params) {
       return `/game/blank${qstr ? '?' + qstr : ''}`;
     }
     return `/game/${retGid}`;
-  }
-  if (backTo === 'main_page') {
-    return mainPage ? `/?page=${mainPage}` : '/';
   }
   return '/';
 }
@@ -130,3 +126,4 @@ router.post('/profile/:id', async (req, res) => {
 });
 
 module.exports = router;
+

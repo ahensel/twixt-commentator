@@ -42,7 +42,6 @@ A forum to view, comment on, and read other people's comments on Twixt games.&nb
         <input type="submit" value="OK">
         <input type="button" value="Cancel" onclick="closeBlankBoardModal();">
       </div>
-      <input type="hidden" id="page" value="<%= params?.page || '' %>">
     </form>
   </div>
 </div>
@@ -62,8 +61,7 @@ function submitBlankBoardForm() {
   if (isNaN(size) || size < 8) size = 8;
   if (size > 52) size = 52;
   const linkPolicy = document.getElementById('blank-link-removal').checked ? 'R' : '';
-  const page = document.getElementById('page').value;
-  window.location.href = `/game/blank?player1=${player1}&player2=${player2}&size=${size}&link_policy=${linkPolicy}&main_page=${page}`;
+  window.location.href = `/game/blank?player1=${player1}&player2=${player2}&size=${size}&link_policy=${linkPolicy}`;
 }
 document.getElementById('blank-board-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeBlankBoardModal();
@@ -91,9 +89,9 @@ document.addEventListener('keydown', function(e) {
       <tr class="<%= i % 2 === 0 ? 'even' : 'odd' %>">
         <td class="main text-right">
           <% if (game.lg_game_num == null) { %>
-            <a href="/game/blank/<%= game.id %>?main_page=<%= params?.page || '' %>">blank/<%= game.id %></a>
+            <a href="/game/blank/<%= game.id %>">blank/<%= game.id %></a>
           <% } else { %>
-            <a href="/game/<%= game.lg_game_num %>?main_page=<%= params?.page || '' %>"><%= game.lg_game_num %></a>
+            <a href="/game/<%= game.lg_game_num %>"><%= game.lg_game_num %></a>
           <% } %>
         </td>
         <td class="main text-center">

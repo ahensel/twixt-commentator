@@ -8,8 +8,14 @@ const PER_PAGE = 20;
 
 router.get('/', async (req, res) => {
   try {
-    const pageParam = parseInt(req.query.page, 10) || 1;
-    const page = pageParam < 1 ? 1 : pageParam;
+    let page;
+    if (req.query.page) {
+      page = parseInt(req.query.page, 10);
+      if (page < 1) page = 1;
+    } else {
+      page = req.session.main_page || 1;
+    }
+    req.session.main_page = page;
     const offset = (page - 1) * PER_PAGE;
 
     const { count, rows: commentedGames } = await Game.findAndCountAll({

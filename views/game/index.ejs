@@ -5,7 +5,7 @@
     <form action="/game" method="post">
       Game number:&nbsp;<input class="boxed" type="text" name="new_gid" value="<%= params && params.gid ? params.gid : '' %>" size="12" maxlength="12">
       <input type="submit" value="Go">
-      &nbsp;<a href="/?page=<%= params && params.main_page || '' %>">Main Page</a>
+      &nbsp;<a href="/">Main Page</a>
     </form>
   </div>
   <% if (game) { %>
