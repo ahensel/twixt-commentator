@@ -50,6 +50,10 @@ body.about-page {
   margin-right: 25px;
 }
 
+.current-page {
+  font-weight: 600;
+}
+
 /* ── Typography ────────────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-heading);

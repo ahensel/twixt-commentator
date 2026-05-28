@@ -136,7 +136,7 @@ Page:&nbsp;<% pages.forEach((p) => { %>
   <% if (p.page === null) { %>
     ...&nbsp;
   <% } else if (p.current) { %>
-    <%= p.label %>&nbsp;
+    <span class="current-page"><%= p.label %></span>&nbsp;
   <% } else { %>
     <a href="<%= p.url %>"><%= p.label %></a>&nbsp;
   <% } %>
