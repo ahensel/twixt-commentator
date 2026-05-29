@@ -100,6 +100,7 @@ window.addEventListener('load', () => {
   $('topglass').addEventListener('mousedown', clickOnBoard);
   $('topglass').addEventListener('mousemove', mouseOverBoard);
   $('topglass').addEventListener('mouseout', eraseCrosshair);
+  $('swap-button').addEventListener('click', () => { swapFirstPeg(); showUserMovesText(); });
 });
 
 function setBoardSize(size) {
@@ -484,6 +485,7 @@ function swapFirstPeg() {
       colorMove(BoardState.currentMoveNum);
     }
   }
+  updateSwapButton();
 }
 
 function showMovesUpTo(moves, moveNum) {
@@ -559,6 +561,7 @@ function showAllMoves(moveNum, commentMoves) {
 
   showUserMovesText();
   updateBackNextButtons();
+  updateSwapButton();
 
   BoardState.revealNewBoardglass();
 }
@@ -635,6 +638,20 @@ function nextButton() {
   }
 }
 
+function updateSwapButton() {
+  const swapBtn = $('swap-button');
+  if (!swapBtn) return;
+  const moveCount = BoardState.currentMoves.userMoves.length + BoardState.currentMoveNum;
+  const pegCount = BoardState.twixtGame.board.getAllPegs().length;
+  // count moves because there is still one peg after a swap
+  // count pegs because first move could be forfeit or resign
+  if (moveCount === 1 && pegCount === 1) {
+    swapBtn.classList.remove('hidden');
+  } else {
+    swapBtn.classList.add('hidden');
+  }
+}
+
 function clearBoard() {
   BoardState.turn = 1;
   BoardState.twixtGame = new TwixtController(BoardState.twixtGame.board.size, BoardState.twixtGame.board.linkXingPolicy);
@@ -646,6 +663,7 @@ function clearBoard() {
 
   $('newwhitepeg').classList.add('hidden');
   $('newblackpeg').classList.add('hidden');
+  updateSwapButton();
 }
 
 // ─── Mouse / board interaction ────────────────────────────────────────────────
@@ -751,6 +769,7 @@ function nextTurn() {
     BoardState.currentMoves.commitMove(BoardState.twixtGame);
   }
   flipTurn();
+  updateSwapButton();
   if (BoardState.hasLinkRemoval()) {
     drawLinkableMarkersInBox(1, 1, BoardState.twixtGame.board.size, BoardState.twixtGame.board.size, BoardState.turn);
   }

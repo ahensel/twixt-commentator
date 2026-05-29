@@ -278,6 +278,14 @@ div.topglass {
   user-select: none;
 }
 
+div.board .swap-button {
+  position: absolute;
+  font-size: 0.83rem;
+  top: -1.2rem;
+  right: 0.2rem;
+  text-decoration: underline;
+}
+
 /* ── CSS-rendered Twixt board (replaces board.gif) ─────────────── */
 div.board .twixt-board {
   --diagonals-color: #8db43e;
