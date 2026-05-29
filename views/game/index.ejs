@@ -3,7 +3,7 @@
 <div class="game-header">
   <div class="game-number-form">
     <form action="/game" method="post">
-      Game number:&nbsp;<input class="boxed" type="text" name="new_gid" value="<%= params && params.gid ? params.gid : '' %>" size="12" maxlength="12">
+      Game number:&nbsp;<input class="boxed" type="text" name="new_gid" value="<%= params?.gid ?? '' %>" size="12" maxlength="12">
       <input type="submit" value="Go">
       &nbsp;<a href="/">Main Page</a>
     </form>
@@ -128,7 +128,7 @@
       <a href="http://www.littlegolem.net/jsp/tournament/tournament.jsp?trnid=<%= game.tournament %>"><%- game.tournament + '&nbsp;(LG)' %></a> |
     <% } %>
     <a href="http://www.littlegolem.net/jsp/game/game.jsp?gid=<%= game.lg_game_num %>">This&nbsp;game&nbsp;(LG)</a> |
-    <a href="/jtwixt/gen?gameid=<%= params && params.gid %>">Download&nbsp;JTwixt&nbsp;file</a>
+    <a href="/jtwixt/gen?gameid=<%= params?.gid %>">Download&nbsp;JTwixt&nbsp;file</a>
     <% } %>
   </div>
   </div>

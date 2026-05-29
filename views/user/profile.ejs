@@ -34,12 +34,27 @@
       Info:<br>
       <textarea class="boxed user-info" name="info"><%= user.info || '' %></textarea>
       <hr>
-      <input type="hidden" name="back_to" value="<%= params && params.back_to ? params.back_to : '' %>">
-      <% if (params && params.ret_gid) { %>
+      <% if (params) { %>
+      <input type="hidden" name="back_to" value="<%= params.back_to ?? '' %>">
+      <% if (params.ret_gid) { %>
         <input type="hidden" name="ret_gid" value="<%= params.ret_gid %>">
-      <% } %>
+      <% }
+        if (params.player1) { %>
+        <input type="hidden" name="player1" value="<%= params.player1 %>">
+      <% }
+        if (params.player2) { %>
+        <input type="hidden" name="player2" value="<%= params.player2 %>">
+      <% }
+        if (params.size) { %>
+        <input type="hidden" name="size" value="<%= params.size %>">
+      <% }
+        if (params.link_policy) { %>
+        <input type="hidden" name="link_policy" value="<%= params.link_policy ?? '' %>">
+      <% }
+      }
+      %>
       <input class="submit" type="submit" value="Change">
-      &nbsp;<a href="/<%= params && params.back_to === 'game' ? 'game/' + (params.ret_gid || '') : '' %>">Cancel</a>
+      &nbsp;<a href="/<%= params?.back_to === 'game' ? 'game/' + (params.ret_gid || '') : '' %><%= params && params.back_to === 'game' && params.ret_gid === 'blank' ? '?player1=' + (params.player1 || '') + '&player2=' + (params.player2 || '') + '&size=' + (params.size || '') + '&link_policy=' + (params.link_policy || '') : '' %>">Cancel</a>
     </form>
   </fieldset>
 </div>

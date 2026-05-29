@@ -4,17 +4,17 @@
   if (!session || !session.user_id) { %>
   <div class="login-box">
     <form action="/user/login" method="post">
-      <input type="hidden" name="back_to" value="<%= params && params.controller ? params.controller : (params && params.back_to ? params.back_to : '') %>">
-      <input type="hidden" name="ret_gid" value="<%= params && params.gid ? params.gid : (params && params.ret_gid ? params.ret_gid : '') %>">
-      <input type="hidden" name="player1" value="<%= params && params.player1 ? params.player1 : '' %>">
-      <input type="hidden" name="player2" value="<%= params && params.player2 ? params.player2 : '' %>">
-      <input type="hidden" name="size" value="<%= params && params.size ? params.size : '' %>">
-      <input type="hidden" name="link_policy" value="<%= params && params.link_policy ? params.link_policy : '' %>">
+      <input type="hidden" name="back_to" value="<%= params?.controller ? params.controller : (params?.back_to ?? '') %>">
+      <input type="hidden" name="ret_gid" value="<%= params?.gid ? params.gid : (params?.ret_gid ?? '') %>">
+      <input type="hidden" name="player1" value="<%= params?.player1 ?? '' %>">
+      <input type="hidden" name="player2" value="<%= params?.player2 ?? '' %>">
+      <input type="hidden" name="size" value="<%= params?.size ?? '' %>">
+      <input type="hidden" name="link_policy" value="<%= params?.link_policy ?? '' %>">
       <div class="login-form-row">
         <div class="boxed">
           <div class="login-fields">
             <label for="name">Name:</label>
-            <input id="name" class="boxed" type="text" name="name" value="<%= params && params.name ? params.name : '' %>" autocomplete="username">
+            <input id="name" class="boxed" type="text" name="name" value="<%= params?.name ?? '' %>" autocomplete="username">
             <span></span>
             <label for="password">Password:</label>
             <input class="boxed" type="password" name="password" autocomplete="current-password">
@@ -25,7 +25,7 @@
           <% } %>
         </div>
         <div class="please-register">
-          <a href="/user/add_user?back_to=<%= params && params.back_to || params && params.controller || '' %>&ret_gid=<%= params && params.gid || params && params.ret_gid || '' %>">Register</a><br>
+          <a href="/user/add_user?back_to=<%= params?.back_to || params?.controller || '' %>&ret_gid=<%= params?.gid || params?.ret_gid || '' %>&player1=<%= params?.player1 || '' %>&player2=<%= params?.player2 || '' %>&size=<%= params?.size || '' %>&link_policy=<%= params?.link_policy || '' %>">Register</a><br>
           to add<br>
           comments.
         </div>
@@ -35,7 +35,9 @@
 <% } else {
   const user = currentUser? currentUser.dataValues : ''; %>
   <div class="login-box">
-    Welcome,&nbsp;<b><%- h2(user.name) %></b>&nbsp;<a href="/user/info/<%= session.user_id %>?back_to=<%= params && (params.controller || params.back_to) || '' %>&ret_gid=<%= params && params.gid || '' %>"><img class="info" src="/images/info.gif" alt="(info)" width="9" height="9"></a><br>
-    <a href="/user/profile/<%= session.user_id %>?ret_gid=<%= params && params.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>">Profile</a>&nbsp;|&nbsp;<a href="/user/logout?ret_gid=<%= params && params.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&player1=<%= params && params.player1 || '' %>&player2=<%= params && params.player2 || '' %>&size=<%= params && params.size || '' %>&link_policy=<%= params && params.link_policy || '' %>">Log out</a>
+    Welcome,&nbsp;<b><%- h2(user.name) %></b>&nbsp;<a href="/user/info/<%= session.user_id %>?back_to=<%= params && (params.controller || params.back_to) || '' %>&ret_gid=<%= params?.gid || '' %>"><img class="info" src="/images/info.gif" alt="(info)" width="9" height="9"></a><br>
+    <a href="/user/profile/<%= session.user_id %>?ret_gid=<%= params?.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&player1=<%= params?.player1 || '' %>&player2=<%= params?.player2 || '' %>&size=<%= params?.size || '' %>&link_policy=<%= params?.link_policy || '' %>">Profile</a>
+    |
+    <a href="/user/logout?ret_gid=<%= params?.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&player1=<%= params?.player1 || '' %>&player2=<%= params?.player2 || '' %>&size=<%= params?.size || '' %>&link_policy=<%= params?.link_policy || '' %>">Log out</a>
   </div>
 <% } %>
