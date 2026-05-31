@@ -61,7 +61,11 @@ function submitBlankBoardForm() {
   if (isNaN(size) || size < 8) size = 8;
   if (size > 52) size = 52;
   const linkPolicy = document.getElementById('blank-link-removal').checked ? 'R' : '';
-  window.location.href = `/game/blank?player1=${player1}&player2=${player2}&size=${size}&link_policy=${linkPolicy}`;
+  let url = `/game/blank?player1=${player1}&player2=${player2}&size=${size}`;
+  if (linkPolicy) {
+    url += `&link_policy=${linkPolicy}`;
+  }
+  window.location.href = url;
 }
 document.getElementById('blank-board-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeBlankBoardModal();
