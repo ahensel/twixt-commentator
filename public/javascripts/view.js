@@ -14,6 +14,10 @@ const wswcut_img = 'data:image/webp;base64,UklGRmQAAABXRUJQVlA4TFcAAAAvGoADEC8gE
 
 const linkablemarker_img = 'data:image/webp;base64,UklGRioAAABXRUJQVlA4TB4AAAAvDAADEA8Q8z8z8x84CLJtNn/JI0ziDhH9T25k5ng=';
 
+// Swap style: 'P' = pie rule (first peg stays, players swap colors)
+// null/undefined = default (first peg moves and changes color, players fixed)
+let SWAP_STYLE = null;
+
 // Lightweight getElementById shorthand — NOT Prototype's $().
 // Use document.getElementById directly if you prefer explicitness.
 const $ = id => document.getElementById(id);
@@ -89,6 +93,7 @@ window.addEventListener('load', () => {
   if (!$('board')) return;
   const size = parseInt($('boardSize').value, 10);
   const linkPolicy = $('linkPolicy')?.value === 'R' ? TwixtBoard.LINK_REMOVAL : TwixtBoard.PENCIL_AND_PAPER;
+  SWAP_STYLE = $('swapStyle')?.value || null;
   BoardState.twixtGame = new TwixtController(size, linkPolicy);
   setBoardSize(size);
   showMovesOnLoad();
