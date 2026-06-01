@@ -19,6 +19,7 @@ function buildBackUrl(params) {
       if (params.player2) qs.set('player2', params.player2);
       if (params.size)        qs.set('size',        params.size);
       if (params.link_policy) qs.set('link_policy', params.link_policy);
+      if (params.swap_style) qs.set('swap_style', params.swap_style);
       const qstr = qs.toString();
       return `/game/blank${qstr ? '?' + qstr : ''}`;
     }

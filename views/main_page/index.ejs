@@ -37,6 +37,15 @@ A forum to view, comment on, and read other people's comments on Twixt games.&nb
             <input id="blank-link-removal" type="checkbox" name="link_removal">
           </td>
         </tr>
+        <tr>
+          <td><label for="blank-swap-style">Swap Style:</label></td>
+          <td>
+            <select id="blank-swap-style" name="swap_style">
+              <option value="">Board Flip</option>
+              <option value="P">Player Color Swap</option>
+            </select>
+          </td>
+        </tr>
       </table>
       <div class="blank-board-buttons">
         <input type="submit" value="OK">
@@ -61,9 +70,13 @@ function submitBlankBoardForm() {
   if (isNaN(size) || size < 8) size = 8;
   if (size > 52) size = 52;
   const linkPolicy = document.getElementById('blank-link-removal').checked ? 'R' : '';
+  const swapStyle = document.getElementById('blank-swap-style').value;
   let url = `/game/blank?player1=${player1}&player2=${player2}&size=${size}`;
   if (linkPolicy) {
     url += `&link_policy=${linkPolicy}`;
+  }
+  if (swapStyle) {
+    url += `&swap_style=${swapStyle}`;
   }
   window.location.href = url;
 }

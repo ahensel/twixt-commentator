@@ -94,8 +94,8 @@ window.addEventListener('load', () => {
   showMovesOnLoad();
   showTurn();
 
-  Object.assign($('white-player-label'), { src: whitepeg_img });
-  Object.assign($('black-player-label'), { src: blackpeg_img });
+  Object.assign($('player1-label'), { src: whitepeg_img });
+  Object.assign($('player2-label'), { src: blackpeg_img });
 
   $('topglass').addEventListener('mousedown', clickOnBoard);
   $('topglass').addEventListener('mousemove', mouseOverBoard);

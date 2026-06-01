@@ -19,6 +19,7 @@ const Game = sequelize.define('Game', {
   tournament: { type: DataTypes.STRING },
   board_size: { type: DataTypes.INTEGER },
   link_policy: { type: DataTypes.STRING(1) },
+  swap_style: { type: DataTypes.STRING(1) },
 }, {
   tableName: 'games',
   timestamps: false,

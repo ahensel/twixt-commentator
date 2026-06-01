@@ -45,6 +45,7 @@ router.post('/', async (req, res) => {
         winner: 0,
         board_size: boardSize,
         link_policy: req.body.link_policy === 'R' ? 'R' : null,
+        swap_style: req.body.swap_style === 'P' ? 'P' : null,
         created_on: new Date(),
       });
 

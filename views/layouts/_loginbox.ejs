@@ -10,6 +10,7 @@
       <input type="hidden" name="player2" value="<%= params?.player2 ?? '' %>">
       <input type="hidden" name="size" value="<%= params?.size ?? '' %>">
       <input type="hidden" name="link_policy" value="<%= params?.link_policy ?? '' %>">
+      <input type="hidden" name="swap_style" value="<%= params?.swap_style ?? '' %>">
       <div class="login-form-row">
         <div class="boxed">
           <div class="login-fields">
@@ -25,7 +26,7 @@
           <% } %>
         </div>
         <div class="please-register">
-          <a href="/user/add_user?back_to=<%= params?.back_to || params?.controller || '' %>&ret_gid=<%= params?.gid || params?.ret_gid || '' %>&player1=<%= params?.player1 || '' %>&player2=<%= params?.player2 || '' %>&size=<%= params?.size || '' %>&link_policy=<%= params?.link_policy || '' %>">Register</a><br>
+          <a href="/user/add_user?back_to=<%= params?.back_to || params?.controller || '' %>&ret_gid=<%= params?.gid || params?.ret_gid || '' %>&player1=<%= params?.player1 || '' %>&player2=<%= params?.player2 || '' %>&size=<%= params?.size || '' %>&link_policy=<%= params?.link_policy || '' %>&swap_style=<%= params?.swap_style || '' %>">Register</a><br>
           to add<br>
           comments.
         </div>
@@ -36,8 +37,8 @@
   const user = currentUser? currentUser.dataValues : ''; %>
   <div class="login-box">
     Welcome,&nbsp;<b><%- h2(user.name) %></b>&nbsp;<a href="/user/info/<%= session.user_id %>?back_to=<%= params && (params.controller || params.back_to) || '' %>&ret_gid=<%= params?.gid || '' %>"><img class="info" src="/images/info.gif" alt="(info)" width="9" height="9"></a><br>
-    <a href="/user/profile/<%= session.user_id %>?ret_gid=<%= params?.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&player1=<%= params?.player1 || '' %>&player2=<%= params?.player2 || '' %>&size=<%= params?.size || '' %>&link_policy=<%= params?.link_policy || '' %>">Profile</a>
+    <a href="/user/profile/<%= session.user_id %>?ret_gid=<%= params?.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&player1=<%= params?.player1 || '' %>&player2=<%= params?.player2 || '' %>&size=<%= params?.size || '' %>&link_policy=<%= params?.link_policy || '' %>&swap_style=<%= params?.swap_style || '' %>">Profile</a>
     |
-    <a href="/user/logout?ret_gid=<%= params?.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&player1=<%= params?.player1 || '' %>&player2=<%= params?.player2 || '' %>&size=<%= params?.size || '' %>&link_policy=<%= params?.link_policy || '' %>">Log out</a>
+    <a href="/user/logout?ret_gid=<%= params?.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&player1=<%= params?.player1 || '' %>&player2=<%= params?.player2 || '' %>&size=<%= params?.size || '' %>&link_policy=<%= params?.link_policy || '' %>&swap_style=<%= params?.swap_style || '' %>">Log out</a>
   </div>
 <% } %>
