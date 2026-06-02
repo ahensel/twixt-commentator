@@ -76,6 +76,7 @@ router.post('/', async (req, res) => {
       preview,
       author,
       prepareComment,
+      swapStyle: req.body.swap_style === 'P' ? 'P' : null,
       params: req.body,
       session: req.session,
     });

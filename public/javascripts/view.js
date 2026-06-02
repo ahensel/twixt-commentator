@@ -64,6 +64,10 @@ const BoardState = {
   holdingForMarkers: false,
   numLinkableMarkers: 0,
 
+  // True when SWAP_STYLE === 'P' and a pie-rule swap has been played.
+  // Causes player label icons and move-list colors to flip from move 3 onward.
+  colorsSwapped: false,
+
   // Helper methods
   isLegalSpot: (x, y, turn) => {
     return BoardState.twixtGame.board.isLegalSpot(x, y, turn ?? BoardState.turn);
@@ -99,8 +103,7 @@ window.addEventListener('load', () => {
   showMovesOnLoad();
   showTurn();
 
-  Object.assign($('player1-label'), { src: whitepeg_img });
-  Object.assign($('player2-label'), { src: blackpeg_img });
+  setPlayerLabels(BoardState.colorsSwapped);
 
   $('topglass').addEventListener('mousedown', clickOnBoard);
   $('topglass').addEventListener('mousemove', mouseOverBoard);
@@ -129,8 +132,14 @@ function showMovesOnLoad() {
   const moves = JSON.parse(movesJson);
 
   if (moves.length > 1 && moves[1].type === Move.Swap) {
-    [moves[0].x, moves[0].y] = [moves[0].y, moves[0].x];
-    moves[0].player = 3 - moves[0].player;
+    if (SWAP_STYLE === 'P') {
+      // Pie rule: peg stays, player colors swap.
+      // colorsSwapped will be set after swapFirstMove() runs below.
+    } else {
+      // LG style: peg moves to the diagonally mirrored position.
+      [moves[0].x, moves[0].y] = [moves[0].y, moves[0].x];
+      moves[0].player = 3 - moves[0].player;
+    }
   }
 
   BoardState.currentMoves.settingUp = true;
@@ -154,15 +163,32 @@ function showMovesOnLoad() {
 
   BoardState.currentMoveNum = BoardState.currentMoves.moves.length - (BoardState.currentMoves.gameIsInProgress() ? 0 : 1);
 
+  // For pie-rule games, detect whether a swap was played and update labels/colors.
+  if (SWAP_STYLE === 'P') {
+    const swapOccurred = BoardState.currentMoves.moves.length >= 2 &&
+                         BoardState.currentMoves.moves[1].getText() === 'swap';
+    BoardState.colorsSwapped = swapOccurred;
+    setPlayerLabels(swapOccurred);
+  }
+
   showMovesText();
   updateBackNextButtons();
 }
 
+// Returns the CSS class ('black' or 'white') for move number moveNum.
+// When colorsSwapped is true (pie-rule swap occurred), move colors flip from move 3 onward.
+function getMoveColor(moveNum, colorsSwapped) {
+  const isOdd = moveNum % 2 === 1;
+  if (colorsSwapped && moveNum >= 3) return isOdd ? 'black' : 'white';
+  return isOdd ? 'white' : 'black';
+}
+
 function buildMovesText(moves, firstNum, fn) {
+  const colorsSwapped = BoardState.colorsSwapped;
   return moves.map((move, index) => {
     const moveNum = firstNum + index;
     const moveText  = `${moveNum}.${move.getText()}`;
-    const className = ['black', 'white'][moveNum % 2];
+    const className = getMoveColor(moveNum, colorsSwapped);
     return fn(moveText, moveNum, className);
   }).join(' ');
 }
@@ -468,19 +494,28 @@ function placePegByNotation(pegString) {
 function swapFirstPeg() {
   const pegs = BoardState.twixtGame.board.getAllPegs();
   if (pegs.length === 1) {
-    const peg = pegs[0];
-    clearBoard();
-    BoardState.turn = 1 - BoardState.turn;
-    placePeg(peg.y, peg.x);
+    if (SWAP_STYLE === 'P') {
+      // Pie rule: the first peg stays in place; player colors swap.
+      BoardState.colorsSwapped = !BoardState.colorsSwapped;
+      setPlayerLabels(BoardState.colorsSwapped);
+    } else {
+      // LG style: remove the peg, switch color, re-place at the diagonal position.
+      const peg = pegs[0];
+      clearBoard();
+      BoardState.turn = 1 - BoardState.turn;
+      placePeg(peg.y, peg.x);
 
-    // it erroneously put the peg on the user moves stack; correct that.
-    BoardState.currentMoves.popMove();
-    const firstMove = BoardState.currentMoves.hasUserMoves() ? BoardState.currentMoves.userMoves[0] : BoardState.currentMoves.moves[0];
-    const peg1 = firstMove.peg;
-    if (!peg1.swapped) {
-      peg1.swapped = true;
-      [peg1.x, peg1.y] = [peg1.y, peg1.x];
+      // placePeg erroneously put the peg on the user moves stack; correct that.
+      BoardState.currentMoves.popMove();
+      const firstMove = BoardState.currentMoves.hasUserMoves() ? BoardState.currentMoves.userMoves[0] : BoardState.currentMoves.moves[0];
+      const peg1 = firstMove.peg;
+      if (!peg1.swapped) {
+        peg1.swapped = true;
+        [peg1.x, peg1.y] = [peg1.y, peg1.x];
+      }
     }
+
+    // Record the swap move (same for both styles).
     if (BoardState.currentMoves.hasUserMoves() ||
         (BoardState.currentMoves.moves.length > 1 && BoardState.currentMoves.moves[1].getText().toLowerCase() !== 'swap')) {
       BoardState.currentMoves.userMoves.push(new SwapMove());
@@ -488,6 +523,11 @@ function swapFirstPeg() {
       uncolorMove(BoardState.currentMoveNum);
       BoardState.currentMoveNum++;
       colorMove(BoardState.currentMoveNum);
+    }
+
+    if (SWAP_STYLE === 'P') {
+      // Re-render the main moves list so colors reflect the new swap state.
+      showMovesText();
     }
   }
   updateSwapButton();
@@ -521,7 +561,7 @@ function showAllMoves(moveNum, commentMoves) {
   BoardState.currentMoves.jumpingTo = true;
 
   BoardState.switchDrawingBoardglass();
-  clearBoard();
+  clearBoard();  // resets colorsSwapped to false
 
   const moves = BoardState.currentMoves.getMoves();
   if (moves.length > 0) {
@@ -551,6 +591,17 @@ function showAllMoves(moveNum, commentMoves) {
   if (BoardState.currentMoves.hasUserMoves()) {
     const userMoves = BoardState.currentMoves.getUserMoves();
     showMovesUpTo(userMoves, userMoves.length);
+  }
+
+  // For pie-rule games, re-derive whether a swap is active in the displayed position.
+  // clearBoard() above reset colorsSwapped to false, so we must restore it if needed.
+  if (SWAP_STYLE === 'P') {
+    const allDisplayed = [
+      ...BoardState.currentMoves.getMoves().slice(0, BoardState.currentMoveNum),
+      ...BoardState.currentMoves.getUserMoves(),
+    ];
+    BoardState.colorsSwapped = allDisplayed.some(m => m.getText() === 'swap');
+    setPlayerLabels(BoardState.colorsSwapped);
   }
 
   BoardState.currentMoves.jumpingTo = false;
@@ -663,11 +714,13 @@ function clearBoard() {
   BoardState.cutLink = null;
   BoardState.holdingForMarkers = false;
   BoardState.numLinkableMarkers = 0;
+  BoardState.colorsSwapped = false;
 
   BoardState.boardglass().replaceChildren();
 
   $('newwhitepeg').classList.add('hidden');
   $('newblackpeg').classList.add('hidden');
+  setPlayerLabels(false);
   updateSwapButton();
 }
 
@@ -778,6 +831,13 @@ function nextTurn() {
   if (BoardState.hasLinkRemoval()) {
     drawLinkableMarkersInBox(1, 1, BoardState.twixtGame.board.size, BoardState.twixtGame.board.size, BoardState.turn);
   }
+}
+
+// Sets player label icons to reflect the current color assignment.
+// When colorsSwapped is true (pie-rule swap), player1 plays black and player2 plays white.
+function setPlayerLabels(colorsSwapped = false) {
+  $('player1-label').src = colorsSwapped ? blackpeg_img : whitepeg_img;
+  $('player2-label').src = colorsSwapped ? whitepeg_img : blackpeg_img;
 }
 
 function showTurn() {

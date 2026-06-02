@@ -4,7 +4,7 @@
       <div class="preview-header">
         <%- include('_comment_header', { comment: comment, author: author.dataValues, preview: true }) %>
       </div>
-      <%- prepareComment(comment.comment) %>
+      <%- prepareComment(comment.comment, swapStyle) %>
       <br/>
       <br/>
     </div>
@@ -12,7 +12,7 @@
     <div class="comment-header">
       <%- include('_comment_header', { comment: comment, author: author.dataValues, preview: false }) %>
     </div>
-    <%- prepareComment(comment.comment) %>
+    <%- prepareComment(comment.comment, swapStyle) %>
     <br/>
     <br/>
   <% } %>

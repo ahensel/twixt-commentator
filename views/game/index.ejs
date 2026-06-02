@@ -154,7 +154,7 @@
           <div class="comment-header">
             <%- include('../comment/_comment_header', { comment: comment, author: comment.author, preview: false }) %>
           </div>
-          <%- prepareComment(comment.comment) %>
+          <%- prepareComment(comment.comment, game.swap_style) %>
           <br>
           <br>
         <% }); %>
