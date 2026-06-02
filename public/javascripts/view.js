@@ -234,6 +234,7 @@ function showUserMovesText() {
   }
 
   $('user-moves').innerHTML = userMovesText;
+  updateBackNextButtons();
 }
 
 function jumpTo(moveNum) {
@@ -617,7 +618,6 @@ function showAllMoves(moveNum, commentMoves) {
   }
 
   showUserMovesText();
-  updateBackNextButtons();
   updateSwapButton();
 
   BoardState.revealNewBoardglass();
@@ -686,6 +686,10 @@ function backButton() {
     showAllMoves(BoardState.currentMoveNum, null);
   } else if (BoardState.currentMoveNum > 0) {
     showAllMoves(BoardState.currentMoveNum - 1, null);
+  }
+  const pegCount = BoardState.twixtGame.board.getAllPegs().length;
+  if (pegCount === 0) {
+    showTurn();
   }
 }
 
@@ -777,7 +781,6 @@ function clickOnBoard(evt) {
     if (peg == null && !BoardState.holdingForMarkers && BoardState.isLegalSpot(x, y)) {
       const peg = placePeg(x, y);
       showUserMovesText();
-      updateBackNextButtons();
       highlightMoveInSidebar(peg);
     } else if (BoardState.hasLinkRemoval() && peg != null && peg.color === BoardState.turn) {
       placeLinks(peg, false);
