@@ -122,8 +122,11 @@
 
   <div id="underbar">
     <% if (game.isBlank) {
-      if (game.link_policy === 'R') { %>
-      <span class='underbar-status'>Link Removal is <b>ON</b></span>
+    if (game.link_policy === 'R') { %>
+      <span class='underbar-status'>Link Removal is <b>ON</b></span><%= (game.swap_style === 'P')? ',': '' %>
+    <% }
+    if (game.swap_style === 'P') { %>
+      <span class='underbar-status'>Swap style is <b>Swap Player Colors</b></span>
       <% }
     } else {
       if (game.tournament && game.tournament.trim() !== '' && game.tournament.trim() !== 'twixt') { %>
@@ -172,7 +175,7 @@
           <form id="comment_form" action="/comment" method="post">
             <input type="hidden" name="game" value="<%= game.id || 'blank' %>">
             <input type="hidden" id="button_pressed" name="button_pressed" value="Comment">
-            <% if (game.isBlank && !game.id) { %>
+            <% if (game.isBlank) { %>
             <input type="hidden" name="player1" value="<%= game.player1 %>">
             <input type="hidden" name="player2" value="<%= game.player2 %>">
             <input type="hidden" name="board_size" value="<%= game.board_size %>">

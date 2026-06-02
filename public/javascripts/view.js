@@ -178,6 +178,7 @@ function showMovesOnLoad() {
 // Returns the CSS class ('black' or 'white') for move number moveNum.
 // When colorsSwapped is true (pie-rule swap occurred), move colors flip from move 3 onward.
 function getMoveColor(moveNum, colorsSwapped) {
+  if (colorsSwapped && moveNum === 2) return 'black-white-swap';
   const isOdd = moveNum % 2 === 1;
   if (colorsSwapped && moveNum >= 3) return isOdd ? 'black' : 'white';
   return isOdd ? 'white' : 'black';
