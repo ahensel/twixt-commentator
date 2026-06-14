@@ -334,6 +334,7 @@ div.board .crucial-diagonals {
   margin: 9px;
   overflow: hidden;
   z-index: 1;
+  container-type: inline-size; /* enables cqi units for child height calculations */
 }
 
 div.board .crucial-diagonals .top-shallow {
@@ -349,11 +350,18 @@ div.board .crucial-diagonals .top-steep {
 div.board .crucial-diagonals .bottom-shallow {
   bottom: 0;
   aspect-ratio: 2/1;
+  /* Explicit height fallback: some browsers can't resolve aspect-ratio
+     on bottom-anchored absolutely-positioned elements (needs height to
+     find top edge, but aspect-ratio derives height from width — circular). */
+  height: 50cqi;
 }
 
 div.board .crucial-diagonals .bottom-steep {
   bottom: 0;
   aspect-ratio: 1/2;
+  /* Same fix: height = 2× width of the container. Overflows the top but
+     .crucial-diagonals has overflow:hidden so it is clipped safely. */
+  height: 200cqi;
 }
 
 div.board .crucial-diagonals .draw2diagonals {
