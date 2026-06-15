@@ -331,7 +331,7 @@ div.board .crucial-diagonals {
   position: relative;
   grid-column: 2 / -2;
   grid-row: 2 / -2;
-  margin: 9px;
+  margin: calc(var(--grid-spacing) / 2);
   overflow: hidden;
   z-index: 1;
   container-type: inline-size; /* enables cqi units for child height calculations */
@@ -642,6 +642,7 @@ img.crosshair, img.new-peg {
   font-size: 0.83rem;
   font-family: var(--font-stack);
   border: 1px solid var(--color-border);
+  resize: vertical;
 }
 
 div#current-comments {
