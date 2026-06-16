@@ -40,10 +40,21 @@
     <div id="twixt-board" class="twixt-board" aria-hidden="true">
       <div class="border"></div>
       <div class="crucial-diagonals">
-        <div class="top-shallow draw2diagonals"></div>
-        <div class="top-steep draw2diagonals"></div>
-        <div class="bottom-shallow draw2diagonals"></div>
-        <div class="bottom-steep draw2diagonals"></div>
+        <%# Eight crucial diagonal reference lines drawn as an inline SVG.
+            Coordinates are in SVG units 0-100; the SVG is scaled to fill
+            the square playing area via preserveAspectRatio="none". %>
+        <svg class="diagonal-lines" xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 100 100" preserveAspectRatio="none"
+             aria-hidden="true">
+          <line x1="0"   y1="0"   x2="100" y2="50"  stroke-width="1" vector-effect="non-scaling-stroke"/>
+          <line x1="0"   y1="0"   x2="50"  y2="100" stroke-width="1" vector-effect="non-scaling-stroke"/>
+          <line x1="100" y1="0"   x2="50"  y2="100" stroke-width="1" vector-effect="non-scaling-stroke"/>
+          <line x1="100" y1="0"   x2="0"   y2="50"  stroke-width="1" vector-effect="non-scaling-stroke"/>
+          <line x1="0"   y1="50"  x2="100" y2="100" stroke-width="1" vector-effect="non-scaling-stroke"/>
+          <line x1="100" y1="50"  x2="0"   y2="100" stroke-width="1" vector-effect="non-scaling-stroke"/>
+          <line x1="0"   y1="100" x2="50"  y2="0"   stroke-width="1" vector-effect="non-scaling-stroke"/>
+          <line x1="100" y1="100" x2="50"  y2="0"   stroke-width="1" vector-effect="non-scaling-stroke"/>
+        </svg>
       </div>
       <div class="holes-layer">
         <div class="upper left corner"></div>

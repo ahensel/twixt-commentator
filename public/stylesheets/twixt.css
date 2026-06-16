@@ -295,7 +295,7 @@ div.board .swap-button {
 
 /* ── CSS-rendered Twixt board (replaces board.gif) ─────────────── */
 div.board .twixt-board {
-  --diagonals-color: #8db43e;
+  --diagonals-color: #a6c76a;
   --hole-color: #000;
   --playing-area-color: #f2fff0;
   --tb-border-color: #e6e6e6;
@@ -334,52 +334,23 @@ div.board .crucial-diagonals {
   margin: calc(var(--grid-spacing) / 2);
   overflow: hidden;
   z-index: 1;
-  container-type: inline-size; /* enables cqi units for child height calculations */
 }
 
-div.board .crucial-diagonals .top-shallow {
-  top: 0;
-  aspect-ratio: 2/1;
-}
-
-div.board .crucial-diagonals .top-steep {
-  top: 0;
-  aspect-ratio: 1/2;
-}
-
-div.board .crucial-diagonals .bottom-shallow {
-  bottom: 0;
-  aspect-ratio: 2/1;
-  /* Explicit height fallback: some browsers can't resolve aspect-ratio
-     on bottom-anchored absolutely-positioned elements (needs height to
-     find top edge, but aspect-ratio derives height from width — circular). */
-  height: 50cqi;
-}
-
-div.board .crucial-diagonals .bottom-steep {
-  bottom: 0;
-  aspect-ratio: 1/2;
-  /* Same fix: height = 2× width of the container. Overflows the top but
-     .crucial-diagonals has overflow:hidden so it is clipped safely. */
-  height: 200cqi;
-}
-
-div.board .crucial-diagonals .draw2diagonals {
+/* Inline SVG carries all 8 crucial diagonal lines.  The SVG coordinate
+   space is 0-100 × 0-100, stretched to fill the square playing area.
+   vector-effect: non-scaling-stroke keeps each line at a constant pixel
+   width regardless of the board's rendered size. */
+div.board .crucial-diagonals .diagonal-lines {
   position: absolute;
+  top: 0;
   left: 0;
   width: 100%;
-  background: linear-gradient(to top left,
-      transparent 0%,
-      transparent calc(50% - 0.8px),
-      var(--diagonals-color) 50%,
-      transparent calc(50% + 0.8px),
-      transparent 100%),
-    linear-gradient(to top right,
-      transparent 0%,
-      transparent calc(50% - 0.8px),
-      var(--diagonals-color) 50%,
-      transparent calc(50% + 0.8px),
-      transparent 100%);
+  height: 100%;
+  overflow: visible;
+}
+
+div.board .crucial-diagonals .diagonal-lines line {
+  stroke: var(--diagonals-color);
 }
 
 div.board .holes-layer {
