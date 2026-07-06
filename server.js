@@ -14,8 +14,6 @@ const gameRouter = require('./routes/game');
 const commentRouter = require('./routes/comment');
 const userRouter = require('./routes/user');
 const jtwixtRouter = require('./routes/jtwixt');
-const rssFeedRouter = require('./routes/rssFeed');
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -88,7 +86,6 @@ app.use('/game', gameRouter);
 app.use('/comment', commentRouter);
 app.use('/user', userRouter);
 app.use('/jtwixt', jtwixtRouter);
-app.use('/rss_feed', rssFeedRouter);
 app.get('/faq', (req, res) => res.render('about/faq', { params: req.query }));
 
 // ── Error handler ─────────────────────────────────────────────────────────────
