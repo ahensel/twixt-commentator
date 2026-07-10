@@ -608,6 +608,16 @@ img.crosshair, img.new-peg {
   background-color: var(--color-preview);
 }
 
+.comment-buttons {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.comment-buttons .discard {
+  margin-left: auto;
+}
+
 .comment-textarea {
   width: 100%;
   font-size: 0.83rem;

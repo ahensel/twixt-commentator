@@ -36,7 +36,7 @@ function removePreview() {
 
 function checkStateChange() {
   const hasComments = commentBoxHasComments();
-  document.getElementById('comment_button').value = hasComments ? 'Comment' : 'No Comment';
+  document.getElementById('comment_button').disabled = !hasComments;
   document.getElementById('preview_button').disabled = !hasComments;
 }
 
@@ -62,3 +62,4 @@ function keyIntercept(evt) {
   }
   return true;
 }
+
