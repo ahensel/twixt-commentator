@@ -2,6 +2,10 @@
 (() => {
   const form = document.getElementById('comment_form');
   if (!form) return;
+
+  // Show "Undo Discard" link on page load if there's a saved discard
+  updateUndoLink();
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const buttonPressed = document.getElementById('button_pressed').value;
@@ -38,7 +42,9 @@
           history.pushState(null, '', `/game/blank/${newGameId}`);
         }
         document.getElementById('new_comment').value = '';
+        sessionStorage.removeItem('discard_' + location.pathname);
         checkStateChange();
+        updateUndoLink();
         document.getElementById('addComment').classList.add('hidden');
         document.getElementById('addCommentLink').classList.remove('hidden');
       }

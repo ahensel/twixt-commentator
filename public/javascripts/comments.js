@@ -14,10 +14,39 @@ function showAddCommentBox() {
   return false;
 }
 
+function undoDiscard() {
+  const key = 'discard_' + location.pathname;
+  const text = sessionStorage.getItem(key);
+  if (text != null) {
+    sessionStorage.removeItem(key);
+    showAddCommentBox();
+    document.getElementById('new_comment').value = text;
+    checkStateChange();
+  }
+  return false;
+}
+
+function updateUndoLink() {
+  const key = 'discard_' + location.pathname;
+  const link = document.getElementById('undoDiscardLink');
+  if (link) {
+    if (sessionStorage.getItem(key)) {
+      link.classList.remove('hidden');
+    } else {
+      link.classList.add('hidden');
+    }
+  }
+}
+
 function hideAddCommentBox() {
+  const hasComments = commentBoxHasComments();
+  if (hasComments) {
+    sessionStorage.setItem('discard_' + location.pathname, document.getElementById('new_comment').value);
+  }
   document.getElementById('addComment').classList.add('hidden');
   document.getElementById('addCommentLink').classList.remove('hidden');
-  return commentBoxHasComments();
+  updateUndoLink();
+  return hasComments;
 }
 
 function commentBoxHasComments() {
