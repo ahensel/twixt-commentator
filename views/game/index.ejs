@@ -194,7 +194,7 @@
             <input type="hidden" name="link_policy" value="<%= game.link_policy || '' %>">
             <input type="hidden" name="swap_style" value="<%= game.swap_style || '' %>">
             <% } %>
-            <textarea class="comment-textarea" id="new_comment" name="new_comment" rows="8" onkeyup="checkStateChange()" onfocus="commentsInFocus(true)" onblur="commentsInFocus(false)"></textarea>
+            <textarea class="comment-textarea" id="new_comment" name="new_comment" rows="8" onkeyup="checkStateChange(); scheduleSave();" onfocus="commentsInFocus(true)" onblur="commentsInFocus(false)"></textarea>
             <div class="comment-buttons">
               <input id="comment_button" type="submit" value="Comment" onclick="removePreview(); setButtonPressed(this, 'Comment'); return hideAddCommentBox();" disabled>
               <input id="preview_button" type="submit" value="Preview" onclick="removePreview(); setButtonPressed(this, 'Preview'); return true;" disabled>

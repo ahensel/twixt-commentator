@@ -1,3 +1,15 @@
+let saveTimer = null;
+
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    const text = document.getElementById('new_comment').value;
+    if (text.trim()) {
+      sessionStorage.setItem('discard_' + location.pathname, text);
+    }
+  }, 2000);
+}
+
 function scrollToBottom() {
   const comments = document.getElementById('comments');
   comments.scrollTop = 0; // ensure scroll resets before jumping to bottom
