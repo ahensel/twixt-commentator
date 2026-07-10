@@ -6,6 +6,17 @@
   // Show "Undo Discard" link on page load if there's a saved discard
   updateUndoLink();
 
+  // Save draft if the comment box is open when the page is unloaded
+  window.addEventListener('beforeunload', () => {
+    const addComment = document.getElementById('addComment');
+    if (addComment && !addComment.classList.contains('hidden')) {
+      const text = document.getElementById('new_comment').value;
+      if (text.trim()) {
+        sessionStorage.setItem('discard_' + location.pathname, text);
+      }
+    }
+  });
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const buttonPressed = document.getElementById('button_pressed').value;
