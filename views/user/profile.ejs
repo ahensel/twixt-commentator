@@ -1,5 +1,15 @@
 <% layout('layouts/admin') %>
-
+<script>
+  function show_name_on_lg_div(checked) {
+    const name_on_lg_div = document.getElementById('name_on_lg_div');
+    if (checked) {
+      name_on_lg_div.classList.remove('hidden');
+      document.getElementById('user_name_on_lg').select();
+    } else {
+      name_on_lg_div.classList.add('hidden');
+    }
+  }
+</script>
 <div>
   <fieldset class="boxed">
     <% if (errors && errors.length) { %>
@@ -21,7 +31,7 @@
       </div>
       <hr>
       <label>
-        <input type="checkbox" name="on_lg" <%= user.on_lg ? 'checked="checked"' : '' %> onchange="$('name_on_lg_div').style.display = (this.checked ? 'block' : 'none'); return true;">
+        <input type="checkbox" name="on_lg" <%= user.on_lg ? 'checked="checked"' : '' %> onchange="show_name_on_lg_div(this.checked);">
         &nbsp;Player on Little Golem?
       </label>
       <br>
@@ -58,5 +68,3 @@
     </form>
   </fieldset>
 </div>
-
-
