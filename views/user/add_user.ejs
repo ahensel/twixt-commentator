@@ -9,30 +9,38 @@
         <% }); %>
       </ul>
     <% } %>
-    <legend>Your User Profile</legend>
-    <form action="/user/profile/<%= user.id %>" method="post">
+    <legend>New User Registration for Twixt Commentator</legend>
+    <form action="/user/add_user" method="post">
       <div class="user-form-grid">
         <label for="user_name">Name:</label>
-        <input id="user_name" class="boxed" type="text" name="name" value="<%= user.name %>" size="40">
+        <div>
+            <input id="user_name" class="boxed" type="text" name="name" size="40">
+            <span class="text-error">&nbsp;(Required)</span>
+        </div>
         <label for="user_password">Password:</label>
-        <input id="user_password" class="boxed" type="password" name="password" size="40">
+        <div>
+            <input id="user_password" class="boxed" type="password" name="password" size="40">
+            <span class="text-error">&nbsp;(Required)</span>
+        </div>
         <label for="user_password_confirmation">Confirm:</label>
-        <input id="user_password_confirmation" class="boxed" type="password" name="password_confirmation" size="40">
+        <div>
+            <input id="user_password_confirmation" class="boxed" type="password" name="password_confirmation" size="40">
+            <span class="text-error">&nbsp;(Required)</span>
+        </div>
       </div>
       <hr>
       <label>
-        <input type="checkbox" name="on_lg" <%= user.on_lg ? 'checked="checked"' : '' %> onchange="$('name_on_lg_div').style.display = (this.checked ? 'block' : 'none'); return true;">
-        &nbsp;Player on Little Golem?
+        <input type="checkbox" name="on_lg" onchange="$('name_on_lg_div').style.display = (this.checked ? 'block' : 'none'); return true;">        &nbsp;Player on Little Golem?
       </label>
       <br>
-      <div id="name_on_lg_div" class="p-5<%= user.on_lg ? '' : ' hidden' %>">
+      <div id="name_on_lg_div" class="p-5 hidden">
         <label for="user_name_on_lg">Name on Little Golem, if different from above:</label>
         <br>
-        <input id="user_name_on_lg" class="boxed" type="text" name="name_on_lg" value="<%= user.name_on_lg || '' %>" size="40">
+        <input id="user_name_on_lg" class="boxed" type="text" name="name_on_lg" size="40">
         <br>
       </div>
       Info:<br>
-      <textarea class="boxed user-info" name="info"><%= user.info || '' %></textarea>
+      <textarea class="boxed user-info" name="info"></textarea>
       <hr>
       <% if (params) { %>
       <input type="hidden" name="back_to" value="<%= params.back_to ?? '' %>">
@@ -56,7 +64,7 @@
       <% }
       }
       %>
-      <input class="submit" type="submit" value="Change">
+      <input class="submit" type="submit" value="Register">
       &nbsp;<a href="/<%= params?.back_to === 'game' ? 'game/' + (params.ret_gid || '') : '' %><%= params && params.back_to === 'game' && params.ret_gid === 'blank' ? '?player1=' + (params.player1 || '') + '&player2=' + (params.player2 || '') + '&size=' + (params.size || '') + '&link_policy=' + (params.link_policy || '') : '' %>">Cancel</a>
     </form>
   </fieldset>
