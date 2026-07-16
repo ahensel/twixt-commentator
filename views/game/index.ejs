@@ -164,11 +164,12 @@
 
     <div id="comments">
       <div id="current-comments">
+        <% const namedSequences = {}; %>
         <% (game.comments || []).forEach((comment) => { %>
           <div class="comment-header">
             <%- include('../comment/_comment_header', { comment: comment, author: comment.author, preview: false }) %>
           </div>
-          <%- prepareComment(comment.comment, game.swap_style) %>
+          <%- prepareComment(comment.comment, game.swap_style, namedSequences) %>
           <br>
           <br>
         <% }); %>

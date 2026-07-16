@@ -244,74 +244,13 @@ function jumpTo(moveNum) {
   showAllMoves(moveNum, null);
 }
 
-function cJumpMain(firstMoveNum, commentMoves) {
+function jumpFromComment(firstMoveNum, commentMoves) {
   if (firstMoveNum > BoardState.currentMoves.getMoves().length) {
     firstMoveNum = BoardState.currentMoves.getMoves().length;
   }
   uncolorMove(BoardState.currentMoveNum);
   BoardState.currentMoves.clearUserMoves();
   showAllMoves(firstMoveNum - 1, commentMoves);
-}
-
-function cJump(firstMoveNum, moves) {
-  let nextMoveNum = null;
-  if (BoardState.currentMoveNum != null) {
-    nextMoveNum = BoardState.currentMoveNum + BoardState.currentMoves.getUserMoves().length + 1;
-  }
-
-  if (nextMoveNum === firstMoveNum) {
-    placeCommentPegs(moves);
-  } else if (nextMoveNum > firstMoveNum && overlapMovesMatch(firstMoveNum, nextMoveNum, moves)) {
-    if (nextMoveNum <= firstMoveNum + moves.length) {
-      placeCommentPegs(moves.slice(nextMoveNum - firstMoveNum));
-    } else {
-      if (BoardState.currentMoves.hasUserMoves()) {
-        uncolorMove(BoardState.currentMoveNum);
-        for (let i = 0; i < (nextMoveNum - (firstMoveNum + moves.length)); i++) {
-          if (BoardState.currentMoves.hasUserMoves()) {
-            BoardState.currentMoves.popMove();
-          } else {
-            BoardState.currentMoveNum--;
-          }
-        }
-        showAllMoves(BoardState.currentMoveNum, null);
-      } else {
-        jumpTo(firstMoveNum - 1);
-        placeCommentPegs(moves);
-      }
-    }
-  } else if (nextMoveNum > firstMoveNum && firstMoveNum > BoardState.currentMoves.getMoves().length) {
-    for (let i = 0; i < (nextMoveNum - firstMoveNum); i++) {
-      BoardState.currentMoves.popMove();
-    }
-    showAllMoves(BoardState.currentMoveNum, moves);
-  } else {
-    cJumpMain(firstMoveNum, moves);
-  }
-}
-
-function overlapMovesMatch(firstMoveNum, nextMoveNum, moves) {
-  for (let moveNum = firstMoveNum; moveNum < Math.min(nextMoveNum, firstMoveNum + moves.length); moveNum++) {
-    const shownMove = (moveNum <= BoardState.currentMoveNum)
-      ? BoardState.currentMoves.getMoves()[moveNum - 1]
-      : BoardState.currentMoves.getUserMoves()[moveNum - BoardState.currentMoveNum - 1];
-    const shownMoveCoord = getPegCoordinates(shownMove.getText()).join(',');
-    const commentMoveCoord = getPegCoordinates(moves[moveNum - firstMoveNum]).join(',');
-    if (shownMoveCoord !== commentMoveCoord) {
-      return false;
-    }
-  }
-  return true;
-}
-
-function placeCommentPegs(moves) {
-  const errors = getCommentPegErrors(moves);
-  if (errors.length === 0) {
-    moves.forEach(move => placePegByNotation(move));
-    showUserMovesText();
-  } else {
-    alert(errors);
-  }
 }
 
 function getCommentPegErrors(moves) {

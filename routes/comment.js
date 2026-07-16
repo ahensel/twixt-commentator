@@ -4,7 +4,7 @@
 const express = require('express');
 const router = express.Router();
 const { Comment, Game, User } = require('../models');
-const { prepareComment } = require('../lib/helpers/applicationHelper');
+const { prepareComment, hiliteTwixtMoves } = require('../lib/helpers/applicationHelper');
 
 router.post('/', async (req, res) => {
   if (!req.session.user_id) {
@@ -71,12 +71,28 @@ router.post('/', async (req, res) => {
       res.set('X-New-Game-Id', String(newGameId));
     }
     const author = await User.findByPk(req.session.user_id);
+    const swapStyle = req.body.swap_style === 'P' ? 'P' : null;
+
+    // Build namedSequences from all existing comments on this game
+    // so that previews and new comments can reference previously defined names
+    const namedSequences = {};
+    if (!isBlankBoard && gameId) {
+      const existingComments = await Comment.findAll({
+        where: { game_id: gameId },
+        order: [['created_on', 'ASC']],
+      });
+      for (const ec of existingComments) {
+        hiliteTwixtMoves(ec.comment, swapStyle, namedSequences);
+      }
+    }
+
     res.render('comment/index', {
       comment,
       preview,
       author,
       prepareComment,
-      swapStyle: req.body.swap_style === 'P' ? 'P' : null,
+      swapStyle,
+      namedSequences,
       params: req.body,
       session: req.session,
     });

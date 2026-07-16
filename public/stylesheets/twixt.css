@@ -591,6 +591,16 @@ img.crosshair, img.new-peg {
   font-weight: normal;
 }
 
+/* ── Named sequence markers ────────────────────────────────────── */
+.seq-name {
+  background-color: #ffff80;
+  font-weight: bold;
+  padding-left: 1px;
+  padding-right: 1px;
+  margin-left: -1px;
+  margin-right: -1px;
+}
+
 /* ── Comments ──────────────────────────────────────────────────── */
 .comment-header,
 .preview-header {
