@@ -19,12 +19,16 @@
 <p>Watch out&mdash;moves in the comments can be ambiguous. Make it clear what variation you are talking about. Twixt Commentator makes its best guess, which means:</p>
 <ol>
   <li>If the numbering sequence fits with previous numbering in the comments, it assumes you mean a continuation of that. For example, "23.g7 24.g8" will result in a link on "23.g7", and a separate link on "24.g8" that tries to guarantee "23.g7" first. If you write "23.g7, and then 24.g8 or 24.g6", then both "24.g8" and "24.g6" will try to place the "23.g7" peg first. I have found this to be the best compromise. This logic does not cross comment boundaries.</li>
-  <li>If the numbering does not follow in the text, for example "24.f6 23.g7 25.g8", then the link on "25.g8" will begin on move 25, and the first thing it does when you click on "25.g8" is check to see if the board is currently at move 24, and if so, continue from there.</li>
   <li>Otherwise, it assumes that you mean a branch off of the main variation.</li>
 </ol>
 <p>Because of this ambiguity, whenever you really do mean a main branch off of the main variation, you should put a vertical bar (|) in front of your moves. For example,</p>
 <p>|23.g7</p>
 <p>means that 23.g7 follows whatever move 22 was in the actual game. There is no ambiguity here. Also, you can avoid ambiguity by including your entire variation in your comment.</p>
+<p>For more complex discussions, and especially for blank boards, it may be useful to name a variation. This is done simply by putting the name in brackets directly after the variation. For example,</p>
+<p>23.g7 [v-1]</p>
+<p>Spaces before the bracket are optional. Now you can branch off of that variation anytime after its definition, even in following comments, by starting your sequence with the variation name in vertical bars, like this:</p>
+<p>|v-1| 24.h9</p>
+<p>Variation names must start with a letter, contain only letters, numbers, and dashes, and are case-sensitive.</p>
 <p>I recommend using "Preview" and testing all of your moves.</p>
 <p>In Size 24 games, moves are case-insensitive, so 20.D12 is the same as 20.d12. But on larger boards (sizes 30 and 48), moves are NOT case-insensitive, since the notation on the right side of the board is uppercase.</p>
 <p>Blank boards support link removal, and with that comes link removal notation, which can seem cryptic at first, so here is an explanation.
