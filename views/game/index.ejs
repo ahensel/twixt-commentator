@@ -199,6 +199,7 @@
             <div class="comment-buttons">
               <input id="comment_button" type="submit" value="Comment" onclick="removePreview(); setButtonPressed(this, 'Comment'); return hideAddCommentBox();" disabled>
               <input id="preview_button" type="submit" value="Preview" onclick="removePreview(); setButtonPressed(this, 'Preview'); return true;" disabled>
+              <button type="button" class="help-btn" onclick="openHelpModal(); return false;" title="Help">?</button>
               <input type="button" class="discard" value="Discard" onclick="return hideAddCommentBox();">
             </div>
           </form>
@@ -218,5 +219,75 @@
 <noscript>
   <div class="noscript">JavaScript was not detected. This site requires JavaScript to be enabled in your browser.</div>
 </noscript>
+
+<!-- Help Modal -->
+<div id="help-overlay" class="help-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="help-title">
+  <div class="help-modal">
+    <a class="close-btn" href="#" onclick="return closeHelpModal();">&times;</a>
+    <h3 id="help-title">Comment Help</h3>
+    <div class="help-content">
+      <p class="help-top-p">
+        Move sequences are automatically highlighted and made clickable. If the previous
+        move number appears earlier in the comment, the sequence continues from that move.
+        Otherwise, it's treated as a variation from the main line. This can be error-prone
+        with multiple sequences in one comment, so please use the Preview button to check your work
+        before posting.
+      </p>
+      <p>
+        To force a sequence to be treated as a main line variation, precede it with a vertical bar
+        (<code>|</code>). The copy variation button (⧉) includes this bar automatically.
+      </p>
+      <p>
+        For more complex discussions, you can name a sequence by adding the name in square
+        brackets at the end, e.g. <code>15.p9 [a]</code>. Later in the same comment, or in
+        any following comment, you can branch off that variation by wrapping the name in vertical
+        bars, like this:<br/><code>|a| 16.o13</code><br/>The variation name must start with
+        a letter, contain only letters, numbers, and dashes (-), and is case-sensitive.
+      </p>
+      <hr/>
+      <p>
+        Comments use UTF-8 encoding, so you can include emojis 😉, non-English characters, and
+        other Unicode symbols.
+      </p>
+      <p>
+        You can also use HTML entities like &amp;mdash; for an em-dash (&mdash;) or
+        &amp;rarr; for a right arrow (&rarr;).
+      </p>
+      <p>
+        For safety reasons, most HTML tags are stripped, except:
+      </p>
+      <ul>
+        <li><code>&lt;b&gt;</code>, <code>&lt;i&gt;</code>, <code>&lt;u&gt;</code> — <b>bold</b>, <i>italic</i>, <u>underline</u></li>
+        <li><code>&lt;em&gt;</code>, <code>&lt;strong&gt;</code> — <em>emphasis</em>, <strong>strong text</strong></li>
+        <li><code>&lt;s&gt;</code>, <code>&lt;strike&gt;</code> — <s>strikethrough</s></li>
+        <li><code>&lt;sup&gt;</code>, <code>&lt;sub&gt;</code> — <sup>superscript</sup>, <sub>subscript</sub></li>
+        <li><code>&lt;blockquote&gt;</code> — <blockquote>indented quotes</blockquote></li>
+        <li><code>&lt;code&gt;</code> — <code>fixed-width font</code></li>
+        <li><code>&lt;pre&gt;</code> — <pre>multi-line
+preformatted   text</pre></li>
+        <li><code>&lt;br&gt;</code> — forces a line break</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+function openHelpModal() {
+  document.getElementById('help-overlay').classList.remove('hidden');
+}
+function closeHelpModal() {
+  document.getElementById('help-overlay').classList.add('hidden');
+  document.getElementById('new_comment').focus();
+  return false;
+}
+document.getElementById('help-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeHelpModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && document.getElementById('help-overlay').classList.contains('hidden') === false) {
+    closeHelpModal();
+  }
+});
+</script>
 
 <% block('scripts', include('_comment_script')); %>
