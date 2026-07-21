@@ -15,6 +15,7 @@
   --color-user-bg:   #ff8080;
   --color-hp-bg:     #80d080;
   --color-header:    #a0a0ff;
+  --color-header-x:  #dcdcff;
   --color-preview:   #c0c0ff;
   --color-focus:     #275ec5;
   --font-stack:      Arial, Helvetica, sans-serif;
@@ -623,10 +624,11 @@ img.crosshair, img.new-peg {
 
 .comment-header-deleted .comment-header-text {
   opacity: 0.55;
+  text-decoration: line-through;
 }
 
 .comment-header-deleted {
-  background-color: #dcdcff;
+  background-color: var(--color-header-x);
 }
 
 .comment-delete-link {
