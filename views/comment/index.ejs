@@ -9,12 +9,14 @@
       <br/>
     </div>
   <% } else { %>
-    <div class="comment-header">
+    <div id="comment-header-<%= comment.id %>" class="comment-header">
       <%- include('_comment_header', { comment: comment, author: author.dataValues, preview: false }) %>
     </div>
+    <div id="comment-body-<%= comment.id %>">
     <%- prepareComment(comment.comment, swapStyle, namedSequences) %>
     <br/>
     <br/>
+    </div>
   <% } %>
   <script>
     scrollToBottom();

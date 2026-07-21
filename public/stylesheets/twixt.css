@@ -601,17 +601,38 @@ img.crosshair, img.new-peg {
   margin-right: -1px;
 }
 
-/* ── Comments ──────────────────────────────────────────────────── */
+/* ── Comments ──────────────────────────────────────────────── */
 .comment-header,
 .preview-header {
   font-size: 0.83rem;
   font-weight: normal;
   margin-left: -10px;
   padding-left: 10px;
+  display: flex;
+  align-items: baseline;
+  padding-right: 6px;
+}
+
+.comment-header-text {
+  flex: 1;
 }
 
 .comment-header {
   background-color: var(--color-header);
+}
+
+.comment-header-deleted .comment-header-text {
+  opacity: 0.55;
+}
+
+.comment-header-deleted {
+  background-color: #dcdcff;
+}
+
+.comment-delete-link {
+  margin-left: 8px;
+  white-space: nowrap;
+  font-size: 0.75rem;
 }
 
 .preview-header {

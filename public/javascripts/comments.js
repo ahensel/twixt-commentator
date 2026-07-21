@@ -104,3 +104,30 @@ function keyIntercept(evt) {
   return true;
 }
 
+async function deleteComment(commentId) {
+  const resp = await fetch('/comment/' + commentId, { method: 'DELETE' });
+  if (!resp.ok) { alert('Could not delete comment. Please try again.'); return false; }
+  const header = document.getElementById('comment-header-' + commentId);
+  if (header) {
+    header.classList.add('comment-header-deleted');
+    const deleteLink = header.querySelector('.comment-delete-link');
+    if (deleteLink) deleteLink.innerHTML = '<a href="" onclick="return undeleteComment(' + commentId + ');">Undelete</a>';
+    const body = document.getElementById('comment-body-' + commentId);
+    if (body) body.style.display = 'none';
+  }
+  return false;
+}
+
+async function undeleteComment(commentId) {
+  const resp = await fetch('/comment/' + commentId + '/undelete', { method: 'POST' });
+  if (!resp.ok) { alert('Could not restore comment. Please try again.'); return false; }
+  const header = document.getElementById('comment-header-' + commentId);
+  if (header) {
+    header.classList.remove('comment-header-deleted');
+    const deleteLink = header.querySelector('.comment-delete-link');
+    if (deleteLink) deleteLink.innerHTML = '<a href="" onclick="return deleteComment(' + commentId + ');">Delete</a>';
+    const body = document.getElementById('comment-body-' + commentId);
+    if (body) body.style.display = '';
+  }
+  return false;
+}

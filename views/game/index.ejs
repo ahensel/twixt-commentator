@@ -166,12 +166,20 @@
       <div id="current-comments">
         <% const namedSequences = {}; %>
         <% (game.comments || []).forEach((comment) => { %>
-          <div class="comment-header">
+          <% const isAuthor = session && session.user_id && comment.author && session.user_id === comment.author.id; %>
+          <% const isDeleted = !!comment.deleted_at; %>
+          <% if (!isDeleted || isAuthor) { %>
+          <div id="comment-header-<%= comment.id %>" class="comment-header<%= isDeleted ? ' comment-header-deleted' : '' %>">
             <%- include('../comment/_comment_header', { comment: comment, author: comment.author, preview: false }) %>
           </div>
+          <% if (!isDeleted) { %>
+          <div id="comment-body-<%= comment.id %>">
           <%- prepareComment(comment.comment, game.swap_style, namedSequences) %>
           <br>
           <br>
+          </div>
+          <% } %>
+          <% } %>
         <% }); %>
       </div>
       <% if (game.isInProgress()) { %>

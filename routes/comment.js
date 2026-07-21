@@ -101,4 +101,31 @@ router.post('/', async (req, res) => {
   }
 });
 
+// DELETE /comment/:id — soft-delete (author only, AJAX)
+router.delete('/:id', async (req, res) => {
+  if (!req.session.user_id) return res.status(403).json({ error: 'Not logged in' });
+
+  const comment = await Comment.findByPk(req.params.id);
+  if (!comment) return res.status(404).json({ error: 'Not found' });
+  if (comment.user_id !== req.session.user_id) return res.status(403).json({ error: 'Forbidden' });
+
+  comment.deleted_at = new Date();
+  await comment.save();
+  res.json({ ok: true });
+});
+
+// POST /comment/:id/undelete — restore a soft-deleted comment (author only, AJAX)
+router.post('/:id/undelete', async (req, res) => {
+  if (!req.session.user_id) return res.status(403).json({ error: 'Not logged in' });
+
+  const comment = await Comment.findByPk(req.params.id);
+  if (!comment) return res.status(404).json({ error: 'Not found' });
+  if (comment.user_id !== req.session.user_id) return res.status(403).json({ error: 'Forbidden' });
+
+  comment.deleted_at = null;
+  await comment.save();
+  res.json({ ok: true });
+});
+
 module.exports = router;
+

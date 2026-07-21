@@ -46,6 +46,7 @@ const Comment = sequelize.define('Comment', {
   game_id: { type: DataTypes.INTEGER },
   created_on: { type: DataTypes.DATE },
   user_id: { type: DataTypes.INTEGER },
+  deleted_at: { type: DataTypes.DATE, allowNull: true, defaultValue: null },
 }, {
   tableName: 'comments',
   timestamps: false,
