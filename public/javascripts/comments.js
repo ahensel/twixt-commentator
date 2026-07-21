@@ -51,6 +51,7 @@ function updateUndoLink() {
 }
 
 function hideAddCommentBox() {
+  removePreview();
   const hasComments = commentBoxHasComments();
   if (hasComments) {
     sessionStorage.setItem('discard_' + location.pathname, document.getElementById('new_comment').value);
