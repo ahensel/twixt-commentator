@@ -101,6 +101,23 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Recalculate last_commented_on / last_commented_by from non-deleted comments
+async function refreshLastCommented(gameId) {
+  const latest = await Comment.findOne({
+    where: { game_id: gameId, deleted_at: null },
+    order: [['created_on', 'DESC']],
+    attributes: ['created_on', 'user_id'],
+  });
+
+  await Game.update(
+    {
+      last_commented_on: latest ? latest.created_on : null,
+      last_commented_by: latest ? latest.user_id : null,
+    },
+    { where: { id: gameId } }
+  );
+}
+
 // DELETE /comment/:id — soft-delete (author only, AJAX)
 router.delete('/:id', async (req, res) => {
   if (!req.session.user_id) return res.status(403).json({ error: 'Not logged in' });
@@ -111,6 +128,8 @@ router.delete('/:id', async (req, res) => {
 
   comment.deleted_at = new Date();
   await comment.save();
+
+  await refreshLastCommented(comment.game_id);
   res.json({ ok: true });
 });
 
@@ -124,6 +143,8 @@ router.post('/:id/undelete', async (req, res) => {
 
   comment.deleted_at = null;
   await comment.save();
+
+  await refreshLastCommented(comment.game_id);
   res.json({ ok: true });
 });
 
