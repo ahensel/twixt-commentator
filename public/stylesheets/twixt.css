@@ -616,6 +616,7 @@ img.crosshair, img.new-peg {
 
 .comment-header-text {
   flex: 1;
+  white-space: nowrap;
 }
 
 .comment-header {

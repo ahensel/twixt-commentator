@@ -1,1 +1,30 @@
-<span class="comment-header-text">On&nbsp;<%= comment.created_on ? new Date(comment.created_on).toISOString().slice(0,10) + ' at ' + new Date(comment.created_on).toISOString().slice(11,16) + ',' : '' %>&nbsp;<b><%- author ? h2(author.name) : '' %></b>&nbsp;<% if (author) { %><a href="/user/info/<%= author.id %>"><img class="info" src="/images/info.gif" alt="(info)" width="9" height="9"></a><% } %>&nbsp;<% if (preview) { %>considered saying:<% } else { %>said:<% } %></span><% if (!preview && comment.id && session && session.user_id && author && session.user_id === author.id) { %><span class="comment-delete-link"><% if (comment.deleted_at) { %><a href="" onclick="return undeleteComment(<%= comment.id %>);">Undelete</a><% } else { %><a href="" onclick="return deleteComment(<%= comment.id %>);">Delete ❌</a><% } %></span><% } %>
+<span class="comment-header-text">
+  On
+  <%= comment.created_on
+    ? new Date(comment.created_on).toISOString().slice(0, 10)
+      + ' at '
+      + new Date(comment.created_on).toISOString().slice(11, 16)
+      + ','
+    : ''
+  %>
+  <b><%- author ? h2(author.name) : '' %></b>
+  <% if (author) { %>
+    <a href="/user/info/<%= author.id %>">
+      <img class="info" src="/images/info.gif" alt="(info)" width="9" height="9">
+    </a>
+  <% } %>
+  <% if (preview) { %>
+    considered saying:
+  <% } else { %>
+    said:
+  <% } %>
+</span>
+<% if (!preview && comment.id && session && session.user_id && author && session.user_id === author.id) { %>
+  <span class="comment-delete-link">
+    <% if (comment.deleted_at) { %>
+      <a href="" onclick="return undeleteComment(<%= comment.id %>);">Undelete</a>
+    <% } else { %>
+      <a href="" onclick="return deleteComment(<%= comment.id %>);">Delete ❌</a>
+    <% } %>
+  </span>
+<% } %>
