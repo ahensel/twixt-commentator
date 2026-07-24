@@ -1,14 +1,13 @@
 <span class="comment-header-text">
   On
-  <%= comment.created_on
-    ? new Date(comment.created_on).toISOString().slice(0, 10)
-      + ' at '
-      + new Date(comment.created_on).toISOString().slice(11, 16)
-      + ','
-    : ''
-  %>
-  <b><%- author ? h2(author.name) : '' %></b>
+  <% if (comment.created_on) { %>
+    <%
+      const createdDate = new Date(comment.created_on).toISOString();
+    %>
+    <%= createdDate.slice(0, 10) %> at <%= createdDate.slice(11, 16) %>,
+  <% } %>
   <% if (author) { %>
+    <b><%- h2(author.name) %></b>
     <a href="/user/info/<%= author.id %>">
       <img class="info" src="/images/info.gif" alt="(info)" width="9" height="9">
     </a>
