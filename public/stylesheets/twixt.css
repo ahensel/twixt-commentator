@@ -641,6 +641,12 @@ img.crosshair, img.new-peg {
   font-size: 0.75rem;
 }
 
+.comment-edit-delete-links a {
+  background-color: var(--color-header-x);
+  border-radius: 0.5rem;
+  padding: 1px 5px;
+}
+
 .preview-header {
   background-color: var(--color-preview);
 }
