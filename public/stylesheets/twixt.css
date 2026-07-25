@@ -632,8 +632,11 @@ img.crosshair, img.new-peg {
   background-color: var(--color-header-x);
 }
 
-.comment-delete-link {
-  margin-left: 8px;
+.comment-edit-delete-links {
+  display: inline-flex;
+  gap: 10px;
+  margin-left: 10px;
+  margin-right: 8px;
   white-space: nowrap;
   font-size: 0.75rem;
 }
@@ -646,6 +649,7 @@ img.crosshair, img.new-peg {
   display: flex;
   gap: 4px;
   margin-top: 4px;
+  margin-bottom: 5px;
   align-items: center;
 }
 

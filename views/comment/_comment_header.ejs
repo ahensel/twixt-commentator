@@ -19,11 +19,12 @@
   <% } %>
 </span>
 <% if (!preview && comment.id && session && session.user_id && author && session.user_id === author.id) { %>
-  <span class="comment-delete-link">
+  <span class="comment-edit-delete-links">
     <% if (comment.deleted_at) { %>
-      <a href="" onclick="return undeleteComment(<%= comment.id %>);">Undelete</a>
+      <a href="" onclick="undeleteComment(<%= comment.id %>); return false;">Undelete</a>
     <% } else { %>
-      <a href="" onclick="return deleteComment(<%= comment.id %>);">Delete ❌</a>
+      <a href="" onclick="editComment(<%= comment.id %>); return false;">Edit</a>
+      <a href="" onclick="deleteComment(<%= comment.id %>); return false;" title="Soft Delete (can be undone)">Delete</a>
     <% } %>
   </span>
 <% } %>

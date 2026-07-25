@@ -1,5 +1,27 @@
 let saveTimer = null;
 
+// ── Scroll position preservation across reloads ─────────────────────────────
+
+function saveScrollPosition() {
+  const commentsDiv = document.getElementById('comments');
+  if (commentsDiv) {
+    sessionStorage.setItem('comments_scroll_top', commentsDiv.scrollTop);
+  }
+}
+
+function restoreScrollPosition() {
+  const scrollTop = sessionStorage.getItem('comments_scroll_top');
+  if (scrollTop) {
+    const commentsDiv = document.getElementById('comments');
+    if (commentsDiv) {
+      commentsDiv.scrollTop = parseInt(scrollTop, 10);
+    }
+    sessionStorage.removeItem('comments_scroll_top');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', restoreScrollPosition);
+
 function scheduleSave() {
   clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
@@ -105,30 +127,149 @@ function keyIntercept(evt) {
   return true;
 }
 
+// ── Inline editing ──────────────────────────────────────────────────────────
+
+/**
+ * Replace the comment body with a textarea for inline editing.
+ * Fetches the raw comment text from the server, then stores the original HTML
+ * so we can cancel back to it.
+ */
+async function editComment(commentId) {
+  const body = document.getElementById('comment-body-' + commentId);
+  if (!body) return false;
+
+  // Store original rendered HTML so cancel can restore it
+  body.dataset.originalHtml = body.innerHTML;
+
+  // Fetch the raw comment text from the server
+  try {
+    const resp = await fetch('/comment/' + commentId);
+    if (!resp.ok) {
+      alert('Could not load comment for editing. Please try again.');
+      delete body.dataset.originalHtml;
+      return false;
+    }
+    const data = await resp.json();
+    const rawText = data.comment || '';
+
+    body.innerHTML =
+      '<textarea class="comment-textarea" rows="6">' +
+        escapeHtml(rawText) +
+      '</textarea>' +
+      '<div class="comment-buttons">' +
+        '<input type="button" value="Save" onclick="saveComment(' + commentId + '); return false;">' +
+        '<input type="button" class="discard" value="Cancel" onclick="cancelEdit(' + commentId + '); return false;">' +
+      '</div>';
+
+    // Focus the textarea
+    const textarea = body.querySelector('textarea');
+    if (textarea) textarea.focus();
+
+    // Hide the "Add a comment" link while editing
+    const addLink = document.getElementById('addCommentLink');
+    if (addLink) addLink.classList.add('hidden');
+
+    // Hide the Edit link while editing
+    const header = document.getElementById('comment-header-' + commentId);
+    if (header) {
+      const editLink = header.querySelector('a[onclick*="editComment"]');
+      if (editLink) editLink.classList.add('hidden');
+    }
+  } catch (err) {
+    alert('Error loading comment for editing: ' + err.message);
+    delete body.dataset.originalHtml;
+  }
+
+  return false;
+}
+
+/**
+ * Send the edited comment text to the server and replace the comment
+ * with the re-rendered HTML.
+ */
+async function saveComment(commentId) {
+  const body = document.getElementById('comment-body-' + commentId);
+  if (!body) return false;
+
+  const textarea = body.querySelector('textarea');
+  if (!textarea) return false;
+
+  const newText = textarea.value;
+
+  try {
+    const resp = await fetch('/comment/' + commentId, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ new_comment: newText }),
+    });
+
+    if (!resp.ok) {
+      alert('Could not save comment. Please try again.');
+      return false;
+    }
+
+    // Server confirmed the save; reload to reflect the new state
+    saveScrollPosition();
+    window.location.reload();
+  } catch (err) {
+    alert('Error saving comment: ' + err.message);
+  }
+
+  return false;
+}
+
+/**
+ * Cancel inline editing and restore the original rendered comment.
+ */
+function cancelEdit(commentId) {
+  const body = document.getElementById('comment-body-' + commentId);
+  if (!body) return false;
+
+  // Restore original rendered HTML
+  if (body.dataset.originalHtml) {
+    body.innerHTML = body.dataset.originalHtml;
+    delete body.dataset.originalHtml;
+  }
+
+  // Re-show the "Add a comment" link
+  const addLink = document.getElementById('addCommentLink');
+  if (addLink) addLink.classList.remove('hidden');
+
+  // Re-show the Edit link
+  const header = document.getElementById('comment-header-' + commentId);
+  if (header) {
+    const editLink = header.querySelector('a[onclick*="editComment"]');
+    if (editLink) editLink.classList.remove('hidden');
+  }
+
+  return false;
+}
+
+/**
+ * Minimal HTML escaper for putting raw text into a textarea safely.
+ */
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// ── Delete / Undelete ────────────────────────────────────────────────────────
+
 async function deleteComment(commentId) {
   const resp = await fetch('/comment/' + commentId, { method: 'DELETE' });
   if (!resp.ok) { alert('Could not delete comment. Please try again.'); return false; }
-  const header = document.getElementById('comment-header-' + commentId);
-  if (header) {
-    header.classList.add('comment-header-deleted');
-    const deleteLink = header.querySelector('.comment-delete-link');
-    if (deleteLink) deleteLink.innerHTML = '<a href="" onclick="return undeleteComment(' + commentId + ');">Undelete</a>';
-    const body = document.getElementById('comment-body-' + commentId);
-    if (body) body.style.display = 'none';
-  }
+
+  saveScrollPosition();
+  window.location.reload();
   return false;
 }
 
 async function undeleteComment(commentId) {
   const resp = await fetch('/comment/' + commentId + '/undelete', { method: 'POST' });
   if (!resp.ok) { alert('Could not restore comment. Please try again.'); return false; }
-  const header = document.getElementById('comment-header-' + commentId);
-  if (header) {
-    header.classList.remove('comment-header-deleted');
-    const deleteLink = header.querySelector('.comment-delete-link');
-    if (deleteLink) deleteLink.innerHTML = '<a href="" onclick="return deleteComment(' + commentId + ');">Delete</a>';
-    const body = document.getElementById('comment-body-' + commentId);
-    if (body) body.style.display = '';
-  }
+
+  saveScrollPosition();
+  window.location.reload();
   return false;
 }
