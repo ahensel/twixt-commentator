@@ -138,6 +138,9 @@ async function editComment(commentId) {
   const body = document.getElementById('comment-body-' + commentId);
   if (!body) return false;
 
+  // Hide the "Add a comment" box if it's open to prevent two textareas
+  hideAddCommentBox();
+
   // Store original rendered HTML so cancel can restore it
   body.dataset.originalHtml = body.innerHTML;
 
@@ -169,12 +172,10 @@ async function editComment(commentId) {
     const addLink = document.getElementById('addCommentLink');
     if (addLink) addLink.classList.add('hidden');
 
-    // Hide the Edit link while editing
-    const header = document.getElementById('comment-header-' + commentId);
-    if (header) {
-      const editLink = header.querySelector('a[onclick*="editComment"]');
-      if (editLink) editLink.classList.add('hidden');
-    }
+    // Hide ALL action links while editing
+    document.querySelectorAll('.comment-edit-delete-links a').forEach(link => {
+      link.classList.add('hidden');
+    });
   } catch (err) {
     alert('Error loading comment for editing: ' + err.message);
     delete body.dataset.originalHtml;
@@ -235,12 +236,10 @@ function cancelEdit(commentId) {
   const addLink = document.getElementById('addCommentLink');
   if (addLink) addLink.classList.remove('hidden');
 
-  // Re-show the Edit link
-  const header = document.getElementById('comment-header-' + commentId);
-  if (header) {
-    const editLink = header.querySelector('a[onclick*="editComment"]');
-    if (editLink) editLink.classList.remove('hidden');
-  }
+  // Re-show ALL action links
+  document.querySelectorAll('.comment-edit-delete-links a').forEach(link => {
+    link.classList.remove('hidden');
+  });
 
   return false;
 }
