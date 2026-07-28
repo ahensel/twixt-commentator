@@ -1,0 +1,110 @@
+<% layout('layouts/about') %>
+
+<h2>Twixt Commentator — Stats</h2>
+<p>Commentator caches every completed game in its database if it is visited.
+  The original intent of this was simply to prevent unnecessary requests to the Little Golem website, and to keep Commentator at least partially running
+  even if Little Golem was down.
+  But what I didn't expect was the web crawlers that index the web for search engines.
+  Over the years, through their random visits, they have inadvertently cached the vast majority of Little Golem's Twixt games in Twixt Commentator's database!
+</p>
+
+<table class="main" cellspacing="0" style="max-width: 480px;">
+  <thead>
+    <tr>
+      <th class="main">Metric</th>
+      <th class="main" style="text-align: right;">Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td class="main">Games cached from Little Golem</td>
+      <td class="main" style="text-align: right;"><%= cachedCount.toLocaleString() %></td>
+    </tr>
+    <tr class="odd">
+      <td class="main">Total Twixt games on Little Golem</td>
+      <td class="main" style="text-align: right;">
+        <% if (lgError) { %>
+          <span style="color: var(--color-error); font-size: 0.85em;"><%= lgError %></span>
+        <% } else { %>
+          <%= lgTotal.toLocaleString() %>
+        <% } %>
+      </td>
+    </tr>
+    <% if (percentage !== null) { %>
+    <tr class="even">
+      <td class="main">Coverage</td>
+      <td class="main" style="text-align: right;"><%= percentage %>%</td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<br/>
+<h3>Games by Board Size and Result</h3>
+
+<% const showOther = breakdown.grand.other > 0; %>
+<% const pct = (n, d) => d > 0 ? (n / d * 100).toFixed(1) + '%' : '—'; %>
+<table class="main" cellspacing="0">
+  <thead>
+    <tr>
+      <th class="main">Size</th>
+      <% RESULT_CODES.forEach(code => { %>
+        <th class="main" style="text-align: right;"><%= RESULT_LABELS[code] %></th>
+      <% }); %>
+      <% if (showOther) { %><th class="main" style="text-align: right;">Other</th><% } %>
+      <th class="main" style="text-align: right;">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% breakdown.sizeRows.forEach((row, i) => { %>
+    <tr class="<%= i % 2 === 0 ? 'even' : 'odd' %>">
+      <td class="main"><%= row.size === null ? '(unknown)' : row.size %></td>
+      <% RESULT_CODES.forEach(code => { %>
+        <td class="main" style="text-align: right;"><%= row[code].toLocaleString() %><br/><span style="color: gray; font-size: 0.85em;"><%= pct(row[code], row.total) %></span></td>
+      <% }); %>
+      <% if (showOther) { %><td class="main" style="text-align: right;"><%= row.other.toLocaleString() %><br/><span style="color: gray; font-size: 0.85em;"><%= pct(row.other, row.total) %></span></td><% } %>
+      <td class="main" style="text-align: right;"><b><%= row.total.toLocaleString() %></b><br/><span style="color: gray; font-size: 0.85em;"><%= pct(row.total, breakdown.grand.total) %></span></td>
+    </tr>
+    <% }); %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td class="main"><b>Total</b></td>
+      <% RESULT_CODES.forEach(code => { %>
+        <td class="main" style="text-align: right;"><b><%= breakdown.grand[code].toLocaleString() %></b><br/><span style="color: gray; font-size: 0.85em;"><%= pct(breakdown.grand[code], breakdown.grand.total) %></span></td>
+      <% }); %>
+      <% if (showOther) { %><td class="main" style="text-align: right;"><b><%= breakdown.grand.other.toLocaleString() %></b><br/><span style="color: gray; font-size: 0.85em;"><%= pct(breakdown.grand.other, breakdown.grand.total) %></span></td><% } %>
+      <td class="main" style="text-align: right;"><b><%= breakdown.grand.total.toLocaleString() %></b><br/><span style="color: gray; font-size: 0.85em;">100%</span></td>
+    </tr>
+  </tfoot>
+</table>
+
+<br/>
+<h3>Games by Board Size Since Introduction</h3>
+<p>The table above is a little unfair: size 24 has a 15 year head start on other sizes.
+This table counts each size's games only from the point when that size first appeared on Little Golem,
+so the percentages are directly comparable.</p>
+
+<table class="main" cellspacing="0">
+  <thead>
+    <tr>
+      <th class="main">Size</th>
+      <th class="main" style="text-align: right;">Games of This Size</th>
+      <th class="main" style="text-align: right;">All Games Since Then</th>
+      <th class="main" style="text-align: right;">Share</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% sizeIntro.forEach((row, i) => { %>
+    <tr class="<%= i % 2 === 0 ? 'even' : 'odd' %>">
+      <td class="main"><%= row.size %></td>
+      <td class="main" style="text-align: right;"><%= row.sizeCount.toLocaleString() %></td>
+      <td class="main" style="text-align: right;"><%= row.totalSinceIntro.toLocaleString() %></td>
+      <td class="main" style="text-align: right;"><%= pct(row.sizeCount, row.totalSinceIntro) %></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+<br/>
+<p><a href="/">Main page</a></p>

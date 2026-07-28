@@ -14,6 +14,7 @@ const gameRouter = require('./routes/game');
 const commentRouter = require('./routes/comment');
 const userRouter = require('./routes/user');
 const jtwixtRouter = require('./routes/jtwixt');
+const statsRouter = require('./routes/stats');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -87,6 +88,7 @@ app.use('/comment', commentRouter);
 app.use('/user', userRouter);
 app.use('/jtwixt', jtwixtRouter);
 app.get('/faq', (req, res) => res.render('about/faq', { params: req.query }));
+app.use('/stats', statsRouter);
 
 // ── Error handler ─────────────────────────────────────────────────────────────
 app.use((err, req, res, next) => {
