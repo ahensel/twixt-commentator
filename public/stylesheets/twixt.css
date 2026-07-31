@@ -249,6 +249,8 @@ div.game-header {
 /* board + underbar + sidebar */
 div.game-details {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
   position: relative;
   width: 100%;
   top: -5px;
@@ -260,7 +262,6 @@ div.game-details {
 div.board-side {
   flex: 0 0 auto;
   margin-left: 10px;
-  margin-right: 10px;
 }
 
 div.board {
@@ -484,11 +485,13 @@ div.game-players {
 
 div.sidebar {
   position: relative;
+  margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 5px;
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-width: 400px;
   min-height: 0;
   height: 100%;
   gap: 10px;
