@@ -20,6 +20,7 @@ const Game = sequelize.define('Game', {
   board_size: { type: DataTypes.INTEGER },
   link_policy: { type: DataTypes.STRING(1) },
   swap_style: { type: DataTypes.STRING(1) },
+  num_pegs: { type: DataTypes.INTEGER },
 }, {
   tableName: 'games',
   timestamps: false,
@@ -97,3 +98,4 @@ Comment.belongsTo(User, { foreignKey: 'user_id', as: 'author' });
 User.hasMany(Comment,  { foreignKey: 'user_id', as: 'comments' });
 
 module.exports = { sequelize, Game, Comment, User };
+

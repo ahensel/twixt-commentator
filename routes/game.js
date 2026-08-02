@@ -123,6 +123,7 @@ async function getGameFromLittleGolem(gameNumber, flash) {
     winner: board.hasWonPlayer(1) ? 1 : board.hasWonPlayer(2) ? 2 : 0,
     tournament: parser.getTournament(),
     board_size: parser.getBoardSize(),
+    num_pegs: board.numPegs(),
     created_on: new Date(),
   });
 
