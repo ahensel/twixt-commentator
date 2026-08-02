@@ -285,7 +285,7 @@ function openHelpModal() {
 }
 function closeHelpModal() {
   document.getElementById('help-overlay').classList.add('hidden');
-  document.getElementById('new_comment').focus();
+  document.getElementsByClassName('comment-textarea')[0].focus();
   return false;
 }
 document.getElementById('help-overlay').addEventListener('click', function(e) {
