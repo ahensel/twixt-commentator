@@ -161,6 +161,7 @@ async function editComment(commentId) {
       '</textarea>' +
       '<div class="comment-buttons">' +
         '<input type="button" value="Save" onclick="saveComment(' + commentId + '); return false;">' +
+        '<button type="button" class="help-btn" onclick="openHelpModal(); return false;" title="Help">?</button>' +
         '<input type="button" class="discard" value="Cancel" onclick="cancelEdit(' + commentId + '); return false;">' +
       '</div>';
 
