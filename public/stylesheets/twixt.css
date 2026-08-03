@@ -1,4 +1,4 @@
-/* CSS for this site is pretty much snarfed directly from Little Golem, to provide a familiar look */
+/* CSS for this site was originally copied from Little Golem, to provide a familiar look */
 
 /* ── Custom Properties ─────────────────────────────────────────── */
 :root {
@@ -19,7 +19,12 @@
   --color-preview:   #c0c0ff;
   --color-focus:     #275ec5;
   --font-stack:      Arial, Helvetica, sans-serif;
-  --font-moves:      'Trebuchet MS', Arial, Helvetica, sans-serif;
+  --font-for-moves:  'Trebuchet MS', Arial, Helvetica, sans-serif;
+  --font-size-xl:    2.5rem;
+  --font-size-l:     1.67rem;
+  --font-size-m:     0.92rem;
+  --font-size-s:     0.83rem;
+  --font-size-xs:    0.75rem;
 
   --grid-spacing: 18px;
   --grid-margin: 24px;
@@ -33,7 +38,7 @@
 
 body {
   font-family: var(--font-stack);
-  font-size: 0.92rem;
+  font-size: var(--font-size-m);
   background-color: var(--color-bg);
   margin: 0;
 }
@@ -62,27 +67,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: var(--font-size-xl);
   text-align: center;
 }
 
 h2 {
-  font-size: 1.67rem;
+  font-size: var(--font-size-l);
   padding: 5px;
 }
 
 p {
-  font-size: 0.92rem;
+  font-size: var(--font-size-m);
 }
 
 .news {
-  font-size: 0.83rem;
+  font-size: var(--font-size-s);
   text-align: left;
   font-weight: bold;
 }
 
 pre {
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
 }
 
 /* ── Links ─────────────────────────────────────────────────────── */
@@ -118,7 +123,7 @@ input[type="submit"] {
 .black-white-swap {
   text-decoration: none;
   font-weight: bold;
-  font-size: 0.83rem;
+  font-size: var(--font-size-s);
 }
 
 a.white,
@@ -169,7 +174,7 @@ table.main {
 td {
   color: var(--color-text);
   font-family: var(--font-stack);
-  font-size: 0.83rem;
+  font-size: var(--font-size-s);
 }
 
 td.text-right  { text-align: right; }
@@ -178,7 +183,7 @@ td.italic      { font-style: italic; }
 td.bold       { font-weight: bold; }
 
 th {
-  font-size: 0.83rem;
+  font-size: var(--font-size-s);
 }
 
 td.main,
@@ -289,7 +294,7 @@ div.topglass {
 
 div.board .swap-button {
   position: absolute;
-  font-size: 0.83rem;
+  font-size: var(--font-size-s);
   top: -1.2rem;
   right: 0.2rem;
   text-decoration: underline;
@@ -303,8 +308,8 @@ div.board .twixt-board {
   --tb-border-color: #e6e6e6;
   --lr-border-color: #a8a8a8;
 
-  font-family: var(--font-moves);
-  font-size: 0.75rem;
+  font-family: var(--font-for-moves);
+  font-size: var(--font-size-xs);
   font-weight: 700;
   margin: 0;
   overflow: hidden;
@@ -501,7 +506,7 @@ div.moves-panel {
   border: 1px solid var(--color-border);
   padding: 9px;
   background-color: var(--color-bg);
-  font-size: 0.83rem;
+  font-size: var(--font-size-s);
   flex-shrink: 0;
 }
 
@@ -527,19 +532,19 @@ div#underbar {
 }
 
 div#underbar .underbar-status {
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
 }
 
 div#moves,
 span.moves {
-  font-family: var(--font-moves);
+  font-family: var(--font-for-moves);
   background-color: var(--color-moves-bg);
   padding-left: 1px;
   padding-right: 1px;
 }
 
 span.user-moves {
-  font-family: var(--font-moves);
+  font-family: var(--font-for-moves);
   background-color: var(--color-user-bg);
   padding-right: 1px;
 }
@@ -608,7 +613,7 @@ img.crosshair, img.new-peg {
 /* ── Comments ──────────────────────────────────────────────── */
 .comment-header,
 .preview-header {
-  font-size: 0.83rem;
+  font-size: var(--font-size-s);
   font-weight: normal;
   margin-left: -10px;
   padding-left: 10px;
@@ -641,7 +646,7 @@ img.crosshair, img.new-peg {
   margin-left: 10px;
   margin-right: 8px;
   white-space: nowrap;
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
 }
 
 .comment-edit-delete-links a {
@@ -668,14 +673,14 @@ img.crosshair, img.new-peg {
 
 .comment-textarea {
   width: 100%;
-  font-size: 0.83rem;
+  font-size: var(--font-size-s);
   font-family: var(--font-stack);
   border: 1px solid var(--color-border);
   resize: vertical;
 }
 
 div#current-comments {
-  font-size: 0.83rem;
+  font-size: var(--font-size-s);
 }
 
 /* ── Login box ─────────────────────────────────────────────────── */
@@ -687,7 +692,7 @@ div.login-box {
 }
 
 div.login-box label {
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   text-align: right;
   float: left;
   width: 5em;
@@ -695,7 +700,7 @@ div.login-box label {
 }
 
 div.login-box input {
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
 }
 
 div.login-box .login-form-row {
@@ -723,7 +728,7 @@ div.login-box .login-fields {
   gap: 3px 6px;
   align-items: center;
   padding: 4px;
-  font-size: 0.83rem;
+  font-size: var(--font-size-s);
 }
 
 .user-form-grid .boxed {
@@ -734,7 +739,7 @@ div.login-box .login-fields {
 div.please-register {
   border: 1px solid var(--color-border);
   padding: 4px;
-  font-size: 0.83rem;
+  font-size: var(--font-size-s);
 }
 
 /* ── Admin page ─────────────────────────────────────────────────── */
@@ -872,7 +877,7 @@ div.please-register {
 
 .help-content {
   overflow-y: auto;
-  font-size: 0.83rem;
+  font-size: var(--font-size-s);
   line-height: 1.5;
 }
 
@@ -909,13 +914,13 @@ div.please-register {
 
 .blank-board-form-table td {
   padding: 4px 6px;
-  font-size: 0.83rem;
+  font-size: var(--font-size-s);
   border: none;
   background: none;
 }
 
 .blank-board-hint {
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   color: #555;
   margin-left: 4px;
 }
