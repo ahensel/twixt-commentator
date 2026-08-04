@@ -56,11 +56,14 @@ A forum to view, comment on, and read other people's comments on Twixt games.&nb
 </div>
 
 <script>
+let blankBoardFocusTrap = null;
 function openBlankBoardModal() {
   document.getElementById('blank-board-overlay').classList.remove('hidden');
+  blankBoardFocusTrap = modalFocusTrap(document.getElementById('blank-board-overlay'));
   document.getElementById('blank-player1').focus();
 }
 function closeBlankBoardModal() {
+  if (blankBoardFocusTrap) { blankBoardFocusTrap(); blankBoardFocusTrap = null; }
   document.getElementById('blank-board-overlay').classList.add('hidden');
 }
 function submitBlankBoardForm() {

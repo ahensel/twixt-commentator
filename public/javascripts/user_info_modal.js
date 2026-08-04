@@ -3,6 +3,7 @@
   'use strict';
 
   let overlay = null;
+  let focusTrapDispose = null;
 
   function showModal(userId) {
     fetch('/user/info/' + userId + '.json')
@@ -25,7 +26,7 @@
         overlay = document.createElement('div');
         overlay.className = 'modal-overlay';
         overlay.innerHTML =
-          '<div class="modal user-info-modal">' +
+          '<div class="modal user-info-modal" tabindex="-1">' +
             '<a class="modal-close-btn" href="#" onclick="return closeUserInfoModal()">&times;</a>' +
             '<span>Name:&nbsp;<b>' + user.name + '</b></span><br/>' +
             '<span>' + lgText + '</span><br/>' +
@@ -35,6 +36,12 @@
           '</div>';
 
         document.body.appendChild(overlay);
+
+        // Focus the close button so the focus trap works
+        overlay.querySelector('.modal-close-btn')?.focus();
+
+        // Trap focus within the modal
+        focusTrapDispose = modalFocusTrap(overlay);
 
         // Close when clicking the overlay background (not the modal itself)
         overlay.addEventListener('click', function (e) {
@@ -48,6 +55,8 @@
 
   function hideModal() {
     if (overlay) {
+      if (focusTrapDispose) focusTrapDispose();
+      focusTrapDispose = null;
       document.body.removeChild(overlay);
       overlay = null;
     }

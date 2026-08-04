@@ -280,10 +280,14 @@ preformatted   text</pre></li>
 </div>
 
 <script>
+let helpFocusTrap = null;
 function openHelpModal() {
   document.getElementById('help-overlay').classList.remove('hidden');
+  helpFocusTrap = modalFocusTrap(document.getElementById('help-overlay'));
+  document.querySelector('#help-overlay .modal-close-btn').focus();
 }
 function closeHelpModal() {
+  if (helpFocusTrap) { helpFocusTrap(); helpFocusTrap = null; }
   document.getElementById('help-overlay').classList.add('hidden');
   document.getElementsByClassName('comment-textarea')[0].focus();
   return false;

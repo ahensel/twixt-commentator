@@ -797,6 +797,10 @@ div.please-register {
   text-decoration: none;
 }
 
+.modal-close-btn:focus {
+  outline: none;
+}
+
 /* ── User Info modal overrides ───────────────────────────────────── */
 .user-info-modal {
   padding: 20px;
