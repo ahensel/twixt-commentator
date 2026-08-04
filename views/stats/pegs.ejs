@@ -55,6 +55,8 @@
   <canvas id="pegs-chart" height="120"></canvas>
 </div>
 
+<p id="pegs-stats" style="margin-top:10px; font-size:var(--font-size-s); color:#444;"></p>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <script>
   const RESULT_CODES = <%- JSON.stringify(RESULT_CODES) %>;
@@ -120,6 +122,39 @@
     },
   });
 
+  // Weighted mean + population std-dev across all visible result datasets
+  function updateStats() {
+    let totalCount = 0, weightedSum = 0;
+    chart.data.datasets.forEach((ds, i) => {
+      if (!chart.isDatasetVisible(i)) return;
+      ds.data.forEach((count, pegs) => {
+        totalCount  += count;
+        weightedSum += count * pegs;
+      });
+    });
+
+    const el = document.getElementById('pegs-stats');
+    if (totalCount === 0) { el.textContent = ''; return; }
+
+    const mean = weightedSum / totalCount;
+
+    let variance = 0;
+    chart.data.datasets.forEach((ds, i) => {
+      if (!chart.isDatasetVisible(i)) return;
+      ds.data.forEach((count, pegs) => {
+        const diff = pegs - mean;
+        variance += count * diff * diff;
+      });
+    });
+    const stdDev = Math.sqrt(variance / totalCount);
+
+    el.textContent =
+      `Mean: ${mean.toFixed(2)} pegs — Std dev: ${stdDev.toFixed(2)} pegs` +
+      ` — ${totalCount.toLocaleString()} games`;
+  }
+
+  updateStats();
+
   // Board size switcher
   document.getElementById('size-switcher').addEventListener('click', e => {
     const btn = e.target.closest('.size-btn');
@@ -134,6 +169,7 @@
       ds.data = pegsBySize[size][RESULT_CODES[i]];
     });
     chart.update();
+    updateStats();
 
     document.querySelectorAll('.size-btn').forEach(b =>
       b.classList.toggle('size-btn-active', parseInt(b.dataset.size, 10) === size)
@@ -145,6 +181,7 @@
     cb.addEventListener('change', () => {
       chart.setDatasetVisibility(parseInt(cb.dataset.index, 10), cb.checked);
       chart.update();
+      updateStats();
     });
   });
 </script>
