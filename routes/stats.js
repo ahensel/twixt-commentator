@@ -170,4 +170,72 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/pegs', async (req, res) => {
+  try {
+    const RESULT_CODES = ['R', 'L', 'D', 'F'];
+
+    // Distinct board sizes that have peg data
+    const [sizeRows] = await sequelize.query(`
+      SELECT DISTINCT board_size
+      FROM games
+      WHERE lg_game_num IS NOT NULL
+        AND num_pegs IS NOT NULL
+        AND board_size IS NOT NULL
+      ORDER BY board_size
+    `);
+    const boardSizes = sizeRows.map(r => parseInt(r.board_size, 10));
+
+    // Per-size cutoff: 3.5× board size (captures nearly all real games)
+    const limitBySize = {};
+    for (const size of boardSizes) {
+      limitBySize[size] = Math.ceil(3.5 * size);
+    }
+    const maxLimit = Math.max(...Object.values(limitBySize));
+
+    // All data in one query; use a generous upper bound to exclude board-filling outliers
+    const [pegsRows] = await sequelize.query(`
+      SELECT board_size, num_pegs, result, COUNT(*) AS cnt
+      FROM games
+      WHERE lg_game_num IS NOT NULL
+        AND num_pegs IS NOT NULL
+        AND num_pegs < 500
+        AND board_size IS NOT NULL
+      GROUP BY board_size, num_pegs, result
+      ORDER BY board_size, num_pegs, result
+    `);
+
+    // Build { size: { result: Array(limit) } } — each array is sized to its own limit
+    const pegsBySize = {};
+    for (const size of boardSizes) {
+      const limit = limitBySize[size];
+      pegsBySize[size] = {};
+      for (const code of RESULT_CODES) {
+        pegsBySize[size][code] = Array(limit).fill(0);
+      }
+    }
+    for (const row of pegsRows) {
+      const size = parseInt(row.board_size, 10);
+      const pegs = parseInt(row.num_pegs, 10);
+      const limit = limitBySize[size];
+      if (RESULT_CODES.includes(row.result) && pegsBySize[size] && pegs < limit) {
+        pegsBySize[size][row.result][pegs] = parseInt(row.cnt, 10);
+      }
+    }
+
+    const defaultSize = boardSizes.includes(24) ? 24 : boardSizes[0];
+
+    res.render('stats/pegs', {
+      pegsBySize,
+      boardSizes,
+      defaultSize,
+      limitBySize,
+      RESULT_CODES,
+      params: req.query,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 module.exports = router;

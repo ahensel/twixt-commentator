@@ -1,0 +1,150 @@
+<% layout('layouts/stats') %>
+<% locals.currentPage = 'pegs'; %>
+
+<h2>Twixt Commentator — Number of Pegs</h2>
+<p>
+  Distribution of total pegs placed per game.
+</p>
+
+<%
+  const RESULT_META = {
+    R: { label: 'Resign',  bg: 'rgba(231, 76,  60,  0.7)', border: 'rgba(231, 76,  60,  1)' },
+    L: { label: 'Connect', bg: 'rgba( 52,152, 219,  0.7)', border: 'rgba( 52,152, 219,  1)' },
+    D: { label: 'Draw',    bg: 'rgba(149,165, 166,  0.7)', border: 'rgba(149,165, 166,  1)' },
+    F: { label: 'Forfeit', bg: 'rgba(243,156,  18,  0.7)', border: 'rgba(243,156,  18,  1)' },
+  };
+%>
+
+<!-- Board size switcher -->
+<div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
+  <span style="font-size:var(--font-size-s); color:#555;">Board size:</span>
+  <div id="size-switcher" style="display:flex; gap:4px; flex-wrap:wrap;">
+    <% boardSizes.forEach(size => { %>
+      <button
+        class="size-btn<%= size === defaultSize ? ' size-btn-active' : '' %>"
+        data-size="<%= size %>"
+        id="size-btn-<%= size %>"
+      ><%= size %></button>
+    <% }); %>
+  </div>
+</div>
+
+<!-- Result filter checkboxes -->
+<div id="pegs-controls" style="display:flex; gap:16px; margin-bottom:12px; flex-wrap:wrap;">
+  <% RESULT_CODES.forEach((code, i) => { %>
+    <label style="display:flex; align-items:center; gap:6px; cursor:pointer; user-select:none;">
+      <input
+        type="checkbox"
+        id="pegs-toggle-<%= code %>"
+        data-index="<%= i %>"
+        checked
+        style="width:15px; height:15px; accent-color:<%= RESULT_META[code].border %>;"
+      >
+      <span style="
+        display:inline-block; width:14px; height:14px;
+        background:<%= RESULT_META[code].bg %>;
+        border:1.5px solid <%= RESULT_META[code].border %>;
+        border-radius:3px; flex-shrink:0;
+      "></span>
+      <span><%= RESULT_META[code].label %> (<%= code %>)</span>
+    </label>
+  <% }); %>
+</div>
+
+<div style="max-width: 900px;">
+  <canvas id="pegs-chart" height="120"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script>
+  const RESULT_CODES = <%- JSON.stringify(RESULT_CODES) %>;
+  const RESULT_META  = <%- JSON.stringify(
+    Object.fromEntries(RESULT_CODES.map(c => [c, {
+      label:  { R:'Resign', L:'Connect', D:'Draw', F:'Forfeit' }[c],
+      bg:     { R:'rgba(231,76,60,0.7)',  L:'rgba(52,152,219,0.7)',
+                D:'rgba(149,165,166,0.7)', F:'rgba(243,156,18,0.7)' }[c],
+      border: { R:'rgba(231,76,60,1)',    L:'rgba(52,152,219,1)',
+                D:'rgba(149,165,166,1)',   F:'rgba(243,156,18,1)' }[c],
+    }]))
+  ) %>;
+  const pegsBySize   = <%- JSON.stringify(pegsBySize) %>;
+  const limitBySize  = <%- JSON.stringify(limitBySize) %>;
+  let   currentSize  = <%= defaultSize %>;
+
+  const makeLabels = (size) => Array.from({ length: limitBySize[size] }, (_, i) => i);
+
+  function datasetsForSize(size) {
+    return RESULT_CODES.map(code => ({
+      label:           RESULT_META[code].label,
+      data:            pegsBySize[size][code],
+      backgroundColor: RESULT_META[code].bg,
+      borderColor:     RESULT_META[code].border,
+      borderWidth: 1,
+      borderRadius: 2,
+      categoryPercentage: 1.0,
+      barPercentage: 0.9,
+      stack: 'pegs',
+    }));
+  }
+
+  const chart = new Chart(document.getElementById('pegs-chart'), {
+    type: 'bar',
+    data: { labels: makeLabels(currentSize), datasets: datasetsForSize(currentSize) },
+    options: {
+      animation: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          mode: 'index',
+          callbacks: {
+            title: (items) => `${items[0].label} pegs`,
+            label:  (item) => `${item.dataset.label}: ${item.formattedValue} games`,
+          },
+        },
+      },
+      scales: {
+        x: {
+          stacked: true,
+          title: { display: true, text: 'Number of pegs' },
+          ticks: {
+            callback: (val, idx) => idx % 10 === 0 ? idx : '',
+            maxRotation: 0,
+          },
+        },
+        y: {
+          stacked: true,
+          title: { display: true, text: 'Number of games' },
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+
+  // Board size switcher
+  document.getElementById('size-switcher').addEventListener('click', e => {
+    const btn = e.target.closest('.size-btn');
+    if (!btn) return;
+    const size = parseInt(btn.dataset.size, 10);
+    if (size === currentSize) return;
+
+    currentSize = size;
+    // Update labels and data in-place so Chart.js visibility state is preserved
+    chart.data.labels = makeLabels(size);
+    chart.data.datasets.forEach((ds, i) => {
+      ds.data = pegsBySize[size][RESULT_CODES[i]];
+    });
+    chart.update();
+
+    document.querySelectorAll('.size-btn').forEach(b =>
+      b.classList.toggle('size-btn-active', parseInt(b.dataset.size, 10) === size)
+    );
+  });
+
+  // Result checkboxes
+  document.querySelectorAll('#pegs-controls input[type=checkbox]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      chart.setDatasetVisibility(parseInt(cb.dataset.index, 10), cb.checked);
+      chart.update();
+    });
+  });
+</script>

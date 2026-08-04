@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Twixt Commentator — Stats</title>
+    <link rel="stylesheet" href="/stylesheets/twixt.css" media="all">
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+  </head>
+  <body class="about-page">
+    <div class="stats-layout">
+      <nav class="stats-nav">
+        <ul>
+          <li><a href="/" class="<%= locals.currentPage === 'main' ? 'current-page' : '' %>">Main Page</a></li>
+          <li class="stats-nav-divider"></li>
+          <li><a href="/stats" class="<%= locals.currentPage === 'general' ? 'current-page' : '' %>">General Stats</a></li>
+          <li><a href="/stats/pegs" class="<%= locals.currentPage === 'pegs' ? 'current-page' : '' %>">Number of Pegs</a></li>
+        </ul>
+      </nav>
+      <main class="stats-content">
+        <%- body %>
+      </main>
+    </div>
+  </body>
+</html>

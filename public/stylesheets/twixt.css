@@ -60,6 +60,73 @@ body.about-page {
   font-weight: 600;
 }
 
+/* ── Stats layout (left nav + content) ────────────────────────── */
+.stats-layout {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  margin: 16px 25px;
+  min-height: calc(100vh - 32px); /* 32px = top + bottom margin */
+}
+
+.stats-nav {
+  flex: 0 0 160px;
+  border-right: 1px solid var(--color-border);
+  padding-right: 16px;
+  padding-top: 4px;
+}
+
+.stats-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stats-nav ul li {
+  margin-bottom: 6px;
+}
+
+.stats-nav ul li a {
+  display: block;
+  padding: 2px 4px;
+}
+
+.stats-nav-divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 8px 0 !important;
+}
+
+.stats-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* ── Stats: board size switcher buttons ────────────────────────── */
+.size-btn {
+  font-family: var(--font-stack);
+  font-size: var(--font-size-s);
+  padding: 3px 10px;
+  border: 1px solid var(--color-border);
+  background: var(--color-odd-row);
+  color: var(--color-text);
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.size-btn:hover {
+  background: var(--color-even-row);
+}
+
+.size-btn-active {
+  background: var(--color-header);
+  border-color: var(--color-link);
+  color: var(--color-text);
+  font-weight: 600;
+  cursor: default;
+}
+
 /* ── Typography ────────────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-heading);
