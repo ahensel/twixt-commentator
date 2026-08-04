@@ -23,14 +23,14 @@
           : 'None';
 
         overlay = document.createElement('div');
-        overlay.className = 'user-info-overlay';
+        overlay.className = 'modal-overlay';
         overlay.innerHTML =
-          '<div class="user-info-modal">' +
-            '<a class="close-btn" href="#" onclick="return closeUserInfoModal()">&times;</a>' +
+          '<div class="modal user-info-modal">' +
+            '<a class="modal-close-btn" href="#" onclick="return closeUserInfoModal()">&times;</a>' +
             '<span>Name:&nbsp;<b>' + user.name + '</b></span><br/>' +
             '<span>' + lgText + '</span><br/>' +
             '<span>Account created on:&nbsp;' + user.created_on + '</span><br/>' +
-            'Info: ' + 
+            'Info: ' +
             infoText +
           '</div>';
 
