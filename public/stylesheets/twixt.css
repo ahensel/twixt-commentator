@@ -5,6 +5,7 @@
   --color-bg:        #ffffff;
   --color-text:      #000000;
   --color-link:      #5050ff;
+  --color-hint:      #555;
   --color-border:    #000000;
   --color-error:     #ff0000;
   --color-heading:   navy;
@@ -12,12 +13,15 @@
   --color-odd-row:   #eeeeee;
   --color-moves-bg:  #b0b0b0;
   --color-currm-bg:  #ff8080;
+  --color-seq-name:  #ffff80;
   --color-user-bg:   #ff8080;
   --color-hp-bg:     #80d080;
   --color-header:    #a0a0ff;
   --color-header-x:  #dcdcff;
   --color-preview:   #c0c0ff;
   --color-focus:     #275ec5;
+  --color-tick-hole: #cc0000;
+  --color-tick-peg:  #808080;
   --font-stack:      Arial, Helvetica, sans-serif;
   --font-for-moves:  'Trebuchet MS', Arial, Helvetica, sans-serif;
   --font-size-xl:    2.5rem;
@@ -299,11 +303,11 @@ tr.odd  { background-color: var(--color-odd-row); }
 }
 
 .tick-mouse-hole, .tick-mouse-link {
-  border-color: #cc0000;
+  border-color: var(--color-tick-hole);
 }
 
 .tick-mouse-peg {
-  border-color: #808080;
+  border-color: var(--color-tick-peg);
 }
 
 /* ── Padding utility ───────────────────────────────────────────── */
@@ -313,13 +317,13 @@ tr.odd  { background-color: var(--color-odd-row); }
 
 /* ── Board (JavaScript Twixt Board) ───────────────────────────── */
 
-div.game-header {
+.game-header {
   margin-top: 15px;
   flex: 0;
 }
 
 /* board + underbar + sidebar */
-div.game-details {
+.game-details {
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
@@ -331,18 +335,18 @@ div.game-details {
 }
 
 /* board + underbar */
-div.board-side {
+.board-side {
   flex: 0 0 auto;
   margin-left: 10px;
 }
 
-div.board {
+.board {
   position: relative;
 }
 
-div.boardglass,
-div.markerglass,
-div.topglass {
+.boardglass,
+.markerglass,
+.topglass {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -351,15 +355,15 @@ div.topglass {
   background-color: transparent;
 }
 
-div.boardglass { z-index: 5; }
-div.markerglass { z-index: 10; }
-div.topglass {
+.boardglass { z-index: 5; }
+.markerglass { z-index: 10; }
+.topglass {
   z-index: 15;
   cursor: pointer;
   user-select: none;
 }
 
-div.board .swap-button {
+.board .swap-button {
   position: absolute;
   font-size: var(--font-size-s);
   top: -1.2rem;
@@ -368,7 +372,7 @@ div.board .swap-button {
 }
 
 /* ── CSS-rendered Twixt board (replaces board.gif) ─────────────── */
-div.board .twixt-board {
+.board .twixt-board {
   --diagonals-color: #a6c76a;
   --hole-color: #000;
   --playing-area-color: #f2fff0;
@@ -392,7 +396,7 @@ div.board .twixt-board {
   z-index: 0;
 }
 
-div.board .border {
+.board .border {
   grid-column: 1 / -1;
   grid-row: 1 / -1;
   background-color: var(--playing-area-color);
@@ -401,7 +405,7 @@ div.board .border {
     var(--tb-border-color) var(--lr-border-color);
 }
 
-div.board .crucial-diagonals {
+.board .crucial-diagonals {
   position: relative;
   grid-column: 2 / -2;
   grid-row: 2 / -2;
@@ -414,7 +418,7 @@ div.board .crucial-diagonals {
    space is 0-100 × 0-100, stretched to fill the square playing area.
    vector-effect: non-scaling-stroke keeps each line at a constant pixel
    width regardless of the board's rendered size. */
-div.board .crucial-diagonals .diagonal-lines {
+.board .crucial-diagonals .diagonal-lines {
   position: absolute;
   top: 0;
   left: 0;
@@ -423,11 +427,11 @@ div.board .crucial-diagonals .diagonal-lines {
   overflow: visible;
 }
 
-div.board .crucial-diagonals .diagonal-lines line {
+.board .crucial-diagonals .diagonal-lines line {
   stroke: var(--diagonals-color);
 }
 
-div.board .holes-layer {
+.board .holes-layer {
   display: grid;
   grid-column: 1/-1;
   grid-row: 1/-1;
@@ -440,47 +444,48 @@ div.board .holes-layer {
   z-index: 2;
 }
 
-div.board .corner {
+.board .corner {
   border: calc(var(--grid-spacing)/2) solid;
 }
 
-div.board .corner.upper {
+.board .corner.upper {
   grid-row: 1 / 1;
   border-bottom-color: var(--lr-border-color);
   border-top-color: var(--tb-border-color);
 }
 
-div.board .corner.lower {
+.board .corner.lower {
   grid-row: -2 / -2;
   border-bottom-color: var(--tb-border-color);
   border-top-color: var(--lr-border-color);
 }
 
-div.board .corner.left {
+.board .corner.left {
   grid-column: 1 / 1;
   border-left-color: var(--lr-border-color);
   border-right-color: var(--tb-border-color);
 }
 
-div.board .corner.right {
+.board .corner.right {
   grid-column: -2 / -2;
   border-left-color: var(--tb-border-color);
   border-right-color: var(--lr-border-color);
 }
 
-div.board .left-side {
+.board .left-side {
   grid-column: 1;
-  margin-left: -27px;
+  padding-right: 3px;
+  margin-left: calc(var(--grid-margin) * -1);
   text-align: right;
 }
 
-div.board .right-side {
+.board .right-side {
   grid-column: -1;
   padding-left: 3px;
   text-align: left;
 }
 
-div.board .row-numbers {
+.board .row-numbers {
   grid-row: 1 / -1;
   line-height: var(--grid-spacing);
   width: var(--grid-margin);
@@ -489,24 +494,24 @@ div.board .row-numbers {
   counter-reset: rownum;
 }
 
-div.board .row-numbers div::before {
+.board .row-numbers div::before {
   counter-increment: rownum;
   content: counter(rownum);
 }
 
-div.board .top-side {
+.board .top-side {
   grid-row: 1;
-  margin-top: -18px;
+  margin-top: calc(var(--grid-spacing) * -1);
 }
 
-div.board .bottom-side {
+.board .bottom-side {
   grid-row: -1;
 }
 
-div.board .right-half {
+.board .right-half {
   margin-left: calc(var(--grid-spacing) * 26); /* capital letters on the right */
 }
-div.board .column-letters, div.board .column-letters2 {
+.board .column-letters, .board .column-letters2 {
   grid-column: 1 / -1;
   line-height: var(--grid-spacing);
   height: var(--grid-spacing);
@@ -517,17 +522,17 @@ div.board .column-letters, div.board .column-letters2 {
   justify-items: center;
 }
 
-div.board .column-letters div::before {
+.board .column-letters div::before {
   counter-increment: colnum;
   content: counter(colnum, lower-alpha);
 }
 
-div.board .column-letters2 div::before {
+.board .column-letters2 div::before {
   counter-increment: colnum;
   content: counter(colnum, upper-alpha);
 }
 
-div.noscript {
+.noscript {
   position: absolute;
   top: 200px;
   left: 70px;
@@ -539,23 +544,23 @@ div.noscript {
   background-color: var(--color-bg);
 }
 
-div.turn {
+.turn {
   font-weight: bold;
   font-size: 1rem;
   height: 25px;
   margin: 10px 0 0 10px;
 }
 
-div.game-number-form {
+.game-number-form {
   margin-left: 10px;
 }
 
-div.game-players {
+.game-players {
   margin-top: 15px;
   margin-left: 10px;
 }
 
-div.sidebar {
+.sidebar {
   position: relative;
   margin-left: 10px;
   margin-right: 10px;
@@ -569,7 +574,7 @@ div.sidebar {
   gap: 10px;
 }
 
-div.moves-panel {
+.moves-panel {
   border: 1px solid var(--color-border);
   padding: 9px;
   background-color: var(--color-bg);
@@ -577,32 +582,32 @@ div.moves-panel {
   flex-shrink: 0;
 }
 
-div.moves-panel div {
+.moves-panel div {
   margin: 4px;
 }
 
-div.moves-panel div.back-next {
+.moves-panel .back-next {
   padding: 4px 2px 2px 2px;
   margin: 2px;
   user-select: none;
 }
 
-div.moves-panel div.back-next a.disabled {
+.moves-panel .back-next a.disabled {
   color: #999;
   pointer-events: none;
   cursor: default;
 }
 
-div#underbar {
+#underbar {
   position: relative;
   margin-top: 5px;
 }
 
-div#underbar .underbar-status {
+#underbar .underbar-status {
   font-size: var(--font-size-xs);
 }
 
-div#moves,
+#moves,
 span.moves {
   font-family: var(--font-for-moves);
   background-color: var(--color-moves-bg);
@@ -633,7 +638,7 @@ span.user-moves {
   width: 13px;
 }
 
-div#comments {
+#comments {
   border: 1px solid var(--color-border);
   padding: 10px;
   background-color: var(--color-bg);
@@ -669,7 +674,7 @@ img.crosshair, img.new-peg {
 
 /* ── Named sequence markers ────────────────────────────────────── */
 .seq-name {
-  background-color: #ffff80;
+  background-color: var(--color-seq-name);
   font-weight: bold;
   padding-left: 1px;
   padding-right: 1px;
@@ -689,13 +694,17 @@ img.crosshair, img.new-peg {
   padding-right: 6px;
 }
 
+.comment-header {
+  background-color: var(--color-header);
+}
+
+.preview-header {
+  background-color: var(--color-preview);
+}
+
 .comment-header-text {
   flex: 1;
   white-space: nowrap;
-}
-
-.comment-header {
-  background-color: var(--color-header);
 }
 
 .comment-header-deleted .comment-header-text {
@@ -720,10 +729,6 @@ img.crosshair, img.new-peg {
   background-color: var(--color-header-x);
   border-radius: 0.5rem;
   padding: 1px 5px;
-}
-
-.preview-header {
-  background-color: var(--color-preview);
 }
 
 .comment-buttons {
@@ -751,14 +756,14 @@ div#current-comments {
 }
 
 /* ── Login box ─────────────────────────────────────────────────── */
-div.login-box {
+.login-box {
   position: absolute;
   text-align: right;
   right: 10px;
   top: 10px;
 }
 
-div.login-box label {
+.login-box label {
   font-size: var(--font-size-xs);
   text-align: right;
   float: left;
@@ -766,21 +771,21 @@ div.login-box label {
   margin-right: 0.5em;
 }
 
-div.login-box input {
+.login-box input {
   font-size: var(--font-size-xs);
 }
 
-div.login-box .login-form-row {
+.login-box .login-form-row {
   display: flex;
   align-items: flex-start;
   gap: 8px;
 }
 
-div.login-box .login-form-row .boxed {
+.login-box .login-form-row .boxed {
   padding: 1px 2px 1px 2px;
 }
 
-div.login-box .login-fields {
+.login-box .login-fields {
   display: grid;
   grid-template-columns: auto auto auto;
   gap: 3px 6px;
@@ -803,7 +808,7 @@ div.login-box .login-fields {
   width: 275px;
 }
 
-div.please-register {
+.please-register {
   border: 1px solid var(--color-border);
   padding: 4px;
   font-size: var(--font-size-s);
@@ -811,7 +816,7 @@ div.please-register {
 
 /* ── Admin page ─────────────────────────────────────────────────── */
 .admin-page {
-  margin: 10px 10px 10px 10px;
+  margin: 10px;
 }
 
 .admin-page .user-info {
@@ -855,7 +860,6 @@ div.please-register {
   font-weight: bold;
   cursor: pointer;
   color: var(--color-text);
-  text-decoration: none;
   line-height: 1;
 }
 
@@ -942,7 +946,7 @@ div.please-register {
 
 .blank-board-hint {
   font-size: var(--font-size-xs);
-  color: #555;
+  color: var(--color-hint);
   margin-left: 4px;
 }
 
