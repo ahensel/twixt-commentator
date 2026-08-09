@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const https = require('https');
+const cheerio = require('cheerio');
 const { Op } = require('sequelize');
 const { Game } = require('../models');
 const { LittleGolemParser } = require('../lib/domain/LittleGolemParser');
@@ -49,6 +50,39 @@ function fixSgfCoordinates(sgf) {
   });
 }
 
+// Extract player IDs from the HTML game page.
+// The HTML contains links like:
+//   <a href="/jsp/info/player.jsp?plid=12345">Player Name ★</a>
+// The player ID is in the `plid` query parameter, and the link text is the
+// player name (optionally followed by a star). We match each player name
+// against these links to find their ID.
+function extractPlayerIds(html, player1Name, player2Name) {
+  const $ = cheerio.load(html);
+
+  // Build a map: player name (trimmed, star stripped) -> plid
+  const playerLinks = $('.page-content a[href*="player.jsp?plid="]');
+  const nameToId = {};
+  playerLinks.each((_, el) => {
+    const href = $(el).attr('href');
+    const plidMatch = href.match(/plid=([0-9]+)/);
+    if (plidMatch) {
+      const name = $(el).text().replace(/\s*★.*/, '').trim();
+      nameToId[name] = parseInt(plidMatch[1], 10);
+    }
+  });
+
+  return { player1_id: nameToId[player1Name], player2_id: nameToId[player2Name] };
+}
+
+async function scrapeHtmlPage(gameNumber, cacheBust, flash) {
+  try {
+    return await httpsGet('www.littlegolem.net', `/jsp/game/game.jsp?gid=${gameNumber}&${cacheBust}`);
+  } catch (e) {
+    flash.error = `Network error scraping HTML for game ${gameNumber}: ${e.message}`;
+    return null;
+  }
+}
+
 async function getGameFromLittleGolem(gameNumber, flash) {
   const cacheBust = Math.random().toString();
   let response;
@@ -79,21 +113,22 @@ async function getGameFromLittleGolem(gameNumber, flash) {
 
   const parser = new LittleGolemParser(lgData);
 
+  // Always scrape the HTML page to get player IDs and check forfeit status
+  const htmlResp = await scrapeHtmlPage(gameNumber, cacheBust, flash);
+  if (!htmlResp) {
+    return { game: null, parser: null };
+  }
+
+  if (htmlResp.statusCode !== 200) {
+    flash.error = `HTTP error ${htmlResp.statusCode} scraping HTML for game ${gameNumber}.`;
+    return { game: null, parser: null };
+  }
+
+  const player1Name = parser.getPlayer1();
+  const player2Name = parser.getPlayer2();
+  const { player1_id, player2_id } = extractPlayerIds(htmlResp.body, player1Name, player2Name);
+
   if (!parser.isGameOver()) {
-    // Game may be a forfeit — scrape the HTML page to check
-    let htmlResp;
-    try {
-      htmlResp = await httpsGet('www.littlegolem.net', `/jsp/game/game.jsp?gid=${gameNumber}&${cacheBust}`);
-    } catch (e) {
-      flash.error = `Network error checking game ${gameNumber} forfeit status: ${e.message}`;
-      return { game: null, parser: null };
-    }
-
-    if (htmlResp.statusCode !== 200) {
-      flash.error = `HTTP error ${htmlResp.statusCode} checking forfeit for game ${gameNumber}.`;
-      return { game: null, parser: null };
-    }
-
     if (htmlResp.body.includes('game finished')) {
       parser.forfeit();
       // fall through to save as forfeit
@@ -103,8 +138,10 @@ async function getGameFromLittleGolem(gameNumber, flash) {
         lg_game_num: gameNumber,
         lg_data: lgData,
         result: '?',
-        player1: parser.getPlayer1(),
-        player2: parser.getPlayer2(),
+        player1: player1Name,
+        player2: player2Name,
+        player1_id,
+        player2_id,
         winner: 0,
         tournament: parser.getTournament(),
         board_size: parser.getBoardSize(),
@@ -118,8 +155,10 @@ async function getGameFromLittleGolem(gameNumber, flash) {
     lg_game_num: gameNumber,
     lg_data: lgData,
     result: parser.getResultChar(),
-    player1: parser.getPlayer1(),
-    player2: parser.getPlayer2(),
+    player1: player1Name,
+    player2: player2Name,
+    player1_id,
+    player2_id,
     winner: board.hasWonPlayer(1) ? 1 : board.hasWonPlayer(2) ? 2 : 0,
     tournament: parser.getTournament(),
     board_size: parser.getBoardSize(),

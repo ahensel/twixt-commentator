@@ -21,6 +21,8 @@ const Game = sequelize.define('Game', {
   link_policy: { type: DataTypes.STRING(1) },
   swap_style: { type: DataTypes.STRING(1) },
   num_pegs: { type: DataTypes.INTEGER },
+  player1_id: { type: DataTypes.INTEGER },
+  player2_id: { type: DataTypes.INTEGER },
 }, {
   tableName: 'games',
   timestamps: false,
