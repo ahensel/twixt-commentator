@@ -962,6 +962,11 @@ div#current-comments {
   border-collapse: collapse;
 }
 
+/* Horizontal row separator lines */
+.fm-heatmap td.main {
+  border-bottom: 1px solid var(--color-border);
+}
+
 .fm-heatmap .fm-corner,
 .fm-heatmap .fm-col-header {
   text-align: center;
@@ -1000,7 +1005,9 @@ div#current-comments {
 }
 
 .fm-cell-sparse {
-  border-style: dashed !important;
+  outline: 3px dashed #777;
+  outline-offset: -3px;
+  opacity: 0.6;
 }
 
 .fm-cell-move {
@@ -1020,7 +1027,7 @@ div#current-comments {
 
 .fm-cell-swap {
   font-size: 0.68rem;
-  color: #888;
+  color: #777;
   line-height: 1.2;
   margin-top: 1px;
 }
