@@ -257,7 +257,7 @@ async function computeFirstMoves() {
   }
 
   // Fetch every game that has player IDs and a winner, in chronological order.
-  // We need all games (not just size-24) so Elo ratings are accurate.
+  // We need all size 24 games so Elo ratings are accurate.
   const [eloGames] = await sequelize.query(`
     SELECT player1_id, player2_id, winner,
            board_size, num_pegs, result, move1n, swapped
@@ -266,6 +266,7 @@ async function computeFirstMoves() {
       AND player1_id IS NOT NULL
       AND player2_id IS NOT NULL
       AND winner      IS NOT NULL
+      AND board_size = 24
     ORDER BY lg_game_num ASC
   `);
 
@@ -296,11 +297,13 @@ async function computeFirstMoves() {
     const numPegs   = parseInt(g.num_pegs,   10);
     if (
       boardSize === 24 &&
-      numPegs   >  7  &&
+      numPegs > 7 &&
+      numPegs < 100 &&
       g.result !== 'F' &&
       g.result !== 'D' &&
       g.move1n != null &&
-      g.move1n.length === 2
+      g.move1n.length === 2 &&
+      g.player1_id != g.player2_id
     ) {
       const m = g.move1n;
       if (!perMove[m]) perMove[m] = { n: 0, sumActual: 0, sumExpected: 0, sumSwapped: 0 };

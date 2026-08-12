@@ -3,9 +3,14 @@
 
 <h2>Twixt Commentator — First Moves</h2>
 <p>
-  For each possible first move (normalized to the upper-left quadrant of a 24×24 board),
+  Elo-adjusted expected-score residuals for board size 24.
+</p>
+<p>
+  For each first move, normalized to the upper-left quadrant of a 24×24 board,
   this page shows how White's actual win rate compares to what Elo ratings would predict.
-  Games with board size&nbsp;24, more than 7 pegs placed, and a decisive result
+</p>
+<p>
+  Games with board size&nbsp;24, more than 7 pegs and less than 100, and a decisive result
   (no forfeits, no draws) are included.
 </p>
 
@@ -104,7 +109,7 @@
 </div>
 
 <p style="margin-top:6px; font-size:var(--font-size-xs); color:#777;">
-  <%= totalGames.toLocaleString() %> games included (board size&nbsp;24, pegs&nbsp;&gt;&nbsp;7, excluding forfeits and draws).
+  <%= totalGames.toLocaleString() %> games included (board size&nbsp;24, pegs&nbsp;&gt;&nbsp;7 and &lt;&nbsp;100, excluding forfeits and draws).
   Elo ratings use K&nbsp;=&nbsp;32, computed from all player history.
   Hover a cell for details.
 </p>
