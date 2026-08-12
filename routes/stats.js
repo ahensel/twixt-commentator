@@ -265,7 +265,8 @@ async function computeFirstMoves() {
     WHERE lg_game_num IS NOT NULL
       AND player1_id IS NOT NULL
       AND player2_id IS NOT NULL
-      AND winner      IS NOT NULL
+      AND player1_id != player2_id
+      AND winner IS NOT NULL
       AND board_size = 24
     ORDER BY lg_game_num ASC
   `);
@@ -285,31 +286,28 @@ async function computeFirstMoves() {
     const r2 = getR(p2id);
 
     // Standard Elo expected score for player 1
-    const expected1 = 1 / (1 + Math.pow(10, (r2 - r1) / 400));
-    const actual1   = parseInt(g.winner, 10) === 1 ? 1 : 0;
+    const expected = 1 / (1 + Math.pow(10, (r2 - r1) / 400));
+    const actual   = [0.5, 1, 0][parseInt(g.winner, 10)];
 
     // Update ratings (pre-game expected, post-game update)
-    ratings.set(p1id, r1 + K * (actual1       - expected1));
-    ratings.set(p2id, r2 + K * ((1 - actual1) - (1 - expected1)));
+    ratings.set(p1id, r1 + K * (actual - expected));
+    ratings.set(p2id, r2 + K * ((1 - actual) - (1 - expected)));
 
     // Accumulate only for the filtered dataset
-    const boardSize = parseInt(g.board_size, 10);
-    const numPegs   = parseInt(g.num_pegs,   10);
+    const numPegs = parseInt(g.num_pegs,   10);
     if (
-      boardSize === 24 &&
       numPegs > 7 &&
       numPegs < 100 &&
       g.result !== 'F' &&
       g.result !== 'D' &&
       g.move1n != null &&
-      g.move1n.length === 2 &&
-      g.player1_id != g.player2_id
+      g.move1n.length === 2
     ) {
       const m = g.move1n;
       if (!perMove[m]) perMove[m] = { n: 0, sumActual: 0, sumExpected: 0, sumSwapped: 0 };
       perMove[m].n++;
-      perMove[m].sumActual   += actual1;
-      perMove[m].sumExpected += expected1;
+      perMove[m].sumActual   += actual;
+      perMove[m].sumExpected += expected;
       perMove[m].sumSwapped  += (parseInt(g.swapped, 10) === 1 || g.swapped === true) ? 1 : 0;
       totalGames++;
     }
