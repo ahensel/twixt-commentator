@@ -161,10 +161,10 @@
 <script>
 (function () {
   'use strict';
-  var tbody = document.getElementById('fm-ranked-tbody');
-  var table = document.getElementById('fm-ranked-table');
-  var sortCol = 'residual';
-  var sortDir = -1; // -1 descending, +1 ascending
+  const tbody = document.getElementById('fm-ranked-tbody');
+  const table = document.getElementById('fm-ranked-table');
+  let sortCol = 'residual';
+  let sortDir = -1; // -1 descending, +1 ascending
 
   function getVal(tr, col) {
     switch (col) {
@@ -179,6 +179,14 @@
     }
   }
 
+  function compareMove(a, b) {
+    const aCol = a[0], bCol = b[0];
+    if (aCol !== bCol) return aCol < bCol ? -1 : 1;
+    const aNum = parseInt(a.slice(1), 10);
+    const bNum = parseInt(b.slice(1), 10);
+    return aNum - bNum;
+  }
+
   function applySort(col) {
     if (col === sortCol) {
       sortDir = -sortDir;
@@ -187,11 +195,11 @@
       sortDir = (col === 'move') ? 1 : -1;
     }
 
-    var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+    const rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
     rows.sort(function(a, b) {
-      var va = getVal(a, col);
-      var vb = getVal(b, col);
-      if (typeof va === 'string') return sortDir * va.localeCompare(vb);
+      const va = getVal(a, col);
+      const vb = getVal(b, col);
+      if (typeof va === 'string') return sortDir * compareMove(va, vb);
       return sortDir * (va - vb);
     });
 
@@ -202,7 +210,7 @@
     });
 
     table.querySelectorAll('.fm-th-sortable').forEach(function(th) {
-      var label = th.dataset.label;
+      const label = th.dataset.label;
       th.textContent = (th.dataset.col === sortCol)
         ? label + (sortDir === -1 ? ' \u25BC' : ' \u25B2')
         : label;
