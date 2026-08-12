@@ -163,6 +163,8 @@ async function getGameFromLittleGolem(gameNumber, flash) {
     tournament: parser.getTournament(),
     board_size: parser.getBoardSize(),
     num_pegs: board.numPegs(),
+    move1n: parser.getNormalizedFirstMove(),
+    swapped: parser.getSwapped(),
     created_on: new Date(),
   });
 

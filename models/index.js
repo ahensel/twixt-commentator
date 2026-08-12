@@ -23,6 +23,8 @@ const Game = sequelize.define('Game', {
   num_pegs: { type: DataTypes.INTEGER },
   player1_id: { type: DataTypes.INTEGER },
   player2_id: { type: DataTypes.INTEGER },
+  move1n: { type: DataTypes.STRING(2) },
+  swapped: { type: DataTypes.BOOLEAN },
 }, {
   tableName: 'games',
   timestamps: false,
