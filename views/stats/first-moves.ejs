@@ -1,0 +1,210 @@
+<% layout('layouts/stats') %>
+<% locals.currentPage = 'first-moves'; %>
+
+<h2>Twixt Commentator — First Moves</h2>
+<p>
+  For each possible first move (normalized to the upper-left quadrant of a 24×24 board),
+  this page shows how White's actual win rate compares to what Elo ratings would predict.
+  Games with board size&nbsp;24, more than 7 pegs placed, and a decisive result
+  (no forfeits, no draws) are included.
+</p>
+
+<%
+  const COLS = ['b','c','d','e','f','g','h','i','j','k','l'];
+  const ROWS = [1,2,3,4,5,6,7,8,9,10,11,12];
+
+  function rowLetter(r) {
+    return String.fromCharCode('a'.charCodeAt(0) + r - 1);
+  }
+  function cellKey(col, r) {
+    return col + rowLetter(r);
+  }
+  function moveName(move1n) {
+    const col = move1n[0];
+    const row = move1n[1].charCodeAt(0) - 'a'.charCodeAt(0) + 1;
+    return col + row;
+  }
+  function cellColor(residual, maxAbs) {
+    if (!maxAbs || maxAbs <= 0) return 'transparent';
+    const t = Math.max(-1, Math.min(1, residual / maxAbs));
+    if (t < 0) {
+      return 'rgba(52,152,219,' + (-t * 0.80).toFixed(2) + ')';
+    } else {
+      return 'rgba(231,76,60,' + (t * 0.80).toFixed(2) + ')';
+    }
+  }
+  function fmtPct(v) {
+    const s = (Math.abs(v) * 100).toFixed(1);
+    return (v >= 0 ? '+' : '\u2212') + s + '%';
+  }
+  function fmtPctPlain(v) {
+    return (v * 100).toFixed(1) + '%';
+  }
+  function residualTextColor(r) {
+    if (r >  0.001) return 'rgb(170,30,10)';
+    if (r < -0.001) return 'rgb(20,80,150)';
+    return 'inherit';
+  }
+%>
+
+<div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; flex-wrap:wrap; font-size:var(--font-size-s); color:#555;">
+  <span>Residual:</span>
+  <span>
+    <span style="display:inline-block; width:14px; height:14px; background:rgba(52,152,219,0.8); border:1px solid #888; vertical-align:middle; border-radius:2px;"></span>
+    White underperforms Elo
+  </span>
+  <span>
+    <span style="display:inline-block; width:14px; height:14px; background:#f0f0f0; border:1px solid #bbb; vertical-align:middle; border-radius:2px;"></span>
+    &asymp; expected
+  </span>
+  <span>
+    <span style="display:inline-block; width:14px; height:14px; background:rgba(231,76,60,0.8); border:1px solid #888; vertical-align:middle; border-radius:2px;"></span>
+    White overperforms Elo
+  </span>
+  <span style="margin-left:6px; border:1px dashed #999; padding:1px 5px; font-size:var(--font-size-xs);">dashed = &lt;20 games</span>
+</div>
+
+<h3 style="margin-bottom:6px;">First Move Heatmap</h3>
+<div style="overflow-x: auto;">
+  <table class="main fm-heatmap" cellspacing="0">
+    <thead>
+      <tr>
+        <th class="main fm-corner"></th>
+        <% COLS.forEach(function(col) { %>
+          <th class="main fm-col-header"><%= col %></th>
+        <% }); %>
+      </tr>
+    </thead>
+    <tbody>
+      <% ROWS.forEach(function(r) { %>
+      <tr>
+        <td class="main fm-row-header"><%= r %></td>
+        <% COLS.forEach(function(col) { %>
+          <% var key = cellKey(col, r); var s = moveStats[key]; %>
+          <% if (s) { %>
+            <% var bg = cellColor(s.residual, maxAbsResidual); %>
+            <% var sparse = s.n < 20; %>
+            <td class="main fm-cell<%= sparse ? ' fm-cell-sparse' : '' %>"
+                style="background:<%= bg %>;"
+                title="<%= moveName(key) %>: <%= s.n.toLocaleString() %> games | win <%= fmtPctPlain(s.winRate) %> | expected <%= fmtPctPlain(s.expectedRate) %> | residual <%= fmtPct(s.residual) %>">
+              <div class="fm-cell-move"><%= moveName(key) %></div>
+              <div class="fm-cell-residual" style="color:<%= residualTextColor(s.residual) %>;"><%= fmtPct(s.residual) %></div>
+            </td>
+          <% } else { %>
+            <td class="main fm-cell fm-cell-empty" title="No data for <%= col + r %>">
+              <div class="fm-cell-move" style="color:#ccc;"><%= col + r %></div>
+            </td>
+          <% } %>
+        <% }); %>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+
+<p style="margin-top:6px; font-size:var(--font-size-xs); color:#777;">
+  <%= totalGames.toLocaleString() %> games included (board size&nbsp;24, pegs&nbsp;&gt;&nbsp;7, excluding forfeits and draws).
+  Elo ratings use K&nbsp;=&nbsp;32, computed from all player history.
+  Hover a cell for details.
+</p>
+
+<h3 style="margin-top:24px; margin-bottom:4px;">Ranked by Residual</h3>
+<p style="font-size:var(--font-size-s); color:#555; margin-bottom:8px;">
+  Click any column header to sort.
+</p>
+
+<table class="main fm-ranked" id="fm-ranked-table" cellspacing="0" style="max-width:520px;">
+  <thead>
+    <tr>
+      <th class="main fm-th-sortable" data-col="rank"         data-label="#"        style="text-align:right;">#</th>
+      <th class="main fm-th-sortable" data-col="move"         data-label="Move">Move</th>
+      <th class="main fm-th-sortable" data-col="n"            data-label="Games"    style="text-align:right;">Games</th>
+      <th class="main fm-th-sortable" data-col="winRate"      data-label="Win Rate" style="text-align:right;">Win Rate</th>
+      <th class="main fm-th-sortable" data-col="expectedRate" data-label="Expected" style="text-align:right;">Expected</th>
+      <th class="main fm-th-sortable" data-col="residual"     data-label="Residual" style="text-align:right;">Residual &#x25BC;</th>
+    </tr>
+  </thead>
+  <tbody id="fm-ranked-tbody">
+    <% movesSorted.forEach(function(m, i) { %>
+    <tr class="<%= i % 2 === 0 ? 'even' : 'odd' %>"
+        data-rank="<%= i + 1 %>"
+        data-move="<%= moveName(m.move1n) %>"
+        data-n="<%= m.n %>"
+        data-winrate="<%= m.winRate %>"
+        data-expectedrate="<%= m.expectedRate %>"
+        data-residual="<%= m.residual %>">
+      <td class="main" style="text-align:right; color:#777;"><%= i + 1 %></td>
+      <td class="main" style="font-family:var(--font-for-moves); font-weight:bold; padding-left:8px;">
+        <span style="
+          display:inline-block; width:10px; height:10px;
+          background:<%= cellColor(m.residual, maxAbsResidual) %>;
+          border:1px solid #999; border-radius:2px;
+          margin-right:5px; vertical-align:middle;
+        "></span><%= moveName(m.move1n) %>
+      </td>
+      <td class="main" style="text-align:right;"><%= m.n.toLocaleString() %></td>
+      <td class="main" style="text-align:right;"><%= fmtPctPlain(m.winRate) %></td>
+      <td class="main" style="text-align:right;"><%= fmtPctPlain(m.expectedRate) %></td>
+      <td class="main" style="text-align:right; font-weight:bold; color:<%= residualTextColor(m.residual) %>;">
+        <%= fmtPct(m.residual) %>
+      </td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+<script>
+(function () {
+  'use strict';
+  var tbody = document.getElementById('fm-ranked-tbody');
+  var table = document.getElementById('fm-ranked-table');
+  var sortCol = 'residual';
+  var sortDir = -1; // -1 descending, +1 ascending
+
+  function getVal(tr, col) {
+    switch (col) {
+      case 'rank':         return parseInt(tr.dataset.rank,         10);
+      case 'move':         return tr.dataset.move;
+      case 'n':            return parseInt(tr.dataset.n,            10);
+      case 'winRate':      return parseFloat(tr.dataset.winrate);
+      case 'expectedRate': return parseFloat(tr.dataset.expectedrate);
+      case 'residual':     return parseFloat(tr.dataset.residual);
+      default:             return 0;
+    }
+  }
+
+  function applySort(col) {
+    if (col === sortCol) {
+      sortDir = -sortDir;
+    } else {
+      sortCol = col;
+      sortDir = (col === 'move') ? 1 : -1;
+    }
+
+    var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+    rows.sort(function(a, b) {
+      var va = getVal(a, col);
+      var vb = getVal(b, col);
+      if (typeof va === 'string') return sortDir * va.localeCompare(vb);
+      return sortDir * (va - vb);
+    });
+
+    rows.forEach(function(tr, i) {
+      tr.className = i % 2 === 0 ? 'even' : 'odd';
+      tr.cells[0].textContent = i + 1;
+      tbody.appendChild(tr);
+    });
+
+    table.querySelectorAll('.fm-th-sortable').forEach(function(th) {
+      var label = th.dataset.label;
+      th.textContent = (th.dataset.col === sortCol)
+        ? label + (sortDir === -1 ? ' \u25BC' : ' \u25B2')
+        : label;
+    });
+  }
+
+  table.querySelectorAll('.fm-th-sortable').forEach(function(th) {
+    th.addEventListener('click', function() { applySort(th.dataset.col); });
+  });
+})();
+</script>

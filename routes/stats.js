@@ -238,4 +238,115 @@ router.get('/pegs', async (req, res) => {
   }
 });
 
+// ── First Moves: Elo-adjusted residuals ──────────────────────────────────────
+
+// Simple in-memory cache (survives across requests, recomputed after TTL)
+let _firstMovesCache = null;
+const FIRST_MOVES_TTL_MS = 10 * 60 * 1000; // 10 minutes
+
+/**
+ * Run a full online Elo pass over all games ordered by lg_game_num, then
+ * accumulate per-move1n actual vs. expected scores for the filtered set
+ * (board_size=24, num_pegs>7, result not 'F' or 'D').
+ *
+ * Returns { moveStats, movesSorted, totalGames, maxAbsResidual }
+ */
+async function computeFirstMoves() {
+  if (_firstMovesCache && Date.now() - _firstMovesCache.computedAt < FIRST_MOVES_TTL_MS) {
+    return _firstMovesCache.data;
+  }
+
+  // Fetch every game that has player IDs and a winner, in chronological order.
+  // We need all games (not just size-24) so Elo ratings are accurate.
+  const [eloGames] = await sequelize.query(`
+    SELECT player1_id, player2_id, winner,
+           board_size, num_pegs, result, move1n
+    FROM games
+    WHERE lg_game_num IS NOT NULL
+      AND player1_id IS NOT NULL
+      AND player2_id IS NOT NULL
+      AND winner      IS NOT NULL
+    ORDER BY lg_game_num ASC
+  `);
+
+  const ratings = new Map(); // player_id (string key) → current Elo rating
+  const K = 32;
+  const getR = (id) => ratings.get(String(id)) ?? 1500;
+
+  const perMove = {}; // move1n → { n, sumActual, sumExpected }
+  let totalGames = 0;
+
+  for (const g of eloGames) {
+    const p1id = String(g.player1_id);
+    const p2id = String(g.player2_id);
+
+    const r1 = getR(p1id);
+    const r2 = getR(p2id);
+
+    // Standard Elo expected score for player 1
+    const expected1 = 1 / (1 + Math.pow(10, (r2 - r1) / 400));
+    const actual1   = parseInt(g.winner, 10) === 1 ? 1 : 0;
+
+    // Update ratings (pre-game expected, post-game update)
+    ratings.set(p1id, r1 + K * (actual1       - expected1));
+    ratings.set(p2id, r2 + K * ((1 - actual1) - (1 - expected1)));
+
+    // Accumulate only for the filtered dataset
+    const boardSize = parseInt(g.board_size, 10);
+    const numPegs   = parseInt(g.num_pegs,   10);
+    if (
+      boardSize === 24 &&
+      numPegs   >  7  &&
+      g.result !== 'F' &&
+      g.result !== 'D' &&
+      g.move1n != null &&
+      g.move1n.length === 2
+    ) {
+      const m = g.move1n;
+      if (!perMove[m]) perMove[m] = { n: 0, sumActual: 0, sumExpected: 0 };
+      perMove[m].n++;
+      perMove[m].sumActual   += actual1;
+      perMove[m].sumExpected += expected1;
+      totalGames++;
+    }
+  }
+
+  // Compute per-move summary statistics
+  const moveStats = {};
+  for (const [move1n, { n, sumActual, sumExpected }] of Object.entries(perMove)) {
+    const winRate      = sumActual   / n;
+    const expectedRate = sumExpected / n;
+    moveStats[move1n] = {
+      n,
+      winRate,
+      expectedRate,
+      residual: winRate - expectedRate,
+    };
+  }
+
+  // Sorted list (residual descending) for the ranked table
+  const movesSorted = Object.entries(moveStats)
+    .map(([move1n, stats]) => ({ move1n, ...stats }))
+    .sort((a, b) => b.residual - a.residual);
+
+  const maxAbsResidual = movesSorted.reduce(
+    (acc, m) => Math.max(acc, Math.abs(m.residual)),
+    0.001 // guard against all-zero
+  );
+
+  const data = { moveStats, movesSorted, totalGames, maxAbsResidual };
+  _firstMovesCache = { data, computedAt: Date.now() };
+  return data;
+}
+
+router.get('/first-moves', async (req, res) => {
+  try {
+    const data = await computeFirstMoves();
+    res.render('stats/first-moves', { ...data, params: req.query });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 module.exports = router;

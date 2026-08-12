@@ -955,3 +955,79 @@ div#current-comments {
   display: flex;
   gap: 8px;
 }
+
+/* ── First Moves stats page ─────────────────────────────────────── */
+.fm-heatmap {
+  font-size: var(--font-size-xs);
+  border-collapse: collapse;
+}
+
+.fm-heatmap .fm-corner,
+.fm-heatmap .fm-col-header {
+  text-align: center;
+  font-weight: bold;
+  color: var(--color-heading);
+  background: var(--color-odd-row);
+  padding: 3px 6px;
+}
+
+.fm-heatmap .fm-row-header {
+  text-align: right;
+  font-weight: bold;
+  color: var(--color-heading);
+  background: var(--color-odd-row);
+  padding: 3px 8px 3px 6px;
+  white-space: nowrap;
+}
+
+.fm-cell {
+  text-align: center;
+  padding: 4px 5px;
+  min-width: 54px;
+  cursor: default;
+  vertical-align: middle;
+}
+
+.fm-cell:hover {
+  outline: 2px solid var(--color-link);
+  outline-offset: -2px;
+  position: relative;
+  z-index: 1;
+}
+
+.fm-cell-empty {
+  background: #f7f7f7 !important;
+}
+
+.fm-cell-sparse {
+  border-style: dashed !important;
+}
+
+.fm-cell-move {
+  font-family: var(--font-for-moves);
+  font-weight: bold;
+  font-size: var(--font-size-xs);
+  color: #333;
+  line-height: 1.2;
+}
+
+.fm-cell-residual {
+  font-size: var(--font-size-xs);
+  font-weight: bold;
+  line-height: 1.2;
+  margin-top: 1px;
+}
+
+.fm-th-sortable {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.fm-th-sortable:hover {
+  background: var(--color-even-row);
+}
+
+.fm-ranked td {
+  white-space: nowrap;
+}
