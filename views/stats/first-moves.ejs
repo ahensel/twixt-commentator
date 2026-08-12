@@ -118,7 +118,7 @@
 <table class="main fm-ranked" id="fm-ranked-table" cellspacing="0" style="max-width:520px;">
   <thead>
     <tr>
-      <th class="main fm-th-sortable" data-col="rank"         data-label="#"        style="text-align:right;">#</th>
+      <th class="main"                data-col="rank"         data-label="#"        style="text-align:right;">#</th>
       <th class="main fm-th-sortable" data-col="move"         data-label="Move">Move</th>
       <th class="main fm-th-sortable" data-col="n"            data-label="Games"    style="text-align:right;">Games</th>
       <th class="main fm-th-sortable" data-col="winRate"      data-label="Win Rate" style="text-align:right;">Win Rate</th>
@@ -168,9 +168,9 @@
 
   function getVal(tr, col) {
     switch (col) {
-      case 'rank':         return parseInt(tr.dataset.rank,         10);
+      case 'rank':         return parseInt(tr.dataset.rank, 10);
       case 'move':         return tr.dataset.move;
-      case 'n':            return parseInt(tr.dataset.n,            10);
+      case 'n':            return parseInt(tr.dataset.n, 10);
       case 'winRate':      return parseFloat(tr.dataset.winrate);
       case 'expectedRate': return parseFloat(tr.dataset.expectedrate);
       case 'swapRate':     return parseFloat(tr.dataset.swaprate);
