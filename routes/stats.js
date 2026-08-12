@@ -260,7 +260,7 @@ async function computeFirstMoves() {
   // We need all games (not just size-24) so Elo ratings are accurate.
   const [eloGames] = await sequelize.query(`
     SELECT player1_id, player2_id, winner,
-           board_size, num_pegs, result, move1n
+           board_size, num_pegs, result, move1n, swapped
     FROM games
     WHERE lg_game_num IS NOT NULL
       AND player1_id IS NOT NULL
@@ -303,17 +303,18 @@ async function computeFirstMoves() {
       g.move1n.length === 2
     ) {
       const m = g.move1n;
-      if (!perMove[m]) perMove[m] = { n: 0, sumActual: 0, sumExpected: 0 };
+      if (!perMove[m]) perMove[m] = { n: 0, sumActual: 0, sumExpected: 0, sumSwapped: 0 };
       perMove[m].n++;
       perMove[m].sumActual   += actual1;
       perMove[m].sumExpected += expected1;
+      perMove[m].sumSwapped  += (parseInt(g.swapped, 10) === 1 || g.swapped === true) ? 1 : 0;
       totalGames++;
     }
   }
 
   // Compute per-move summary statistics
   const moveStats = {};
-  for (const [move1n, { n, sumActual, sumExpected }] of Object.entries(perMove)) {
+  for (const [move1n, { n, sumActual, sumExpected, sumSwapped }] of Object.entries(perMove)) {
     const winRate      = sumActual   / n;
     const expectedRate = sumExpected / n;
     moveStats[move1n] = {
@@ -321,6 +322,7 @@ async function computeFirstMoves() {
       winRate,
       expectedRate,
       residual: winRate - expectedRate,
+      swapRate: sumSwapped / n,
     };
   }
 

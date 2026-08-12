@@ -1018,6 +1018,13 @@ div#current-comments {
   margin-top: 1px;
 }
 
+.fm-cell-swap {
+  font-size: 0.68rem;
+  color: #888;
+  line-height: 1.2;
+  margin-top: 1px;
+}
+
 .fm-th-sortable {
   cursor: pointer;
   user-select: none;

@@ -86,9 +86,10 @@
             <% var sparse = s.n < 20; %>
             <td class="main fm-cell<%= sparse ? ' fm-cell-sparse' : '' %>"
                 style="background:<%= bg %>;"
-                title="<%= moveName(key) %>: <%= s.n.toLocaleString() %> games | win <%= fmtPctPlain(s.winRate) %> | expected <%= fmtPctPlain(s.expectedRate) %> | residual <%= fmtPct(s.residual) %>">
+                title="<%= moveName(key) %>: <%= s.n.toLocaleString() %> games | win <%= fmtPctPlain(s.winRate) %> | expected <%= fmtPctPlain(s.expectedRate) %> | residual <%= fmtPct(s.residual) %> | swapped <%= fmtPctPlain(s.swapRate) %>">
               <div class="fm-cell-move"><%= moveName(key) %></div>
               <div class="fm-cell-residual" style="color:<%= residualTextColor(s.residual) %>;"><%= fmtPct(s.residual) %></div>
+              <div class="fm-cell-swap"><%= fmtPctPlain(s.swapRate) %> swap</div>
             </td>
           <% } else { %>
             <td class="main fm-cell fm-cell-empty" title="No data for <%= col + r %>">
@@ -121,6 +122,7 @@
       <th class="main fm-th-sortable" data-col="n"            data-label="Games"    style="text-align:right;">Games</th>
       <th class="main fm-th-sortable" data-col="winRate"      data-label="Win Rate" style="text-align:right;">Win Rate</th>
       <th class="main fm-th-sortable" data-col="expectedRate" data-label="Expected" style="text-align:right;">Expected</th>
+      <th class="main fm-th-sortable" data-col="swapRate"     data-label="Swap %"   style="text-align:right;">Swap %</th>
       <th class="main fm-th-sortable" data-col="residual"     data-label="Residual" style="text-align:right;">Residual &#x25BC;</th>
     </tr>
   </thead>
@@ -132,6 +134,7 @@
         data-n="<%= m.n %>"
         data-winrate="<%= m.winRate %>"
         data-expectedrate="<%= m.expectedRate %>"
+        data-swaprate="<%= m.swapRate %>"
         data-residual="<%= m.residual %>">
       <td class="main" style="text-align:right; color:#777;"><%= i + 1 %></td>
       <td class="main" style="font-family:var(--font-for-moves); font-weight:bold; padding-left:8px;">
@@ -145,6 +148,7 @@
       <td class="main" style="text-align:right;"><%= m.n.toLocaleString() %></td>
       <td class="main" style="text-align:right;"><%= fmtPctPlain(m.winRate) %></td>
       <td class="main" style="text-align:right;"><%= fmtPctPlain(m.expectedRate) %></td>
+      <td class="main" style="text-align:right; color:#777;"><%= fmtPctPlain(m.swapRate) %></td>
       <td class="main" style="text-align:right; font-weight:bold; color:<%= residualTextColor(m.residual) %>;">
         <%= fmtPct(m.residual) %>
       </td>
@@ -168,6 +172,7 @@
       case 'n':            return parseInt(tr.dataset.n,            10);
       case 'winRate':      return parseFloat(tr.dataset.winrate);
       case 'expectedRate': return parseFloat(tr.dataset.expectedrate);
+      case 'swapRate':     return parseFloat(tr.dataset.swaprate);
       case 'residual':     return parseFloat(tr.dataset.residual);
       default:             return 0;
     }
