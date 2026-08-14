@@ -3,7 +3,7 @@ const router = express.Router();
 const https = require('https');
 const cheerio = require('cheerio');
 const { Op } = require('sequelize');
-const { Game } = require('../models');
+const { Game, InProgress } = require('../models');
 const { LittleGolemParser } = require('../lib/domain/LittleGolemParser');
 
 const MIN_TWIXT_GAME_NUM = 37491;
@@ -133,7 +133,11 @@ async function getGameFromLittleGolem(gameNumber, flash) {
       parser.forfeit();
       // fall through to save as forfeit
     } else {
-      // Game still in progress — return an unsaved Game object for display only
+      // Game still in progress — upsert to in_progress, then return for display only
+      await InProgress.upsert({
+        lg_game_num: gameNumber,
+        last_visited: new Date(),
+      });
       const inProgressGame = Game.build({
         lg_game_num: gameNumber,
         lg_data: lgData,
@@ -167,6 +171,9 @@ async function getGameFromLittleGolem(gameNumber, flash) {
     swapped: parser.getSwapped(),
     created_on: new Date(),
   });
+
+  // Remove from in_progress if it exists there
+  await InProgress.destroy({ where: { lg_game_num: gameNumber } });
 
   return { game: savedGame, parser };
 }

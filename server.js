@@ -8,6 +8,9 @@ const bodyParser = require('body-parser');
 const { sequelize, User } = require('./models');
 const { h2, xssize, prepareComment } = require('./lib/helpers/applicationHelper');
 
+// ── Cron jobs ────────────────────────────────────────────────────────────────
+require('./cron/visitStaleInProgress');
+
 // ── Routes ──────────────────────────────────────────────────────────────────
 const mainPageRouter = require('./routes/mainPage');
 const gameRouter = require('./routes/game');

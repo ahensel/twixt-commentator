@@ -73,6 +73,16 @@ const User = sequelize.define('User', {
   timestamps: false,
 });
 
+// ─── InProgress ───────────────────────────────────────────────────────────────
+
+const InProgress = sequelize.define('InProgress', {
+  lg_game_num: { type: DataTypes.INTEGER, primaryKey: true },
+  last_visited: { type: DataTypes.DATE, allowNull: false },
+}, {
+  tableName: 'in_progress',
+  timestamps: false,
+});
+
 const crypto = require('crypto');
 User._encryptedPassword = function (password, salt) {
   return crypto.createHash('sha1')
@@ -101,5 +111,5 @@ Comment.belongsTo(Game, { foreignKey: 'game_id', as: 'game' });
 Comment.belongsTo(User, { foreignKey: 'user_id', as: 'author' });
 User.hasMany(Comment,  { foreignKey: 'user_id', as: 'comments' });
 
-module.exports = { sequelize, Game, Comment, User };
+module.exports = { sequelize, Game, Comment, User, InProgress };
 
