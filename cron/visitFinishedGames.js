@@ -39,11 +39,30 @@ const LG_URL = 'https://www.littlegolem.net/jsp/games/gamedetail.jsp?gtid=twixt'
 
 function fetchLGPage() {
   return new Promise((resolve, reject) => {
-    https.get(LG_URL, { headers: { 'User-Agent': 'TwixtCommentator/1.0' } }, (res) => {
-      let data = '';
-      res.on('data', (chunk) => { data += chunk; });
-      res.on('end', () => resolve(data));
-    }).on('error', reject);
+    const maxRedirects = 5;
+    const fetch = (url, redirects = 0) => {
+      https.get(url, { headers: { 'User-Agent': 'TwixtCommentator/1.0' } }, (res) => {
+        if ([301, 302, 303, 307, 308].includes(res.statusCode)) {
+          if (redirects >= maxRedirects) {
+            res.resume();
+            return reject(new Error(`Too many redirects (${redirects + 1})`));
+          }
+          res.resume();
+          return fetch(res.headers.location, redirects + 1);
+        }
+
+        if (res.statusCode < 200 || res.statusCode >= 300) {
+          res.resume();
+          return reject(new Error(`HTTP ${res.statusCode} from LittleGolem`));
+        }
+
+        let data = '';
+        res.on('data', (chunk) => { data += chunk; });
+        res.on('end', () => resolve(data));
+      }).on('error', reject);
+    };
+
+    fetch(LG_URL);
   });
 }
 
