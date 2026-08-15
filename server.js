@@ -10,6 +10,7 @@ const { h2, xssize, prepareComment } = require('./lib/helpers/applicationHelper'
 
 // ── Cron jobs ────────────────────────────────────────────────────────────────
 require('./cron/visitStaleInProgress');
+require('./cron/visitFinishedGames');
 
 // ── Routes ──────────────────────────────────────────────────────────────────
 const mainPageRouter = require('./routes/mainPage');
