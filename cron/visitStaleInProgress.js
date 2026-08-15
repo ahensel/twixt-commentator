@@ -1,6 +1,6 @@
 const cron = require('node-cron');
-const http = require('http');
 const { InProgress } = require('../models');
+const { visitGame, sleep } = require('./helpers');
 
 // Runs monthly on the 1st at 06:00.
 // Visits every in_progress game that hasn't been touched in over 14 days,
@@ -35,42 +35,4 @@ cron.schedule('0 6 1 * *', async () => {
   console.log('[cron] Finished visiting stale in_progress games.');
 });
 
-function visitGame(gameNum) {
-  return new Promise((resolve) => {
-    const options = {
-      hostname: 'localhost',
-      port: process.env.PORT || 3000,
-      path: `/game/${gameNum}`,
-      method: 'GET',
-      timeout: 30000,
-    };
 
-    const req = http.request(options, (res) => {
-      // Consume the response body so the connection can be freed
-      res.resume();
-      res.on('end', () => {
-        console.log(`[cron] Visited game ${gameNum} (HTTP ${res.statusCode})`);
-        resolve();
-      });
-    });
-
-    req.on('error', (err) => {
-      console.error(`[cron] Failed to visit game ${gameNum}: ${err.message}`);
-      resolve();
-    });
-
-    req.on('timeout', () => {
-      console.error(`[cron] Timeout visiting game ${gameNum}`);
-      req.destroy();
-      resolve();
-    });
-
-    req.end();
-  });
-}
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-module.exports = { visitGame };

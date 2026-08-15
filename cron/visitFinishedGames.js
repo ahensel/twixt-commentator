@@ -1,7 +1,7 @@
 const cron = require('node-cron');
 const https = require('https');
 const cheerio = require('cheerio');
-const { visitGame } = require('./visitStaleInProgress');
+const { visitGame, sleep } = require('./helpers');
 
 // Runs daily at 05:30.
 // Scrapes LittleGolem's Twixt page for the last five finished games,
@@ -71,8 +71,4 @@ function parseLastFiveFinishedGames(html) {
   });
 
   return gameNums;
-}
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }
