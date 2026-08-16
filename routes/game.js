@@ -71,7 +71,7 @@ function extractPlayerIds(html, player1Name, player2Name) {
     }
   });
 
-  return { player1_id: nameToId[player1Name], player2_id: nameToId[player2Name] };
+  return { player1_id: nameToId[player1Name.trim()], player2_id: nameToId[player2Name.trim()] };
 }
 
 async function scrapeHtmlPage(gameNumber, cacheBust, flash) {
