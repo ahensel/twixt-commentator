@@ -3,10 +3,10 @@ const https = require('https');
 const cheerio = require('cheerio');
 const { visitGame, sleep } = require('./helpers');
 
-// Runs daily at 05:30.
+// Runs twice daily at 05:30 and 17:30.
 // Scrapes LittleGolem's Twixt page for the last five finished games,
 // hitting each game route so it gets fetched from LittleGolem.
-cron.schedule('30 5 * * *', async () => {
+cron.schedule('30 5,17 * * *', async () => {
   console.log('[cron] Checking for recently finished games...');
 
   let html;
