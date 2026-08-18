@@ -6,7 +6,8 @@
   The original intent of this was simply to prevent unnecessary requests to the Little Golem website, and to keep Commentator at least partially running
   even if Little Golem was down.
   But what I didn't expect was the web crawlers that index the web for search engines.
-  Over the years, through their random visits, they have inadvertently cached the vast majority of Little Golem's Twixt games in Twixt Commentator's database!
+  Over the years, through their random visits, they inadvertently cached over 99% of Little Golem's Twixt games in Twixt Commentator's database.
+  I have since added some periodically running scripts to keep up the total.
 </p>
 
 <table class="main" cellspacing="0" style="max-width: 480px;">
@@ -41,6 +42,10 @@
 </table>
 
 <br/>
+  The number from Little Golem includes games in progress, so it will never be 100%,
+  but I do feel there are still a few missing.
+
+<br/><br/>
 <h3>Games by Board Size and Result</h3>
 
 <% const showOther = breakdown.grand.other > 0; %>
@@ -83,7 +88,7 @@
 <br/>
 <h3>Games by Board Size Since Introduction</h3>
 <p>The table above is a little unfair: size 24 has a 15 year head start on other sizes.
-This table counts each size's games only from the point when that size first appeared on Little Golem,
+The next table counts each size's games only from the point when that size first appeared on Little Golem,
 so the percentages are directly comparable.</p>
 
 <table class="main" cellspacing="0">
@@ -106,4 +111,3 @@ so the percentages are directly comparable.</p>
     <% }); %>
   </tbody>
 </table>
-
