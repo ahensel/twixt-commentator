@@ -210,9 +210,18 @@ async function saveComment(commentId) {
       return false;
     }
 
-    // Server confirmed the save; reload to reflect the new state
-    saveScrollPosition();
-    window.location.reload();
+    // Server confirmed the save; update the local DOM and re-render
+    body.setAttribute('data-raw-comment', newText);
+    delete body.dataset.originalHtml;
+    
+    // Re-show links
+    const addLink = document.getElementById('addCommentLink');
+    if (addLink) addLink.classList.remove('hidden');
+    document.querySelectorAll('.comment-edit-delete-links a').forEach(link => {
+      link.classList.remove('hidden');
+    });
+
+    if (typeof renderAllComments === 'function') renderAllComments();
   } catch (err) {
     alert('Error saving comment: ' + err.message);
   }

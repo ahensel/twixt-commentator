@@ -4,18 +4,13 @@
       <div class="preview-header">
         <%- include('_comment_header', { comment: comment, author: author.dataValues, preview: true }) %>
       </div>
-      <%- prepareComment(comment.comment, swapStyle, namedSequences) %>
-      <br/>
-      <br/>
+      <div id="preview-body" data-raw-comment="<%= comment.comment %>"></div>
     </div>
   <% } else { %>
     <div id="comment-header-<%= comment.id %>" class="comment-header">
       <%- include('_comment_header', { comment: comment, author: author.dataValues, preview: false }) %>
     </div>
-    <div id="comment-body-<%= comment.id %>">
-    <%- prepareComment(comment.comment, swapStyle, namedSequences) %>
-    <br/>
-    <br/>
+    <div id="comment-body-<%= comment.id %>" data-raw-comment="<%= comment.comment %>">
     </div>
   <% } %>
   <script>

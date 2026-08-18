@@ -39,6 +39,7 @@
       if (container && html.trim()) {
         removePreview();
         container.insertAdjacentHTML('beforeend', html);
+        if (typeof renderAllComments === 'function') renderAllComments();
       }
       if (buttonPressed !== 'Preview') {
         // If this was the first comment on an unsaved blank board, update state

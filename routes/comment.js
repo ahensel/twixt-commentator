@@ -4,7 +4,7 @@
 const express = require('express');
 const router = express.Router();
 const { Comment, Game, User } = require('../models');
-const { prepareComment, hiliteTwixtMoves } = require('../lib/helpers/applicationHelper');
+
 
 router.post('/', async (req, res) => {
   if (!req.session.user_id) {
@@ -71,28 +71,10 @@ router.post('/', async (req, res) => {
       res.set('X-New-Game-Id', String(newGameId));
     }
     const author = await User.findByPk(req.session.user_id);
-    const swapStyle = req.body.swap_style === 'P' ? 'P' : null;
-
-    // Build namedSequences from all existing comments on this game
-    // so that previews and new comments can reference previously defined names
-    const namedSequences = {};
-    if (!isBlankBoard && gameId) {
-      const existingComments = await Comment.findAll({
-        where: { game_id: gameId, deleted_at: null },
-        order: [['created_on', 'ASC']],
-      });
-      for (const ec of existingComments) {
-        hiliteTwixtMoves(ec.comment, swapStyle, namedSequences);
-      }
-    }
-
     res.render('comment/index', {
       comment,
       preview,
       author,
-      prepareComment,
-      swapStyle,
-      namedSequences,
       params: req.body,
       session: req.session,
     });
@@ -146,25 +128,10 @@ router.put('/:id', async (req, res) => {
   // Re-render the comment with the same context used on the game page
   const author = await User.findByPk(req.session.user_id);
   const game = await Game.findByPk(comment.game_id);
-  const swapStyle = game ? game.swap_style : null;
-
-  // Build namedSequences from all existing comments on this game
-  const namedSequences = {};
-  const existingComments = await Comment.findAll({
-    where: { game_id: comment.game_id, deleted_at: null },
-    order: [['created_on', 'ASC']],
-  });
-  for (const ec of existingComments) {
-    hiliteTwixtMoves(ec.comment, swapStyle, namedSequences);
-  }
-
   res.render('comment/index', {
     comment,
     preview: false,
     author: author,
-    prepareComment,
-    swapStyle,
-    namedSequences,
     params: req.body,
     session: req.session,
   });

@@ -173,10 +173,7 @@
             <%- include('../comment/_comment_header', { comment: comment, author: comment.author, preview: false }) %>
           </div>
           <% if (!isDeleted) { %>
-          <div id="comment-body-<%= comment.id %>">
-          <%- prepareComment(comment.comment, game.swap_style, namedSequences) %>
-          <br>
-          <br>
+          <div id="comment-body-<%= comment.id %>" data-raw-comment="<%= comment.comment %>">
           </div>
           <% } %>
           <% } %>
@@ -302,4 +299,5 @@ document.addEventListener('keydown', function(e) {
 });
 </script>
 
+<script src="/javascripts/comment_highlighter.js"></script>
 <% block('scripts', include('_comment_script')); %>
