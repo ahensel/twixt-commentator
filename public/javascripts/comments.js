@@ -141,8 +141,9 @@ async function editComment(commentId) {
   // Hide the "Add a comment" box if it's open to prevent two textareas
   hideAddCommentBox();
 
-  // Store original rendered HTML so cancel can restore it
+  // Store original rendered HTML and raw text so cancel can restore it
   body.dataset.originalHtml = body.innerHTML;
+  body.dataset.originalRaw = body.getAttribute('data-raw-comment');
 
   // Fetch the raw comment text from the server
   try {
@@ -150,6 +151,7 @@ async function editComment(commentId) {
     if (!resp.ok) {
       alert('Could not load comment for editing. Please try again.');
       delete body.dataset.originalHtml;
+      delete body.dataset.originalRaw;
       return false;
     }
     const data = await resp.json();
@@ -161,13 +163,25 @@ async function editComment(commentId) {
       '</textarea>' +
       '<div class="comment-buttons">' +
         '<input type="button" value="Save" onclick="saveComment(' + commentId + '); return false;">' +
+        '<input type="button" value="Preview" onclick="previewEditComment(' + commentId + '); return false;">' +
         '<button type="button" class="help-btn" onclick="openHelpModal(); return false;" title="Help">?</button>' +
         '<input type="button" class="discard" value="Cancel" onclick="cancelEdit(' + commentId + '); return false;">' +
       '</div>';
 
-    // Focus the textarea
+    // Focus the textarea and attach live preview state updates
     const textarea = body.querySelector('textarea');
-    if (textarea) textarea.focus();
+    if (textarea) {
+      textarea.focus();
+      textarea.addEventListener('input', (e) => {
+        body.setAttribute('data-raw-comment', e.target.value);
+        const previewBody = document.getElementById('edit-preview-' + commentId);
+        if (previewBody) previewBody.setAttribute('data-raw-comment', e.target.value);
+        if (typeof renderAllComments === 'function') renderAllComments();
+      });
+    }
+
+    // Render initially to ensure state is correct
+    if (typeof renderAllComments === 'function') renderAllComments();
 
     // Hide the "Add a comment" link while editing
     const addLink = document.getElementById('addCommentLink');
@@ -180,8 +194,33 @@ async function editComment(commentId) {
   } catch (err) {
     alert('Error loading comment for editing: ' + err.message);
     delete body.dataset.originalHtml;
+    delete body.dataset.originalRaw;
   }
 
+  return false;
+}
+
+/**
+ * Show a live preview for an edited comment.
+ */
+function previewEditComment(commentId) {
+  const body = document.getElementById('comment-body-' + commentId);
+  if (!body) return false;
+  const textarea = body.querySelector('textarea');
+  if (!textarea) return false;
+
+  let previewBody = document.getElementById('edit-preview-' + commentId);
+  if (!previewBody) {
+    previewBody = document.createElement('div');
+    previewBody.id = 'edit-preview-' + commentId;
+    previewBody.className = 'edit-preview';
+    // Insert it above the textarea for consistency with Add Comment
+    body.insertBefore(previewBody, body.firstChild);
+  }
+
+  previewBody.setAttribute('data-raw-comment', textarea.value);
+  if (typeof renderAllComments === 'function') renderAllComments();
+  textarea.focus();
   return false;
 }
 
@@ -213,6 +252,10 @@ async function saveComment(commentId) {
     // Server confirmed the save; update the local DOM and re-render
     body.setAttribute('data-raw-comment', newText);
     delete body.dataset.originalHtml;
+    delete body.dataset.originalRaw;
+    
+    // Clear the textarea so renderAllComments can inject the HTML
+    body.innerHTML = '';
     
     // Re-show links
     const addLink = document.getElementById('addCommentLink');
@@ -236,10 +279,14 @@ function cancelEdit(commentId) {
   const body = document.getElementById('comment-body-' + commentId);
   if (!body) return false;
 
-  // Restore original rendered HTML
+  // Restore original rendered HTML and raw text
   if (body.dataset.originalHtml) {
     body.innerHTML = body.dataset.originalHtml;
     delete body.dataset.originalHtml;
+  }
+  if (body.dataset.originalRaw != null) {
+    body.setAttribute('data-raw-comment', body.dataset.originalRaw);
+    delete body.dataset.originalRaw;
   }
 
   // Re-show the "Add a comment" link
