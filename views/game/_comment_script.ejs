@@ -17,6 +17,18 @@
     }
   });
 
+  // Real-time preview update
+  const newCommentTextarea = document.getElementById('new_comment');
+  if (newCommentTextarea) {
+    newCommentTextarea.addEventListener('input', (e) => {
+      const previewBody = document.getElementById('preview-body');
+      if (previewBody) {
+        previewBody.setAttribute('data-raw-comment', e.target.value);
+        if (typeof renderAllComments === 'function') renderAllComments();
+      }
+    });
+  }
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const buttonPressed = document.getElementById('button_pressed').value;
@@ -59,6 +71,9 @@
         updateUndoLink();
         document.getElementById('addComment').classList.add('hidden');
         document.getElementById('addCommentLink').classList.remove('hidden');
+      } else {
+        // Focus back on the textarea for real-time typing
+        if (newCommentTextarea) newCommentTextarea.focus();
       }
     })
     .catch((err) => console.error('Comment submit error:', err));

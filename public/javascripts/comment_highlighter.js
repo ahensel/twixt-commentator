@@ -2,8 +2,19 @@
 // Attributes are not allowed on any tag (prevents XSS via inline event handlers etc.).
 function sanitizeHtml(html) {
   if (html == null) return '';
-  const allowed = /^<\/?(b|i|u|em|strong|s|strike|sup|sub|blockquote|code|pre)>$|^<br\s*\/?>$/i;
-  return String(html).replace(/<[^>]*>/g, tag => allowed.test(tag) ? tag : '');
+  
+  // Split the string by the allowed tags.
+  const allowedRegex = /(<\/?(?:b|i|u|em|strong|s|strike|sup|sub|blockquote|code|pre)>|<br\s*\/?>)/i;
+  let parts = String(html).split(allowedRegex);
+  
+  for (let i = 0; i < parts.length; i++) {
+    if (i % 2 === 0) {
+      // This is a text node (not an allowed tag), so escape < and >
+      parts[i] = parts[i].replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+  }
+  
+  return parts.join('');
 }
 
 function xssize(html) {
