@@ -40,6 +40,7 @@ function scrollToBottom() {
 
 function showAddCommentBox() {
   document.getElementById('new_comment').value = '';
+  setPreviewButtonLabel(false);
   checkStateChange();
   document.getElementById('addCommentLink').classList.add('hidden');
   document.getElementById('addComment').classList.remove('hidden');
@@ -96,6 +97,12 @@ function setButtonPressed(button, name) {
 function removePreview() {
   const preview = document.getElementById('preview');
   if (preview != null) preview.parentNode.removeChild(preview);
+}
+
+// Reflect the Add-Comment preview state in the Preview button's label.
+function setPreviewButtonLabel(showing) {
+  const btn = document.getElementById('preview_button');
+  if (btn) btn.value = showing ? 'Hide preview' : 'Preview';
 }
 
 function checkStateChange() {
@@ -163,7 +170,7 @@ async function editComment(commentId) {
       '</textarea>' +
       '<div class="comment-buttons">' +
         '<input type="button" value="Save" onclick="saveComment(' + commentId + '); return false;">' +
-        '<input type="button" value="Preview" onclick="previewEditComment(' + commentId + '); return false;">' +
+        '<input type="button" id="preview-btn-' + commentId + '" value="Preview" onclick="previewEditComment(' + commentId + '); return false;">' +
         '<button type="button" class="help-btn" onclick="openHelpModal(); return false;" title="Help">?</button>' +
         '<input type="button" class="discard" value="Cancel" onclick="cancelEdit(' + commentId + '); return false;">' +
       '</div>';
@@ -210,10 +217,12 @@ function previewEditComment(commentId) {
   if (!textarea) return false;
 
   let previewBody = document.getElementById('edit-preview-' + commentId);
+  const btn = document.getElementById('preview-btn-' + commentId);
 
   // Preview button is a toggle: if a preview is already showing, remove it
   if (previewBody) {
     previewBody.parentNode.removeChild(previewBody);
+    if (btn) btn.value = 'Preview';
     if (typeof renderAllComments === 'function') renderAllComments();
     textarea.focus();
     return false;
@@ -226,6 +235,7 @@ function previewEditComment(commentId) {
   body.insertBefore(previewBody, body.firstChild);
 
   previewBody.setAttribute('data-raw-comment', textarea.value);
+  if (btn) btn.value = 'Hide preview';
   if (typeof renderAllComments === 'function') renderAllComments();
   textarea.focus();
   return false;
@@ -260,10 +270,10 @@ async function saveComment(commentId) {
     body.setAttribute('data-raw-comment', newText);
     delete body.dataset.originalHtml;
     delete body.dataset.originalRaw;
-    
+
     // Clear the textarea so renderAllComments can inject the HTML
     body.innerHTML = '';
-    
+
     // Re-show links
     const addLink = document.getElementById('addCommentLink');
     if (addLink) addLink.classList.remove('hidden');

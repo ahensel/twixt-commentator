@@ -37,6 +37,7 @@
     // and skip the server round-trip entirely.
     if (buttonPressed === 'Preview' && document.getElementById('preview')) {
       removePreview();
+      setPreviewButtonLabel(false);
       document.getElementById('new_comment')?.focus();
       return;
     }
@@ -81,6 +82,8 @@
         document.getElementById('addComment').classList.add('hidden');
         document.getElementById('addCommentLink').classList.remove('hidden');
       } else {
+        // Preview was shown — reflect that in the button label
+        setPreviewButtonLabel(true);
         // Focus back on the textarea for real-time typing
         if (newCommentTextarea) newCommentTextarea.focus();
       }
