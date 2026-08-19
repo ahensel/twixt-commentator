@@ -2,18 +2,18 @@
 // Attributes are not allowed on any tag (prevents XSS via inline event handlers etc.).
 function sanitizeHtml(html) {
   if (html == null) return '';
-  
+
   // Split the string by the allowed tags.
   const allowedRegex = /(<\/?(?:b|i|u|em|strong|s|strike|sup|sub|blockquote|code|pre)>|<br\s*\/?>)/i;
   let parts = String(html).split(allowedRegex);
-  
+
   for (let i = 0; i < parts.length; i++) {
     if (i % 2 === 0) {
       // This is a text node (not an allowed tag), so escape < and >
       parts[i] = parts[i].replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
   }
-  
+
   return parts.join('');
 }
 
@@ -160,12 +160,12 @@ function hiliteTwixtMoves(html, swapStyle, namedSequences) {
   });
 }
 
-function renderAllComments() {
+function renderAll(type) {
   const swapStyleElement = document.getElementById('swapStyle');
   const swapStyle = swapStyleElement ? swapStyleElement.value : null;
   const namedSequences = {};
 
-  document.querySelectorAll('[data-raw-comment]').forEach(container => {
+  document.querySelectorAll(`.${type}[data-raw-comment]`).forEach(container => {
     // Check if we are in edit mode (contains a textarea)
     if (container.querySelector('textarea.comment-textarea')) {
       // Rebuild state but don't inject HTML over the textarea
@@ -174,13 +174,18 @@ function renderAllComments() {
       hiliteTwixtMoves(safeText, swapStyle, namedSequences);
       return;
     }
-    
+
     let rawText = container.getAttribute('data-raw-comment') || '';
     let safeText = sanitizeHtml(rawText);
     let highlightedHtml = hiliteTwixtMoves(safeText, swapStyle, namedSequences);
-    
+
     container.innerHTML = highlightedHtml.replace(/\n/g, '<br/>') + '<br/><br/>';
   });
+}
+
+function renderAllComments() {
+  renderAll('note');
+  renderAll('comment');
 }
 
 // Run initially

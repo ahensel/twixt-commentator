@@ -86,7 +86,7 @@ function hideAddCommentBox() {
 }
 
 function commentBoxHasComments() {
-  return document.getElementById('new_comment').value.replace(/\s*/, '').length > 0;
+  return document.getElementById('new_comment').value.trim().length > 0;
 }
 
 // Multiple submit buttons share a form: track which was clicked via a hidden field.
@@ -102,13 +102,12 @@ function removePreview() {
 // Reflect the Add-Comment preview state in the Preview button's label.
 function setPreviewButtonLabel(showing) {
   const btn = document.getElementById('preview_button');
-  if (btn) btn.value = showing ? 'Hide preview' : 'Preview';
+  if (btn) btn.value = showing ? 'Hide Preview' : 'Show Preview';
 }
 
 function checkStateChange() {
   const hasComments = commentBoxHasComments();
   document.getElementById('comment_button').disabled = !hasComments;
-  document.getElementById('preview_button').disabled = !hasComments;
 }
 
 function commentsInFocus(state) {
@@ -165,12 +164,12 @@ async function editComment(commentId) {
     const rawText = data.comment || '';
 
     body.innerHTML =
-      '<textarea class="comment-textarea" rows="6">' +
+      '<textarea id="edit-box-' + commentId + '" class="comment-textarea" rows="8" onkeyup="checkEditBoxStateChange(' + commentId + ');">' +
         escapeHtml(rawText) +
       '</textarea>' +
       '<div class="comment-buttons">' +
-        '<input type="button" value="Save" onclick="saveComment(' + commentId + '); return false;">' +
-        '<input type="button" id="preview-btn-' + commentId + '" value="Preview" onclick="previewEditComment(' + commentId + '); return false;">' +
+        '<input type="button" id="save-btn-' + commentId + '" value="Save" onclick="saveComment(' + commentId + '); return false;">' +
+        '<input type="button" id="preview-btn-' + commentId + '" value="Show Preview" onclick="previewEditComment(' + commentId + '); return false;">' +
         '<button type="button" class="help-btn" onclick="openHelpModal(); return false;" title="Help">?</button>' +
         '<input type="button" class="discard" value="Cancel" onclick="cancelEdit(' + commentId + '); return false;">' +
       '</div>';
@@ -207,6 +206,11 @@ async function editComment(commentId) {
   return false;
 }
 
+function checkEditBoxStateChange(commentId) {
+  const hasComments = document.getElementById('edit-box-' + commentId).value.trim().length > 0;
+  document.getElementById('save-btn-' + commentId).disabled = !hasComments;
+}
+
 /**
  * Toggle a live preview for an edited comment (show it if hidden, hide it if shown).
  */
@@ -222,7 +226,7 @@ function previewEditComment(commentId) {
   // Preview button is a toggle: if a preview is already showing, remove it
   if (previewBody) {
     previewBody.parentNode.removeChild(previewBody);
-    if (btn) btn.value = 'Preview';
+    if (btn) btn.value = 'Show Preview';
     if (typeof renderAllComments === 'function') renderAllComments();
     textarea.focus();
     return false;
@@ -235,7 +239,8 @@ function previewEditComment(commentId) {
   body.insertBefore(previewBody, body.firstChild);
 
   previewBody.setAttribute('data-raw-comment', textarea.value);
-  if (btn) btn.value = 'Hide preview';
+  previewBody.classList.add('comment');
+  if (btn) btn.value = 'Hide Preview';
   if (typeof renderAllComments === 'function') renderAllComments();
   textarea.focus();
   return false;

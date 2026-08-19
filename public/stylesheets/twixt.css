@@ -18,7 +18,10 @@
   --color-hp-bg:     #80d080;
   --color-header:    #a0a0ff;
   --color-header-x:  #dcdcff;
+  --color-note-header:   #80c080;
+  --color-note-header-x: #c4e8c4;
   --color-preview:   #c0c0ff;
+  --color-preview-note:  #c4e8c4;
   --color-focus:     #275ec5;
   --color-tick-hole: #cc0000;
   --color-tick-peg:  #808080;
@@ -702,6 +705,10 @@ img.crosshair, img.new-peg {
   background-color: var(--color-preview);
 }
 
+.preview-header-note {
+  background-color: var(--color-preview-note);
+}
+
 .comment-header-text {
   flex: 1;
   white-space: nowrap;
@@ -716,7 +723,8 @@ img.crosshair, img.new-peg {
   background-color: var(--color-header-x);
 }
 
-.comment-edit-delete-links {
+.comment-edit-delete-links,
+.note-edit-delete-links {
   display: inline-flex;
   gap: 10px;
   margin-left: 10px;
@@ -729,6 +737,33 @@ img.crosshair, img.new-peg {
   background-color: var(--color-header-x);
   border-radius: 0.5rem;
   padding: 1px 5px;
+}
+
+.note-edit-delete-links a {
+  background-color: var(--color-note-header-x);
+  border-radius: 0.5rem;
+  padding: 1px 5px;
+}
+
+/* ── Private notes ──────────────────────────────────────────── */
+.add-note-link {
+  margin-top: 5px;
+}
+
+.note-header {
+  font-size: var(--font-size-s);
+  font-weight: normal;
+  margin-left: -10px;
+  padding-left: 10px;
+  display: flex;
+  align-items: baseline;
+  padding-right: 6px;
+  background-color: var(--color-note-header);
+}
+
+.note-header-text {
+  flex: 1;
+  white-space: nowrap;
 }
 
 .comment-buttons {
@@ -751,7 +786,7 @@ img.crosshair, img.new-peg {
   resize: vertical;
 }
 
-div#current-comments {
+#current-comments, #private-notes-container, #note-new-preview {
   font-size: var(--font-size-s);
 }
 

@@ -163,52 +163,81 @@
     </div>
 
     <div id="comments">
+      <% if (game.isInProgress()) { %>
+        <div class="comment-header">Game is in progress.</div>
+      <% } %>
+
+      <input type="hidden" id="privateNoteGameId" value="<%= params.gid %>">
+      <div id="private-notes-container"></div>
+      <% if (game.isInProgress()) { %>
+        <div id="addNote" class="hidden">
+          <div class="note-header">Add a private note:</div>
+          <textarea class="comment-textarea" id="new_note" name="new_note" rows="8"
+            onkeyup="privateNotes.checkNoteStateChange();"></textarea>
+          <div class="comment-buttons">
+            <input id="note_save_button" type="button" value="Save"
+              onclick="privateNotes.saveNewNote(); return false;"
+              title="Save to browser local storage" disabled>
+            <input id="note_preview_button" type="button" value="Show Preview"
+              onclick="privateNotes.previewNewNote(); return false;">
+            <button type="button" class="help-btn" onclick="openHelpModal(); return false;" title="Help">?</button>
+            <input type="button" class="discard" value="Discard"
+              onclick="return privateNotes.hideAddNoteBox();">
+          </div>
+        </div>
+        <div id="addNoteLink" class="add-note-link">
+          <a href="" onclick="return privateNotes.showAddNoteBox();" title="Saves to browser local storage">Add a private note</a>
+          <span id="undoNoteDiscardLink" class="hidden"> | <a href="" onclick="return privateNotes.undoNoteDiscard();">Restore draft</a></span>
+        </div>
+      <% } %>
+
       <div id="current-comments">
         <% const namedSequences = {}; %>
         <% (game.comments || []).forEach((comment) => { %>
           <% const isAuthor = session && session.user_id && comment.author && session.user_id === comment.author.id; %>
           <% const isDeleted = !!comment.deleted_at; %>
           <% if (!isDeleted || isAuthor) { %>
-          <div id="comment-header-<%= comment.id %>" class="comment-header<%= isDeleted ? ' comment-header-deleted' : '' %>">
-            <%- include('../comment/_comment_header', { comment: comment, author: comment.author, preview: false }) %>
-          </div>
-          <% if (!isDeleted) { %>
-          <div id="comment-body-<%= comment.id %>" data-raw-comment="<%= comment.comment %>">
-          </div>
-          <% } %>
+            <div id="comment-header-<%= comment.id %>" class="comment-header<%= isDeleted ? ' comment-header-deleted' : '' %>">
+              <%- include('../comment/_comment_header', { comment: comment, author: comment.author, preview: false }) %>
+            </div>
+            <% if (!isDeleted) { %>
+              <div id="comment-body-<%= comment.id %>" class="comment" data-raw-comment="<%= comment.comment %>">
+            </div>
+            <% } %>
           <% } %>
         <% }); %>
       </div>
-      <% if (game.isInProgress()) { %>
-        <div class="comment-header">Game is in progress.</div>
-      <% } else if (!session || !session.user_id) { %>
-        <div class="comment-header">You must be logged in to add comments.</div>
-      <% } else { %>
-        <div id="addCommentLink">
-          <a href="" onclick="return showAddCommentBox();">Add a comment</a>
-          <span id="undoDiscardLink" class="hidden"> | <a href="" onclick="return undoDiscard();">Restore draft</a></span>
-        </div>
-        <div id="addComment" class="hidden">
-          <div class="comment-header">Add a comment:</div>
-          <form id="comment_form" action="/comment" method="post">
-            <input type="hidden" name="game" value="<%= game.id || 'blank' %>">
-            <input type="hidden" id="button_pressed" name="button_pressed" value="Comment">
-            <% if (game.isBlank) { %>
-            <input type="hidden" name="player1" value="<%= game.player1 %>">
-            <input type="hidden" name="player2" value="<%= game.player2 %>">
-            <input type="hidden" name="board_size" value="<%= game.board_size %>">
-            <input type="hidden" name="link_policy" value="<%= game.link_policy || '' %>">
-            <input type="hidden" name="swap_style" value="<%= game.swap_style || '' %>">
-            <% } %>
-            <textarea class="comment-textarea" id="new_comment" name="new_comment" rows="8" onkeyup="checkStateChange(); scheduleSave();" onfocus="commentsInFocus(true)" onblur="commentsInFocus(false)"></textarea>
-            <div class="comment-buttons">
-              <input id="comment_button" type="submit" value="Comment" onclick="removePreview(); setButtonPressed(this, 'Comment'); return hideAddCommentBox();" disabled>
-              <input id="preview_button" type="submit" value="Preview" onclick="setButtonPressed(this, 'Preview'); return true;" disabled>
-              <button type="button" class="help-btn" onclick="openHelpModal(); return false;" title="Help">?</button>
-              <input type="button" class="discard" value="Discard" onclick="return hideAddCommentBox();">
-            </div>
-          </form>
-        </div>
+
+      <% if (!game.isInProgress()) { %>
+        <% if (!session || !session.user_id) { %>
+          <div class="comment-header">You must be logged in to add comments.</div>
+        <% } else { %>
+          <div id="addCommentLink">
+            <a href="" onclick="return showAddCommentBox();">Add a comment</a>
+            <span id="undoDiscardLink" class="hidden"> | <a href="" onclick="return undoDiscard();">Restore draft</a></span>
+          </div>
+          <div id="addComment" class="hidden">
+            <div class="comment-header">Add a comment:</div>
+            <form id="comment_form" action="/comment" method="post">
+              <input type="hidden" name="game" value="<%= game.id || 'blank' %>">
+              <input type="hidden" id="button_pressed" name="button_pressed" value="Comment">
+              <% if (game.isBlank) { %>
+              <input type="hidden" name="player1" value="<%= game.player1 %>">
+              <input type="hidden" name="player2" value="<%= game.player2 %>">
+              <input type="hidden" name="board_size" value="<%= game.board_size %>">
+              <input type="hidden" name="link_policy" value="<%= game.link_policy || '' %>">
+              <input type="hidden" name="swap_style" value="<%= game.swap_style || '' %>">
+              <% } %>
+              <textarea class="comment-textarea" id="new_comment" name="new_comment" rows="8" onkeyup="checkStateChange(); scheduleSave();" onfocus="commentsInFocus(true)" onblur="commentsInFocus(false)"></textarea>
+              <div class="comment-buttons">
+                <input id="comment_button" type="submit" value="Comment" onclick="removePreview(); setButtonPressed(this, 'Comment'); return hideAddCommentBox();" disabled>
+                <input id="preview_button" type="submit" value="Show Preview" onclick="setButtonPressed(this, 'Preview'); return true;">
+                <button type="button" class="help-btn" onclick="openHelpModal(); return false;" title="Help">?</button>
+                <input type="button" class="discard" value="Discard" onclick="return hideAddCommentBox();">
+              </div>
+            </form>
+          </div>
+        <% } %>
       <% } %>
     </div>
   </div>
@@ -235,7 +264,7 @@
         Move sequences are automatically highlighted and made clickable. If the previous
         move number appears earlier in the comment, the sequence continues from that move.
         Otherwise, it's treated as a variation from the main line. This can be error-prone
-        with multiple sequences in one comment, so please use the Preview button to check your work
+        with multiple sequences in one comment, so please use the Show Preview button to check your work
         before posting.
       </p>
       <p>
@@ -300,4 +329,5 @@ document.addEventListener('keydown', function(e) {
 </script>
 
 <script src="/javascripts/comment_highlighter.js"></script>
+<script src="/javascripts/private_notes.js"></script>
 <% block('scripts', include('_comment_script')); %>

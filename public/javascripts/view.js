@@ -250,7 +250,7 @@ function jumpFromComment(firstMoveNum, commentMoves) {
   }
   uncolorMove(BoardState.currentMoveNum);
   BoardState.currentMoves.clearUserMoves();
-  showAllMoves(firstMoveNum - 1, commentMoves);
+  showAllMoves(firstMoveNum - (BoardState.currentMoves.gameIsInProgress()? 0 : 1), commentMoves);
 }
 
 function getCommentPegErrors(moves) {
@@ -264,7 +264,7 @@ function getCommentPegErrors(moves) {
 }
 
 function getXFromLetter(xChar) {
-  return (BoardState.twixtGame.board.size < 27)? xChar.toUpperCase().charCodeAt(0) - 64 : 
+  return (BoardState.twixtGame.board.size < 27)? xChar.toUpperCase().charCodeAt(0) - 64 :
     ((xChar >= 'a')? xChar.charCodeAt(0) - 96 : xChar.charCodeAt(0) - 38);
 }
 
