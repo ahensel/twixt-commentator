@@ -201,7 +201,7 @@ async function editComment(commentId) {
 }
 
 /**
- * Show a live preview for an edited comment.
+ * Toggle a live preview for an edited comment (show it if hidden, hide it if shown).
  */
 function previewEditComment(commentId) {
   const body = document.getElementById('comment-body-' + commentId);
@@ -210,13 +210,20 @@ function previewEditComment(commentId) {
   if (!textarea) return false;
 
   let previewBody = document.getElementById('edit-preview-' + commentId);
-  if (!previewBody) {
-    previewBody = document.createElement('div');
-    previewBody.id = 'edit-preview-' + commentId;
-    previewBody.className = 'edit-preview';
-    // Insert it above the textarea for consistency with Add Comment
-    body.insertBefore(previewBody, body.firstChild);
+
+  // Preview button is a toggle: if a preview is already showing, remove it
+  if (previewBody) {
+    previewBody.parentNode.removeChild(previewBody);
+    if (typeof renderAllComments === 'function') renderAllComments();
+    textarea.focus();
+    return false;
   }
+
+  previewBody = document.createElement('div');
+  previewBody.id = 'edit-preview-' + commentId;
+  previewBody.className = 'edit-preview';
+  // Insert it above the textarea for consistency with Add Comment
+  body.insertBefore(previewBody, body.firstChild);
 
   previewBody.setAttribute('data-raw-comment', textarea.value);
   if (typeof renderAllComments === 'function') renderAllComments();

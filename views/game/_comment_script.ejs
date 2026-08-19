@@ -32,6 +32,15 @@
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const buttonPressed = document.getElementById('button_pressed').value;
+
+    // Preview button is a toggle: if a preview is already showing, remove it
+    // and skip the server round-trip entirely.
+    if (buttonPressed === 'Preview' && document.getElementById('preview')) {
+      removePreview();
+      document.getElementById('new_comment')?.focus();
+      return;
+    }
+
     const data = new FormData(form);
     const body = new URLSearchParams();
     data.forEach((v, k) => body.append(k, v));
@@ -80,4 +89,3 @@
   });
 })();
 </script>
-
