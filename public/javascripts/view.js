@@ -245,12 +245,15 @@ function jumpTo(moveNum) {
 }
 
 function jumpFromComment(firstMoveNum, commentMoves) {
-  if (firstMoveNum > BoardState.currentMoves.getMoves().length) {
-    firstMoveNum = BoardState.currentMoves.getMoves().length;
+  const finalEditMoveNum = BoardState.currentMoves.getMoves().length +
+    (BoardState.currentMoves.gameIsInProgress() ? 1 : 0);
+  if (firstMoveNum > finalEditMoveNum) {
+    firstMoveNum = finalEditMoveNum;
   }
   uncolorMove(BoardState.currentMoveNum);
   BoardState.currentMoves.clearUserMoves();
-  showAllMoves(firstMoveNum - (BoardState.currentMoves.gameIsInProgress()? 0 : 1), commentMoves);
+
+  showAllMoves(firstMoveNum - 1, commentMoves);
 }
 
 function getCommentPegErrors(moves) {
