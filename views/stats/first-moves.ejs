@@ -62,7 +62,8 @@
     <span style="display:inline-block; width:14px; height:14px; background:rgba(231,76,60,0.8); border:1px solid #888; vertical-align:middle; border-radius:2px;"></span>
     White overperforms Elo
   </span>
-  <span style="margin-left:6px; border:1px dashed #999; padding:1px 5px; font-size:var(--font-size-xs);">dashed = &lt;20 games</span>
+  <span style="margin-left:6px; padding:1px 5px; font-size:var(--font-size-xs);">stripes = &lt;100 games</span>
+  <span style="padding:1px 5px; font-size:var(--font-size-xs);">thick stripes = &lt;20 games</span>
 </div>
 
 <h3 style="margin-bottom:6px;">First Move Heatmap</h3>
@@ -85,8 +86,9 @@
           <% if (s) { %>
             <% var bg = cellColor(s.residual, maxAbsResidual); %>
             <% var sparse = s.n < 20; %>
-            <td class="main fm-cell<%= sparse ? ' fm-cell-sparse' : '' %>"
-                style="background:<%= bg %>;"
+            <% var mid = !sparse && s.n < 100; %>
+            <td class="main fm-cell<%= sparse ? ' fm-cell-sparse' : (mid ? ' fm-cell-mid' : '') %>"
+                style="background-color:<%= bg %>;"
                 title="<%= moveName(key) %>: <%= s.n.toLocaleString() %> games | win <%= fmtPctPlain(s.winRate) %> | expected <%= fmtPctPlain(s.expectedRate) %> | residual <%= fmtPct(s.residual) %> | swapped <%= fmtPctPlain(s.swapRate) %>">
               <div class="fm-cell-move"><%= moveName(key) %></div>
               <div class="fm-cell-residual" style="color:<%= residualTextColor(s.residual) %>;"><%= fmtPct(s.residual) %></div>
