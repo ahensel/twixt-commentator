@@ -73,20 +73,20 @@
       <tr>
         <th class="main fm-corner"></th>
         <% COLS.forEach(function(col) { %>
-          <th class="main fm-col-header"><%= col %></th>
+          <th class="main fm-col-header"><%= col %>, <%= String.fromCharCode(217 - col.charCodeAt(0)) %></th>
         <% }); %>
       </tr>
     </thead>
     <tbody>
       <% ROWS.forEach(function(r) { %>
       <tr>
-        <td class="main fm-row-header"><%= r %></td>
+        <td class="main fm-row-header"><%= r %>, <%= 25-r %></td>
         <% COLS.forEach(function(col) { %>
-          <% var key = cellKey(col, r); var s = moveStats[key]; %>
+          <% const key = cellKey(col, r); const s = moveStats[key]; %>
           <% if (s) { %>
-            <% var bg = cellColor(s.residual, maxAbsResidual); %>
-            <% var sparse = s.n < 20; %>
-            <% var mid = !sparse && s.n < 100; %>
+            <% const bg = cellColor(s.residual, maxAbsResidual); %>
+            <% const sparse = s.n < 20; %>
+            <% const mid = !sparse && s.n < 100; %>
             <td class="main fm-cell<%= sparse ? ' fm-cell-sparse' : (mid ? ' fm-cell-mid' : '') %>"
                 style="background-color:<%= bg %>;"
                 title="<%= moveName(key) %>: <%= s.n.toLocaleString() %> games | win <%= fmtPctPlain(s.winRate) %> | expected <%= fmtPctPlain(s.expectedRate) %> | residual <%= fmtPct(s.residual) %> | swapped <%= fmtPctPlain(s.swapRate) %>">
