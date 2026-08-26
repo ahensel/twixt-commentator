@@ -72,6 +72,10 @@
     container.innerHTML = '';
 
     const notes = getNotesSorted();
+    // The add-note form (#addNote) is only rendered server-side while the
+    // game is in progress. Use its presence to gate editing: finished games
+    // allow deleting notes but not editing them.
+    const notesEditable = !!document.getElementById('addNote');
     notes.forEach(({ index, note }) => {
       // Header
       const headerEl = document.createElement('div');
@@ -85,13 +89,16 @@
       const editDeleteSpan = document.createElement('span');
       editDeleteSpan.className = 'note-edit-delete-links';
 
-      const editLink = document.createElement('a');
-      editLink.href = '';
-      editLink.textContent = 'Edit';
-      editLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        editNote(index);
-      });
+      if (notesEditable) {
+        const editLink = document.createElement('a');
+        editLink.href = '';
+        editLink.textContent = 'Edit';
+        editLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          editNote(index);
+        });
+        editDeleteSpan.appendChild(editLink);
+      }
 
       const deleteLink = document.createElement('a');
       deleteLink.href = '';
@@ -101,7 +108,6 @@
         confirmDeleteNote(index);
       });
 
-      editDeleteSpan.appendChild(editLink);
       editDeleteSpan.appendChild(deleteLink);
       headerEl.appendChild(headerText);
       headerEl.appendChild(editDeleteSpan);
@@ -258,6 +264,10 @@
   function editNote(noteIndex) {
     const body = document.getElementById('note-body-' + noteIndex);
     if (!body) return false;
+
+    // Editing is only allowed while the game is in progress; finished games
+    // may only delete notes.
+    if (!document.getElementById('addNote')) return false;
 
     const note = getNote(noteIndex);
     if (!note) return false;
