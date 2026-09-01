@@ -51,6 +51,9 @@ function buildJTwixtFileData(game) {
 // GET /jtwixt/gen?gameid=X
 router.get('/gen', async (req, res) => {
   const gameId = req.query.gameid;
+  if (!gameId) {
+    return res.status(400).send('Missing required query parameter: gameid');
+  }
   let game = await Game.findOne({ where: { lg_game_num: gameId } });
   if (!game) {
     game = await getGameFromLittleGolem(gameId);
