@@ -11,10 +11,15 @@ router.get('/', async (req, res) => {
     let page;
     if (req.query.page) {
       page = parseInt(req.query.page, 10);
-      if (page < 1) page = 1;
     } else {
-      page = req.session.main_page || 1;
+      page = parseInt(req.session.main_page, 10) || 1;
     }
+
+    // Ensure page is a valid positive integer, defaulting to 1
+    if (!Number.isInteger(page) || page < 1) {
+      page = 1;
+    }
+
     req.session.main_page = page;
     const offset = (page - 1) * PER_PAGE;
 
