@@ -1,7 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require('../models');
-const { sanitizeHtml } = require('../lib/helpers/applicationHelper');
+
+// Sanitizer: keep only known safe opening/closing tags, strip everything else.
+// Attributes are not allowed on any tag (prevents XSS via inline event handlers etc.).
+function sanitizeHtml(html) {
+  if (html == null) return '';
+  const allowed = /^<\/?(b|i|u|em|strong|s|strike|sup|sub|blockquote|code|pre)>$|^<br\s*\/?>$/i;
+  return String(html).replace(/<[^>]*>/g, tag => allowed.test(tag) ? tag : '');
+}
 
 // Helper: reconstruct the "back" redirect URL from hidden form params,
 // mirroring Rails' go_back action.
@@ -127,4 +134,3 @@ router.post('/profile/:id', async (req, res) => {
 });
 
 module.exports = router;
-
