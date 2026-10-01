@@ -14,7 +14,7 @@ set -euo pipefail
 
 # ── Configuration ──────────────────────────────────────────────────────────────
 REMOTE_USER="ubuntu"
-REMOTE_HOST="yammy.local"   # or IP address
+REMOTE_HOST="yammy"   # or IP address
 REMOTE_DIR="/home/ubuntu/twixt-commentator"
 APP_NAME="twixt-commentator"         # pm2 process name
 # ──────────────────────────────────────────────────────────────────────────────
