@@ -4,7 +4,7 @@ const https = require('https');
 const { Game, InProgress, sequelize } = require('../models');
 const { visitGame, sleep } = require('./helpers');
 
-// Runs monthly on the 14th at 06:00.
+// Runs monthly on the 4th at 06:00.
 // Finds all players active in the last N days, scrapes each player's Twixt
 // game list from LittleGolem, and visits every game number we don't have in
 // the database yet:
@@ -109,7 +109,7 @@ async function getPlayerMissingGames(playerId, inProgressInDb, finishedInDb) {
   ];
 }
 
-cron.schedule('0 6 14 * *', async () => {
+cron.schedule('0 6 4 * *', async () => {
   console.log('[cron] Checking recent players for missing games...');
 
   let playerIds;
