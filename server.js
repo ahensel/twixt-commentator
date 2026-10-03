@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
 
 const { sequelize, User } = require('./models');
@@ -35,6 +36,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true, encoding: 'utf-8' }));
 app.use(bodyParser.json());
 
+const sessionStore = new MySQLStore({
+  host: sequelize.config.host,
+  port: sequelize.config.port,
+  user: sequelize.config.username,
+  password: sequelize.config.password,
+  database: sequelize.config.database,
+  createDatabaseTable: false, // table is created by the migration
+  clearExpired: true,
+  checkExpirationInterval: 15 * 60 * 1000, // expire old sessions every 15 min
+  expiration: 24 * 60 * 60 * 1000, // 24 hours
+});
+
 app.use(session({
   secret: process.env.SESSION_SECRET || (() => {
     if (process.env.NODE_ENV === 'production') {
@@ -45,6 +58,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   name: '_twixt_session_id',
+  store: sessionStore,
 }));
 
 // ── Expose helpers and session to all EJS templates via res.locals ───────────
