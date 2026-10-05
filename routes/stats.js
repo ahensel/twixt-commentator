@@ -3,32 +3,26 @@ const router = express.Router();
 const https = require('https');
 const { sequelize } = require('../models');
 
-const LG_URL = 'https://www.littlegolem.net/jsp/games/gamedetail.jsp?gtid=twixt';
+const LG_URL = 'https://api.littlegolem.net/stats/gamecatalogue';
 
 /**
- * Fetch the raw HTML from Little Golem's Twixt game detail page.
- * Returns a Promise<string> of the response body.
+ * Fetch the Little Golem game catalogue JSON.
+ * Returns a Promise<Array> of {gtype, games, introduced_at} objects.
  */
-function fetchLGPage() {
+function fetchLGGameCatalogue() {
   return new Promise((resolve, reject) => {
     https.get(LG_URL, { headers: { 'User-Agent': 'TwixtCommentator/1.0' } }, (res) => {
       let data = '';
       res.on('data', (chunk) => { data += chunk; });
-      res.on('end', () => resolve(data));
+      res.on('end', () => {
+        try {
+          resolve(JSON.parse(data));
+        } catch (err) {
+          reject(new Error(`Invalid JSON from Little Golem: ${err.message}`));
+        }
+      });
     }).on('error', reject);
   });
-}
-
-/**
- * Parse the total game count from the LG page HTML.
- * The page contains text like:
- *   Number of tournaments/games: <b>5784 /\r\n104745</b>
- */
-function parseLGGameCount(html) {
-  // Match "Number of tournaments/games:" followed by bold content containing "/ <number>"
-  const match = html.match(/Number of tournaments\/games:\s*<b>[^<]*\/\s*([\d,]+)/i);
-  if (!match) return null;
-  return parseInt(match[1].replace(/,/g, ''), 10);
 }
 
 // Result codes shown in the breakdown table, in display order.
@@ -138,13 +132,14 @@ router.get('/', async (req, res) => {
       totalSinceIntro:  parseInt(r.total_since_intro, 10),
     }));
 
-    // 3. Scrape total count from Little Golem
+    // 3. Fetch total count from Little Golem's game catalogue API
     let lgTotal = null;
     let lgError = null;
     try {
-      const html = await fetchLGPage();
-      lgTotal = parseLGGameCount(html);
-      if (lgTotal === null) lgError = 'Could not parse game count from Little Golem.';
+      const catalogue = await fetchLGGameCatalogue();
+      const twixt = catalogue.find(game => game.gtype === 'twixt');
+      lgTotal = twixt ? parseInt(twixt.games, 10) : null;
+      if (lgTotal === null) lgError = 'Could not find Twixt game count.';
     } catch (err) {
       lgError = `Failed to fetch Little Golem: ${err.message}`;
     }
