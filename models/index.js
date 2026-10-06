@@ -10,6 +10,7 @@ const Game = sequelize.define('Game', {
   lg_game_num: { type: DataTypes.INTEGER },
   result: { type: DataTypes.STRING(1) },
   lg_data: { type: DataTypes.TEXT },
+  lg_data_type: { type: DataTypes.STRING(1), allowNull: true },
   created_on: { type: DataTypes.DATE },
   last_commented_on: { type: DataTypes.DATE },
   last_commented_by: { type: DataTypes.INTEGER },

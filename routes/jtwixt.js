@@ -3,6 +3,7 @@ const router = express.Router();
 const https = require('https');
 const { Game } = require('../models');
 const { LittleGolemParser } = require('../lib/domain/LittleGolemParser');
+const { LittleGolemNewParser } = require('../lib/domain/LittleGolemNewParser');
 const { JTwixtFormatter } = require('../lib/domain/JTwixtFormatter');
 
 function httpsGet(host, path) {
@@ -17,28 +18,43 @@ function httpsGet(host, path) {
 }
 
 async function getGameFromLittleGolem(gameNumber) {
-  const cacheBust = Math.random().toString();
-  const response = await httpsGet('www.littlegolem.net', `/jsp/game/png.jsp?gid=${gameNumber}&${cacheBust}`);
-  if (response.statusCode !== 200 || !response.body || response.body.trim() === '') return null;
+  try {
+    const response = await httpsGet('api.littlegolem.net', `/games/gamedetail/${gameNumber}`);
+    if (response.statusCode !== 200 || !response.body || response.body.trim() === '') return null;
 
-  const lgData = response.body.trim();
-  if (!lgData.includes('SZ[24]')) return null;
+    // The API sometimes returns duplicate JSON objects concatenated — take the first.
+    const firstJson = response.body.trim().replace(/}\s*\{[\s\S]*$/, '}');
+    const apiJson = JSON.parse(firstJson);
 
-  const parser = new LittleGolemParser(lgData);
-  return Game.build({
-    lg_game_num: gameNumber,
-    lg_data: lgData,
-    result: '?',
-    player1: parser.getPlayer1(),
-    player2: parser.getPlayer2(),
-    winner: 0,
-    tournament: parser.getTournament(),
-  });
+    if (apiJson.gtid !== 'twixt') return null;
+
+    const parser = new LittleGolemNewParser(apiJson);
+    const lgData = LittleGolemNewParser.buildLgData(apiJson);
+    return Game.build({
+      lg_game_num: gameNumber,
+      lg_data: lgData,
+      lg_data_type: 'N',
+      result: '?',
+      player1: parser.getPlayer1(),
+      player2: parser.getPlayer2(),
+      winner: 0,
+      tournament: parser.getTournament(),
+      board_size: parser.getBoardSize(),
+    });
+  } catch (e) {
+    return null;
+  }
 }
 
 function buildJTwixtFileData(game) {
-  const parser = new LittleGolemParser(game.lg_data);
   const jtwixt = new JTwixtFormatter();
+
+  let parser;
+  if (game.lg_data_type === 'N') {
+    parser = new LittleGolemNewParser(game.lg_data, game);
+  } else {
+    parser = new LittleGolemParser(game.lg_data);
+  }
 
   let fileData = jtwixt.formatStandardTwixtHeader(game.player1, game.player2);
   parser.forEachMoveForJtwixt((x, y, player) => {

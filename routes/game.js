@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const https = require('https');
-const cheerio = require('cheerio');
 const { Op } = require('sequelize');
 const { Game, InProgress } = require('../models');
 const { LittleGolemParser } = require('../lib/domain/LittleGolemParser');
+const { LittleGolemNewParser } = require('../lib/domain/LittleGolemNewParser');
 
 const MIN_TWIXT_GAME_NUM = 37491;
 
@@ -38,126 +38,71 @@ function parseGameNumber(gidStr, flash) {
   return n;
 }
 
-// LittleGolem SGF is encoding coordinates beyond 'z' (26) as simply further up the ASCII chart.
-// The problem is, in Size 48 games, this gets into codes above 127, which causes character encoding headaches.
-// This translates coordinates beyond 'z' to the range 'A-Z', which is in agreement with board coordinates.
-function fixSgfCoordinates(sgf) {
-  return sgf.replace(/([br])\[(.)(.)([\s\S]*?\])/g, (_, color, c1, c2, rest) => {
-    const fix = c => (c.charCodeAt(0) > 122 && c.charCodeAt(0) < 149)
-      ? String.fromCharCode(c.charCodeAt(0) - 58)
-      : c;
-    return `${color}[${fix(c1)}${fix(c2)}${rest}`;
-  });
-}
-
-// Extract player IDs from the HTML game page.
-// The HTML contains links like:
-//   <a href="/jsp/info/player.jsp?plid=12345">Player Name ★</a>
-// The player ID is in the `plid` query parameter, and the link text is the
-// player name (optionally followed by a star). We match each player name
-// against these links to find their ID.
-function extractPlayerIds(html, player1Name, player2Name) {
-  const $ = cheerio.load(html);
-
-  // Build a map: player name (trimmed, star stripped) -> plid
-  const playerLinks = $('.page-content a[href*="player.jsp?plid="]');
-  const nameToId = {};
-  playerLinks.each((_, el) => {
-    const href = $(el).attr('href');
-    const plidMatch = href.match(/plid=([0-9]+)/);
-    if (plidMatch) {
-      const name = $(el).text().replace(/\s*★.*/, '').trim();
-      nameToId[name] = parseInt(plidMatch[1], 10);
-    }
-  });
-
-  return { player1_id: nameToId[player1Name.trim()], player2_id: nameToId[player2Name.trim()] };
-}
-
-async function scrapeHtmlPage(gameNumber, cacheBust, flash) {
+// Fetch game JSON from the new LittleGolem API.
+async function fetchLgApi(gameNumber, flash) {
   try {
-    return await httpsGet('www.littlegolem.net', `/jsp/game/game.jsp?gid=${gameNumber}&${cacheBust}`);
+    const response = await httpsGet('api.littlegolem.net', `/games/gamedetail/${gameNumber}`);
+    if (response.statusCode === 404 || !response.body || response.body.trim() === '') {
+      flash.error = `Game ${gameNumber} does not exist.`;
+      return null;
+    }
+    if (response.statusCode !== 200) {
+      flash.error = `HTTP error ${response.statusCode} trying to get game ${gameNumber}.`;
+      return null;
+    }
+    // The API sometimes returns duplicate JSON objects concatenated — take the first.
+    const firstJson = response.body.trim().replace(/}\s*\{[\s\S]*$/, '}');
+    return JSON.parse(firstJson);
   } catch (e) {
-    flash.error = `Network error scraping HTML for game ${gameNumber}: ${e.message}`;
+    flash.error = `Network error fetching game ${gameNumber}: ${e.message}`;
     return null;
   }
 }
 
 async function getGameFromLittleGolem(gameNumber, flash) {
-  const cacheBust = Math.random().toString();
-  let response;
+  const apiJson = await fetchLgApi(gameNumber, flash);
+  if (!apiJson) return { game: null, parser: null };
 
-  try {
-    response = await httpsGet('www.littlegolem.net', `/jsp/game/png.jsp?gid=${gameNumber}&${cacheBust}`);
-  } catch (e) {
-    flash.error = `Network error fetching game ${gameNumber}: ${e.message}`;
-    return { game: null, parser: null };
-  }
-
-  if (response.statusCode === 500 || !response.body || response.body.trim() === '') {
-    flash.error = `Game ${gameNumber} does not exist.`;
-    return { game: null, parser: null };
-  }
-  if (response.statusCode !== 200) {
-    flash.error = `HTTP error ${response.statusCode} trying to get game ${gameNumber}.`;
-    return { game: null, parser: null };
-  }
-
-  const lgData = fixSgfCoordinates(response.body.trim());
-
-  // if the EV[] (event) tag does not contain the string 'twixt' somewhere between the square brackets
-  if (!/EV\[[^\]]*twixt[^\]]*\]/i.test(lgData)) {
+  if (apiJson.gtid !== 'twixt') {
     flash.error = `Game ${gameNumber} is not a Twixt game.`;
     return { game: null, parser: null };
   }
 
-  const parser = new LittleGolemParser(lgData);
-
-  // Always scrape the HTML page to get player IDs and check forfeit status
-  const htmlResp = await scrapeHtmlPage(gameNumber, cacheBust, flash);
-  if (!htmlResp) {
-    return { game: null, parser: null };
-  }
-
-  if (htmlResp.statusCode !== 200) {
-    flash.error = `HTTP error ${htmlResp.statusCode} scraping HTML for game ${gameNumber}.`;
-    return { game: null, parser: null };
-  }
+  const parser = new LittleGolemNewParser(apiJson);
+  const lgData = LittleGolemNewParser.buildLgData(apiJson);
 
   const player1Name = parser.getPlayer1();
   const player2Name = parser.getPlayer2();
-  const { player1_id, player2_id } = extractPlayerIds(htmlResp.body, player1Name, player2Name);
+  const player1_id = parser.getPlayer1Id();
+  const player2_id = parser.getPlayer2Id();
 
-  if (!parser.isGameOver()) {
-    if (htmlResp.body.includes('game finished')) {
-      parser.forfeit();
-      // fall through to save as forfeit
-    } else {
-      // Game still in progress — upsert to in_progress, then return for display only
-      await InProgress.upsert({
-        lg_game_num: gameNumber,
-        last_visited: new Date(),
-      });
-      const inProgressGame = Game.build({
-        lg_game_num: gameNumber,
-        lg_data: lgData,
-        result: '?',
-        player1: player1Name,
-        player2: player2Name,
-        player1_id,
-        player2_id,
-        winner: 0,
-        tournament: parser.getTournament(),
-        board_size: parser.getBoardSize(),
-      });
-      return { game: inProgressGame, parser };
-    }
+  if (!parser.isCompleted()) {
+    // Game still in progress — upsert to in_progress, then return for display only
+    await InProgress.upsert({
+      lg_game_num: gameNumber,
+      last_visited: new Date(),
+    });
+    const inProgressGame = Game.build({
+      lg_game_num: gameNumber,
+      lg_data: lgData,
+      lg_data_type: 'N',
+      result: '?',
+      player1: player1Name,
+      player2: player2Name,
+      player1_id,
+      player2_id,
+      winner: 0,
+      tournament: parser.getTournament(),
+      board_size: parser.getBoardSize(),
+    });
+    return { game: inProgressGame, parser };
   }
 
   const board = parser.getTwixtBoard();
   const savedGame = await Game.create({
     lg_game_num: gameNumber,
     lg_data: lgData,
+    lg_data_type: 'N',
     result: parser.getResultChar(),
     player1: player1Name,
     player2: player2Name,
@@ -275,9 +220,13 @@ router.get('/:gid', async (req, res) => {
   let parser = null;
 
   if (game) {
-    parser = new LittleGolemParser(game.lg_data);
-    if (game.isForfeit()) parser.forfeit();
-    // Eagerly load comments if not already (Sequelize include above handles it)
+    if (game.lg_data_type === 'N') {
+      parser = new LittleGolemNewParser(game.lg_data, game);
+      if (game.isForfeit()) parser.forfeit();
+    } else {
+      parser = new LittleGolemParser(game.lg_data);
+      if (game.isForfeit()) parser.forfeit();
+    }
   } else {
     const result = await getGameFromLittleGolem(gameNumber, flash);
     game = result.game;
