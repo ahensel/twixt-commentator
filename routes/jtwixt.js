@@ -64,12 +64,18 @@ function buildJTwixtFileData(game) {
   return fileData;
 }
 
-// GET /jtwixt/gen?gameid=X
+const FORMATS = {
+  tgt: { extension: '.tgt', build: (game) => buildJTwixtFileData(game) },
+};
+
+// GET /jtwixt/gen?gameid=X[&format=tgt][&filename=...]
 router.get('/gen', async (req, res) => {
   const gameId = req.query.gameid;
   if (!gameId) {
     return res.status(400).send('Missing required query parameter: gameid');
   }
+
+  const format = FORMATS[req.query.format] ? req.query.format : 'tgt';
   let game = await Game.findOne({ where: { lg_game_num: gameId } });
   if (!game) {
     game = await getGameFromLittleGolem(gameId);
@@ -79,8 +85,10 @@ router.get('/gen', async (req, res) => {
     return res.status(404).send('Game not found');
   }
 
-  const fileData = buildJTwixtFileData(game);
-  const fileName = `game${gameId}.tgt`;
+  const fileData = FORMATS[format].build(game);
+  let fileName = req.query.filename ? String(req.query.filename).trim().replace(/[^\w. -]/g, '') : '';
+  if (!fileName) fileName = `game${gameId}`;
+  if (!fileName.toLowerCase().endsWith(FORMATS[format].extension)) fileName += FORMATS[format].extension;
 
   res.setHeader('Content-Type', 'application/octet-stream');
   res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);

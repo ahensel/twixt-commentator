@@ -907,6 +907,25 @@ img.crosshair, img.new-peg {
   outline: none;
 }
 
+/* ── Download modal ──────────────────────────────────────────────── */
+.download-modal h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.download-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.download-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
 /* ── User Info modal overrides ───────────────────────────────────── */
 .user-info-modal {
   padding: 20px;

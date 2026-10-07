@@ -144,7 +144,7 @@
       <a href="http://www.littlegolem.net/jsp/tournament/tournament.jsp?trnid=<%= game.tournament %>"><%- game.tournament + '&nbsp;(LG)' %></a> |
     <% } %>
     <a href="http://www.littlegolem.net/jsp/game/game.jsp?gid=<%= game.lg_game_num %>">This&nbsp;game&nbsp;(LG)</a> |
-    <a href="/jtwixt/gen?gameid=<%= params?.gid %>">Download&nbsp;JTwixt&nbsp;file</a>
+    <a id="downloadLink" href="#" onclick="return openDownloadModal();" data-gameid="<%= params?.gid %>">Download&nbsp;game</a>
     <% } %>
   </div>
   </div>
@@ -305,7 +305,83 @@ preformatted   text</pre></li>
   </div>
 </div>
 
+<!-- Download Modal -->
+<div id="download-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="download-title">
+  <div class="modal download-modal">
+    <a class="modal-close-btn" href="#" onclick="return closeDownloadModal();" aria-label="Close">&times;</a>
+    <h3 id="download-title">Download Game</h3>
+    <form id="download-form">
+      <input type="hidden" id="download-gameid" value="<%= params?.gid %>">
+      <label class="download-row">
+        Filename:
+        <input type="text" id="download-filename" name="filename" value="game<%= params?.gid %>" maxlength="100" required>
+      </label>
+      <label class="download-row">
+        Format:
+        <select id="download-format" name="format">
+          <option value="tgt">.tgt (JTwixt)</option>
+        </select>
+      </label>
+      <div class="download-actions">
+        <button type="submit">Save</button>
+        <button type="button" id="download-cancel" onclick="return closeDownloadModal();">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <script>
+let downloadFocusTrap = null;
+function openDownloadModal() {
+  const overlay = document.getElementById('download-overlay');
+  overlay.classList.remove('hidden');
+  downloadFocusTrap = modalFocusTrap(overlay);
+  document.getElementById('download-filename').focus();
+  document.getElementById('download-filename').select();
+  return false;
+}
+function closeDownloadModal() {
+  if (downloadFocusTrap) { downloadFocusTrap(); downloadFocusTrap = null; }
+  document.getElementById('download-overlay').classList.add('hidden');
+  return false;
+}
+document.getElementById('download-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeDownloadModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && document.getElementById('download-overlay').classList.contains('hidden') === false) {
+    closeDownloadModal();
+  }
+});
+document.getElementById('download-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const gameId = document.getElementById('download-gameid').value;
+  const format = document.getElementById('download-format').value;
+  const filename = document.getElementById('download-filename').value.trim();
+  if (!filename) return;
+  const url = '/jtwixt/gen?gameid=' + encodeURIComponent(gameId)
+    + '&format=' + encodeURIComponent(format)
+    + '&filename=' + encodeURIComponent(filename);
+  fetch(url, { credentials: 'same-origin' })
+    .then(function(response) {
+      if (!response.ok) throw new Error('Download failed');
+      return response.blob();
+    })
+    .then(function(blob) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename + '.tgt';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(a.href);
+      closeDownloadModal();
+    })
+    .catch(function() {
+      window.location.href = url;
+    });
+});
+
 let helpFocusTrap = null;
 function openHelpModal() {
   document.getElementById('help-overlay').classList.remove('hidden');
