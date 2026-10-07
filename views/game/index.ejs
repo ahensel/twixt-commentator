@@ -320,6 +320,7 @@ preformatted   text</pre></li>
         Format:
         <select id="download-format" name="format">
           <option value="tgt">.tgt (JTwixt)</option>
+          <option value="t1">.t1 (Twixtbot)</option>
         </select>
       </label>
       <div class="download-actions">
@@ -370,7 +371,7 @@ document.getElementById('download-form').addEventListener('submit', function(e) 
     .then(function(blob) {
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = filename + '.tgt';
+      a.download = filename + '.' + format;
       document.body.appendChild(a);
       a.click();
       a.remove();

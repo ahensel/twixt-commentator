@@ -66,6 +66,7 @@ function buildJTwixtFileData(game) {
 
 const FORMATS = {
   tgt: { extension: '.tgt', build: (game) => buildJTwixtFileData(game) },
+  t1: { extension: '.t1', build: (game) => require('../lib/domain/TwixtbotFormatter').TwixtbotFormatter.buildFile(game) },
 };
 
 // GET /jtwixt/gen?gameid=X[&format=tgt][&filename=...]
