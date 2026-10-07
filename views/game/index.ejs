@@ -141,7 +141,7 @@
       <% }
     } else {
       if (game.tournament && game.tournament.trim() !== '' && game.tournament.trim() !== 'twixt') { %>
-      <a href="http://www.littlegolem.net/jsp/tournament/tournament.jsp?trnid=<%= game.tournament %>"><%- game.tournament + '&nbsp;(LG)' %></a> |
+      <a href="https://www.littlegolem.net/app/#/tournament/<%= game.tournament %>"><%- game.tournament + '&nbsp;(LG)' %></a> |
     <% } %>
     <a href="http://www.littlegolem.net/jsp/game/game.jsp?gid=<%= game.lg_game_num %>">This&nbsp;game&nbsp;(LG)</a> |
     <a id="downloadLink" href="#" onclick="return openDownloadModal();" data-gameid="<%= params?.gid %>">Download&nbsp;game</a>
