@@ -26,6 +26,7 @@ rsync -az --delete \
   --exclude '.env' \
   --exclude '.env.prod' \
   --exclude '.DS_Store' \
+  --exclude 'cron/last-seen.json' \
   . "${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_DIR}"
 
 echo "==> Copying .env.prod to server as .env…"
