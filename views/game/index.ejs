@@ -146,7 +146,7 @@
       if (game.tournament && game.tournament.trim() !== '' && game.tournament.trim() !== 'twixt' && !game.tournament.trim().startsWith('twixt.ld.')) { %>
         <a href="https://www.littlegolem.net/app/#/tournament/<%= game.tournament %>/game/<%= game.lg_game_num %>">This&nbsp;game&nbsp;(LG)</a> |
       <% } else { %>
-        <a href="https://www.littlegolem.net/app/#/tournament/twixt.ch.1.1.1/game/<%= game.lg_game_num %>">This&nbsp;game&nbsp;(LG)</a> |
+        <a href="https://www.littlegolem.net/app/#/game/daily/<%= game.lg_game_num %>">This&nbsp;game&nbsp;(LG)</a> |
       <% } %>
       <a id="downloadLink" href="#" onclick="return openDownloadModal();" data-gameid="<%= params?.gid %>">Download&nbsp;game</a>
     <% } %>
