@@ -14,6 +14,7 @@ require('./cron/visitStaleInProgress');
 require('./cron/visitFinishedGames');
 require('./cron/visitFinishedGamesV2');
 require('./cron/recent-player-update');
+require('./cron/recent-player-update-V2');
 
 // ── Routes ──────────────────────────────────────────────────────────────────
 const mainPageRouter = require('./routes/mainPage');

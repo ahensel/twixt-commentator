@@ -80,7 +80,7 @@ function getPlayerGames(playerId, variant) {
   });
 }
 
-cron.schedule('0 6 10 * *', async () => {
+cron.schedule('0 6 11 * *', async () => {
   console.log('[cron] Checking recent players for missing games (API)...');
 
   let playerIds;
