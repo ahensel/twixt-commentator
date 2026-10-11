@@ -27,7 +27,8 @@ const API_BASE = 'https://api.littlegolem.net/players/{plid}/games?gtype=twixt&v
 function httpsGet(url) {
   return new Promise((resolve, reject) => {
     const req = https.get(
-      { url, headers: { 'User-Agent': 'TwixtCommentator/1.0' } },
+      url,
+      { headers: { 'User-Agent': 'TwixtCommentator/1.0' } },
       (res) => {
         if ([301, 302, 303, 307, 308].includes(res.statusCode)) {
           res.resume();
@@ -79,7 +80,7 @@ function getPlayerGames(playerId, variant) {
   });
 }
 
-cron.schedule('30 6 11 * *', async () => {
+cron.schedule('0 6 2 * *', async () => {
   console.log('[cron] Checking recent players for missing games (API)...');
 
   let playerIds;
