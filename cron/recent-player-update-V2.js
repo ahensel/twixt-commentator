@@ -11,8 +11,6 @@ const { visitGame, sleep } = require('./helpers');
 //   in-progress games checked against the in_progress table
 //   finished games   checked against the games table
 // So each missing game gets fetched from LittleGolem via the /game route.
-// Kept alongside the old scraper (recent-player-update.js) so we can compare
-// coverage and retire the old one once confident.
 
 // Number of days to look back for "recent" players.
 const DAYS = 45;
