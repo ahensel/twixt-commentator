@@ -5,13 +5,15 @@ const path = require('path');
 const { InProgress } = require('../models');
 const { visitGame, sleep } = require('./helpers');
 
-// Runs twice daily at 05:15 and 17:15.
+// Runs daily at 05:30.
+//
 // Phase 1: uses the LittleGolem JSON API to get recently finished games for
 // each variant (DEFAULT, SIZE30, SIZE48), then visits each game that is newer
 // than the last one seen in the previous run (saved in last-seen.json). It
 // fetches pages of 10 and keeps going until it finds the last-seen game — so
 // we don't skip past games that finished between runs — or until it has looked
 // back MAX_GAMES.
+//
 // Phase 2: fetches the current ongoing games the same way (state=ongoing,
 // pages of ONGOING_PAGE_SIZE, all of them) and compares against the
 // in_progress table. Ongoing games the API reports that are missing from the
@@ -19,8 +21,7 @@ const { visitGame, sleep } = require('./helpers');
 // the table that the API no longer reports are also visited — interesting
 // because phase 1 just ran and should have captured any that finished between
 // runs, so these suggest phase 1 is missing games.
-// Kept alongside the old scraper (visitFinishedGames.js) so we can compare
-// coverage and retire the old one once confident.
+
 cron.schedule('30 5 * * *', async () => {
   console.log('[cron] Checking for recently finished games (API)...');
 
