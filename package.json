@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "body-parser": "^2.3.0",
-    "cheerio": "^1.2.0",
     "dotenv": "^18.0.5",
     "ejs": "^6.0.1",
     "ejs-mate": "^4.0.0",

@@ -10,8 +10,6 @@ const { sequelize, User } = require('./models');
 const { h2, xssize, prepareComment } = require('./lib/helpers/applicationHelper');
 
 // ── Cron jobs ────────────────────────────────────────────────────────────────
-require('./cron/visitStaleInProgress');
-require('./cron/visitFinishedGames');
 require('./cron/visitFinishedGamesV2');
 require('./cron/recent-player-update-V2');
 
