@@ -3,7 +3,7 @@ const https = require('https');
 const { Game, InProgress, sequelize } = require('../models');
 const { visitGame, sleep } = require('./helpers');
 
-// Runs monthly on the 2nd at 06:00.
+// Runs monthly on the 1st day of the month at 06:00.
 // Finds all players active in the last N days, fetches each player's most
 // recent 100 Twixt games for every variant (DEFAULT, SIZE30, SIZE48) from the
 // LittleGolem JSON API (both in-progress and finished), and visits every game
@@ -78,7 +78,7 @@ function getPlayerGames(playerId, variant) {
   });
 }
 
-cron.schedule('0 6 2 * *', async () => {
+cron.schedule('0 6 1 * *', async () => {
   console.log('[cron] Checking recent players for missing games (API)...');
 
   let playerIds;

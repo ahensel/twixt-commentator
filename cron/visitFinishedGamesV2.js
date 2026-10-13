@@ -21,7 +21,7 @@ const { visitGame, sleep } = require('./helpers');
 // runs, so these suggest phase 1 is missing games.
 // Kept alongside the old scraper (visitFinishedGames.js) so we can compare
 // coverage and retire the old one once confident.
-cron.schedule('15 5,17 * * *', async () => {
+cron.schedule('30 5 * * *', async () => {
   console.log('[cron] Checking for recently finished games (API)...');
 
   const state = readLastSeen();
