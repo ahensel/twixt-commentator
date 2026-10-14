@@ -14,8 +14,18 @@ const sequelize = new Sequelize(cfg.database, cfg.username, cfg.password, {
     timestamps: false,
     underscored: true,
   },
+  // Recycle idle connections so we never hand out a socket that MySQL (or an
+  // intermediate proxy/firewall) has already closed — otherwise the first
+  // query after a quiet period fails with "Connection lost".
+  pool: {
+    max: 10,
+    min: 0,
+    idle: 10000,   // destroy pooled connections after 10s of idleness
+    evict: 60000,  // ping connections before reuse if they've been idle this long
+  },
   dialectOptions: {
     charset: 'utf8mb4',
+    enableKeepAlive: true,
   },
 });
 
