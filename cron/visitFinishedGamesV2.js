@@ -5,7 +5,7 @@ const path = require('path');
 const { InProgress } = require('../models');
 const { visitGame, sleep } = require('./helpers');
 
-// Runs daily at 05:30.
+// Runs daily at 05:30 UTC.
 //
 // Phase 1: uses the LittleGolem JSON API to get recently finished games for
 // each variant (DEFAULT, SIZE30, SIZE48), then visits each game that is newer
@@ -84,7 +84,7 @@ cron.schedule('30 5 * * *', async () => {
       // upserts them into in_progress via the /game route.
       const missing = games.filter((g) => !inProgressInDb.has(g.gid)).map((g) => g.gid);
       if (missing.length > 0) {
-        console.warn(`[cron] ${missing.length} ongoing ${variant} game(s) not in in_progress: ${missing.join(', ')}`);
+        console.log(`[cron] ${missing.length} ongoing ${variant} game(s) not in in_progress: ${missing.join(', ')}`);
         for (const gid of missing) toVisit.add(gid);
       }
 
@@ -98,7 +98,7 @@ cron.schedule('30 5 * * *', async () => {
     // the games it failed to capture.
     const vanished = [...inProgressInDb].sort((a, b) => a - b);
     if (vanished.length > 0) {
-      console.warn(`[cron] ${vanished.length} in_progress game(s) no longer reported as ongoing: ${vanished.join(', ')}`);
+      console.log(`[cron] ${vanished.length} in_progress game(s) no longer reported as ongoing: ${vanished.join(', ')}`);
       for (const gid of vanished) toVisit.add(gid);
     } else {
       console.log('[cron] in_progress table matches the API\'s ongoing games.');
