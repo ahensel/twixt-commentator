@@ -467,6 +467,14 @@ describe('LittleGolemNewParser', () => {
     });
   });
 
+  describe('number of pegs', () => {
+    test('counts number of pegs correctly', () => {
+      const parser = new LittleGolemNewParser('F17 swap F17',
+        { player1: 'Alice', player2: 'Bob', board_size: 48, result: 'R' });
+      expect(parser.getTwixtBoard().numPegs()).toBe(2);
+    });
+  })
+
   describe('Game won by connection (LostMove)', () => {
     const connectedGameJson = {"gid":143962,"gtid":"twixt","variant":"DEFAULT","players":[{"player":{"plid":4,"real_name":"Alice","membership":false,"country":"US"},"rating":1500,"deviation":60},{"player":{"plid":7,"real_name":"Bob","membership":false,"country":"US"},"rating":1500,"deviation":60}],"status":2,"results":[2,0],"onmove":0,"expire_time":1080144988331,"chngr":[0,0],"moves":[{"nmove":0,"plid":1,"movetime":1079117955853,"jmove":"","dmove":""},{"nmove":1,"plid":4,"movetime":1079128379677,"jmove":"nv","dmove":"n22"},{"nmove":2,"plid":7,"movetime":1079272256440,"jmove":"pt","dmove":"p20"},{"nmove":3,"plid":4,"movetime":1079273463275,"jmove":"mt","dmove":"m20"},{"nmove":4,"plid":7,"movetime":1079375561051,"jmove":"ow","dmove":"o23"},{"nmove":5,"plid":4,"movetime":1079377348243,"jmove":"mx","dmove":"m24"},{"nmove":6,"plid":7,"movetime":1079383429336,"jmove":"ns","dmove":"n19"},{"nmove":7,"plid":4,"movetime":1079410041011,"jmove":"lr","dmove":"l18"},{"nmove":8,"plid":7,"movetime":1079543956792,"jmove":"jh","dmove":"j8"},{"nmove":9,"plid":4,"movetime":1079582426288,"jmove":"lj","dmove":"l10"},{"nmove":10,"plid":7,"movetime":1079635570301,"jmove":"lg","dmove":"l7"},{"nmove":11,"plid":4,"movetime":1079655052167,"jmove":"og","dmove":"o7"},{"nmove":12,"plid":7,"movetime":1079663217869,"jmove":"nh","dmove":"n8"},{"nmove":13,"plid":4,"movetime":1079705318708,"jmove":"ni","dmove":"n9"},{"nmove":14,"plid":7,"movetime":1079720757418,"jmove":"of","dmove":"o6"},{"nmove":15,"plid":4,"movetime":1079792193455,"jmove":"pe","dmove":"p5"},{"nmove":16,"plid":7,"movetime":1079817615496,"jmove":"pd","dmove":"p4"},{"nmove":17,"plid":4,"movetime":1079961925119,"jmove":"qc","dmove":"q3"},{"nmove":18,"plid":7,"movetime":1079965586402,"jmove":"qb","dmove":"q2"},{"nmove":19,"plid":4,"movetime":1079967325774,"jmove":"ra","dmove":"r1"},{"nmove":20,"plid":7,"movetime":1079993552865,"jmove":"kj","dmove":"k10"},{"nmove":21,"plid":4,"movetime":1080053327315,"jmove":"ml","dmove":"m12"},{"nmove":22,"plid":7,"movetime":1080067663826,"jmove":"ll","dmove":"l12"},{"nmove":23,"plid":4,"movetime":1080079126457,"jmove":"ln","dmove":"l14"},{"nmove":24,"plid":7,"movetime":1080079824570,"jmove":"lp","dmove":"l16"},{"nmove":25,"plid":4,"movetime":1080144988329,"jmove":"kp","dmove":"k16"}],"messages":[],"ulid":"01M4SKCNBPQP12C83NB86RF0SB","time":[864000000,864000000],"points":[0,0],"tournament":"FR","trnid":""};
 
