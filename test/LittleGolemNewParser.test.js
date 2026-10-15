@@ -202,6 +202,260 @@ describe('LittleGolemNewParser', () => {
       expect(moves[2].player).toBe(1); // 3rd move in 0-indexed is move index 2 -> player 1
     });
 
+    describe("Resign after swap (regression: game 2565947)", () => {
+      const gameJson = {
+        gid: 2565947,
+        gtid: "twixt",
+        variant: "DEFAULT",
+        players: [
+          {
+            player: {
+              plid: 2,
+              real_name: "Alice",
+              membership: false,
+              country: "SE",
+            },
+            rating: 1972.5,
+            deviation: 30,
+          },
+          {
+            player: {
+              plid: 10,
+              real_name: "Bob",
+              membership: false,
+              country: "SI",
+            },
+            rating: 2023.432,
+            deviation: 30,
+          },
+        ],
+        status: 1,
+        results: [2, 0],
+        moves: [
+          { nmove: 0, plid: 1, movetime: 1789561948493, jmove: "", dmove: "" },
+          {
+            nmove: 1,
+            plid: 2,
+            jmove: "ju",
+            dmove: "j21",
+          },
+          {
+            nmove: 2,
+            plid: 10,
+            jmove: "swap",
+            dmove: "swap",
+          },
+          {
+            nmove: 3,
+            plid: 2,
+            jmove: "lk",
+            dmove: "l11",
+          },
+          {
+            nmove: 4,
+            plid: 10,
+            jmove: "ln",
+            dmove: "l14",
+          },
+          {
+            nmove: 5,
+            plid: 2,
+            jmove: "pn",
+            dmove: "p14",
+          },
+          {
+            nmove: 6,
+            plid: 10,
+            jmove: "og",
+            dmove: "o7",
+          },
+          {
+            nmove: 7,
+            plid: 2,
+            jmove: "ih",
+            dmove: "i8",
+          },
+          {
+            nmove: 8,
+            plid: 10,
+            jmove: "lr",
+            dmove: "l18",
+          },
+          {
+            nmove: 9,
+            plid: 2,
+            jmove: "so",
+            dmove: "s15",
+          },
+          {
+            nmove: 10,
+            plid: 10,
+            jmove: "ok",
+            dmove: "o11",
+          },
+          {
+            nmove: 11,
+            plid: 2,
+            jmove: "nj",
+            dmove: "n10",
+          },
+          {
+            nmove: 12,
+            plid: 10,
+            jmove: "nm",
+            dmove: "n13",
+          },
+          {
+            nmove: 13,
+            plid: 2,
+            jmove: "pk",
+            dmove: "p11",
+          },
+          {
+            nmove: 14,
+            plid: 10,
+            jmove: "ql",
+            dmove: "q12",
+          },
+          {
+            nmove: 15,
+            plid: 2,
+            jmove: "rl",
+            dmove: "r12",
+          },
+          {
+            nmove: 16,
+            plid: 10,
+            jmove: "sm",
+            dmove: "s13",
+          },
+          {
+            nmove: 17,
+            plid: 2,
+            jmove: "tm",
+            dmove: "t13",
+          },
+          {
+            nmove: 18,
+            plid: 10,
+            jmove: "sq",
+            dmove: "s17",
+          },
+          {
+            nmove: 19,
+            plid: 2,
+            jmove: "jp",
+            dmove: "j16",
+          },
+          {
+            nmove: 20,
+            plid: 10,
+            jmove: "kp",
+            dmove: "k16",
+          },
+          {
+            nmove: 21,
+            plid: 2,
+            jmove: "ho",
+            dmove: "h15",
+          },
+          {
+            nmove: 22,
+            plid: 10,
+            jmove: "ik",
+            dmove: "i11",
+          },
+          {
+            nmove: 23,
+            plid: 2,
+            jmove: "hm",
+            dmove: "h13",
+          },
+          {
+            nmove: 24,
+            plid: 10,
+            jmove: "hr",
+            dmove: "h18",
+          },
+          {
+            nmove: 25,
+            plid: 2,
+            jmove: "hq",
+            dmove: "h17",
+          },
+          {
+            nmove: 26,
+            plid: 10,
+            jmove: "jm",
+            dmove: "j13",
+          },
+          {
+            nmove: 27,
+            plid: 2,
+            jmove: "gk",
+            dmove: "g11",
+          },
+          {
+            nmove: 28,
+            plid: 10,
+            jmove: "he",
+            dmove: "h5",
+          },
+          {
+            nmove: 29,
+            plid: 2,
+            jmove: "gg",
+            dmove: "g7",
+          },
+          {
+            nmove: 30,
+            plid: 10,
+            jmove: "gc",
+            dmove: "g3",
+          },
+          {
+            nmove: 31,
+            plid: 2,
+            jmove: "jf",
+            dmove: "j6",
+          },
+          {
+            nmove: 32,
+            plid: 10,
+            jmove: "resign",
+            dmove: "resign",
+          },
+        ],
+        tournament: "ld",
+        trnid: "twixt.ld.DEFAULT",
+      };
+
+      test("player 2 resigns after swap: player 1 (Alice) should win", () => {
+        const parser = new LittleGolemNewParser(gameJson);
+        expect(parser.getResultChar()).toBe("R");
+        const board = parser.getTwixtBoard();
+        expect(board.isResignation()).toBe(true);
+        // After swap, player 1 is black, player 2 is white. Player 2 resigned → player 1 wins.
+        expect(board.hasWonPlayer(1)).toBe(true);
+        expect(board.hasWonPlayer(2)).toBe(false);
+        expect(board.winner()).toBe(1);
+      });
+
+      test("minimal swap+resign: last mover player 2 resigns, player 1 wins", () => {
+        // f4 swap e5 resign  → resign is index 3 (player 2), but after swap player 2 is 'white'
+        const parser = new LittleGolemNewParser("f4 swap e5 resign", {
+          player1: "Alice",
+          player2: "Bob",
+          board_size: 24,
+          result: "R",
+        });
+        expect(parser.getResultChar()).toBe("R");
+        const board = parser.getTwixtBoard();
+        expect(board.isResignation()).toBe(true);
+        expect(board.winner()).toBe(1); // player 1 wins; player 2 resigned
+      });
+    });
+
     test('handles draw correctly', () => {
       const parser = new LittleGolemNewParser('f4 e5 draw', {
         player1: 'Alice', player2: 'Bob', board_size: 24, result: 'D'
