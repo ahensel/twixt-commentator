@@ -1,14 +1,14 @@
-const { LittleGolemNewParser } = require('../lib/domain/LittleGolemNewParser');
+const { LittleGolemParser } = require('../lib/domain/LittleGolemParser');
 const { Move, SwapMove, ResignMove, DrawMove, ForfeitMove, LostMove } = require('../public/javascripts/move');
 
-describe('LittleGolemNewParser', () => {
+describe('LittleGolemParser', () => {
   describe('Static helpers', () => {
     test('dmoveToXY converts column letters and 1-based rows', () => {
-      expect(LittleGolemNewParser.dmoveToXY('a1')).toEqual({ x: 0, y: 0 });
-      expect(LittleGolemNewParser.dmoveToXY('f4')).toEqual({ x: 5, y: 3 });
-      expect(LittleGolemNewParser.dmoveToXY('z24')).toEqual({ x: 25, y: 23 });
-      expect(LittleGolemNewParser.dmoveToXY('A1')).toEqual({ x: 26, y: 0 });
-      expect(LittleGolemNewParser.dmoveToXY('B24')).toEqual({ x: 27, y: 23 });
+      expect(LittleGolemParser.dmoveToXY('a1')).toEqual({ x: 0, y: 0 });
+      expect(LittleGolemParser.dmoveToXY('f4')).toEqual({ x: 5, y: 3 });
+      expect(LittleGolemParser.dmoveToXY('z24')).toEqual({ x: 25, y: 23 });
+      expect(LittleGolemParser.dmoveToXY('A1')).toEqual({ x: 26, y: 0 });
+      expect(LittleGolemParser.dmoveToXY('B24')).toEqual({ x: 27, y: 23 });
     });
 
     test('buildLgData joins non-empty dmoves', () => {
@@ -20,7 +20,7 @@ describe('LittleGolemNewParser', () => {
           { nmove: 3, dmove: 't20' }
         ]
       };
-      expect(LittleGolemNewParser.buildLgData(apiJson)).toBe('f4 swap t20');
+      expect(LittleGolemParser.buildLgData(apiJson)).toBe('f4 swap t20');
     });
   });
 
@@ -40,7 +40,7 @@ describe('LittleGolemNewParser', () => {
     };
 
     test('detects forfeit on completed API game with 0 moves', () => {
-      const parser = new LittleGolemNewParser(zeroMoveApiJson);
+      const parser = new LittleGolemParser(zeroMoveApiJson);
       expect(parser.isCompleted()).toBe(true);
       expect(parser.getResultChar()).toBe('F');
 
@@ -60,7 +60,7 @@ describe('LittleGolemNewParser', () => {
         result: 'F',
         board_size: 24
       };
-      const parser = new LittleGolemNewParser('', meta);
+      const parser = new LittleGolemParser('', meta);
       expect(parser.getResultChar()).toBe('F');
 
       const movesList = parser.getMovesList();
@@ -70,7 +70,7 @@ describe('LittleGolemNewParser', () => {
     });
 
     test('board evaluation handles 0-move forfeit', () => {
-      const parser = new LittleGolemNewParser(zeroMoveApiJson);
+      const parser = new LittleGolemParser(zeroMoveApiJson);
       const board = parser.getTwixtBoard();
       expect(board.isForfeit()).toBe(true);
       expect(board.hasWonPlayer(2)).toBe(true);
@@ -80,7 +80,7 @@ describe('LittleGolemNewParser', () => {
 
     test('handles status: 2 forfeited 0-move game like game 2566016', () => {
       const rawApiJson = {"gid":2566016,"gtid":"twixt","variant":"DEFAULT","players":[{"player":{"plid":4,"real_name":"Alice","membership":false,"country":"US"},"rating":1298.427,"deviation":30},{"player":{"plid":7,"real_name":"Bob","membership":false,"country":"US"},"rating":1268.8358,"deviation":30}],"status":2,"results":[0,2],"onmove":42052,"expire_time":1790484446030,"chngr":[0,0],"moves":[{"nmove":0,"plid":1,"movetime":1789620179159,"jmove":"","dmove":""}],"messages":[],"ulid":"01M4RWF3P5MGWY05KJW4TQTF9C","time":[864000000,864000000],"points":[0,0],"tournament":"ld","trnid":"twixt.ld.DEFAULT"};
-      const parser = new LittleGolemNewParser(rawApiJson);
+      const parser = new LittleGolemParser(rawApiJson);
       expect(parser.isCompleted()).toBe(true);
       expect(parser.getResultChar()).toBe('F');
       const movesList = parser.getMovesList();
@@ -108,7 +108,7 @@ describe('LittleGolemNewParser', () => {
           { nmove: 1, dmove: 'f4' } // Alice played f4, then Bob timed out
         ]
       };
-      const parser = new LittleGolemNewParser(apiJson);
+      const parser = new LittleGolemParser(apiJson);
       expect(parser.getResultChar()).toBe('F');
 
       const movesList = parser.getMovesList();
@@ -126,14 +126,14 @@ describe('LittleGolemNewParser', () => {
 
   describe('Swap handling in LittleGolem games', () => {
     test('marks getSwapped() true when move 2 is swap', () => {
-      const parser = new LittleGolemNewParser('f4 swap t20', {
+      const parser = new LittleGolemParser('f4 swap t20', {
         player1: 'Alice', player2: 'Bob', board_size: 24, result: 'R'
       });
       expect(parser.getSwapped()).toBe(true);
     });
 
     test('forEachLittleGolemMove emits SwapMove without altering player alternating order', () => {
-      const parser = new LittleGolemNewParser('f4 swap t20 resign', {
+      const parser = new LittleGolemParser('f4 swap t20 resign', {
         player1: 'Alice', player2: 'Bob', board_size: 24, result: 'R'
       });
       const moves = parser.getMovesList();
@@ -153,7 +153,7 @@ describe('LittleGolemNewParser', () => {
       // Player 2 swaps.
       // Under LG rules, the first peg is transposed to (3, 5) and becomes black.
       // Player 1 then plays the next move.
-      const parser = new LittleGolemNewParser('f4 swap d6', {
+      const parser = new LittleGolemParser('f4 swap d6', {
         player1: 'Alice', player2: 'Bob', board_size: 24, result: 'R'
       });
       const moves = [];
@@ -175,7 +175,7 @@ describe('LittleGolemNewParser', () => {
     });
 
     test('forEachMoveForJtwixt produces correct moves for swapped game', () => {
-      const parser = new LittleGolemNewParser('f4 swap d6', {
+      const parser = new LittleGolemParser('f4 swap d6', {
         player1: 'Alice', player2: 'Bob', board_size: 24, result: 'R'
       });
       const jtwixtCalls = [];
@@ -193,7 +193,7 @@ describe('LittleGolemNewParser', () => {
 
   describe('Resignation and Draw moves', () => {
     test('handles resign correctly', () => {
-      const parser = new LittleGolemNewParser('f4 e5 resign', {
+      const parser = new LittleGolemParser('f4 e5 resign', {
         player1: 'Alice', player2: 'Bob', board_size: 24, result: 'R'
       });
       expect(parser.getResultChar()).toBe('R');
@@ -431,7 +431,7 @@ describe('LittleGolemNewParser', () => {
       };
 
       test("player 2 resigns after swap: player 1 (Alice) should win", () => {
-        const parser = new LittleGolemNewParser(gameJson);
+        const parser = new LittleGolemParser(gameJson);
         expect(parser.getResultChar()).toBe("R");
         const board = parser.getTwixtBoard();
         expect(board.isResignation()).toBe(true);
@@ -443,7 +443,7 @@ describe('LittleGolemNewParser', () => {
 
       test("minimal swap+resign: last mover player 2 resigns, player 1 wins", () => {
         // f4 swap e5 resign  → resign is index 3 (player 2), but after swap player 2 is 'white'
-        const parser = new LittleGolemNewParser("f4 swap e5 resign", {
+        const parser = new LittleGolemParser("f4 swap e5 resign", {
           player1: "Alice",
           player2: "Bob",
           board_size: 24,
@@ -457,7 +457,7 @@ describe('LittleGolemNewParser', () => {
     });
 
     test('handles draw correctly', () => {
-      const parser = new LittleGolemNewParser('f4 e5 draw', {
+      const parser = new LittleGolemParser('f4 e5 draw', {
         player1: 'Alice', player2: 'Bob', board_size: 24, result: 'D'
       });
       expect(parser.getResultChar()).toBe('D');
@@ -469,7 +469,7 @@ describe('LittleGolemNewParser', () => {
 
   describe('number of pegs', () => {
     test('counts number of pegs correctly', () => {
-      const parser = new LittleGolemNewParser('F17 swap F17',
+      const parser = new LittleGolemParser('F17 swap F17',
         { player1: 'Alice', player2: 'Bob', board_size: 48, result: 'R' });
       expect(parser.getTwixtBoard().numPegs()).toBe(2);
     });
@@ -479,7 +479,7 @@ describe('LittleGolemNewParser', () => {
     const connectedGameJson = {"gid":143962,"gtid":"twixt","variant":"DEFAULT","players":[{"player":{"plid":4,"real_name":"Alice","membership":false,"country":"US"},"rating":1500,"deviation":60},{"player":{"plid":7,"real_name":"Bob","membership":false,"country":"US"},"rating":1500,"deviation":60}],"status":2,"results":[2,0],"onmove":0,"expire_time":1080144988331,"chngr":[0,0],"moves":[{"nmove":0,"plid":1,"movetime":1079117955853,"jmove":"","dmove":""},{"nmove":1,"plid":4,"movetime":1079128379677,"jmove":"nv","dmove":"n22"},{"nmove":2,"plid":7,"movetime":1079272256440,"jmove":"pt","dmove":"p20"},{"nmove":3,"plid":4,"movetime":1079273463275,"jmove":"mt","dmove":"m20"},{"nmove":4,"plid":7,"movetime":1079375561051,"jmove":"ow","dmove":"o23"},{"nmove":5,"plid":4,"movetime":1079377348243,"jmove":"mx","dmove":"m24"},{"nmove":6,"plid":7,"movetime":1079383429336,"jmove":"ns","dmove":"n19"},{"nmove":7,"plid":4,"movetime":1079410041011,"jmove":"lr","dmove":"l18"},{"nmove":8,"plid":7,"movetime":1079543956792,"jmove":"jh","dmove":"j8"},{"nmove":9,"plid":4,"movetime":1079582426288,"jmove":"lj","dmove":"l10"},{"nmove":10,"plid":7,"movetime":1079635570301,"jmove":"lg","dmove":"l7"},{"nmove":11,"plid":4,"movetime":1079655052167,"jmove":"og","dmove":"o7"},{"nmove":12,"plid":7,"movetime":1079663217869,"jmove":"nh","dmove":"n8"},{"nmove":13,"plid":4,"movetime":1079705318708,"jmove":"ni","dmove":"n9"},{"nmove":14,"plid":7,"movetime":1079720757418,"jmove":"of","dmove":"o6"},{"nmove":15,"plid":4,"movetime":1079792193455,"jmove":"pe","dmove":"p5"},{"nmove":16,"plid":7,"movetime":1079817615496,"jmove":"pd","dmove":"p4"},{"nmove":17,"plid":4,"movetime":1079961925119,"jmove":"qc","dmove":"q3"},{"nmove":18,"plid":7,"movetime":1079965586402,"jmove":"qb","dmove":"q2"},{"nmove":19,"plid":4,"movetime":1079967325774,"jmove":"ra","dmove":"r1"},{"nmove":20,"plid":7,"movetime":1079993552865,"jmove":"kj","dmove":"k10"},{"nmove":21,"plid":4,"movetime":1080053327315,"jmove":"ml","dmove":"m12"},{"nmove":22,"plid":7,"movetime":1080067663826,"jmove":"ll","dmove":"l12"},{"nmove":23,"plid":4,"movetime":1080079126457,"jmove":"ln","dmove":"l14"},{"nmove":24,"plid":7,"movetime":1080079824570,"jmove":"lp","dmove":"l16"},{"nmove":25,"plid":4,"movetime":1080144988329,"jmove":"kp","dmove":"k16"}],"messages":[],"ulid":"01M4SKCNBPQP12C83NB86RF0SB","time":[864000000,864000000],"points":[0,0],"tournament":"FR","trnid":""};
 
     test('detects win by connection and appends LostMove for the losing player', () => {
-      const parser = new LittleGolemNewParser(connectedGameJson);
+      const parser = new LittleGolemParser(connectedGameJson);
       expect(parser.isCompleted()).toBe(true);
       expect(parser.isGameOver()).toBe(true);
       expect(parser.isGameLostOnMoves()).toBe(true);
@@ -506,7 +506,7 @@ describe('LittleGolemNewParser', () => {
         board_size: 24,
         result: 'L'
       };
-      const parser = new LittleGolemNewParser(dmoves, meta);
+      const parser = new LittleGolemParser(dmoves, meta);
       expect(parser.getResultChar()).toBe('L');
       expect(parser.isGameLostOnMoves()).toBe(true);
 
@@ -523,21 +523,21 @@ describe('LittleGolemNewParser', () => {
 
   describe('Metadata and variant handling', () => {
     test('extracts board size from variant', () => {
-      const parserDefault = new LittleGolemNewParser({
+      const parserDefault = new LittleGolemParser({
         variant: 'DEFAULT',
         moves: [],
         players: [{ player: {} }, { player: {} }]
       });
       expect(parserDefault.getBoardSize()).toBe(24);
 
-      const parser30 = new LittleGolemNewParser({
+      const parser30 = new LittleGolemParser({
         variant: 'SIZE30',
         moves: [],
         players: [{ player: {} }, { player: {} }]
       });
       expect(parser30.getBoardSize()).toBe(30);
 
-      const parser48 = new LittleGolemNewParser({
+      const parser48 = new LittleGolemParser({
         variant: 'SIZE48',
         moves: [],
         players: [{ player: {} }, { player: {} }]
