@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const https = require('https');
 const { Game } = require('../models');
-const { LittleGolemParser } = require('../lib/domain/LittleGolemParser');
 const { LittleGolemNewParser } = require('../lib/domain/LittleGolemNewParser');
 const { JTwixtFormatter } = require('../lib/domain/JTwixtFormatter');
 
@@ -33,7 +32,6 @@ async function getGameFromLittleGolem(gameNumber) {
     return Game.build({
       lg_game_num: gameNumber,
       lg_data: lgData,
-      lg_data_type: 'N',
       result: '?',
       player1: parser.getPlayer1(),
       player2: parser.getPlayer2(),
@@ -49,12 +47,7 @@ async function getGameFromLittleGolem(gameNumber) {
 function buildJTwixtFileData(game) {
   const jtwixt = new JTwixtFormatter();
 
-  let parser;
-  if (game.lg_data_type === 'N') {
-    parser = new LittleGolemNewParser(game.lg_data, game);
-  } else {
-    parser = new LittleGolemParser(game.lg_data);
-  }
+  const parser = new LittleGolemNewParser(game.lg_data, game);
 
   let fileData = jtwixt.formatStandardTwixtHeader(game.player1, game.player2);
   parser.forEachMoveForJtwixt((x, y, player) => {

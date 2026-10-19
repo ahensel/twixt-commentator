@@ -3,7 +3,6 @@ const router = express.Router();
 const https = require('https');
 const { Op } = require('sequelize');
 const { Game, InProgress } = require('../models');
-const { LittleGolemParser } = require('../lib/domain/LittleGolemParser');
 const { LittleGolemNewParser } = require('../lib/domain/LittleGolemNewParser');
 
 const MIN_TWIXT_GAME_NUM = 37491;
@@ -85,7 +84,6 @@ async function getGameFromLittleGolem(gameNumber, flash) {
     const inProgressGame = Game.build({
       lg_game_num: gameNumber,
       lg_data: lgData,
-      lg_data_type: 'N',
       result: '?',
       player1: player1Name,
       player2: player2Name,
@@ -102,7 +100,6 @@ async function getGameFromLittleGolem(gameNumber, flash) {
   const savedGame = await Game.create({
     lg_game_num: gameNumber,
     lg_data: lgData,
-    lg_data_type: 'N',
     result: parser.getResultChar(),
     player1: player1Name,
     player2: player2Name,
@@ -220,13 +217,8 @@ router.get('/:gid', async (req, res) => {
   let parser = null;
 
   if (game) {
-    if (game.lg_data_type === 'N') {
-      parser = new LittleGolemNewParser(game.lg_data, game);
-      if (game.isForfeit()) parser.forfeit();
-    } else {
-      parser = new LittleGolemParser(game.lg_data);
-      if (game.isForfeit()) parser.forfeit();
-    }
+    parser = new LittleGolemNewParser(game.lg_data, game);
+    if (game.isForfeit()) parser.forfeit();
   } else {
     const result = await getGameFromLittleGolem(gameNumber, flash);
     game = result.game;
