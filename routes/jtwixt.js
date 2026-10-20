@@ -62,7 +62,49 @@ const FORMATS = {
   t1: { extension: '.t1', build: (game) => require('../lib/domain/TwixtbotFormatter').TwixtbotFormatter.buildFile(game) },
 };
 
-// GET /jtwixt/gen?gameid=X[&format=tgt][&filename=...]
+function decodeVariation(variationStr) {
+  const fromLetter = (c) => (c >= 'a' && c <= 'z') ? c.charCodeAt(0) - 97 : c.charCodeAt(0) - 39;
+  const moves = [];
+  for (let i = 0; i < variationStr.length; i += 2) {
+    const pair = variationStr.slice(i, i + 2);
+    if (pair.length < 2) break;
+    if (pair === '~~') {
+      moves.push('swap');
+    } else {
+      const colChar = pair[0];
+      const rowChar = pair[1];
+      const rowNum = fromLetter(rowChar) + 1;
+      moves.push(`${colChar}${rowNum}`);
+    }
+  }
+  return moves;
+}
+
+function buildTargetGame(game, currentMoveNumQuery, variationQuery) {
+  if (currentMoveNumQuery === undefined || currentMoveNumQuery === null || currentMoveNumQuery === '') {
+    return game;
+  }
+  const currentMoveNum = parseInt(currentMoveNumQuery, 10);
+  if (Number.isNaN(currentMoveNum) || currentMoveNum < 0) {
+    return game;
+  }
+
+  const mainDmoves = game.lg_data ? game.lg_data.trim().split(/\s+/).filter(Boolean) : [];
+  const nonTerminalDmoves = mainDmoves.filter(m => !['resign', 'draw'].includes(m.toLowerCase()));
+  const slicedMoves = nonTerminalDmoves.slice(0, currentMoveNum);
+
+  if (variationQuery) {
+    const variationMoves = decodeVariation(variationQuery);
+    slicedMoves.push(...variationMoves);
+  }
+
+  return Object.assign(Object.create(game), {
+    lg_data: slicedMoves.join(' '),
+    result: null,
+  });
+}
+
+// GET /jtwixt/gen?gameid=X[&format=tgt][&filename=...][&currentMoveNum=N][&variation=...]
 router.get('/gen', async (req, res) => {
   const gameId = req.query.gameid;
   if (!gameId) {
@@ -79,7 +121,8 @@ router.get('/gen', async (req, res) => {
     return res.status(404).send('Game not found');
   }
 
-  const fileData = FORMATS[format].build(game);
+  const targetGame = buildTargetGame(game, req.query.currentMoveNum, req.query.variation);
+  const fileData = FORMATS[format].build(targetGame);
   let fileName = req.query.filename ? String(req.query.filename).trim().replace(/[^\w. -]/g, '') : '';
   if (!fileName) fileName = `game${gameId}`;
   if (!fileName.toLowerCase().endsWith(FORMATS[format].extension)) fileName += FORMATS[format].extension;
@@ -88,5 +131,8 @@ router.get('/gen', async (req, res) => {
   res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
   res.send(fileData);
 });
+
+router.decodeVariation = decodeVariation;
+router.buildTargetGame = buildTargetGame;
 
 module.exports = router;

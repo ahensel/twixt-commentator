@@ -920,6 +920,24 @@ img.crosshair, img.new-peg {
   margin-bottom: 14px;
 }
 
+.download-radio-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.download-radio-row label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.download-radio-row label:has(input:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .download-actions {
   display: flex;
   gap: 8px;

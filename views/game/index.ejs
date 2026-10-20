@@ -316,6 +316,16 @@ preformatted   text</pre></li>
     <h3 id="download-title">Download Game</h3>
     <form id="download-form">
       <input type="hidden" id="download-gameid" value="<%= params?.gid %>">
+      <div class="download-row download-radio-row">
+        <label>
+          <input type="radio" name="downloadVariation" id="download-var-main" value="main" checked>
+          Main variation
+        </label>
+        <label>
+          <input type="radio" name="downloadVariation" id="download-var-current" value="current">
+          Current variation
+        </label>
+      </div>
       <label class="download-row">
         Filename:
         <input type="text" id="download-filename" name="filename" value="game<%= params?.gid %>" maxlength="100" required>
@@ -337,12 +347,49 @@ preformatted   text</pre></li>
 
 <script>
 let downloadFocusTrap = null;
+
+function isFullMainVariationDisplayed() {
+  if (typeof BoardState === 'undefined' || !BoardState.currentMoves) return true;
+  if (BoardState.currentMoves.hasUserMoves()) return false;
+  const moves = BoardState.currentMoves.moves;
+  if (!moves || moves.length === 0) return true;
+  const finalMainMoveNum = moves.length - (BoardState.currentMoves.gameIsInProgress() ? 0 : 1);
+  return typeof BoardState.currentMoveNum === 'number' && BoardState.currentMoveNum >= finalMainMoveNum;
+}
+
+function serializeUserMoves(userMoves) {
+  const toLetter = (idx) => (idx >= 0 && idx <= 25)
+    ? String.fromCharCode(97 + idx)
+    : String.fromCharCode(39 + idx);
+
+  let result = '';
+  for (const move of userMoves) {
+    if (move instanceof SwapMove || (typeof move.getText === 'function' && move.getText() === 'swap')) {
+      result += '~~';
+    } else if (move.peg) {
+      result += toLetter(move.peg.x - 1) + toLetter(move.peg.y - 1);
+    }
+  }
+  return result;
+}
+
 function openDownloadModal() {
   const overlay = document.getElementById('download-overlay');
   overlay.classList.remove('hidden');
   downloadFocusTrap = modalFocusTrap(overlay);
-  document.getElementById('download-filename').focus();
-  document.getElementById('download-filename').select();
+
+  const mainVarRadio = document.getElementById('download-var-main');
+  const currentVarRadio = document.getElementById('download-var-current');
+  const filenameInput = document.getElementById('download-filename');
+  const gameId = document.getElementById('download-gameid').value;
+
+  const isFullMain = isFullMainVariationDisplayed();
+  currentVarRadio.disabled = isFullMain;
+  mainVarRadio.checked = true;
+  filenameInput.value = 'game' + gameId;
+
+  filenameInput.focus();
+  filenameInput.select();
   return false;
 }
 function closeDownloadModal() {
@@ -350,6 +397,21 @@ function closeDownloadModal() {
   document.getElementById('download-overlay').classList.add('hidden');
   return false;
 }
+
+document.getElementById('download-var-main').addEventListener('change', function() {
+  const filenameInput = document.getElementById('download-filename');
+  if (this.checked && filenameInput.value.endsWith('_var')) {
+    filenameInput.value = filenameInput.value.slice(0, -4);
+  }
+});
+
+document.getElementById('download-var-current').addEventListener('change', function() {
+  const filenameInput = document.getElementById('download-filename');
+  if (this.checked && !filenameInput.value.endsWith('_var')) {
+    filenameInput.value = filenameInput.value + '_var';
+  }
+});
+
 document.getElementById('download-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeDownloadModal();
 });
@@ -364,9 +426,23 @@ document.getElementById('download-form').addEventListener('submit', function(e) 
   const format = document.getElementById('download-format').value;
   const filename = document.getElementById('download-filename').value.trim();
   if (!filename) return;
-  const url = '/jtwixt/gen?gameid=' + encodeURIComponent(gameId)
+
+  let url = '/jtwixt/gen?gameid=' + encodeURIComponent(gameId)
     + '&format=' + encodeURIComponent(format)
     + '&filename=' + encodeURIComponent(filename);
+
+  const isCurrentVar = document.getElementById('download-var-current').checked;
+  if (isCurrentVar && typeof BoardState !== 'undefined' && BoardState.currentMoves) {
+    url += '&currentMoveNum=' + encodeURIComponent(BoardState.currentMoveNum);
+    const userMoves = BoardState.currentMoves.getUserMoves();
+    if (userMoves && userMoves.length > 0) {
+      const variationStr = serializeUserMoves(userMoves);
+      if (variationStr) {
+        url += '&variation=' + encodeURIComponent(variationStr);
+      }
+    }
+  }
+
   fetch(url, { credentials: 'same-origin' })
     .then(function(response) {
       if (!response.ok) throw new Error('Download failed');
