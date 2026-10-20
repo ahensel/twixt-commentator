@@ -807,7 +807,11 @@ img.crosshair, img.new-peg {
 }
 
 .login-box input {
-  font-size: var(--font-size-xs);
+  /* Chrome paints autofilled values with the font size *inherited* by the
+     input on first load; an explicit font-size here makes the autofill flash
+     larger until the next reflow. Keep the size inherited (see .login-fields).
+     Extra left padding keeps autofill from shifting/overlapping text. */
+  padding-left: 8px;
 }
 
 .login-box .login-form-row {
@@ -826,6 +830,9 @@ img.crosshair, img.new-peg {
   gap: 3px 6px;
   align-items: center;
   padding: 4px;
+  /* Arrives at the inputs via inheritance, which matches Chrome's initial
+     autofill paint. */
+  font-size: var(--font-size-xs);
 }
 
 /* ── User, password, confirm password (profile & add_user) ──────── */
