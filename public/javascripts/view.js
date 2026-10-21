@@ -349,7 +349,7 @@ function getPegCoordinates(pegString) {
 
 function getNextCommentPegError(pegString, movesSoFar) {
   if (pegString === 'swap') {
-    const pegsSoFar = BoardState.twixtGame.board.getAllPegs().length + movesSoFar;
+    const pegsSoFar = BoardState.twixtGame.board.pegCount() + movesSoFar;
     if (pegsSoFar === 0) return '- Cannot swap as the first move of the game.';
     if (pegsSoFar >  1) return '- Cannot swap. There is more than one peg on the board.';
     return '';
@@ -436,15 +436,14 @@ function placePegByNotation(pegString) {
 
 // only used by comment clicking; on other occasions handled more efficiently
 function swapFirstPeg() {
-  const pegs = BoardState.twixtGame.board.getAllPegs();
-  if (pegs.length === 1) {
+  if (BoardState.twixtGame.board.pegCount() === 1) {
     if (SWAP_STYLE === 'P') {
       // Pie rule: the first peg stays in place; player colors swap.
       BoardState.colorsSwapped = !BoardState.colorsSwapped;
       setPlayerLabels(BoardState.colorsSwapped);
     } else {
       // LG style: remove the peg, switch color, re-place at the diagonal position.
-      const peg = pegs[0];
+      const peg = BoardState.twixtGame.board.getFirstPeg();
       clearBoard();
       BoardState.turn = 1 - BoardState.turn;
       placePeg(peg.y, peg.x);
@@ -629,7 +628,7 @@ function backButton() {
   } else if (BoardState.currentMoveNum > 0) {
     showAllMoves(BoardState.currentMoveNum - 1, null);
   }
-  const pegCount = BoardState.twixtGame.board.getAllPegs().length;
+  const pegCount = BoardState.twixtGame.board.pegCount();
   if (pegCount === 0) {
     showTurn();
   }
@@ -645,7 +644,7 @@ function updateSwapButton() {
   const swapBtn = $('swap-button');
   if (!swapBtn) return;
   const moveCount = BoardState.currentMoves.userMoves.length + BoardState.currentMoveNum;
-  const pegCount = BoardState.twixtGame.board.getAllPegs().length;
+  const pegCount = BoardState.twixtGame.board.pegCount();
   // count moves because there is still one peg after a swap
   // count pegs because first move could be forfeit or resign
   if (moveCount === 1 && pegCount === 1) {
