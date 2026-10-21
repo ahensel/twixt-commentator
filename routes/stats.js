@@ -82,6 +82,32 @@ function pivotBreakdown(rows) {
   return { sizeRows, grand };
 }
 
+// ── Little Golem total, fetched lazily from the client ──────────────────────
+
+// Short in-memory cache so the external API isn't hit on every page load.
+let _lgTotalCache = null;
+const LG_TOTAL_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+router.get('/lg-total', async (req, res) => {
+  if (_lgTotalCache && Date.now() - _lgTotalCache.fetchedAt < LG_TOTAL_TTL_MS) {
+    return res.json({ lgTotal: _lgTotalCache.lgTotal, lgError: _lgTotalCache.lgError });
+  }
+
+  let lgTotal = null;
+  let lgError = null;
+  try {
+    const catalogue = await fetchLGGameCatalogue();
+    const twixt = catalogue.find(game => game.gtype === 'twixt');
+    lgTotal = twixt ? parseInt(twixt.games, 10) : null;
+    if (lgTotal === null) lgError = 'Could not find Twixt game count.';
+  } catch (err) {
+    lgError = `Failed to fetch Little Golem: ${err.message}`;
+  }
+
+  _lgTotalCache = { lgTotal, lgError, fetchedAt: Date.now() };
+  res.json({ lgTotal, lgError });
+});
+
 router.get('/', async (req, res) => {
   try {
     // 1. Count cached LG games in our DB
@@ -132,27 +158,11 @@ router.get('/', async (req, res) => {
       totalSinceIntro:  parseInt(r.total_since_intro, 10),
     }));
 
-    // 3. Fetch total count from Little Golem's game catalogue API
-    let lgTotal = null;
-    let lgError = null;
-    try {
-      const catalogue = await fetchLGGameCatalogue();
-      const twixt = catalogue.find(game => game.gtype === 'twixt');
-      lgTotal = twixt ? parseInt(twixt.games, 10) : null;
-      if (lgTotal === null) lgError = 'Could not find Twixt game count.';
-    } catch (err) {
-      lgError = `Failed to fetch Little Golem: ${err.message}`;
-    }
-
-    const percentage = (lgTotal && lgTotal > 0)
-      ? ((cachedCount / lgTotal) * 100).toFixed(2)
-      : null;
+    // lgTotal is fetched by the client from /stats/lg-total after the page
+    // loads, so we don't block rendering on the external API.
 
     res.render('stats/index', {
       cachedCount,
-      lgTotal,
-      lgError,
-      percentage,
       breakdown,
       sizeIntro,
       RESULT_CODES,

@@ -25,19 +25,15 @@
     <tr class="odd">
       <td class="main">Total Twixt games on Little Golem</td>
       <td class="main" style="text-align: right;">
-        <% if (lgError) { %>
-          <span style="color: var(--color-error); font-size: 0.85em;"><%= lgError %></span>
-        <% } else { %>
-          <%= lgTotal.toLocaleString() %>
-        <% } %>
+        <span id="lg-total" class="lg-total-loading" data-cached="<%= cachedCount %>">
+          <span class="spinner" aria-label="Loading"></span>
+        </span>
       </td>
     </tr>
-    <% if (percentage !== null) { %>
-    <tr class="even">
+    <tr class="even" id="lg-coverage-row" style="display: none;">
       <td class="main">Coverage</td>
-      <td class="main" style="text-align: right;"><%= percentage %>%</td>
+      <td class="main" style="text-align: right;"><span id="lg-coverage"></span></td>
     </tr>
-    <% } %>
   </tbody>
 </table>
 
@@ -103,7 +99,59 @@ so the percentages are directly comparable.</p>
       <td class="main" style="text-align: right;"><%= row.sizeCount.toLocaleString() %></td>
       <td class="main" style="text-align: right;"><%= row.totalSinceIntro.toLocaleString() %></td>
       <td class="main" style="text-align: right;"><%= pct(row.sizeCount, row.totalSinceIntro) %></td>
+    <td class="main"><%= pct(row.sizeCount, row.totalSinceIntro) %></td>
     </tr>
     <% }); %>
   </tbody>
 </table>
+
+<style>
+.lg-total-loading .spinner {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 0.3em;
+  vertical-align: -0.15em;
+  border: 2px solid var(--color-spinner, #999);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: lg-spin 0.8s linear infinite;
+}
+@keyframes lg-spin { to { transform: rotate(360deg); } }
+</style>
+<script>
+(function () {
+  const cell = document.getElementById('lg-total');
+  const coverageRow = document.getElementById('lg-coverage-row');
+  const coverageCell = document.getElementById('lg-coverage');
+  const cached = parseInt(cell.dataset.cached, 10);
+
+  function showError(message) {
+    cell.textContent = '';
+    const span = document.createElement('span');
+    span.style.color = 'var(--color-error, #c00)';
+    span.style.fontSize = '0.85em';
+    span.textContent = message;
+    cell.appendChild(span);
+  }
+
+  fetch('/stats/lg-total')
+    .then(function (res) {
+      if (!res.ok) throw new Error('Request failed: ' + res.status);
+      return res.json();
+    })
+    .then(function (data) {
+      if (data.lgError || !data.lgTotal || data.lgTotal <= 0) {
+        showError(data.lgError || 'Could not find Twixt game count.');
+        return;
+      }
+      cell.textContent = data.lgTotal.toLocaleString();
+      cell.classList.remove('lg-total-loading');
+      coverageCell.textContent = ((cached / data.lgTotal) * 100).toFixed(2) + '%';
+      coverageRow.style.display = '';
+    })
+    .catch(function (err) {
+      showError('Failed to fetch Little Golem: ' + err.message);
+    });
+})();
+</script>
