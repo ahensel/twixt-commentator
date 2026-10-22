@@ -725,7 +725,7 @@ function showWinnerBanner(text) {
   const banner = $('winner-banner');
   if (!banner) return;
   banner.firstElementChild.textContent = text;
-  banner.style.opacity = 1;
+  banner.classList.add('visible');
   BoardState.winnerBannerTimer = setTimeout(hideWinnerBanner, 2000);
 }
 
@@ -733,7 +733,7 @@ function hideWinnerBanner() {
   const banner = $('winner-banner');
   if (!banner) return;
   clearTimeout(BoardState.winnerBannerTimer);
-  banner.style.opacity = 0;
+  banner.classList.remove('visible');
 }
 
 function clickOnBoard(evt) {

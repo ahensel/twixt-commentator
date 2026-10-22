@@ -379,6 +379,10 @@ tr.odd  { background-color: var(--color-odd-row); }
   transition: opacity 1s;
 }
 
+.winner-banner.visible {
+  opacity: 1;
+}
+
 .winner-banner span {
   padding: 0.5em 1.2em;
   font-family: var(--font-stack);
@@ -389,6 +393,10 @@ tr.odd  { background-color: var(--color-odd-row); }
   border-radius: 8px;
   cursor: pointer;
   user-select: none;
+  pointer-events: none;
+}
+
+.winner-banner.visible span {
   pointer-events: auto;
 }
 
