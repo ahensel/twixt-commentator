@@ -8,8 +8,15 @@ class TwixtBoard {
     // 1-based: board[x][y] is valid for x, y in 1..size
     this.board = Array.from({ length: size + 1 }, () => []);
     this.allPegs = [];
-    this.dx = [ 1,  2, 2, 1, -1, -2, -2, -1];
-    this.dy = [-2, -1, 1, 2,  2,  1, -1, -2];
+  }
+
+  forEachKnightMove(callback) {
+    const dx = [ 1,  2, 2, 1, -1, -2, -2, -1];
+    const dy = [-2, -1, 1, 2,  2,  1, -1, -2];
+    for (let i = 0; i < 8; i++) {
+      if (callback(dx[i], dy[i])) return true;
+    }
+    return false;
   }
 
   isLegalSpot(x, y, color) {
@@ -34,13 +41,9 @@ class TwixtBoard {
   isLinkable(x, y) {
     const peg = this.getPeg(x, y);
     if (peg == null) return false;
-    for (let i = 0; i < 8; i++) {
-      if (!peg.hasLink(this.dx[i], this.dy[i]) &&
-          this.canLink(x, y, x + this.dx[i], y + this.dy[i])) {
-        return true;
-      }
-    }
-    return false;
+    return this.forEachKnightMove((dx, dy) => {
+      return !peg.hasLink(dx, dy) && this.canLink(x, y, x + dx, y + dy);
+    });
   }
 
   canLink(x1, y1, x2, y2) {
@@ -74,18 +77,16 @@ class TwixtBoard {
   crossesPegsLinks(x, y, x1, y1, x2, y2) {
     const peg = this.getPeg(x, y);
     if (peg != null) {
-      for (let i = 0; i < 8; i++) {
-        const dx = this.dx[i];
-        const dy = this.dy[i];
-        if (peg.hasLink(dx, dy) &&
-            this.doLinksCross(x1, y1, x2, y2, x, y, x + dx, y + dy)) {
+      return this.forEachKnightMove((dx, dy) => {
+        if (peg.hasLink(dx, dy) && this.doLinksCross(x1, y1, x2, y2, x, y, x + dx, y + dy)) {
           if (this.linkXingPolicy === TwixtBoard.LINK_REMOVAL) {
             return true;
           } else if (peg.color !== this.getPeg(x1, y1).color) {
             return true;
           }
         }
-      }
+        return false;
+      });
     }
     return false;
   }

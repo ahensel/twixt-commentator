@@ -13,9 +13,9 @@ class TwixtGame {
   }
 
   addLinksTo(peg, isNew) {
-    for (let i = 0; i < 8; i++) {
-      this.link(peg.x, peg.y, peg.x + this.board.dx[i], peg.y + this.board.dy[i], isNew);
-    }
+    this.board.forEachKnightMove((dx, dy) => {
+      this.link(peg.x, peg.y, peg.x + dx, peg.y + dy, isNew);
+    });
   }
 
   link(x1, y1, x2, y2, isNew) {
