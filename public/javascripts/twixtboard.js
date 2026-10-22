@@ -36,4 +36,31 @@ class TwixtBoard {
   getFirstPeg() {
     return this.allPegs[0];
   }
+
+  winner() {
+    const whiteWon = this._hasConnection(1, (peg) => peg.y < 3, (peg) => peg.y > this.size - 2);
+    const blackWon = this._hasConnection(0, (peg) => peg.x < 3, (peg) => peg.x > this.size - 2);
+    return whiteWon ? "White" : blackWon ? "Black" : null;
+  }
+
+  _hasConnection(color, startSide, endSide) {
+    this.allPegs.forEach((peg) => peg._visited = false);
+    const visitStack = this.allPegs.filter((peg) => peg.color === color && startSide(peg));
+    visitStack.forEach((peg) => peg._visited = true);
+    while (visitStack.length > 0) {
+      const peg = visitStack.pop();
+      for (let link of peg.getLinks()) {
+        const linkedPeg = (peg === link.peg1) ? link.peg2 : link.peg1;
+        if (endSide(linkedPeg)) {
+          return true;
+        }
+        if (!linkedPeg._visited) {
+          linkedPeg._visited = true;
+          visitStack.push(linkedPeg);
+        }
+      }
+    }
+    return false;
+  }
+
 }

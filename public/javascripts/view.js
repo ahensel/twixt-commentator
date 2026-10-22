@@ -58,6 +58,7 @@ const BoardState = {
   twixtGame: null,  // TwixtController object, created on load
   currentMoves: new TwixtMoves(),  // tracks both main line and user variation
   currentMoveNum: null,   // current move in the main line, not the variation
+  declaredWinner: null,
 
   // Link removal state tracking
   cutLink: null,
@@ -235,6 +236,7 @@ function showUserMovesText() {
 
   $('user-moves').innerHTML = userMovesText;
   updateBackNextButtons();
+  declareWinnerIfWinner();
 }
 
 function jumpTo(moveNum) {
@@ -708,6 +710,16 @@ function mouseOverBoard(evt) {
     }
   }
   return true;
+}
+
+function declareWinnerIfWinner() {
+  const winner = BoardState.twixtGame.board.winner();
+  if (winner !== BoardState.declaredWinner) {
+    if (winner) {
+      alert(winner + " wins!");
+    }
+  }
+  BoardState.declaredWinner = winner;
 }
 
 function clickOnBoard(evt) {
