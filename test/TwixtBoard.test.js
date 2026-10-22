@@ -153,4 +153,58 @@ describe('TwixtBoard (public/javascripts/twixtboard.js)', () => {
       expect(board.winner()).toBeNull();
     });
   });
+
+  describe('isDraw', () => {
+    // Helper: parse a space-separated move list (e.g. "d4 d5 e5 e4 ...") onto an 8x8 board.
+    // White plays on odd-numbered moves (1, 3, 5…), Black on even (2, 4, 6…).
+    // After each peg is placed, all possible links to same-color knight-move
+    // neighbors are added automatically (matching TwixtGame.addLinksTo behaviour).
+    function buildBoard(moveStr) {
+      const board = new TwixtBoard(8);
+      const moves = moveStr.trim().split(/\s+/);
+      const letters = ' abcdefghijklmnopqrstuvwxyz';
+
+      for (let i = 0; i < moves.length; i++) {
+        const token = moves[i];
+        const x = letters.indexOf(token[0]);
+        const y = parseInt(token.slice(1), 10);
+        const color = (i % 2 === 0) ? TwixtBoard.WHITE : TwixtBoard.BLACK;
+        const peg = new Peg(color, x, y);
+        board.setPeg(peg);
+        // Auto-link with existing same-color knight-move neighbors
+        board.forEachKnightMove((dx, dy) => {
+          board.link(x, y, x + dx, y + dy);
+        });
+      }
+      return board;
+    }
+
+    test('returns false on an empty board', () => {
+      expect(new TwixtBoard(8).isDraw()).toBe(false);
+    });
+
+    test('returns false when no one is blocked (open game)', () => {
+      const board = buildBoard('d4 d5');
+      expect(board.isDraw()).toBe(false);
+    });
+
+    // The three positions supplied in the task description.
+    test('draw position 1 (8x8): d4 d5 e5 e4 e2 g5 d7 b4 c5 d3 f4 e6 e3 f5 d6 c4', () => {
+      const board = buildBoard('d4 d5 e5 e4 e2 g5 d7 b4 c5 d3 f4 e6 e3 f5 d6 c4');
+      expect(board.isDraw()).toBe(true);
+    });
+
+    test('draw position 2 (8x8): spiral wall', () => {
+      const board = buildBoard(
+        'b2 c2 d2 e2 f2 g2 g3 f3 e3 d3 c3 b3 b4 c4 d4 e4 f4 g4 ' +
+        'g5 f5 e5 e6 f6 g6 g7 f7 e7 d7 d6 d5 c5 b5 b6 c6 c7 b7'
+      );
+      expect(board.isDraw()).toBe(true);
+    });
+
+    test('draw position 3 (8x8): d4 d5 e2 b4 f4 e6 d7 g5 c5 a2 f6 e5 e3 g4 c4 e4', () => {
+      const board = buildBoard('d4 d5 e2 b4 f4 e6 d7 g5 c5 a2 f6 e5 e3 g4 c4 e4');
+      expect(board.isDraw()).toBe(true);
+    });
+  });
 });

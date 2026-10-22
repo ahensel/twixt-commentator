@@ -137,6 +137,82 @@ class TwixtBoard {
     return false;
   }
 
+  isDraw() {
+    const whiteBlocked = this._isColorBlocked(
+      TwixtBoard.WHITE, (x, y) => y === 1, (x, y) => y === this.size
+    );
+    const blackBlocked = this._isColorBlocked(
+      TwixtBoard.BLACK, (x, y) => x === 1, (x, y) => x === this.size
+    );
+    return whiteBlocked && blackBlocked;
+  }
+
+  // Returns true if `color` can no longer reach their goal side.
+  // Explores all grid squares reachable via knight moves from the start side,
+  // treating opponent-occupied squares, moves blocked by opponent links, and
+  // squares outside the player's legal area as impassable.
+  // Own links are irrelevant (they may cross in P&P mode).
+  _isColorBlocked(color, startSide, endSide) {
+    const opponentColor = (color === TwixtBoard.WHITE) ? TwixtBoard.BLACK : TwixtBoard.WHITE;
+    const key = (x, y) => x * (this.size + 1) + y;
+    const visited = new Set();
+    const stack = [];
+
+    // Seed from every legal start-side square not occupied by the opponent.
+    for (let x = 1; x <= this.size; x++) {
+      for (let y = 1; y <= this.size; y++) {
+        if (!startSide(x, y)) continue;
+        if (!this.isLegalSpot(x, y, color)) continue;
+        const peg = this.getPeg(x, y);
+        if (peg && peg.color === opponentColor) continue; // blocked by opponent
+        const k = key(x, y);
+        if (!visited.has(k)) {
+          visited.add(k);
+          stack.push([x, y]);
+        }
+      }
+    }
+
+    while (stack.length > 0) {
+      const [x, y] = stack.pop();
+      for (const [dx, dy] of KNIGHT_MOVES) {
+        const nx = x + dx;
+        const ny = y + dy;
+        if (!this.isLegalSpot(nx, ny, color)) continue; // outside player's legal area
+        const nPeg = this.getPeg(nx, ny);
+        if (nPeg && nPeg.color === opponentColor) continue; // square owned by opponent
+        if (this._isKnightMoveBlockedByOpponent(x, y, nx, ny, opponentColor)) continue;
+        if (endSide(nx, ny)) return false; // can still reach the goal
+        const k = key(nx, ny);
+        if (!visited.has(k)) {
+          visited.add(k);
+          stack.push([nx, ny]);
+        }
+      }
+    }
+    return true; // goal is unreachable
+  }
+
+  // Returns true if an opponent's existing link crosses the knight move (x1,y1)→(x2,y2).
+  _isKnightMoveBlockedByOpponent(x1, y1, x2, y2, opponentColor) {
+    const minX = Math.min(x1, x2);
+    const maxX = Math.max(x1, x2);
+    const minY = Math.min(y1, y2);
+    const maxY = Math.max(y1, y2);
+    for (let x = minX; x <= maxX; x++) {
+      for (let y = minY; y <= maxY; y++) {
+        if ((x === x1 && y === y1) || (x === x2 && y === y2)) continue;
+        const peg = this.getPeg(x, y);
+        if (!peg || peg.color !== opponentColor) continue;
+        for (const [dx, dy] of KNIGHT_MOVES) {
+          if (!peg.hasLink(dx, dy)) continue;
+          if (this.doLinksCross(x1, y1, x2, y2, x, y, x + dx, y + dy)) return true;
+        }
+      }
+    }
+    return false;
+  }
+
 }
 
 if (typeof module !== 'undefined') module.exports = { TwixtBoard };
