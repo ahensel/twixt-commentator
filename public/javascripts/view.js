@@ -55,7 +55,7 @@ const BoardState = {
   turn: 1,  // 1 = White's turn, 0 = Black's turn
   bg: 1,    // board glass, for double buffering, to eliminate flicker. 1 or 2.
 
-  twixtGame: null,  // TwixtController object, created on load
+  twixtGame: null,  // TwixtGame object, created on load
   currentMoves: new TwixtMoves(),  // tracks both main line and user variation
   currentMoveNum: null,   // current move in the main line, not the variation
   declaredWinner: null,
@@ -99,7 +99,7 @@ window.addEventListener('load', () => {
   const size = parseInt($('boardSize').value, 10);
   const linkPolicy = $('linkPolicy')?.value === 'R' ? TwixtBoard.LINK_REMOVAL : TwixtBoard.PENCIL_AND_PAPER;
   SWAP_STYLE = $('swapStyle')?.value || null;
-  BoardState.twixtGame = new TwixtController(size, linkPolicy);
+  BoardState.twixtGame = new TwixtGame(size, linkPolicy);
   setBoardSize(size);
   showMovesOnLoad();
   showTurn();
@@ -659,7 +659,7 @@ function updateSwapButton() {
 
 function clearBoard() {
   BoardState.turn = 1;
-  BoardState.twixtGame = new TwixtController(BoardState.twixtGame.board.size, BoardState.twixtGame.board.linkXingPolicy);
+  BoardState.twixtGame = new TwixtGame(BoardState.twixtGame.board.size, BoardState.twixtGame.board.linkXingPolicy);
   BoardState.cutLink = null;
   BoardState.holdingForMarkers = false;
   BoardState.numLinkableMarkers = 0;
