@@ -367,6 +367,31 @@ tr.odd  { background-color: var(--color-odd-row); }
   user-select: none;
 }
 
+.winner-banner {
+  position: absolute;
+  inset: 1px;  /* same offset as the other glasses */
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s;
+}
+
+.winner-banner span {
+  padding: 0.5em 1.2em;
+  font-family: var(--font-stack);
+  font-size: var(--font-size-l);
+  font-weight: bold;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  pointer-events: auto;
+}
+
 .board .swap-button {
   position: absolute;
   font-size: var(--font-size-s);

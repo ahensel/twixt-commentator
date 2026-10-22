@@ -110,6 +110,7 @@ window.addEventListener('load', () => {
   $('topglass').addEventListener('mousemove', mouseOverBoard);
   $('topglass').addEventListener('mouseout', eraseCrosshair);
   $('swap-button').addEventListener('click', () => { swapFirstPeg(); showUserMovesText(); });
+  $('winner-banner').addEventListener('click', hideWinnerBanner);
 });
 
 function setBoardSize(size) {
@@ -715,11 +716,24 @@ function mouseOverBoard(evt) {
 function declareWinnerIfWinner() {
   const winner = BoardState.twixtGame.board.winner();
   if (winner !== BoardState.declaredWinner) {
-    if (winner) {
-      alert(winner + " wins!");
-    }
+    if (winner) showWinnerBanner(winner + " wins!");
   }
   BoardState.declaredWinner = winner;
+}
+
+function showWinnerBanner(text) {
+  const banner = $('winner-banner');
+  if (!banner) return;
+  banner.firstElementChild.textContent = text;
+  banner.style.opacity = 1;
+  BoardState.winnerBannerTimer = setTimeout(hideWinnerBanner, 2000);
+}
+
+function hideWinnerBanner() {
+  const banner = $('winner-banner');
+  if (!banner) return;
+  clearTimeout(BoardState.winnerBannerTimer);
+  banner.style.opacity = 0;
 }
 
 function clickOnBoard(evt) {
