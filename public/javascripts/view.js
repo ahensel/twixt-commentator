@@ -714,12 +714,12 @@ function mouseOverBoard(evt) {
 }
 
 function declareWinnerIfWinner() {
-  const winner = BoardState.twixtGame.board.isDraw() ? 'draw' :
-    BoardState.twixtGame.board.winner();
+  const winner = BoardState.twixtGame.board.calculateWinner();
 
   if (winner !== BoardState.declaredWinner) {
-    if (winner === 'Black' || winner === 'White') showWinnerBanner(winner + " wins!");
-      else if (winner === 'draw') showWinnerBanner("It's a draw!");
+    if (winner !== null) {
+      showWinnerBanner(["It's a draw!", "White wins!", "Black wins!"][winner]);
+    }
   }
   BoardState.declaredWinner = winner;
 }

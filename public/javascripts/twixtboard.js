@@ -108,12 +108,16 @@ class TwixtBoard {
     return this.allPegs[0];
   }
 
-  winner() {
+  calculateWinner() {
+    if (this._isColorBlocked(TwixtBoard.WHITE) &&
+      this._isColorBlocked(TwixtBoard.BLACK)) return 0; // draw
+
     const whiteWon = this._hasConnection(TwixtBoard.WHITE, (peg) => peg.y < 3, (peg) => peg.y > this.size - 2);
     const blackWon = this._hasConnection(TwixtBoard.BLACK, (peg) => peg.x < 3, (peg) => peg.x > this.size - 2);
-    return whiteWon ? "White" : blackWon ? "Black" : null;
+    return whiteWon ? 1 : blackWon ? 2 : null;
   }
 
+  // Depth-first search for absolute win by continuous chain of connected pegs from one side to the other
   _hasConnection(color, startSide, endSide) {
     const visited = new Set();
     for (const peg of this.allPegs) {
@@ -134,11 +138,6 @@ class TwixtBoard {
       }
     }
     return false;
-  }
-
-  isDraw() {
-    return this._isColorBlocked(TwixtBoard.WHITE) &&
-           this._isColorBlocked(TwixtBoard.BLACK);
   }
 
   // Returns true if `color` can no longer reach their goal side.
