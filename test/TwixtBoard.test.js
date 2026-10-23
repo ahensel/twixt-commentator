@@ -125,7 +125,7 @@ describe('TwixtBoard (public/javascripts/twixtboard.js)', () => {
     });
   });
 
-  describe('winner', () => {
+  describe('calculate winner', () => {
     test('detects a white connection from bottom to top', () => {
       const board = new TwixtBoard(5);
       placePeg(board, TwixtBoard.WHITE, 2, 1);
@@ -133,7 +133,7 @@ describe('TwixtBoard (public/javascripts/twixtboard.js)', () => {
       placePeg(board, TwixtBoard.WHITE, 2, 5);
       board.link(2, 1, 3, 3);
       board.link(3, 3, 2, 5);
-      expect(board.winner()).toBe('White');
+      expect(board.calculateWinner()).toBe(1);
     });
 
     test('detects a black connection from left to right', () => {
@@ -143,18 +143,18 @@ describe('TwixtBoard (public/javascripts/twixtboard.js)', () => {
       placePeg(board, TwixtBoard.BLACK, 5, 3);
       board.link(1, 3, 3, 4);
       board.link(3, 4, 5, 3);
-      expect(board.winner()).toBe('Black');
+      expect(board.calculateWinner()).toBe(2);
     });
 
     test('returns null when nothing is connected', () => {
       const board = new TwixtBoard(5);
       placePeg(board, TwixtBoard.WHITE, 2, 1);
       placePeg(board, TwixtBoard.WHITE, 3, 3);
-      expect(board.winner()).toBeNull();
+      expect(board.calculateWinner()).toBeNull();
     });
   });
 
-  describe('isDraw', () => {
+  describe('calculate draws', () => {
     // Helper: parse a space-separated move list (e.g. "d4 d5 e5 e4 ...") onto an 8x8 board.
     // White plays on odd-numbered moves (1, 3, 5…), Black on even (2, 4, 6…).
     // After each peg is placed, all possible links to same-color knight-move
@@ -180,18 +180,18 @@ describe('TwixtBoard (public/javascripts/twixtboard.js)', () => {
     }
 
     test('returns false on an empty board', () => {
-      expect(new TwixtBoard(8).isDraw()).toBe(false);
+      expect(new TwixtBoard(8).calculateWinner()).toBe(null);
     });
 
     test('returns false when no one is blocked (open game)', () => {
       const board = buildBoard('d4 d5');
-      expect(board.isDraw()).toBe(false);
+      expect(board.calculateWinner()).toBe(null);
     });
 
     // The three positions supplied in the task description.
     test('draw position 1 (8x8): d4 d5 e5 e4 e2 g5 d7 b4 c5 d3 f4 e6 e3 f5 d6 c4', () => {
       const board = buildBoard('d4 d5 e5 e4 e2 g5 d7 b4 c5 d3 f4 e6 e3 f5 d6 c4');
-      expect(board.isDraw()).toBe(true);
+      expect(board.calculateWinner()).toBe(0);
     });
 
     test('draw position 2 (8x8): spiral wall', () => {
@@ -199,12 +199,12 @@ describe('TwixtBoard (public/javascripts/twixtboard.js)', () => {
         'b2 c2 d2 e2 f2 g2 g3 f3 e3 d3 c3 b3 b4 c4 d4 e4 f4 g4 ' +
         'g5 f5 e5 e6 f6 g6 g7 f7 e7 d7 d6 d5 c5 b5 b6 c6 c7 b7'
       );
-      expect(board.isDraw()).toBe(true);
+      expect(board.calculateWinner()).toBe(0);
     });
 
     test('draw position 3 (8x8): d4 d5 e2 b4 f4 e6 d7 g5 c5 a2 f6 e5 e3 g4 c4 e4', () => {
       const board = buildBoard('d4 d5 e2 b4 f4 e6 d7 g5 c5 a2 f6 e5 e3 g4 c4 e4');
-      expect(board.isDraw()).toBe(true);
+      expect(board.calculateWinner()).toBe(0);
     });
   });
 });
