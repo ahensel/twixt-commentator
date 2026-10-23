@@ -66,7 +66,7 @@ class TwixtBoard {
     return new Link(this.getPeg(x1, y1), this.getPeg(x2, y2));
   }
 
-  crossesExistingLink(x1, y1, x2, y2) {
+  crossesExistingLink(x1, y1, x2, y2, endpointColor = this.getPeg(x1, y1)?.color) {
     const minX = Math.min(x1, x2);
     const maxX = Math.max(x1, x2);
     const minY = Math.min(y1, y2);
@@ -74,17 +74,16 @@ class TwixtBoard {
     for (let x = minX; x <= maxX; x++) {
       for (let y = minY; y <= maxY; y++) {
         if (!((x === x1 && y === y1) || (x === x2 && y === y2))) {
-          if (this.crossesPegsLinks(x, y, x1, y1, x2, y2)) return true;
+          if (this.crossesPegsLinks(x, y, x1, y1, x2, y2, endpointColor)) return true;
         }
       }
     }
     return false;
   }
 
-  crossesPegsLinks(x, y, x1, y1, x2, y2) {
+  crossesPegsLinks(x, y, x1, y1, x2, y2, endpointColor = this.getPeg(x1, y1)?.color) {
     const peg = this.getPeg(x, y);
     if (!peg) return false;
-    const endpointColor = this.getPeg(x1, y1).color;
     return this.forEachKnightMove((dx, dy) => {
       if (!peg.hasLink(dx, dy) || !this.doLinksCross(x1, y1, x2, y2, x, y, x + dx, y + dy)) {
         return false;
@@ -181,7 +180,7 @@ class TwixtBoard {
         if (!this.isLegalSpot(nx, ny, color)) continue; // outside player's legal area
         const nPeg = this.getPeg(nx, ny);
         if (nPeg && nPeg.color === opponentColor) continue; // square owned by opponent
-        if (this._isKnightMoveBlockedByOpponent(x, y, nx, ny, opponentColor)) continue;
+        if (this.crossesExistingLink(x, y, nx, ny, color)) continue;
         if (endSide(nx, ny)) return false; // can still reach the goal
         const k = key(nx, ny);
         if (!visited.has(k)) {
@@ -191,26 +190,6 @@ class TwixtBoard {
       }
     }
     return true; // goal is unreachable
-  }
-
-  // Returns true if an opponent's existing link crosses the knight move (x1,y1)→(x2,y2).
-  _isKnightMoveBlockedByOpponent(x1, y1, x2, y2, opponentColor) {
-    const minX = Math.min(x1, x2);
-    const maxX = Math.max(x1, x2);
-    const minY = Math.min(y1, y2);
-    const maxY = Math.max(y1, y2);
-    for (let x = minX; x <= maxX; x++) {
-      for (let y = minY; y <= maxY; y++) {
-        if ((x === x1 && y === y1) || (x === x2 && y === y2)) continue;
-        const peg = this.getPeg(x, y);
-        if (!peg || peg.color !== opponentColor) continue;
-        for (const [dx, dy] of KNIGHT_MOVES) {
-          if (!peg.hasLink(dx, dy)) continue;
-          if (this.doLinksCross(x1, y1, x2, y2, x, y, x + dx, y + dy)) return true;
-        }
-      }
-    }
-    return false;
   }
 
 }
