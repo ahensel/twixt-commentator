@@ -14,19 +14,19 @@ function placePeg(board, color, x, y) {
 }
 
 describe('TwixtBoard (public/javascripts/twixtboard.js)', () => {
-  describe('isLegalSpot', () => {
+  describe('isValidSpot', () => {
     const board = new TwixtBoard(5);
 
     test('white cannot place on the edge columns', () => {
-      expect(board.isLegalSpot(1, 3, TwixtBoard.WHITE)).toBe(false);
-      expect(board.isLegalSpot(5, 3, TwixtBoard.WHITE)).toBe(false);
-      expect(board.isLegalSpot(3, 3, TwixtBoard.WHITE)).toBe(true);
+      expect(board.isValidSpot(1, 3, TwixtBoard.WHITE)).toBe(false);
+      expect(board.isValidSpot(5, 3, TwixtBoard.WHITE)).toBe(false);
+      expect(board.isValidSpot(3, 3, TwixtBoard.WHITE)).toBe(true);
     });
 
     test('black cannot place on the edge rows', () => {
-      expect(board.isLegalSpot(3, 1, TwixtBoard.BLACK)).toBe(false);
-      expect(board.isLegalSpot(3, 5, TwixtBoard.BLACK)).toBe(false);
-      expect(board.isLegalSpot(3, 3, TwixtBoard.BLACK)).toBe(true);
+      expect(board.isValidSpot(3, 1, TwixtBoard.BLACK)).toBe(false);
+      expect(board.isValidSpot(3, 5, TwixtBoard.BLACK)).toBe(false);
+      expect(board.isValidSpot(3, 3, TwixtBoard.BLACK)).toBe(true);
     });
   });
 

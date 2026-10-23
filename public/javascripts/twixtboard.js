@@ -14,7 +14,7 @@ class TwixtBoard {
     this.size = size;
     this.linkXingPolicy = linkXingPolicy ?? TwixtBoard.PENCIL_AND_PAPER;
     // 1-based: board[x][y] is valid for x, y in 1..size
-    this.board = Array.from({ length: size + 1 }, () => new Array(size + 1).fill(null));
+    this._board = Array.from({ length: size + 1 }, () => new Array(size + 1).fill(null));
     this._allPegs = [];
   }
 
@@ -25,23 +25,27 @@ class TwixtBoard {
     return false;
   }
 
-  isLegalSpot(x, y, color) {
+  isValidSpot(x, y, color) {
     return (
       (color === TwixtBoard.WHITE && x > 1 && x < this.size && y >= 1 && y <= this.size) ||
       (color === TwixtBoard.BLACK && x >= 1 && x <= this.size && y > 1 && y < this.size)
     );
   }
 
+  _isUnoccupiedSpot(x, y) {
+    return this._board[x][y] === null;
+  }
+
   setPeg(peg) {
-    if (this.board[peg.x][peg.y] === null) {
-      this.board[peg.x][peg.y] = peg;
+    if (this._isUnoccupiedSpot(peg.x, peg.y)) {
+      this._board[peg.x][peg.y] = peg;
       this._allPegs.push(peg);
     }
   }
 
   getPeg(x, y) {
     if (x < 1 || x > this.size || y < 1 || y > this.size) return null;
-    return this.board[x][y];
+    return this._board[x][y];
   }
 
   isLinkable(x, y) {
@@ -108,6 +112,8 @@ class TwixtBoard {
     return this._allPegs[0];
   }
 
+  // calculates absolute winner (near edge) or absolute draw,
+  // for the UI to show a banner when it is achieved
   calculateWinner() {
     if (this._isColorBlocked(TwixtBoard.WHITE) &&
       this._isColorBlocked(TwixtBoard.BLACK)) return 0; // draw
@@ -167,7 +173,7 @@ class TwixtBoard {
       for (const [dx, dy] of KNIGHT_MOVES) {
         const nx = x + dx;
         const ny = y + dy;
-        if (!this.isLegalSpot(nx, ny, color)) continue; // outside player's legal area
+        if (!this.isValidSpot(nx, ny, color)) continue; // outside player's legal area
         const nPeg = this.getPeg(nx, ny);
         if (nPeg && nPeg.color !== color) continue; // square owned by opponent
         if (this.crossesExistingLink(x, y, nx, ny, color)) continue;

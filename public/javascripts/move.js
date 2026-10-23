@@ -1,14 +1,5 @@
-class AbstractMove {
-  get color() {
-    if (this.player === 1) return 'white';
-    if (this.player === 2) return 'black';
-    return null;
-  }
-}
-
-class Move extends AbstractMove {
+class Move {
   constructor(x, y, player) {
-    super();
     this.x = x;
     this.y = y;
     this.player = player;
@@ -31,32 +22,32 @@ Move.Draw    = 4;
 Move.Forfeit = 5;
 Move.Lost    = 6;
 
-class SwapMove extends AbstractMove {
-  constructor(player) { super(); this.player = player; this.type = Move.Swap; }
+class SwapMove {
+  constructor(player) { this.player = player; this.type = Move.Swap; }
   get text() { return 'swap'; }
   getText()  { return this.text; }
 }
 
-class ResignMove extends AbstractMove {
-  constructor(player) { super(); this.player = player; this.type = Move.Resign; this.isFinalMove = true; }
+class ResignMove {
+  constructor(player) { this.player = player; this.type = Move.Resign; this.isFinalMove = true; }
   get text() { return 'resign'; }
   getText()  { return this.text; }
 }
 
-class DrawMove extends AbstractMove {
-  constructor(player) { super(); this.player = player; this.type = Move.Draw; this.isFinalMove = true; }
+class DrawMove {
+  constructor(player) { this.player = player; this.type = Move.Draw; this.isFinalMove = true; }
   get text() { return 'draw'; }
   getText()  { return this.text; }
 }
 
-class ForfeitMove extends AbstractMove {
-  constructor(player) { super(); this.player = player; this.type = Move.Forfeit; this.isFinalMove = true; }
+class ForfeitMove {
+  constructor(player) { this.player = player; this.type = Move.Forfeit; this.isFinalMove = true; }
   get text() { return 'forfeit'; }
   getText()  { return this.text; }
 }
 
-class LostMove extends AbstractMove {
-  constructor(player) { super(); this.player = player; this.type = Move.Lost; this.isFinalMove = true; }
+class LostMove {
+  constructor(player) { this.player = player; this.type = Move.Lost; this.isFinalMove = true; }
   get text() { return 'lost'; }
   getText()  { return this.text; }
 }
