@@ -44,7 +44,7 @@ describe('TwixtBoard (public/javascripts/twixtboard.js)', () => {
       board.setPeg(peg);
       board.setPeg(peg);
       expect(board.getPeg(3, 3)).toBe(peg);
-      expect(board.pegCount()).toBe(1);
+      expect(board.numPegs()).toBe(1);
       expect(board.getFirstPeg()).toBe(peg);
     });
   });

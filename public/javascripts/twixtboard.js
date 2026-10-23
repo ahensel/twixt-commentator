@@ -11,10 +11,10 @@ class TwixtBoard {
   static BLACK = 0;
 
   constructor(size, linkXingPolicy) {
-    this._size = size;
+    this.size = size;
     this._linkXingPolicy = linkXingPolicy ?? TwixtBoard.PENCIL_AND_PAPER;
     // 1-based: board[x][y] is valid for x, y in 1..size
-    this._board = Array.from({ length: size + 1 }, () => new Array(size + 1).fill(null));
+    this.board = Array.from({ length: size + 1 }, () => new Array(size + 1).fill(null));
     this._allPegs = [];
   }
 
@@ -27,21 +27,21 @@ class TwixtBoard {
 
   isLegalSpot(x, y, color) {
     return (
-      (color === TwixtBoard.WHITE && x > 1 && x < this._size && y >= 1 && y <= this._size) ||
-      (color === TwixtBoard.BLACK && x >= 1 && x <= this._size && y > 1 && y < this._size)
+      (color === TwixtBoard.WHITE && x > 1 && x < this.size && y >= 1 && y <= this.size) ||
+      (color === TwixtBoard.BLACK && x >= 1 && x <= this.size && y > 1 && y < this.size)
     );
   }
 
   setPeg(peg) {
-    if (this._board[peg.x][peg.y] === null) {
-      this._board[peg.x][peg.y] = peg;
+    if (this.board[peg.x][peg.y] === null) {
+      this.board[peg.x][peg.y] = peg;
       this._allPegs.push(peg);
     }
   }
 
   getPeg(x, y) {
-    if (x < 1 || x > this._size || y < 1 || y > this._size) return null;
-    return this._board[x][y];
+    if (x < 1 || x > this.size || y < 1 || y > this.size) return null;
+    return this.board[x][y];
   }
 
   isLinkable(x, y) {
@@ -100,7 +100,7 @@ class TwixtBoard {
              (y2 - y1) * (x2 - x1) * (y4 - y3) * (x4 - x3) < 0));
   }
 
-  pegCount() {
+  numPegs() {
     return this._allPegs.length;
   }
 
@@ -112,8 +112,8 @@ class TwixtBoard {
     if (this._isColorBlocked(TwixtBoard.WHITE) &&
       this._isColorBlocked(TwixtBoard.BLACK)) return 0; // draw
 
-    const whiteWon = this._hasConnection(TwixtBoard.WHITE, (peg) => peg.y < 3, (peg) => peg.y > this._size - 2);
-    const blackWon = this._hasConnection(TwixtBoard.BLACK, (peg) => peg.x < 3, (peg) => peg.x > this._size - 2);
+    const whiteWon = this._hasConnection(TwixtBoard.WHITE, (peg) => peg.y < 3, (peg) => peg.y > this.size - 2);
+    const blackWon = this._hasConnection(TwixtBoard.BLACK, (peg) => peg.x < 3, (peg) => peg.x > this.size - 2);
     return whiteWon ? 1 : blackWon ? 2 : null;
   }
 
@@ -150,13 +150,13 @@ class TwixtBoard {
   // any opponent pegs, so the seed squares are simply the full legal range there.
   _isColorBlocked(color) {
     const isWhite = color === TwixtBoard.WHITE;
-    const endCoord = this._size; // y===size for White, x===size for Black
-    const key = (x, y) => x * (this._size + 1) + y;
+    const endCoord = this.size; // y===size for White, x===size for Black
+    const key = (x, y) => x * (this.size + 1) + y;
     const visited = new Set();
     const stack = [];
 
     // Seed: x=2..size-1 on row 1 (White) or y=2..size-1 on column 1 (Black).
-    for (let i = 2; i < this._size; i++) {
+    for (let i = 2; i < this.size; i++) {
       const [x, y] = isWhite ? [i, 1] : [1, i];
       visited.add(key(x, y));
       stack.push([x, y]);
