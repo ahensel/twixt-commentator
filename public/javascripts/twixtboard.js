@@ -12,7 +12,7 @@ class TwixtBoard {
 
   constructor(size, linkXingPolicy) {
     this.size = size;
-    this._linkXingPolicy = linkXingPolicy ?? TwixtBoard.PENCIL_AND_PAPER;
+    this.linkXingPolicy = linkXingPolicy ?? TwixtBoard.PENCIL_AND_PAPER;
     // 1-based: board[x][y] is valid for x, y in 1..size
     this.board = Array.from({ length: size + 1 }, () => new Array(size + 1).fill(null));
     this._allPegs = [];
@@ -88,7 +88,7 @@ class TwixtBoard {
       if (!peg.hasLink(dx, dy) || !this.doLinksCross(x1, y1, x2, y2, x, y, x + dx, y + dy)) {
         return false;
       }
-      return (this._linkXingPolicy === TwixtBoard.LINK_REMOVAL) || (peg.color !== endpointColor);
+      return (this.linkXingPolicy === TwixtBoard.LINK_REMOVAL) || (peg.color !== endpointColor);
     });
   }
 
