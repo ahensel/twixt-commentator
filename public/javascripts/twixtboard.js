@@ -137,39 +137,30 @@ class TwixtBoard {
   }
 
   isDraw() {
-    const whiteBlocked = this._isColorBlocked(
-      TwixtBoard.WHITE, (x, y) => y === 1, (x, y) => y === this.size
-    );
-    const blackBlocked = this._isColorBlocked(
-      TwixtBoard.BLACK, (x, y) => x === 1, (x, y) => x === this.size
-    );
-    return whiteBlocked && blackBlocked;
+    return this._isColorBlocked(TwixtBoard.WHITE) &&
+           this._isColorBlocked(TwixtBoard.BLACK);
   }
 
   // Returns true if `color` can no longer reach their goal side.
-  // Explores all grid squares reachable via knight moves from the start side,
+  // Explores all grid squares reachable via knight moves from the start border,
   // treating opponent-occupied squares, moves blocked by opponent links, and
   // squares outside the player's legal area as impassable.
   // Own links are irrelevant (they may cross in P&P mode).
-  _isColorBlocked(color, startSide, endSide) {
-    const opponentColor = (color === TwixtBoard.WHITE) ? TwixtBoard.BLACK : TwixtBoard.WHITE;
+  //
+  // The start border (row 1 for White, column 1 for Black) cannot legally hold
+  // any opponent pegs, so the seed squares are simply the full legal range there.
+  _isColorBlocked(color) {
+    const isWhite = color === TwixtBoard.WHITE;
+    const endCoord = this.size; // y===size for White, x===size for Black
     const key = (x, y) => x * (this.size + 1) + y;
     const visited = new Set();
     const stack = [];
 
-    // Seed from every legal start-side square not occupied by the opponent.
-    for (let x = 1; x <= this.size; x++) {
-      for (let y = 1; y <= this.size; y++) {
-        if (!startSide(x, y)) continue;
-        if (!this.isLegalSpot(x, y, color)) continue;
-        const peg = this.getPeg(x, y);
-        if (peg && peg.color === opponentColor) continue; // blocked by opponent
-        const k = key(x, y);
-        if (!visited.has(k)) {
-          visited.add(k);
-          stack.push([x, y]);
-        }
-      }
+    // Seed: x=2..size-1 on row 1 (White) or y=2..size-1 on column 1 (Black).
+    for (let i = 2; i < this.size; i++) {
+      const [x, y] = isWhite ? [i, 1] : [1, i];
+      visited.add(key(x, y));
+      stack.push([x, y]);
     }
 
     while (stack.length > 0) {
@@ -179,9 +170,9 @@ class TwixtBoard {
         const ny = y + dy;
         if (!this.isLegalSpot(nx, ny, color)) continue; // outside player's legal area
         const nPeg = this.getPeg(nx, ny);
-        if (nPeg && nPeg.color === opponentColor) continue; // square owned by opponent
+        if (nPeg && nPeg.color !== color) continue; // square owned by opponent
         if (this.crossesExistingLink(x, y, nx, ny, color)) continue;
-        if (endSide(nx, ny)) return false; // can still reach the goal
+        if (isWhite ? ny === endCoord : nx === endCoord) return false; // can still reach the goal
         const k = key(nx, ny);
         if (!visited.has(k)) {
           visited.add(k);
