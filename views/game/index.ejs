@@ -359,16 +359,16 @@ function isFullMainVariationDisplayed() {
 }
 
 function serializeUserMoves(userMoves) {
-  const toLetter = (idx) => (idx >= 0 && idx <= 25)
-    ? String.fromCharCode(97 + idx)
-    : String.fromCharCode(39 + idx);
+  const toLetter = (idx) => (idx >= 1 && idx <= 26)
+    ? String.fromCharCode(96 + idx)
+    : String.fromCharCode(38 + idx);
 
   let result = '';
   for (const move of userMoves) {
     if (move instanceof SwapMove || (typeof move.getText === 'function' && move.getText() === 'swap')) {
       result += '~~';
     } else if (move.peg) {
-      result += toLetter(move.peg.x - 1) + toLetter(move.peg.y - 1);
+      result += toLetter(move.peg.x) + toLetter(move.peg.y);
     }
   }
   return result;

@@ -4,11 +4,11 @@ const { Move, SwapMove, ResignMove, DrawMove, ForfeitMove, LostMove } = require(
 describe('LittleGolemParser', () => {
   describe('Static helpers', () => {
     test('dmoveToXY converts column letters and 1-based rows', () => {
-      expect(LittleGolemParser.dmoveToXY('a1')).toEqual({ x: 0, y: 0 });
-      expect(LittleGolemParser.dmoveToXY('f4')).toEqual({ x: 5, y: 3 });
-      expect(LittleGolemParser.dmoveToXY('z24')).toEqual({ x: 25, y: 23 });
-      expect(LittleGolemParser.dmoveToXY('A1')).toEqual({ x: 26, y: 0 });
-      expect(LittleGolemParser.dmoveToXY('B24')).toEqual({ x: 27, y: 23 });
+      expect(LittleGolemParser.dmoveToXY('a1')).toEqual({ x: 1, y: 1 });
+      expect(LittleGolemParser.dmoveToXY('f4')).toEqual({ x: 6, y: 4 });
+      expect(LittleGolemParser.dmoveToXY('z24')).toEqual({ x: 26, y: 24 });
+      expect(LittleGolemParser.dmoveToXY('A1')).toEqual({ x: 27, y: 1 });
+      expect(LittleGolemParser.dmoveToXY('B24')).toEqual({ x: 28, y: 24 });
     });
 
     test('buildLgData joins non-empty dmoves', () => {
@@ -160,17 +160,16 @@ describe('LittleGolemParser', () => {
       parser.forEachMove(m => moves.push(m));
 
       expect(moves[0]).toBeInstanceOf(Move);
-      expect(moves[0].x).toBe(5);
-      expect(moves[0].y).toBe(3);
+      expect(moves[0].x).toBe(6);
+      expect(moves[0].y).toBe(4);
       expect(moves[0].player).toBe(1);
 
       expect(moves[1]).toBeInstanceOf(SwapMove);
       expect(moves[1].player).toBe(2);
 
       expect(moves[2]).toBeInstanceOf(Move);
-      // Next move d6: col 'd' is 3, row 6 is 5
-      expect(moves[2].x).toBe(3);
-      expect(moves[2].y).toBe(5);
+      expect(moves[2].x).toBe(4);
+      expect(moves[2].y).toBe(6);
       expect(moves[2].player).toBe(1);
     });
 
@@ -186,7 +185,6 @@ describe('LittleGolemParser', () => {
       // Swap places white peg then black on top with transposed coords
       expect(jtwixtCalls[0]).toEqual({ x: 4, y: 6, player: 1 });
       expect(jtwixtCalls[1]).toEqual({ x: 4, y: 6, player: 2 });
-      // Next move d6: x='d'(4), y=6, player=1
       expect(jtwixtCalls[2]).toEqual({ x: 4, y: 6, player: 1 });
     });
   });

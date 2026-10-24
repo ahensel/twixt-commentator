@@ -63,7 +63,7 @@ const FORMATS = {
 };
 
 function decodeVariation(variationStr) {
-  const fromLetter = (c) => (c >= 'a' && c <= 'z') ? c.charCodeAt(0) - 97 : c.charCodeAt(0) - 39;
+  const fromLetter = (c) => (c >= 'a' && c <= 'z') ? c.charCodeAt(0) - 96 : c.charCodeAt(0) - 38;
   const moves = [];
   for (let i = 0; i < variationStr.length; i += 2) {
     const pair = variationStr.slice(i, i + 2);
@@ -73,7 +73,7 @@ function decodeVariation(variationStr) {
     } else {
       const colChar = pair[0];
       const rowChar = pair[1];
-      const rowNum = fromLetter(rowChar) + 1;
+      const rowNum = fromLetter(rowChar);
       moves.push(`${colChar}${rowNum}`);
     }
   }

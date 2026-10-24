@@ -7,8 +7,8 @@ class Move {
   }
 
   get text() {
-    const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    return letters[this.x] + String(this.y + 1);
+    const letters = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    return letters[this.x] + String(this.y);
   }
 
   // getText() alias used by front-end display code.
