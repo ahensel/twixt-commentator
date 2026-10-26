@@ -55,9 +55,9 @@ class LostMove {
 // ─── Editor move ──────────────────────────────────────────────────────────────
 // Snapshot of a completed editing step on the board: the placed peg plus any
 // links added or removed along the way.  Purely a front-end concept; it is
-// produced by TwixtGame.takeCurrentEdit() and recorded by TwixtMoves to build
+// produced by PendingEdit.takeCurrentEdit() and recorded by TwixtMoves to build
 // the move notation displayed in the moves-panel.  The live, in-progress edit
-// state itself is tracked by TwixtGame.
+// state itself is tracked by PendingEdit.
 
 class EditMove {
   constructor(peg, removedLinks, addedLinks) {

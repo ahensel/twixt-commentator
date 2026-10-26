@@ -158,7 +158,7 @@ describe('TwixtBoard (public/javascripts/twixtboard.js)', () => {
     // Helper: parse a space-separated move list (e.g. "d4 d5 e5 e4 ...") onto an 8x8 board.
     // White plays on odd-numbered moves (1, 3, 5…), Black on even (2, 4, 6…).
     // After each peg is placed, all possible links to same-color knight-move
-    // neighbors are added automatically (matching TwixtGame.addLinksTo behaviour).
+    // neighbors are added automatically (matching PendingEdit.addLinksTo behaviour).
     function buildBoard(moveStr) {
       const board = new TwixtBoard(8);
       const moves = moveStr.trim().split(/\s+/);

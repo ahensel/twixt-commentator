@@ -55,8 +55,8 @@ const BoardState = {
   turn: 1,  // 1 = White's turn, 0 = Black's turn
   bg: 1,    // board glass, for double buffering, to eliminate flicker. 1 or 2.
 
-  pendingEdit: null,  // TwixtGame object, created on load
-  board: null,      // TwixtBoard object, created on load
+  pendingEdit: null,  // PendingEdit object, created on load
+  board: null,        // TwixtBoard object, created on load
   currentMoves: new TwixtMoves(),  // tracks both main line and user variation
   replayMode: 'none',  // 'setup' while loading the game's moves; 'jump' while jumping to a move
   currentMoveNum: null,   // current move in the main line, not the variation
