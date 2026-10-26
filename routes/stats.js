@@ -97,11 +97,15 @@ router.get('/lg-total', async (req, res) => {
   let lgError = null;
   try {
     const catalogue = await fetchLGGameCatalogue();
-    const twixt = catalogue.find(game => game.gtype === 'twixt');
-    lgTotal = twixt ? parseInt(twixt.games, 10) : null;
-    if (lgTotal === null) lgError = 'Could not find Twixt game count.';
+    if (catalogue.fault) {
+      lgError = `Failed to fetch from Little Golem: ${catalogue.message}`;
+    } else {
+      const twixt = catalogue.find((game) => game.gtype === "twixt");
+      lgTotal = twixt ? parseInt(twixt.games, 10) : null;
+      if (lgTotal === null) lgError = "Could not find Twixt game count.";
+    }
   } catch (err) {
-    lgError = `Failed to fetch Little Golem: ${err.message}`;
+    lgError = `Failed to fetch from Little Golem: ${err.message}`;
   }
 
   _lgTotalCache = { lgTotal, lgError, fetchedAt: Date.now() };
