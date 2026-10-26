@@ -53,40 +53,17 @@ class LostMove {
 }
 
 // ─── Editor move ──────────────────────────────────────────────────────────────
-// Tracks the link additions/removals and peg placement for a single interactive
-// editing step on the board.  This is a purely front-end concept used by
-// TwixtGame and TwixtMoves to build the move notation displayed in the
-// moves-panel and to support undo.
+// Snapshot of a completed editing step on the board: the placed peg plus any
+// links added or removed along the way.  Purely a front-end concept; it is
+// produced by TwixtGame.takeCurrentEdit() and recorded by TwixtMoves to build
+// the move notation displayed in the moves-panel.  The live, in-progress edit
+// state itself is tracked by TwixtGame.
 
 class EditMove {
-  constructor() {
-    this.removedLinks = [];
-    this.addedLinks = [];
-  }
-
-  removeLink(link) {
-    const index = this._indexOf(this.addedLinks, link);
-    if (index >= 0) {
-      this.addedLinks.splice(index, 1);
-    } else {
-      this.removedLinks.push(link);
-    }
-  }
-
-  addLink(link) {
-    const index = this._indexOf(this.removedLinks, link);
-    if (index >= 0) {
-      this.removedLinks.splice(index, 1);
-    } else {
-      this.addedLinks.push(link);
-    }
-  }
-
-  _indexOf(links, link) {
-    for (let i = 0; i < links.length; i++) {
-      if (links[i].toString() === link.toString()) return i;
-    }
-    return -1;
+  constructor(peg, removedLinks, addedLinks) {
+    this.peg = peg;
+    this.removedLinks = removedLinks;
+    this.addedLinks = addedLinks;
   }
 
   _sortLinks(links) {
@@ -96,10 +73,6 @@ class EditMove {
       if (ay !== by) return ay - by;
       return (a.peg1.x + a.peg2.x) - (b.peg1.x + b.peg2.x);
     });
-  }
-
-  setPeg(peg) {
-    this.peg = peg;
   }
 
   getText() {
