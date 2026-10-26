@@ -57,6 +57,7 @@ const BoardState = {
 
   twixtGame: null,  // TwixtGame object, created on load
   currentMoves: new TwixtMoves(),  // tracks both main line and user variation
+  replayMode: 'none',  // 'setup' while loading the game's moves; 'jump' while jumping to a move
   currentMoveNum: null,   // current move in the main line, not the variation
   declaredWinner: null,
 
@@ -144,7 +145,7 @@ function showMovesOnLoad() {
     }
   }
 
-  BoardState.currentMoves.settingUp = true;
+  BoardState.replayMode = 'setup';
   moves.forEach(move => {
     if (move.type === Move.Peg) {
       BoardState.turn = 2 - move.player;
@@ -161,7 +162,7 @@ function showMovesOnLoad() {
       BoardState.currentMoves.finalMove(new LostMove());
     }
   });
-  BoardState.currentMoves.settingUp = false;
+  BoardState.replayMode = 'none';
 
   BoardState.currentMoveNum = BoardState.currentMoves.moves.length - (BoardState.currentMoves.gameIsInProgress() ? 0 : 1);
 
@@ -452,7 +453,7 @@ function swapFirstPeg() {
       placePeg(peg.y, peg.x);
 
       // placePeg erroneously put the peg on the user moves stack; correct that.
-      BoardState.currentMoves.popMove();
+      BoardState.currentMoves.popUserMove();
       const firstMove = BoardState.currentMoves.hasUserMoves() ? BoardState.currentMoves.userMoves[0] : BoardState.currentMoves.moves[0];
       const peg1 = firstMove.peg;
       if (!peg1.swapped) {
@@ -494,8 +495,6 @@ function showMovesUpTo(moves, moveNum) {
         }
         placePeg(move.peg.x, move.peg.y);
       }
-    } else if (move.getText === 'swap') {
-      nextTurn();
     }
   }
 }
@@ -504,7 +503,7 @@ function showAllMoves(moveNum, commentMoves) {
   uncolorMove(BoardState.currentMoveNum);
   colorMove(moveNum);
 
-  BoardState.currentMoves.jumpingTo = true;
+  BoardState.replayMode = 'jump';
 
   BoardState.switchDrawingBoardglass();
   clearBoard();  // resets colorsSwapped to false
@@ -550,7 +549,7 @@ function showAllMoves(moveNum, commentMoves) {
     setPlayerLabels(BoardState.colorsSwapped);
   }
 
-  BoardState.currentMoves.jumpingTo = false;
+  BoardState.replayMode = 'none';
 
   if (commentMoves != null) {
     const errors = getCommentPegErrors(commentMoves);
@@ -626,7 +625,7 @@ function updateBackNextButtons() {
 
 function backButton() {
   if (BoardState.currentMoves.hasUserMoves()) {
-    BoardState.currentMoves.popMove();
+    BoardState.currentMoves.popUserMove();
     showAllMoves(BoardState.currentMoveNum, null);
   } else if (BoardState.currentMoveNum > 0) {
     showAllMoves(BoardState.currentMoveNum - 1, null);
@@ -790,15 +789,25 @@ function executeCutLink() {
   drawLinkableMarkers(link);
 }
 
+// True when the just-finished edit continues the main line: no user
+// variation is in progress and the edit matches the next mainline move.
+function continuesMainline(edit) {
+  return BoardState.currentMoves.userMoves.length === 0 &&
+         BoardState.currentMoves.moves[BoardState.currentMoveNum]?.getText() === edit.getText();
+}
+
 function nextTurn() {
-  if (!BoardState.currentMoves.settingUp && !BoardState.currentMoves.jumpingTo &&
-      BoardState.currentMoves.userMoves.length === 0 &&
-      BoardState.currentMoves.moves[BoardState.currentMoveNum]?.getText() === BoardState.twixtGame.move.getText()) {
+  const edit = BoardState.twixtGame.takeCurrentEdit();
+  if (BoardState.replayMode === 'setup') {
+    // Building the main line from the game's recorded moves.
+    BoardState.currentMoves.recordMainline(edit);
+  } else if (BoardState.replayMode === 'none' && continuesMainline(edit)) {
     uncolorMove(BoardState.currentMoveNum);
     BoardState.currentMoveNum++;
     colorMove(BoardState.currentMoveNum);
-  } else {
-    BoardState.currentMoves.commitMove(BoardState.twixtGame);
+  } else if (BoardState.replayMode === 'none') {
+    // The user branched off the main line.
+    BoardState.currentMoves.recordUserMove(edit);
   }
   flipTurn();
   updateSwapButton();

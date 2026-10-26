@@ -29,4 +29,12 @@ class TwixtGame {
     this.move.setPeg(peg);
     return peg;
   }
+
+  // Hands off the in-progress edit and starts a fresh one. The caller decides
+  // where the returned move belongs (main line vs. user variation).
+  takeCurrentEdit() {
+    const edit = this.move;
+    this.move = new EditMove();
+    return edit;
+  }
 }
