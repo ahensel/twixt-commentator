@@ -55,7 +55,8 @@ const BoardState = {
   turn: 1,  // 1 = White's turn, 0 = Black's turn
   bg: 1,    // board glass, for double buffering, to eliminate flicker. 1 or 2.
 
-  twixtGame: null,  // TwixtGame object, created on load
+  pendingEdit: null,  // TwixtGame object, created on load
+  board: null,      // TwixtBoard object, created on load
   currentMoves: new TwixtMoves(),  // tracks both main line and user variation
   replayMode: 'none',  // 'setup' while loading the game's moves; 'jump' while jumping to a move
   currentMoveNum: null,   // current move in the main line, not the variation
@@ -72,13 +73,13 @@ const BoardState = {
 
   // Helper methods
   isLegalSpot: (x, y, turn) => {
-    return BoardState.twixtGame.board.isValidSpot(x, y, turn ?? BoardState.turn);
+    return BoardState.board.isValidSpot(x, y, turn ?? BoardState.turn);
   },
   getPeg: (x, y) => {
-    return BoardState.twixtGame.board.getPeg(x, y);
+    return BoardState.board.getPeg(x, y);
   },
   hasLinkRemoval: () => {
-    return BoardState.twixtGame.board.linkXingPolicy === TwixtBoard.LINK_REMOVAL;
+    return BoardState.board.linkXingPolicy === TwixtBoard.LINK_REMOVAL;
   },
   boardglass: () => {
     return $(`boardglass${BoardState.bg}`);
@@ -100,7 +101,8 @@ window.addEventListener('load', () => {
   const size = parseInt($('boardSize').value, 10);
   const linkPolicy = $('linkPolicy')?.value === 'R' ? TwixtBoard.LINK_REMOVAL : TwixtBoard.PENCIL_AND_PAPER;
   SWAP_STYLE = $('swapStyle')?.value || null;
-  BoardState.twixtGame = new TwixtGame(size, linkPolicy);
+  BoardState.board = new TwixtBoard(size, linkPolicy);
+  BoardState.pendingEdit = new PendingEdit(BoardState.board);
   setBoardSize(size);
   showMovesOnLoad();
   showTurn();
@@ -271,7 +273,7 @@ function getCommentPegErrors(moves) {
 }
 
 function getXFromLetter(xChar) {
-  return (BoardState.twixtGame.board.size < 27)? xChar.toUpperCase().charCodeAt(0) - 64 :
+  return (BoardState.board.size < 27)? xChar.toUpperCase().charCodeAt(0) - 64 :
     ((xChar >= 'a')? xChar.charCodeAt(0) - 96 : xChar.charCodeAt(0) - 38);
 }
 
@@ -353,7 +355,7 @@ function getPegCoordinates(pegString) {
 
 function getNextCommentPegError(pegString, movesSoFar) {
   if (pegString === 'swap') {
-    const pegsSoFar = BoardState.twixtGame.board.numPegs() + movesSoFar;
+    const pegsSoFar = BoardState.board.numPegs() + movesSoFar;
     if (pegsSoFar === 0) return '- Cannot swap as the first move of the game.';
     if (pegsSoFar >  1) return '- Cannot swap. There is more than one peg on the board.';
     return '';
@@ -364,7 +366,7 @@ function getNextCommentPegError(pegString, movesSoFar) {
   if (BoardState.getPeg(x, y) != null) {
     return `- Peg ${pegString} cannot be placed because there is already a peg on that spot.\n`;
   }
-  if (!BoardState.twixtGame.board.isValidSpot(x, y, (BoardState.turn + movesSoFar) % 2)) {
+  if (!BoardState.board.isValidSpot(x, y, (BoardState.turn + movesSoFar) % 2)) {
     return `- Illegal spot for peg: ${pegString}\n`;
   }
   return '';
@@ -400,7 +402,7 @@ function placePegByNotation(pegString) {
           const link = parseLinkNotation(action.notation, '-');
           if (link) {
             link.remove();
-            BoardState.twixtGame.removeLink(link);
+            BoardState.pendingEdit.removeLink(link);
             eraseLink(link);
           }
         }
@@ -411,7 +413,7 @@ function placePegByNotation(pegString) {
         if (action.prefix === '/' || action.prefix === '\\') {
           const endpoints = parseLinkNotation(action.notation, action.prefix);
           if (endpoints) {
-            BoardState.twixtGame.link(endpoints.x1, endpoints.y1, endpoints.x2, endpoints.y2, false);
+            BoardState.pendingEdit.link(endpoints.x1, endpoints.y1, endpoints.x2, endpoints.y2, false);
             const peg1 = BoardState.getPeg(endpoints.x1, endpoints.y1);
             if (peg1) {
               const link = peg1.getLink(endpoints.x2 - endpoints.x1, endpoints.y2 - endpoints.y1);
@@ -440,14 +442,14 @@ function placePegByNotation(pegString) {
 
 // only used by comment clicking; on other occasions handled more efficiently
 function swapFirstPeg() {
-  if (BoardState.twixtGame.board.numPegs() === 1) {
+  if (BoardState.board.numPegs() === 1) {
     if (SWAP_STYLE === 'P') {
       // Pie rule: the first peg stays in place; player colors swap.
       BoardState.colorsSwapped = !BoardState.colorsSwapped;
       setPlayerLabels(BoardState.colorsSwapped);
     } else {
       // LG style: remove the peg, switch color, re-place at the diagonal position.
-      const peg = BoardState.twixtGame.board.getFirstPeg();
+      const peg = BoardState.board.getFirstPeg();
       clearBoard();
       BoardState.turn = 1 - BoardState.turn;
       placePeg(peg.y, peg.x);
@@ -635,7 +637,7 @@ function backButton() {
   } else if (BoardState.currentMoveNum > 0) {
     showAllMoves(BoardState.currentMoveNum - 1, null);
   }
-  const pegCount = BoardState.twixtGame.board.numPegs();
+  const pegCount = BoardState.board.numPegs();
   if (pegCount === 0) {
     showTurn();
   }
@@ -651,7 +653,7 @@ function updateSwapButton() {
   const swapBtn = $('swap-button');
   if (!swapBtn) return;
   const moveCount = BoardState.currentMoves.userMoves.length + BoardState.currentMoveNum;
-  const pegCount = BoardState.twixtGame.board.numPegs();
+  const pegCount = BoardState.board.numPegs();
   // count moves because there is still one peg after a swap
   // count pegs because first move could be forfeit or resign
   if (moveCount === 1 && pegCount === 1) {
@@ -663,7 +665,9 @@ function updateSwapButton() {
 
 function clearBoard() {
   BoardState.turn = 1;
-  BoardState.twixtGame = new TwixtGame(BoardState.twixtGame.board.size, BoardState.twixtGame.board.linkXingPolicy);
+  const { size, linkXingPolicy } = BoardState.board;
+  BoardState.board = new TwixtBoard(size, linkXingPolicy);
+  BoardState.pendingEdit = new PendingEdit(BoardState.board);
   BoardState.cutLink = null;
   BoardState.holdingForMarkers = false;
   BoardState.numLinkableMarkers = 0;
@@ -718,7 +722,7 @@ function mouseOverBoard(evt) {
 }
 
 function declareWinnerIfWinner() {
-  const winner = BoardState.twixtGame.board.calculateWinner();
+  const winner = BoardState.board.calculateWinner();
 
   if (winner !== BoardState.declaredWinner) {
     if (winner !== null) {
@@ -771,7 +775,7 @@ function clickOnBoard(evt) {
 }
 
 function placePeg(x, y) {
-  const peg = BoardState.twixtGame.placePeg(x, y, BoardState.turn);
+  const peg = BoardState.pendingEdit.placePeg(x, y, BoardState.turn);
   drawPeg(peg);
   placeLinks(peg, true);
   if (BoardState.numLinkableMarkers === 0) nextTurn();
@@ -780,7 +784,7 @@ function placePeg(x, y) {
 }
 
 function placeLinks(peg, isNew) {
-  BoardState.twixtGame.addLinksTo(peg, isNew);
+  BoardState.pendingEdit.addLinksTo(peg, isNew);
   drawLinks(peg);
   if (BoardState.hasLinkRemoval()) eraseLinkableMarkersAround(peg);
 }
@@ -788,7 +792,7 @@ function placeLinks(peg, isNew) {
 function executeCutLink() {
   const link = BoardState.cutLink;
   link.remove();
-  BoardState.twixtGame.removeLink(link);
+  BoardState.pendingEdit.removeLink(link);
   eraseCutLink();
   eraseLink(link);
   drawLinkableMarkers(link);
@@ -802,7 +806,7 @@ function continuesMainline(edit) {
 }
 
 function nextTurn() {
-  const edit = BoardState.twixtGame.takeCurrentEdit();
+  const edit = BoardState.pendingEdit.takeCurrentEdit();
   if (BoardState.replayMode === 'setup') {
     // Building the main line from the game's recorded moves.
     BoardState.currentMoves.recordMainline(edit);
@@ -817,7 +821,7 @@ function nextTurn() {
   flipTurn();
   updateSwapButton();
   if (BoardState.hasLinkRemoval()) {
-    drawLinkableMarkersInBox(1, 1, BoardState.twixtGame.board.size, BoardState.twixtGame.board.size, BoardState.turn);
+    drawLinkableMarkersInBox(1, 1, BoardState.board.size, BoardState.board.size, BoardState.turn);
   }
 }
 
@@ -942,7 +946,7 @@ function getMarkerName(x, y) { return `marker_${x}_${y}`; }
 function drawLinkableMarkersInBox(minX, minY, maxX, maxY, color) {
   for (let x = minX; x <= maxX; x++) {
     for (let y = minY; y <= maxY; y++) {
-      if (BoardState.twixtGame.isLinkable(x, y) && BoardState.getPeg(x, y).color === color) {
+      if (BoardState.board.isLinkable(x, y) && BoardState.getPeg(x, y).color === color) {
         const markerName = getMarkerName(x, y);
         if (!$(markerName)) {
           addInlineImgToBoard(linkablemarker_img, markerName,
@@ -963,7 +967,7 @@ function eraseLinkableMarkersAround(peg) {
   for (let x = peg.x - 3; x <= peg.x + 3; x++) {
     for (let y = peg.y - 3; y <= peg.y + 3; y++) {
       const m = $(getMarkerName(x, y));
-      if (m != null && !BoardState.twixtGame.isLinkable(x, y)) {
+      if (m != null && !BoardState.board.isLinkable(x, y)) {
         BoardState.boardglass().removeChild(m);
         BoardState.numLinkableMarkers--;
       }
@@ -1004,7 +1008,7 @@ function drawCrosshair(x, y) {
 }
 
 function drawTickMarks(leftPos, topPos, tickClass) {
-  const boardPixels = (BoardState.twixtGame.board.size * GRID.SPACING) + (GRID.MARGIN * 2);
+  const boardPixels = (BoardState.board.size * GRID.SPACING) + (GRID.MARGIN * 2);
 
   const vtick = getVtick('vtick', leftPos, 0);
   const vtick2 = getVtick('vtick2', leftPos, boardPixels - GRID.TICK_SIZE);

@@ -1,6 +1,6 @@
-class TwixtGame {
-  constructor(size, linkXingPolicy) {
-    this.board = new TwixtBoard(size, linkXingPolicy);
+class PendingEdit {
+  constructor(board) {
+    this.board = board;
     this._resetEdit();
   }
 
