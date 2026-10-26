@@ -493,7 +493,7 @@ function showMovesUpTo(moves, moveNum) {
         if (i === 0 && move.peg.swapped) {
           BoardState.turn = 1 - BoardState.turn; // switch color for swapped first peg
         }
-        placePeg(move.peg.x, move.peg.y);
+        placePegByNotation(move.getText());
       }
     }
   }
@@ -596,10 +596,12 @@ function highlightMoveInSidebar(peg) {
   }
 
   const mainMoves = BoardState.currentMoves.getMoves();
-  for (let i = 0; i <= BoardState.currentMoveNum; i++) {
-    if (mainMoves[i].peg?.getPegName() === pegName) {
-      $(`move_${i + 1}`)?.classList.add('hovered-peg');
-      return;
+  if (mainMoves.length > 0) {
+    for (let i = 0; i <= BoardState.currentMoveNum; i++) {
+      if (mainMoves[i].peg?.getPegName() === pegName) {
+        $(`move_${i + 1}`)?.classList.add('hovered-peg');
+        return;
+      }
     }
   }
 }
@@ -624,7 +626,10 @@ function updateBackNextButtons() {
 }
 
 function backButton() {
-  if (BoardState.currentMoves.hasUserMoves()) {
+  if (BoardState.hasLinkRemoval() && BoardState.numLinkableMarkers > 0) {
+    eraseAllLinkableMarkers();
+    showAllMoves(BoardState.currentMoveNum, null);
+  } else if (BoardState.currentMoves.hasUserMoves()) {
     BoardState.currentMoves.popUserMove();
     showAllMoves(BoardState.currentMoveNum, null);
   } else if (BoardState.currentMoveNum > 0) {
@@ -964,6 +969,13 @@ function eraseLinkableMarkersAround(peg) {
       }
     }
   }
+}
+
+function eraseAllLinkableMarkers() {
+  document.querySelectorAll('img[id^="marker_"]').forEach(m => BoardState.boardglass().removeChild(m));
+  BoardState.numLinkableMarkers = 0;
+  BoardState.holdingForMarkers = false;
+  BoardState.cutLink = null;
 }
 
 function eraseCrosshair() {
