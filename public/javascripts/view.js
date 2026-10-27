@@ -495,7 +495,8 @@ function showMovesUpTo(moves, moveNum) {
         if (i === 0 && move.peg.swapped) {
           BoardState.turn = 1 - BoardState.turn; // switch color for swapped first peg
         }
-        placePegByNotation(move.getText());
+        if (move.peg.swapped) placePeg(move.peg.x, move.peg.y);
+          else placePegByNotation(move.getText());
       }
     }
   }
