@@ -104,7 +104,7 @@ function buildTargetGame(game, currentMoveNumQuery, variationQuery) {
   });
 }
 
-// GET /downloadgame/gen?gameid=X[&format=tgt][&filename=...][&currentMoveNum=N][&variation=...]
+// GET /downloadgame/gen?gameid=X[&format=tgt][&filename=...][&currentMoveNum=N][&variation=...][&player1=...][&player2=...][&boardSize=...]
 router.get('/gen', async (req, res) => {
   const gameId = req.query.gameid;
   if (!gameId) {
@@ -112,9 +112,40 @@ router.get('/gen', async (req, res) => {
   }
 
   const format = FORMATS[req.query.format] ? req.query.format : 'tgt';
-  let game = await Game.findOne({ where: { lg_game_num: gameId } });
-  if (!game) {
-    game = await getGameFromLittleGolem(gameId);
+  let game = null;
+
+  if (gameId === 'blank' || gameId.startsWith('blank/')) {
+    if (gameId.startsWith('blank/')) {
+      const blankId = parseInt(gameId.split('/')[1], 10);
+      if (!isNaN(blankId)) {
+        game = await Game.findOne({ where: { id: blankId } });
+      }
+    }
+    if (!game) {
+      const size = parseInt(req.query.boardSize, 10);
+      const validSize = (!isNaN(size) && size >= 8 && size <= 52) ? size : 24;
+      const gameData = {
+        lg_game_num: null,
+        lg_data: '',
+        result: '?',
+        player1: req.query.player1 || 'Player1',
+        player2: req.query.player2 || 'Player2',
+        winner: 0,
+        tournament: '',
+        board_size: validSize,
+      };
+      game = (typeof Game.build === 'function') ? Game.build(gameData) : gameData;
+    } else {
+      if (!game.lg_data) game.lg_data = '';
+      if (!game.player1) game.player1 = req.query.player1 || 'Player1';
+      if (!game.player2) game.player2 = req.query.player2 || 'Player2';
+      if (!game.board_size) game.board_size = parseInt(req.query.boardSize, 10) || 24;
+    }
+  } else {
+    game = await Game.findOne({ where: { lg_game_num: gameId } });
+    if (!game) {
+      game = await getGameFromLittleGolem(gameId);
+    }
   }
 
   if (!game) {
@@ -124,7 +155,10 @@ router.get('/gen', async (req, res) => {
   const targetGame = buildTargetGame(game, req.query.currentMoveNum, req.query.variation);
   const fileData = FORMATS[format].build(targetGame);
   let fileName = req.query.filename ? String(req.query.filename).trim().replace(/[^\w. -]/g, '') : '';
-  if (!fileName) fileName = `game${gameId}`;
+  if (!fileName) {
+    const cleanId = (gameId === 'blank' ? '_blank' : (gameId.startsWith('blank/') ? '_' + gameId.replace('/', '_') : gameId));
+    fileName = `game${cleanId}`;
+  }
   if (!fileName.toLowerCase().endsWith(FORMATS[format].extension)) fileName += FORMATS[format].extension;
 
   res.setHeader('Content-Type', 'application/octet-stream');

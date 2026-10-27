@@ -134,13 +134,14 @@
 
   <div id="underbar">
     <% if (game.isBlank) {
-    if (game.link_policy === 'R') { %>
-      <span class='underbar-status'>Link Removal is <b>ON</b></span><%= (game.swap_style === 'P')? ',': '' %>
+      if (game.link_policy === 'R') { %>
+      <span class='underbar-status'>Link Removal is <b>ON</b></span><%= (game.swap_style === 'P')? ', ': '' %>
     <% }
-    if (game.swap_style === 'P') { %>
+      if (game.swap_style === 'P') { %>
       <span class='underbar-status'>Swap style is <b>Swap Player Colors</b></span>
-      <% }
-    } else {
+    <% } %>
+    <%= (game.link_policy === 'R' || game.swap_style === 'P') ? ' | ' : '' %>
+    <% } else {
       if (game.tournament && game.tournament.trim() !== '' && game.tournament.trim() !== 'twixt') { %>
       <a href="https://www.littlegolem.net/app/#/tournament/<%= game.tournament %>"><%- game.tournament + '&nbsp;(LG)' %></a> |
     <% }
@@ -149,8 +150,8 @@
       <% } else { %>
         <a href="https://www.littlegolem.net/app/#/game/daily/<%= game.lg_game_num %>">This&nbsp;game&nbsp;(LG)</a> |
       <% } %>
-      <a id="downloadLink" href="#" onclick="return openDownloadModal();" data-gameid="<%= params?.gid %>">Download&nbsp;game</a>
     <% } %>
+    <a id="downloadLink" href="#" onclick="return openDownloadModal();" data-gameid="<%= params?.gid %>">Download&nbsp;game</a>
   </div>
   </div>
 
@@ -317,19 +318,23 @@ preformatted   text</pre></li>
     <h3 id="download-title">Download Game</h3>
     <form id="download-form">
       <input type="hidden" id="download-gameid" value="<%= params?.gid %>">
+      <input type="hidden" id="download-isblank" value="<%= game.isBlank ? '1' : '0' %>">
+      <input type="hidden" id="download-player1" value="<%= game.player1 %>">
+      <input type="hidden" id="download-player2" value="<%= game.player2 %>">
+      <input type="hidden" id="download-boardsize" value="<%= parser.getBoardSize() %>">
       <div class="download-row download-radio-row">
         <label>
-          <input type="radio" name="downloadVariation" id="download-var-main" value="main" checked>
+          <input type="radio" name="downloadVariation" id="download-var-main" value="main" <%= game.isBlank ? 'disabled' : 'checked' %>>
           Main variation
         </label>
         <label>
-          <input type="radio" name="downloadVariation" id="download-var-current" value="current">
+          <input type="radio" name="downloadVariation" id="download-var-current" value="current" <%= game.isBlank ? 'checked' : '' %>>
           Current variation
         </label>
       </div>
       <label class="download-row">
         Filename:
-        <input type="text" id="download-filename" name="filename" value="game<%= params?.gid %>" maxlength="100" required>
+        <input type="text" id="download-filename" name="filename" value="game<%= (params?.gid === 'blank' ? '_blank' : (params?.gid?.startsWith('blank/') ? '_' + params.gid.replace('/', '_') : params?.gid)) %>" maxlength="100" required>
       </label>
       <label class="download-row">
         Format:
@@ -387,11 +392,21 @@ function openDownloadModal() {
   const currentVarRadio = document.getElementById('download-var-current');
   const filenameInput = document.getElementById('download-filename');
   const gameId = document.getElementById('download-gameid').value;
+  const isBlank = document.getElementById('download-isblank')?.value === '1';
 
-  const isFullMain = isFullMainVariationDisplayed();
-  currentVarRadio.disabled = isFullMain;
-  mainVarRadio.checked = true;
-  filenameInput.value = 'game' + gameId;
+  if (isBlank) {
+    mainVarRadio.disabled = true;
+    currentVarRadio.disabled = false;
+    currentVarRadio.checked = true;
+  } else {
+    mainVarRadio.disabled = false;
+    const isFullMain = isFullMainVariationDisplayed();
+    currentVarRadio.disabled = isFullMain;
+    mainVarRadio.checked = true;
+  }
+
+  const cleanGameId = gameId === 'blank' ? '_blank' : (gameId.startsWith('blank/') ? '_' + gameId.replace('/', '_') : gameId);
+  filenameInput.value = 'game' + cleanGameId;
 
   filenameInput.focus();
   filenameInput.select();
@@ -435,6 +450,16 @@ document.getElementById('download-form').addEventListener('submit', function(e) 
   let url = '/downloadgame/gen?gameid=' + encodeURIComponent(gameId)
     + '&format=' + encodeURIComponent(format)
     + '&filename=' + encodeURIComponent(filename);
+
+  const isBlank = document.getElementById('download-isblank')?.value === '1';
+  if (isBlank) {
+    const player1 = document.getElementById('download-player1')?.value;
+    const player2 = document.getElementById('download-player2')?.value;
+    const boardSize = document.getElementById('download-boardsize')?.value;
+    if (player1) url += '&player1=' + encodeURIComponent(player1);
+    if (player2) url += '&player2=' + encodeURIComponent(player2);
+    if (boardSize) url += '&boardSize=' + encodeURIComponent(boardSize);
+  }
 
   const isCurrentVar = document.getElementById('download-var-current').checked;
   if (isCurrentVar && typeof BoardState !== 'undefined' && BoardState.currentMoves) {

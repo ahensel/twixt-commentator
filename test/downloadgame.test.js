@@ -95,4 +95,96 @@ describe('Variation Download Backend Handling', () => {
       expect(moves[1].y).toBe(6);
     });
   });
+
+  describe('Blank game handling', () => {
+    const blankGame = {
+      player1: 'Alice',
+      player2: 'Bob',
+      board_size: 24,
+      lg_data: '',
+      result: '?',
+    };
+
+    it('builds target game with 0 moves for blank game without variation', () => {
+      const target = buildTargetGame(blankGame, '0', undefined);
+      expect(target.lg_data).toBe('');
+
+      const t1Output = TwixtbotFormatter.buildFile(target);
+      expect(t1Output).toContain('Alice # Name of player 1\nBob # Name of player 2\n');
+      expect(t1Output).toContain('24 # y-size of board\n');
+    });
+
+    it('builds target game with user variation on blank game', () => {
+      // User plays 1.d3 ('dc'), 2.swap ('~~'), 3.j10 ('jj') on a blank board
+      const target = buildTargetGame(blankGame, '0', 'dc~~jj');
+      expect(target.lg_data).toBe('d3 swap j10');
+
+      const t1Output = TwixtbotFormatter.buildFile(target);
+      expect(t1Output).toContain('d3\nswap\nj10\n');
+    });
+
+    it('handles custom board size and player names on blank game', () => {
+      const customBlank = {
+        player1: 'Eve',
+        player2: 'Mallory',
+        board_size: 30,
+        lg_data: '',
+      };
+      const target = buildTargetGame(customBlank, '0', 'eedf'); // e5, d6
+      expect(target.lg_data).toBe('e5 d6');
+
+      const t1Output = TwixtbotFormatter.buildFile(target);
+      expect(t1Output).toContain('Eve # Name of player 1\nMallory # Name of player 2\n');
+      expect(t1Output).toContain('30 # y-size of board\n');
+      expect(t1Output).toContain('e5\nd6\n');
+    });
+  });
+
+  describe('GET /downloadgame/gen router endpoint', () => {
+    const router = require('../routes/downloadgame');
+    const express = require('express');
+
+    let app;
+    beforeAll(() => {
+      app = express();
+      app.use('/downloadgame', router);
+    });
+
+    it('generates .t1 for blank game variation via HTTP request', (done) => {
+      const http = require('http');
+      const server = app.listen(0, () => {
+        const port = server.address().port;
+        http.get(`http://127.0.0.1:${port}/downloadgame/gen?gameid=blank&format=t1&player1=Alice&player2=Bob&boardSize=24&currentMoveNum=0&variation=dc~~jj`, (res) => {
+          expect(res.statusCode).toBe(200);
+          expect(res.headers['content-disposition']).toContain('filename="game_blank.t1"');
+          let body = '';
+          res.on('data', chunk => { body += chunk; });
+          res.on('end', () => {
+            expect(body).toContain('Alice # Name of player 1');
+            expect(body).toContain('Bob # Name of player 2');
+            expect(body).toContain('d3\nswap\nj10\n');
+            server.close(done);
+          });
+        });
+      });
+    });
+
+    it('generates .tgt for blank game variation via HTTP request', (done) => {
+      const http = require('http');
+      const server = app.listen(0, () => {
+        const port = server.address().port;
+        http.get(`http://127.0.0.1:${port}/downloadgame/gen?gameid=blank&format=tgt&player1=Alice&player2=Bob&boardSize=24&currentMoveNum=0&variation=dc~~jj`, (res) => {
+          expect(res.statusCode).toBe(200);
+          expect(res.headers['content-disposition']).toContain('filename="game_blank.tgt"');
+          const chunks = [];
+          res.on('data', chunk => { chunks.push(chunk); });
+          res.on('end', () => {
+            const buf = Buffer.concat(chunks);
+            expect(buf.length).toBeGreaterThan(0);
+            server.close(done);
+          });
+        });
+      });
+    });
+  });
 });
