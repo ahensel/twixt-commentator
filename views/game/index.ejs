@@ -428,7 +428,7 @@ document.getElementById('download-form').addEventListener('submit', function(e) 
   const filename = document.getElementById('download-filename').value.trim();
   if (!filename) return;
 
-  let url = '/jtwixt/gen?gameid=' + encodeURIComponent(gameId)
+  let url = '/downloadgame/gen?gameid=' + encodeURIComponent(gameId)
     + '&format=' + encodeURIComponent(format)
     + '&filename=' + encodeURIComponent(filename);
 

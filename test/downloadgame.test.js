@@ -1,6 +1,6 @@
 jest.mock('../models', () => ({ Game: {} }));
 
-const { decodeVariation, buildTargetGame } = require('../routes/jtwixt');
+const { decodeVariation, buildTargetGame } = require('../routes/downloadgame');
 const { LittleGolemParser } = require('../lib/domain/LittleGolemParser');
 const { TwixtbotFormatter } = require('../lib/domain/TwixtbotFormatter');
 

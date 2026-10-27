@@ -18,7 +18,7 @@ const mainPageRouter = require('./routes/mainPage');
 const gameRouter = require('./routes/game');
 const commentRouter = require('./routes/comment');
 const userRouter = require('./routes/user');
-const jtwixtRouter = require('./routes/jtwixt');
+const downloadGameRouter = require('./routes/downloadgame');
 const statsRouter = require('./routes/stats');
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -104,7 +104,7 @@ app.use('/', mainPageRouter);
 app.use('/game', gameRouter);
 app.use('/comment', commentRouter);
 app.use('/user', userRouter);
-app.use('/jtwixt', jtwixtRouter);
+app.use('/downloadgame', downloadGameRouter);
 app.get('/faq', (req, res) => res.render('about/faq', { params: req.query }));
 app.use('/stats', statsRouter);
 

@@ -104,7 +104,7 @@ function buildTargetGame(game, currentMoveNumQuery, variationQuery) {
   });
 }
 
-// GET /jtwixt/gen?gameid=X[&format=tgt][&filename=...][&currentMoveNum=N][&variation=...]
+// GET /downloadgame/gen?gameid=X[&format=tgt][&filename=...][&currentMoveNum=N][&variation=...]
 router.get('/gen', async (req, res) => {
   const gameId = req.query.gameid;
   if (!gameId) {
