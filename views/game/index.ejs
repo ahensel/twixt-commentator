@@ -368,7 +368,11 @@ function serializeUserMoves(userMoves) {
     if (move instanceof SwapMove || (typeof move.getText === 'function' && move.getText() === 'swap')) {
       result += '~~';
     } else if (move.peg) {
-      result += toLetter(move.peg.x) + toLetter(move.peg.y);
+      const x = move.peg.swapped ? move.peg.y : move.peg.x;
+      const y = move.peg.swapped ? move.peg.x : move.peg.y;
+      result += toLetter(x) + toLetter(y);
+    } else if (move.x && move.y) {
+      result += toLetter(move.x) + toLetter(move.y);
     }
   }
   return result;

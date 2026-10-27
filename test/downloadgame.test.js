@@ -73,6 +73,17 @@ describe('Variation Download Backend Handling', () => {
       expect(t1Output).toContain('d6\n');
     });
 
+    it('handles variation from move 0 with swap and subsequent moves (regression: d3 swap j10)', () => {
+      // 1.d3 (col 4 'd', row 3 'c' -> 'dc')
+      // 2.swap ('~~')
+      // 3.j10 (col 10 'j', row 10 'j' -> 'jj')
+      const variationGame = buildTargetGame(baseGame, '0', 'dc~~jj');
+      expect(variationGame.lg_data).toBe('d3 swap j10');
+
+      const t1Output = TwixtbotFormatter.buildFile(variationGame);
+      expect(t1Output).toContain('d3\nswap\nj10\n');
+    });
+
     it('builds clean LittleGolemParser moves for variation game', () => {
       const variationGame = buildTargetGame(baseGame, '1', 'df');
       const parser = new LittleGolemParser(variationGame.lg_data, variationGame);
