@@ -11,10 +11,10 @@
   <% if (game) { %>
   <div class="game-players">
     <img id="player1-label" alt="Player 1:">
-    <span class="<%= game.isBlank ? '' : (game.winner === 1 ? 'winner' : 'loser') %>"><%- h2(game.player1) %></span>
+    <span class="<%= game.isBlank ? '' : (game.winner === 1 ? 'winner' : 'loser') %>"><%= game.player1 || '' %></span>
     &nbsp;&nbsp;
     <img id="player2-label" alt="Player 2:">
-    <span class="<%= game.isBlank ? '' : (game.winner === 2 ? 'winner' : 'loser') %>"><%- h2(game.player2) %></span>
+    <span class="<%= game.isBlank ? '' : (game.winner === 2 ? 'winner' : 'loser') %>"><%= game.player2 || '' %></span>
   </div>
 
   <div id="turn" class="turn"></div>

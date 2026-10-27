@@ -7,7 +7,6 @@ const MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
 
 const { sequelize, User } = require('./models');
-const { h2 } = require('./lib/helpers/applicationHelper');
 
 // ── Cron jobs ────────────────────────────────────────────────────────────────
 require('./cron/visitFinishedGamesV2');
@@ -60,9 +59,8 @@ app.use(session({
   store: sessionStore,
 }));
 
-// ── Expose helpers and session to all EJS templates via res.locals ───────────
+// ── Expose session to all EJS templates via res.locals ───────────────────────
 app.use(async (req, res, next) => {
-  res.locals.h2 = h2;
   res.locals.session = req.session;
   res.locals.flash = {
     error: req.session._flash_error || null,

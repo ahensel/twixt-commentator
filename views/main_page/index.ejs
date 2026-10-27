@@ -118,15 +118,15 @@ document.addEventListener('keydown', function(e) {
           <%= game.board_size || '' %>
         </td>
         <% if (game.lg_game_num == null) { %>
-        <td class="main"><%- h2(game.player1) %></td>
-        <td class="main"><%- h2(game.player2) %></td>
+        <td class="main"><%= game.player1 || '' %></td>
+        <td class="main"><%= game.player2 || '' %></td>
         <td class="main text-center"></td>
         <% } else { %>
         <td class="main<%= game.isDraw() ? ' italic' : '' %>">
-          <%- h2(game.winnerName()) %>
+          <%= game.winnerName() || '' %>
         </td>
         <td class="main<%= game.isDraw() ? ' italic' : '' %>">
-          <%- h2(game.loserName()) %>
+          <%= game.loserName() || '' %>
         </td>
         <td class="main text-center<%= game.isResignation() ? '' : ' bold' %>">
           <%= game.result %>
@@ -145,7 +145,7 @@ document.addEventListener('keydown', function(e) {
         <% const author = authorMap[game.last_commented_by]; %>
         <td class="main">
           <% if (author) { %>
-            <%- h2(author.name) %>&nbsp;<a href="/user/info/<%= author.id %>"><img class="info" src="/images/info.gif" alt="(info)" width="9" height="9"></a>
+            <%= author.name || '' %>&nbsp;<a href="/user/info/<%= author.id %>"><img class="info" src="/images/info.gif" alt="(info)" width="9" height="9"></a>
           <% } %>
         </td>
       </tr>

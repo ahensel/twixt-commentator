@@ -7,7 +7,7 @@
     <%= createdDate.slice(0, 10) %> at <%= createdDate.slice(11, 16) %>,
   <% } %>
   <% if (author) { %>
-    <b><%- h2(author.name) %></b>
+    <b><%= author.name || '' %></b>
     <a href="/user/info/<%= author.id %>">
       <img class="info" src="/images/info.gif" alt="(info)" width="9" height="9">
     </a>

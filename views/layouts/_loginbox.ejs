@@ -36,7 +36,7 @@
 <% } else {
   const user = currentUser? currentUser.dataValues : ''; %>
   <div class="login-box">
-    Welcome,&nbsp;<b><%- h2(user.name) %></b>&nbsp;<a href="/user/info/<%= session.user_id %>?back_to=<%= params && (params.controller || params.back_to) || '' %>&ret_gid=<%= params?.gid || '' %>"><img class="info" src="/images/info.gif" alt="(info)" width="9" height="9"></a><br>
+    Welcome,&nbsp;<b><%= user.name || '' %></b>&nbsp;<a href="/user/info/<%= session.user_id %>?back_to=<%= params && (params.controller || params.back_to) || '' %>&ret_gid=<%= params?.gid || '' %>"><img class="info" src="/images/info.gif" alt="(info)" width="9" height="9"></a><br>
     <a href="/user/profile/<%= session.user_id %>?ret_gid=<%= params?.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&player1=<%= params?.player1 || '' %>&player2=<%= params?.player2 || '' %>&size=<%= params?.size || '' %>&link_policy=<%= params?.link_policy || '' %>&swap_style=<%= params?.swap_style || '' %>">Profile</a>
     |
     <a href="/user/logout?ret_gid=<%= params?.gid || '' %>&back_to=<%= params && (params.controller || params.back_to) || '' %>&player1=<%= params?.player1 || '' %>&player2=<%= params?.player2 || '' %>&size=<%= params?.size || '' %>&link_policy=<%= params?.link_policy || '' %>&swap_style=<%= params?.swap_style || '' %>">Log out</a>
