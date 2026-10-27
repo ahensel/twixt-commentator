@@ -3,7 +3,7 @@
 const { Peg } = require('../public/javascripts/peg');
 const { Link } = require('../public/javascripts/link');
 const { TwixtBoard } = require('../public/javascripts/twixtboard');
-const { EditMove } = require('../public/javascripts/move');
+const { EditMove, Move, SwapMove, ResignMove, DrawMove, ForfeitMove } = require('../public/javascripts/move');
 
 globalThis.Peg = Peg;
 globalThis.Link = Link;
@@ -205,6 +205,94 @@ describe('TwixtBoard (public/javascripts/twixtboard.js)', () => {
     test('draw position 3 (8x8): d4 d5 e2 b4 f4 e6 d7 g5 c5 a2 f6 e5 e3 g4 c4 e4', () => {
       const board = buildBoard('d4 d5 e2 b4 f4 e6 d7 g5 c5 a2 f6 e5 e3 g4 c4 e4');
       expect(board.calculateWinner()).toBe(0);
+    });
+  });
+
+  describe('backend methods (play, swap, winner, connection)', () => {
+    test('isPegAt and getColor', () => {
+      const board = new TwixtBoard(5);
+      expect(board.isPegAt(2, 2)).toBe(false);
+      expect(board.getColor(2, 2)).toBeNull();
+
+      board.setPeg(new Peg(TwixtBoard.WHITE, 2, 2));
+      expect(board.isPegAt(2, 2)).toBe(true);
+      expect(board.getColor(2, 2)).toBe(TwixtBoard.WHITE);
+      expect(board.isPegAt(0, 0)).toBe(false);
+      expect(board.getColor(0, 0)).toBeNull();
+    });
+
+    test('play(Move) places pegs and automatically creates knight-move links', () => {
+      const board = new TwixtBoard(5);
+      board.play(new Move(2, 1, 1)); // Player 1 (White) at (2, 1)
+      board.play(new Move(3, 3, 1)); // Player 1 (White) at (3, 3)
+
+      expect(board.numPegs()).toBe(2);
+      expect(board.isPegAt(2, 1)).toBe(true);
+      expect(board.isPegAt(3, 3)).toBe(true);
+      const peg1 = board.getPeg(2, 1);
+      const peg2 = board.getPeg(3, 3);
+      expect(peg1.hasLink(1, 2)).toBe(true);
+      expect(peg2.hasLink(-1, -2)).toBe(true);
+    });
+
+    test('play(SwapMove) swaps coordinates and flips first peg to Black', () => {
+      const board = new TwixtBoard(5);
+      board.play(new Move(2, 4, 1)); // White peg at (2, 4)
+      expect(board.isPegAt(2, 4)).toBe(true);
+      expect(board.numPegs()).toBe(1);
+
+      board.play(new SwapMove(2)); // Black plays swap
+      expect(board.isPegAt(2, 4)).toBe(false);
+      expect(board.isPegAt(4, 2)).toBe(true);
+      expect(board.getColor(4, 2)).toBe(TwixtBoard.BLACK);
+      expect(board.numPegs()).toBe(1);
+    });
+
+    test('resignation, forfeit, and draw', () => {
+      const board = new TwixtBoard(5);
+      board.setPlayer(1, 'Alice');
+      board.setPlayer(2, 'Bob');
+
+      expect(board.isResignation()).toBe(false);
+      expect(board.isForfeit()).toBe(false);
+      expect(board.isDraw()).toBe(false);
+      expect(board.winner()).toBeNull();
+
+      board.play(new ResignMove(1)); // Player 1 resigns -> Player 2 wins
+      expect(board.isResignation()).toBe(true);
+      expect(board.hasWonPlayer(1)).toBe(false);
+      expect(board.hasWonPlayer(2)).toBe(true);
+      expect(board.winner()).toBe(2);
+    });
+
+    test('forfeit by player 2 gives victory to player 1', () => {
+      const board = new TwixtBoard(5);
+      board.play(new ForfeitMove(2));
+      expect(board.isForfeit()).toBe(true);
+      expect(board.hasWonPlayer(1)).toBe(true);
+      expect(board.hasWonPlayer(2)).toBe(false);
+      expect(board.winner()).toBe(1);
+    });
+
+    test('draw move sets isDraw and winner 0', () => {
+      const board = new TwixtBoard(5);
+      board.play(new DrawMove(1));
+      expect(board.isDraw()).toBe(true);
+      expect(board.winner()).toBe(0);
+    });
+
+    test('full edge-to-edge connection win detection', () => {
+      const board = new TwixtBoard(5);
+      // White connects y=1 to y=5
+      board.play(new Move(2, 1, 1));
+      board.play(new Move(3, 3, 1));
+      board.play(new Move(2, 5, 1));
+
+      expect(board.hasConnectedColor(TwixtBoard.WHITE)).toBe(true);
+      expect(board.hasConnectedColor(TwixtBoard.BLACK)).toBe(false);
+      expect(board.hasWonColor(TwixtBoard.WHITE)).toBe(true);
+      expect(board.hasWonPlayer(1)).toBe(true);
+      expect(board.winner()).toBe(1);
     });
   });
 });
