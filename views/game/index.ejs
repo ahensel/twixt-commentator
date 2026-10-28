@@ -311,6 +311,7 @@ preformatted   text</pre></li>
   </div>
 </div>
 
+<% if (game) { %>
 <!-- Download Modal -->
 <div id="download-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="download-title">
   <div class="modal download-modal">
@@ -350,8 +351,10 @@ preformatted   text</pre></li>
     </form>
   </div>
 </div>
+<% } %>
 
 <script>
+if (document.getElementById('download-overlay') || document.getElementById('help-overlay')) {
 let downloadFocusTrap = null;
 
 function isFullMainVariationDisplayed() {
@@ -513,6 +516,7 @@ document.addEventListener('keydown', function(e) {
     closeHelpModal();
   }
 });
+}
 </script>
 
 <script src="/javascripts/comment_highlighter.js"></script>
