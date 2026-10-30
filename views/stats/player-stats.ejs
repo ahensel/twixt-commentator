@@ -1,0 +1,460 @@
+<% layout('layouts/stats') %>
+<% locals.currentPage = 'player-stats'; %>
+
+<h2>Twixt Commentator — Player Stats</h2>
+
+<p>Select a player to view their win-loss-draw record against each opponent.
+  Forfeits are excluded.</p>
+
+<form id="player-stats-form" method="get" action="/stats/player-stats" autocomplete="off">
+  <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
+    <label for="player-input" style="white-space:nowrap; font-size:var(--font-size-s);">
+      Player:
+    </label>
+    <div style="position:relative; display:inline-block;">
+      <input
+        id="player-input"
+        type="text"
+        name="player_display"
+        placeholder="Type a name or LG id…"
+        value="<%= params.player_display ? params.player_display : (typeof defaultName !== 'undefined' ? defaultName : '') %>"
+        style="width:280px; font-size:var(--font-size-s); font-family:var(--font-stack); border:1px solid var(--color-border); padding:3px 6px;"
+        autocomplete="off"
+        aria-label="Player name autocomplete"
+        aria-expanded="false"
+        aria-autocomplete="list"
+        aria-controls="player-listbox"
+        role="combobox"
+      >
+      <input type="hidden" id="player-id-hidden" name="player_id" value="<%= params.player_id ? params.player_id : '' %>">
+      <ul
+        id="player-listbox"
+        role="listbox"
+        aria-label="Player suggestions"
+        style="
+          display:none;
+          position:absolute;
+          left:0; top:100%;
+          min-width:100%;
+          max-width:380px;
+          max-height:280px;
+          overflow-y:auto;
+          margin:0; padding:0;
+          list-style:none;
+          background:var(--color-bg);
+          border:1px solid var(--color-border);
+          z-index:200;
+          box-shadow:0 3px 8px rgba(0,0,0,0.18);
+        "
+      ></ul>
+    </div>
+
+    <button
+      type="submit"
+      id="view-btn"
+      style="font-size:var(--font-size-s); font-family:var(--font-stack); padding:3px 10px; border:1px solid var(--color-border); background:var(--color-odd-row); cursor:pointer;"
+    >View</button>
+
+    <span id="player-status" style="font-size:var(--font-size-xs); color:var(--color-hint);"></span>
+  </div>
+</form>
+
+<% if (params.player_display && !params.player_id) { %>
+  <p style="color:var(--color-error);">
+    No player matched "<%= params.player_display %>". Please choose a name from the suggestion list.
+  </p>
+<% } %>
+
+<%# W-L-D results area — populated by JS when player_id is present %>
+<div id="wld-area">
+  <% if (params.player_id) { %>
+    <p id="wld-loading" style="font-size:var(--font-size-s); color:var(--color-hint);">
+      <span style="display:inline-block;width:1em;height:1em;border:2px solid var(--color-spinner);border-top-color:transparent;border-radius:50%;animation:ps-spin 0.8s linear infinite;vertical-align:-0.15em;margin-right:0.3em;"></span>
+      Loading games…
+    </p>
+    <p id="wld-error" style="display:none; color:var(--color-error); font-size:var(--font-size-s);"></p>
+    <div id="wld-table-wrap" style="display:none;">
+      <p id="wld-summary" style="font-size:var(--font-size-s);"></p>
+      <table class="main" cellspacing="0" id="wld-table">
+        <thead>
+          <tr>
+            <th class="main ps-th-sort" data-col="name" style="cursor:pointer; user-select:none; white-space:nowrap;">Opponent ▲</th>
+            <th class="main ps-th-sort" data-col="w"    style="cursor:pointer; user-select:none; text-align:right;">W</th>
+            <th class="main ps-th-sort" data-col="l"    style="cursor:pointer; user-select:none; text-align:right;">L</th>
+            <th class="main ps-th-sort" data-col="d"    style="cursor:pointer; user-select:none; text-align:right;">D</th>
+            <th class="main ps-th-sort" data-col="total" style="cursor:pointer; user-select:none; text-align:right;">Total</th>
+          </tr>
+        </thead>
+        <tbody id="wld-tbody"></tbody>
+        <tfoot id="wld-tfoot"></tfoot>
+      </table>
+    </div>
+  <% } %>
+</div>
+
+<style>
+@keyframes ps-spin { to { transform: rotate(360deg); } }
+.ps-th-sort:hover { background: var(--color-even-row); }
+</style>
+
+<script>
+(function () {
+  'use strict';
+
+  // ── Combobox ──────────────────────────────────────────────────────────────
+  const input     = document.getElementById('player-input');
+  const hiddenId  = document.getElementById('player-id-hidden');
+  const listbox   = document.getElementById('player-listbox');
+  const status    = document.getElementById('player-status');
+  const form      = document.getElementById('player-stats-form');
+
+  let allPlayers  = [];
+  let activeIndex = -1;
+  let playerId    = 0; // set on load and by the player picker
+
+  status.textContent = 'Loading players…';
+  fetch('/stats/player-stats/players')
+    .then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function (data) {
+      allPlayers = data;
+      status.textContent = '';
+
+      // If this page loaded with a pre-filled player name (e.g. the logged-in
+      // user's own Little Golem name), resolve it against the player list:
+      // a unique match is selected automatically and the form is submitted so
+      // the W-L-D table loads without any further interaction.
+      if (!hiddenId.value && input.value.trim() && data.length > 0) {
+        const q = input.value.trim().toLowerCase();
+        const exact  = allPlayers.filter(function (p) { return p.player_name.toLowerCase() === q; });
+        const fuzzy  = allPlayers.filter(function (p) {
+          return p.player_name.toLowerCase().indexOf(q) !== -1 || String(p.player_id).indexOf(q) !== -1;
+        });
+        const candidates = exact.length > 0 ? exact : fuzzy;
+        if (candidates.length === 1) {
+          hiddenId.value = candidates[0].player_id;
+          playerId       = candidates[0].player_id;
+          input.value    = formatEntry(candidates[0]);
+          form.submit();
+          return;
+        }
+      }
+
+      const existingId = hiddenId.value;
+      if (existingId) {
+        const match = allPlayers.find(function (p) {
+          return String(p.player_id) === existingId;
+        });
+        if (match) input.value = formatEntry(match);
+      }
+    })
+    .catch(function (err) {
+      status.textContent = 'Could not load players: ' + err.message;
+      status.style.color = 'var(--color-error)';
+    });
+
+  function formatEntry(player) {
+    return player.player_name + ' (' + player.player_id + ')';
+  }
+
+  function filterPlayers(query) {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    return allPlayers.filter(function (p) {
+      return p.player_name.toLowerCase().indexOf(q) !== -1
+          || String(p.player_id).indexOf(q) !== -1;
+    }).slice(0, 50);
+  }
+
+  function renderList(matches) {
+    listbox.innerHTML = '';
+    activeIndex = -1;
+    if (!matches.length) { closeList(); return; }
+
+    matches.forEach(function (player, idx) {
+      const li = document.createElement('li');
+      li.setAttribute('role', 'option');
+      li.setAttribute('aria-selected', 'false');
+      li.dataset.id   = player.player_id;
+      li.dataset.name = player.player_name;
+      li.textContent  = formatEntry(player);
+      li.style.cssText = 'padding:4px 8px;cursor:pointer;font-size:var(--font-size-s);font-family:var(--font-stack);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+      li.addEventListener('mousedown', function (e) { e.preventDefault(); selectItem(li); });
+      li.addEventListener('mousemove', function () { setActive(idx); });
+      listbox.appendChild(li);
+    });
+
+    listbox.style.display = 'block';
+    input.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeList() {
+    listbox.style.display = 'none';
+    input.setAttribute('aria-expanded', 'false');
+    activeIndex = -1;
+  }
+
+  function setActive(idx) {
+    const items = listbox.querySelectorAll('li');
+    items.forEach(function (li, i) {
+      const active = i === idx;
+      li.setAttribute('aria-selected', active ? 'true' : 'false');
+      li.style.background = active ? 'var(--color-header)' : '';
+    });
+    activeIndex = idx;
+    if (items[idx]) {
+      items[idx].id = 'player-opt-' + idx;
+      input.setAttribute('aria-activedescendant', 'player-opt-' + idx);
+      items[idx].scrollIntoView({ block: 'nearest' });
+    }
+  }
+
+  function selectItem(li) {
+    input.value    = formatEntry({ player_name: li.dataset.name, player_id: li.dataset.id });
+    hiddenId.value = li.dataset.id;
+    closeList();
+    input.focus();
+  }
+
+  function clearSelection() { hiddenId.value = ''; }
+
+  input.addEventListener('focus', function () { input.select(); });
+
+  input.addEventListener('input', function () {
+    clearSelection();
+    renderList(filterPlayers(input.value));
+  });
+
+  input.addEventListener('keydown', function (e) {
+    let items = listbox.querySelectorAll('li');
+    const open  = listbox.style.display !== 'none';
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (!open) { renderList(filterPlayers(input.value)); items = listbox.querySelectorAll('li'); }
+      setActive(Math.min(activeIndex + 1, items.length - 1));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActive(Math.max(activeIndex - 1, 0));
+    } else if (e.key === 'Enter') {
+      if (open && activeIndex >= 0 && items[activeIndex]) { e.preventDefault(); selectItem(items[activeIndex]); }
+    } else if (e.key === 'Escape') {
+      closeList();
+    } else if (e.key === 'Tab') {
+      if (open && activeIndex >= 0 && items[activeIndex]) { e.preventDefault(); selectItem(items[activeIndex]); }
+      else closeList();
+    }
+  });
+
+  document.addEventListener('mousedown', function (e) {
+    if (!input.contains(e.target) && !listbox.contains(e.target)) closeList();
+  });
+
+  input.addEventListener('blur', function () { setTimeout(closeList, 120); });
+
+  form.addEventListener('submit', function () {
+    if (!hiddenId.value) {
+      const matches = filterPlayers(input.value);
+      if (matches.length === 1) {
+        hiddenId.value = matches[0].player_id;
+        input.value    = formatEntry(matches[0]);
+      }
+    }
+  });
+
+  // ── W-L-D table ──────────────────────────────────────────────────────────
+  if (playerId === 0) playerId = parseInt('<%= params.player_id || "" %>', 10);
+  if (!playerId || isNaN(playerId)) return; // No player selected yet — stop here.
+
+  const loadingEl   = document.getElementById('wld-loading');
+  const errorEl     = document.getElementById('wld-error');
+  const tableWrapEl = document.getElementById('wld-table-wrap');
+  const summaryEl   = document.getElementById('wld-summary');
+  const tbodyEl     = document.getElementById('wld-tbody');
+  const tfootEl     = document.getElementById('wld-tfoot');
+
+  // Sort state: column key + direction
+  let sortCol = 'total';
+  let sortAsc = false; // default: Total descending (most-played first)
+
+  fetch('/stats/player-stats/games?player_id=' + playerId)
+    .then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function (games) {
+      loadingEl.style.display = 'none';
+      const rows = buildRows(games, playerId);
+      if (!rows.length) {
+        errorEl.textContent = 'No games found for this player.';
+        errorEl.style.display = '';
+        return;
+      }
+      renderTable(rows);
+      tableWrapEl.style.display = '';
+    })
+    .catch(function (err) {
+      if (loadingEl) loadingEl.style.display = 'none';
+      errorEl.textContent = 'Failed to load games: ' + err.message;
+      errorEl.style.display = '';
+    });
+
+  // ── Data processing ───────────────────────────────────────────────────────
+
+  /**
+   * Given the raw game rows (ordered by id DESC) and the selected player_id,
+   * build one summary row per unique opponent.
+   *
+   * "Most recent name" is determined by the first occurrence of each opponent
+   * player_id in the array — since the array is sorted newest-first, the first
+   * name seen is the one used most recently on Little Golem.
+   */
+  function buildRows(games, pid) {
+    // Map from opponent player_id → { name, w, l, d }
+    const opponents = Object.create(null);
+
+    games.forEach(function (g) {
+      const isP1    = g.player1_id === pid;
+      const oppId   = isP1 ? g.player2_id : g.player1_id;
+      const oppName = isP1 ? g.player2    : g.player1;
+      const winner  = g.winner;
+
+      if (!opponents[oppId]) {
+        // First encounter (newest game) → most recent name.
+        opponents[oppId] = { name: oppName, w: 0, l: 0, d: 0 };
+      }
+
+      if (winner === 0) {
+        opponents[oppId].d++;
+      } else if ((winner === 1 && isP1) || (winner === 2 && !isP1)) {
+        opponents[oppId].w++;
+      } else {
+        opponents[oppId].l++;
+      }
+    });
+
+    return Object.keys(opponents).map(function (oppId) {
+      const o = opponents[oppId];
+      return {
+        oppId:   parseInt(oppId, 10),
+        name:    o.name,
+        w:       o.w,
+        l:       o.l,
+        d:       o.d,
+        total:   o.w + o.l + o.d,
+      };
+    });
+  }
+
+  // ── Rendering ─────────────────────────────────────────────────────────────
+
+  function sortRows(rows) {
+    const col = sortCol;
+    const asc = sortAsc;
+    return rows.slice().sort(function (a, b) {
+      const av = col === 'name' ? a.name.toLowerCase() : a[col];
+      const bv = col === 'name' ? b.name.toLowerCase() : b[col];
+      if (av < bv) return asc ? -1 : 1;
+      if (av > bv) return asc ? 1  : -1;
+      // Secondary sort: name ascending
+      if (col !== 'name') {
+        const an = a.name.toLowerCase(), bn = b.name.toLowerCase();
+        if (an < bn) return -1;
+        if (an > bn) return 1;
+      }
+      return 0;
+    });
+  }
+
+  function renderTable(rows) {
+    const sorted = sortRows(rows);
+
+    // Summary line
+    const totalGames   = rows.reduce(function (s, r) { return s + r.total; }, 0);
+    const totalW       = rows.reduce(function (s, r) { return s + r.w; }, 0);
+    const totalL       = rows.reduce(function (s, r) { return s + r.l; }, 0);
+    const totalD       = rows.reduce(function (s, r) { return s + r.d; }, 0);
+    const opponents    = rows.length;
+    summaryEl.textContent =
+      opponents + ' opponent' + (opponents === 1 ? '' : 's') +
+      ', ' + totalGames.toLocaleString() + ' game' + (totalGames === 1 ? '' : 's') +
+      ' (forfeits excluded)';
+
+    // Tbody
+    tbodyEl.innerHTML = '';
+    sorted.forEach(function (row, i) {
+      const tr = document.createElement('tr');
+      tr.className = i % 2 === 0 ? 'even' : 'odd';
+
+      const tdName = document.createElement('td');
+      tdName.className = 'main';
+      tdName.textContent = row.name;
+      tdName.title = 'LG id: ' + row.oppId;
+
+      const tdW = document.createElement('td');
+      tdW.className = 'main';
+      tdW.style.textAlign = 'right';
+      tdW.textContent = row.w;
+
+      const tdL = document.createElement('td');
+      tdL.className = 'main';
+      tdL.style.textAlign = 'right';
+      tdL.textContent = row.l;
+
+      const tdD = document.createElement('td');
+      tdD.className = 'main';
+      tdD.style.textAlign = 'right';
+      tdD.textContent = row.d || '';
+
+      const tdTotal = document.createElement('td');
+      tdTotal.className = 'main';
+      tdTotal.style.textAlign = 'right';
+      tdTotal.innerHTML = '<b>' + row.total + '</b>';
+
+      tr.appendChild(tdName);
+      tr.appendChild(tdW);
+      tr.appendChild(tdL);
+      tr.appendChild(tdD);
+      tr.appendChild(tdTotal);
+      tbodyEl.appendChild(tr);
+    });
+
+    // Tfoot totals row
+    tfootEl.innerHTML =
+      '<tr>' +
+      '<td class="main"><b>Total</b></td>' +
+      '<td class="main" style="text-align:right"><b>' + totalW + '</b></td>' +
+      '<td class="main" style="text-align:right"><b>' + totalL + '</b></td>' +
+      '<td class="main" style="text-align:right"><b>' + (totalD || '') + '</b></td>' +
+      '<td class="main" style="text-align:right"><b>' + totalGames.toLocaleString() + '</b></td>' +
+      '</tr>';
+
+    // Update column-header sort arrows
+    document.querySelectorAll('.ps-th-sort').forEach(function (th) {
+      const col = th.dataset.col;
+      const base = { name: 'Opponent', w: 'W', l: 'L', d: 'D', total: 'Total' }[col];
+      th.textContent = base + (col === sortCol ? (sortAsc ? ' ▲' : ' ▼') : '');
+    });
+
+    // Store rows reference for re-sort
+    renderTable._rows = rows;
+  }
+
+  // Column-header click → re-sort
+  document.querySelectorAll('.ps-th-sort').forEach(function (th) {
+    th.addEventListener('click', function () {
+      const col = th.dataset.col;
+      if (sortCol === col) {
+        sortAsc = !sortAsc;
+      } else {
+        sortCol = col;
+        // Numeric columns default to descending; name defaults to ascending.
+        sortAsc = (col === 'name');
+      }
+      if (renderTable._rows) renderTable(renderTable._rows);
+    });
+  });
+
+})();
+</script>

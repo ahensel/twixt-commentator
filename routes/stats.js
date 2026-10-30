@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const https = require('https');
-const { sequelize } = require('../models');
+const { sequelize, User } = require('../models');
 
 const LG_URL = 'https://api.littlegolem.net/stats/gamecatalogue';
 
@@ -355,6 +355,66 @@ router.get('/first-moves', async (req, res) => {
   try {
     const data = await computeFirstMoves();
     res.render('stats/first-moves', { ...data, params: req.query });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// ── Player Stats ──────────────────────────────────────────────────────────────
+
+// JSON endpoint: returns all players for the autocomplete combobox.
+// Response: [{ player_name, player_id }, ...]  sorted by player_name.
+router.get('/player-stats/players', async (req, res) => {
+  try {
+    const [rows] = await sequelize.query(`
+      SELECT player_name, player_id
+      FROM players
+      ORDER BY player_name ASC
+    `);
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// JSON endpoint: returns all non-forfeit games involving the given player_id.
+// Response: [{ id, player1_id, player2_id, winner, player1, player2 }, ...]
+//   ordered by id DESC so the client can take the first occurrence of each
+//   opponent's name as their most recent known name.
+router.get('/player-stats/games', async (req, res) => {
+  const playerId = parseInt(req.query.player_id, 10);
+  if (!playerId || isNaN(playerId)) {
+    return res.status(400).json({ error: 'player_id query parameter is required' });
+  }
+  try {
+    const [rows] = await sequelize.query(`
+      SELECT id, player1_id, player2_id, winner, player1, player2
+      FROM games
+      WHERE (player1_id = :pid OR player2_id = :pid)
+        AND result != 'F'
+        AND result IS NOT NULL
+        AND player1_id IS NOT NULL
+        AND player2_id IS NOT NULL
+        AND player1_id != player2_id
+      ORDER BY id DESC
+    `, { replacements: { pid: playerId } });
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.get('/player-stats', async (req, res) => {
+  try {
+    let defaultName = '';
+    if (req.session.user_id) {
+      const user = await User.findByPk(req.session.user_id);
+      if (user && user.on_lg) defaultName = user.name_on_lg || user.name;
+    }
+    res.render('stats/player-stats', { params: req.query, defaultName });
   } catch (err) {
     console.error(err);
     res.status(500).send('Internal Server Error');
