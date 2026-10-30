@@ -1,5 +1,7 @@
 const { Sequelize } = require('sequelize');
-const cfg = require('./config')[process.env.NODE_ENV || 'development'];
+const env = process.env.NODE_ENV || 'development';
+const config = require('./config');
+const cfg = config[env] || config.development;
 
 // Create sequelize instance with proper UTF-8 configuration for MySQL
 const sequelize = new Sequelize(cfg.database, cfg.username, cfg.password, {

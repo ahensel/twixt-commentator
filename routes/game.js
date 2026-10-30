@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const https = require('https');
 const { Op } = require('sequelize');
-const { Game, InProgress } = require('../models');
+const { Game, InProgress, Player } = require('../models');
 const { LittleGolemParser } = require('../lib/domain/LittleGolemParser');
 
 const MIN_TWIXT_GAME_NUM = 37491;
@@ -113,6 +113,10 @@ async function getGameFromLittleGolem(gameNumber, flash) {
     swapped: parser.getSwapped(),
     created_on: new Date(),
   });
+
+  // Record players in the players lookup table if not already present
+  await Player.recordPlayer(player1Name, player1_id);
+  await Player.recordPlayer(player2Name, player2_id);
 
   // Remove from in_progress if it exists there
   await InProgress.destroy({ where: { lg_game_num: gameNumber } });
@@ -251,5 +255,7 @@ router.post('/', (req, res) => {
   const gid = req.body.new_gid;
   res.redirect(`/game/${gid}`);
 });
+
+router.getGameFromLittleGolem = getGameFromLittleGolem;
 
 module.exports = router;

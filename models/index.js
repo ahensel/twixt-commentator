@@ -83,6 +83,32 @@ const InProgress = sequelize.define('InProgress', {
   timestamps: false,
 });
 
+// ─── Player ───────────────────────────────────────────────────────────────────
+
+const Player = sequelize.define('Player', {
+  player_name: {
+    type: DataTypes.STRING(255),
+    primaryKey: true,
+    allowNull: false,
+  },
+  player_id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    allowNull: false,
+  },
+}, {
+  tableName: 'players',
+  timestamps: false,
+});
+
+Player.recordPlayer = async function (playerName, playerId) {
+  if (!playerName || !playerId) return null;
+  const name = String(playerName).trim();
+  const id = parseInt(playerId, 10);
+  if (!name || isNaN(id)) return null;
+  return Player.upsert({ player_name: name, player_id: id });
+};
+
 const crypto = require('crypto');
 User._encryptedPassword = function (password, salt) {
   return crypto.createHash('sha1')
@@ -111,5 +137,5 @@ Comment.belongsTo(Game, { foreignKey: 'game_id', as: 'game' });
 Comment.belongsTo(User, { foreignKey: 'user_id', as: 'author' });
 User.hasMany(Comment,  { foreignKey: 'user_id', as: 'comments' });
 
-module.exports = { sequelize, Game, Comment, User, InProgress };
+module.exports = { sequelize, Game, Comment, User, InProgress, Player };
 
