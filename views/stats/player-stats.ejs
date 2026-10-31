@@ -417,7 +417,7 @@
       const tdWp = document.createElement('td');
       tdWp.className = 'main';
       tdWp.style.textAlign = 'right';
-      tdWp.textContent = row.wp.toFixed(1) + '%';
+      tdWp.textContent = row.wp.toFixed(1);
 
       tr.appendChild(tdName);
       tr.appendChild(tdW);
@@ -436,7 +436,7 @@
       '<td class="main" style="text-align:right"><b>' + totalL + '</b></td>' +
       '<td class="main" style="text-align:right"><b>' + (totalD || '') + '</b></td>' +
       '<td class="main" style="text-align:right"><b>' + totalGames.toLocaleString() + '</b></td>' +
-      '<td class="main" style="text-align:right"><b>' + ((totalW * 100 + totalD * 50) / totalGames).toFixed(1) + '%</b></td>' +
+      '<td class="main" style="text-align:right"><b>' + ((totalW * 100 + totalD * 50) / totalGames).toFixed(1) + '</b></td>' +
       '</tr>';
 
     // Update column-header sort arrows
