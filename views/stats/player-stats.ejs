@@ -143,8 +143,11 @@
         }
       }
 
+      // Only overwrite in the display name when the URL didn't provide one
+      // (player_display). Don't clobber an existing value — the player
+      // may have renamed on LG, and the URL's name is what the user chose.
       const existingId = hiddenId.value;
-      if (existingId) {
+      if (existingId && !input.value.trim()) {
         const match = allPlayers.find(function (p) {
           return String(p.player_id) === existingId;
         });
@@ -288,7 +291,7 @@
       loadingEl.style.display = 'none';
       const rows = buildRows(games, playerId);
       if (!rows.length) {
-        errorEl.textContent = 'No games found for this player.';
+        errorEl.textContent = 'No non-forfeited games found for this player.';
         errorEl.style.display = '';
         return;
       }
