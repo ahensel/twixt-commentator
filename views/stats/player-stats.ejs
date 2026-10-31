@@ -83,6 +83,7 @@
             <th class="main ps-th-sort" data-col="l"    style="cursor:pointer; user-select:none; text-align:right;">L</th>
             <th class="main ps-th-sort" data-col="d"    style="cursor:pointer; user-select:none; text-align:right;">D</th>
             <th class="main ps-th-sort" data-col="total" style="cursor:pointer; user-select:none; text-align:right;">Total</th>
+            <th class="main ps-th-sort" data-col="wp" style="cursor:pointer; user-select:none; text-align:right;">Win %</th>
           </tr>
         </thead>
         <tbody id="wld-tbody"></tbody>
@@ -343,6 +344,7 @@
         l:       o.l,
         d:       o.d,
         total:   o.w + o.l + o.d,
+        wp:      (o.w * 100 + o.d * 50) / (o.w + o.l + o.d),
       };
     });
   }
@@ -412,11 +414,17 @@
       tdTotal.style.textAlign = 'right';
       tdTotal.innerHTML = '<b>' + row.total + '</b>';
 
+      const tdWp = document.createElement('td');
+      tdWp.className = 'main';
+      tdWp.style.textAlign = 'right';
+      tdWp.textContent = row.wp.toFixed(1) + '%';
+
       tr.appendChild(tdName);
       tr.appendChild(tdW);
       tr.appendChild(tdL);
       tr.appendChild(tdD);
       tr.appendChild(tdTotal);
+      tr.appendChild(tdWp);
       tbodyEl.appendChild(tr);
     });
 
@@ -428,12 +436,13 @@
       '<td class="main" style="text-align:right"><b>' + totalL + '</b></td>' +
       '<td class="main" style="text-align:right"><b>' + (totalD || '') + '</b></td>' +
       '<td class="main" style="text-align:right"><b>' + totalGames.toLocaleString() + '</b></td>' +
+      '<td class="main" style="text-align:right"><b>' + ((totalW * 100 + totalD * 50) / totalGames).toFixed(1) + '%</b></td>' +
       '</tr>';
 
     // Update column-header sort arrows
     document.querySelectorAll('.ps-th-sort').forEach(function (th) {
       const col = th.dataset.col;
-      const base = { name: 'Opponent', w: 'W', l: 'L', d: 'D', total: 'Total' }[col];
+      const base = { name: 'Opponent', w: 'W', l: 'L', d: 'D', total: 'Total', wp: 'Win %' }[col];
       th.textContent = base + (col === sortCol ? (sortAsc ? ' ▲' : ' ▼') : '');
     });
 
