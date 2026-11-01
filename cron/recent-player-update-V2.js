@@ -78,7 +78,9 @@ function getPlayerGames(playerId, variant) {
   });
 }
 
-cron.schedule('0 6 1 * *', async () => {
+cron.schedule('0 6 1 * *', updateRecentPlayers);
+
+async function updateRecentPlayers() {
   console.log('[cron] Checking recent players for missing games (API)...');
 
   let playerIds;
@@ -92,6 +94,9 @@ cron.schedule('0 6 1 * *', async () => {
   if (playerIds.length === 0) {
     console.log('[cron] No recent players found.');
     return;
+  }
+  else {
+    console.log(`[cron] found ${playerIds.length} recent players from the past ${DAYS} days`);
   }
 
   // Load the game numbers we already have, from the two tables (once).
@@ -108,9 +113,12 @@ cron.schedule('0 6 1 * *', async () => {
     return;
   }
 
+  console.log(`[cron] Found ${inProgressInDb.size} in progress games and ${finishedInDb.size} finished games in db`);
+
   const missing = new Set();
   for (const variant of VARIANTS) {
     for (const playerId of playerIds) {
+      console.log(`[cron] getting recent ${variant} games for player ${playerId}`);
       let games;
       try {
         games = await getPlayerGames(playerId, variant);
@@ -120,11 +128,13 @@ cron.schedule('0 6 1 * *', async () => {
         continue;
       }
 
-      // status 1 = finished, 0 = in progress. Check each against the matching
-      // table's set of game numbers.
+      // status 0 = in progress, anything else (1 = normal finish,
+      // 2 = forfeit / timeout / abandoned) is finished. Check each against
+      // the matching table's set of game numbers.
       for (const game of games) {
-        const known = game.status === 1 ? finishedInDb.has(game.gid) : inProgressInDb.has(game.gid);
+        const known = game.status === 0 ? inProgressInDb.has(game.gid) : finishedInDb.has(game.gid);
         if (!known) missing.add(game.gid);
+        if (!known) console.log(`[cron] not known: ${game.gid}`);
       }
 
       // 1-second pause between requests to avoid hammering LittleGolem
@@ -146,4 +156,9 @@ cron.schedule('0 6 1 * *', async () => {
   }
 
   console.log('[cron] Finished visiting missing recent-player games (API).');
-});
+}
+
+if (process.argv.includes('--test')) {
+  console.log('Manually triggering task...');
+  updateRecentPlayers();
+}
