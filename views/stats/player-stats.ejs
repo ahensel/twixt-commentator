@@ -75,6 +75,7 @@
     <p id="wld-error" style="display:none; color:var(--color-error); font-size:var(--font-size-s);"></p>
     <div id="wld-table-wrap" style="display:none;">
       <p id="board-size-note" style="font-size:var(--font-size-s); display:none;"></p>
+      <div id="board-size-filter" style="display:none; font-size:var(--font-size-s); margin-bottom:8px;"></div>
       <p id="wld-summary" style="font-size:var(--font-size-s);"></p>
       <table class="main" cellspacing="0" id="wld-table">
         <thead>
@@ -275,6 +276,11 @@
   const loadingEl   = document.getElementById('wld-loading');
   const errorEl     = document.getElementById('wld-error');
   const boardSizeNoteEl = document.getElementById('board-size-note');
+  const sizeFilterEl    = document.getElementById('board-size-filter');
+
+  // Board-size filter state (null → show all sizes)
+  let allGames     = [];
+  let selectedSize = null;
   const tableWrapEl = document.getElementById('wld-table-wrap');
   const summaryEl   = document.getElementById('wld-summary');
   const tbodyEl     = document.getElementById('wld-tbody');
@@ -297,7 +303,8 @@
         errorEl.style.display = '';
         return;
       }
-      renderBoardSizeNote(games);
+      allGames = games;
+      setupBoardSizeControls(boardSizesOf(games));
       renderTable(rows);
       tableWrapEl.style.display = '';
     })
@@ -357,28 +364,65 @@
 
   // ── Rendering ─────────────────────────────────────────────────────────────
 
-  /**
-   * Show a note above the table listing which board sizes this player has
-   * played on (e.g. "Player has only played on size 24" or
-   * "Player has played on size 24, 30, 48"). Hidden if no games have a
-   * recorded board size.
-   */
-  function renderBoardSizeNote(games) {
+  /** Distinct board sizes present in the given games, ascending. */
+  function boardSizesOf(games) {
     const sizes = [];
     games.forEach(function (g) {
       if (g.board_size != null && !sizes.includes(g.board_size)) sizes.push(g.board_size);
     });
-    sizes.sort(function (a, b) { return a - b; });
+    return sizes.sort(function (a, b) { return a - b; });
+  }
 
+  /**
+   * Show the board-size note above the table ("Player has only played on size 24"
+   * / "Player has played on size 24, 30") and, when more than one size is
+   * present, an All/Size-N radio group that filters the table. Hidden if no
+   * games have a recorded board size.
+   */
+  function setupBoardSizeControls(sizes) {
     if (sizes.length === 1) {
-      boardSizeNoteEl.textContent = 'Player has only played on size ' + sizes[0];
+      boardSizeNoteEl.textContent = 'Player has only played on size ' + sizes[0] + '.';
       boardSizeNoteEl.style.display = '';
     } else if (sizes.length > 1) {
-      boardSizeNoteEl.textContent = 'Player has played on size ' + sizes.join(', ');
+      boardSizeNoteEl.textContent = 'Player has played on size ' + sizes.join(', ') + '.';
       boardSizeNoteEl.style.display = '';
     } else {
       boardSizeNoteEl.style.display = 'none';
     }
+
+    buildSizeFilter(sizes);
+  }
+
+  function buildSizeFilter(sizes) {
+    if (sizes.length < 2) { sizeFilterEl.style.display = 'none'; return; }
+
+    const options = [{ value: '', label: 'All' }]
+      .concat(sizes.map(function (s) { return { value: String(s), label: 'Size ' + s }; }));
+
+    sizeFilterEl.innerHTML = '';
+    options.forEach(function (opt, i) {
+      const radio = document.createElement('input');
+      radio.type  = 'radio';
+      radio.name  = 'board-size-radio';
+      radio.value = opt.value;
+      if (i === 0) radio.checked = true; // "All" is the default
+
+      const label = document.createElement('label');
+      label.style.cssText = 'margin-right:12px; cursor:pointer; white-space:nowrap;';
+      radio.addEventListener('change', function () {
+        selectedSize = opt.value === '' ? null : parseInt(opt.value, 10);
+        renderTable(buildRows(filterGamesBySize(allGames), playerId));
+      });
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(' ' + opt.label));
+      sizeFilterEl.appendChild(label);
+    });
+    sizeFilterEl.style.display = '';
+  }
+
+  function filterGamesBySize(games) {
+    if (selectedSize == null) return games;
+    return games.filter(function (g) { return g.board_size === selectedSize; });
   }
 
   function sortRows(rows) {
