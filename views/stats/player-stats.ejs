@@ -74,6 +74,7 @@
     </p>
     <p id="wld-error" style="display:none; color:var(--color-error); font-size:var(--font-size-s);"></p>
     <div id="wld-table-wrap" style="display:none;">
+      <p id="board-size-note" style="font-size:var(--font-size-s); display:none;"></p>
       <p id="wld-summary" style="font-size:var(--font-size-s);"></p>
       <table class="main" cellspacing="0" id="wld-table">
         <thead>
@@ -273,6 +274,7 @@
 
   const loadingEl   = document.getElementById('wld-loading');
   const errorEl     = document.getElementById('wld-error');
+  const boardSizeNoteEl = document.getElementById('board-size-note');
   const tableWrapEl = document.getElementById('wld-table-wrap');
   const summaryEl   = document.getElementById('wld-summary');
   const tbodyEl     = document.getElementById('wld-tbody');
@@ -295,6 +297,7 @@
         errorEl.style.display = '';
         return;
       }
+      renderBoardSizeNote(games);
       renderTable(rows);
       tableWrapEl.style.display = '';
     })
@@ -353,6 +356,30 @@
   }
 
   // ── Rendering ─────────────────────────────────────────────────────────────
+
+  /**
+   * Show a note above the table listing which board sizes this player has
+   * played on (e.g. "Player has only played on size 24" or
+   * "Player has played on size 24, 30, 48"). Hidden if no games have a
+   * recorded board size.
+   */
+  function renderBoardSizeNote(games) {
+    const sizes = [];
+    games.forEach(function (g) {
+      if (g.board_size != null && !sizes.includes(g.board_size)) sizes.push(g.board_size);
+    });
+    sizes.sort(function (a, b) { return a - b; });
+
+    if (sizes.length === 1) {
+      boardSizeNoteEl.textContent = 'Player has only played on size ' + sizes[0];
+      boardSizeNoteEl.style.display = '';
+    } else if (sizes.length > 1) {
+      boardSizeNoteEl.textContent = 'Player has played on size ' + sizes.join(', ');
+      boardSizeNoteEl.style.display = '';
+    } else {
+      boardSizeNoteEl.style.display = 'none';
+    }
+  }
 
   function sortRows(rows) {
     const col = sortCol;

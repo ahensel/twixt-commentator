@@ -390,9 +390,10 @@ router.get('/player-stats/games', async (req, res) => {
   }
   try {
     const [rows] = await sequelize.query(`
-      SELECT id, player1_id, player2_id, winner, player1, player2
+      SELECT id, player1_id, player2_id, winner, player1, player2, board_size
       FROM games
       WHERE (player1_id = :pid OR player2_id = :pid)
+        AND lg_game_num IS NOT NULL
         AND result != 'F'
         AND result IS NOT NULL
         AND player1_id IS NOT NULL
