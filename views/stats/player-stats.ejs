@@ -115,6 +115,18 @@
   let activeIndex = -1;
   let playerId    = 0; // set on load and by the player picker
 
+  // Capture the server-rendered field values so they can be restored when this
+  // page is brought back from the bfcache. Without this, picking a different
+  // player (which mutates these fields via JS) then hitting Back would show the
+  // previous player's table alongside the *new* player's name in the input.
+  const initialInputValue = input.value;
+  const initialHiddenId   = hiddenId.value;
+  window.addEventListener('pageshow', function (e) {
+    if (!e.persisted) return;
+    input.value    = initialInputValue;
+    hiddenId.value = initialHiddenId;
+  });
+
   status.textContent = 'Loading players…';
   fetch('/stats/player-stats/players')
     .then(function (r) {
