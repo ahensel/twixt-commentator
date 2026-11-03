@@ -5,9 +5,8 @@ const { visitGame, sleep } = require('./helpers');
 
 // Runs monthly on the 1st day of the month at 06:00.
 // Finds all players active in the last N days, fetches each player's most
-// recent 100 Twixt games for every variant (DEFAULT, SIZE30, SIZE48) from the
-// LittleGolem JSON API (both in-progress and finished), and visits every game
-// number we don't have in the database yet:
+// recent 100 Twixt games from the LittleGolem JSON API (both in-progress and
+// finished), and visits every game number we don't have in the database yet:
 //   in-progress games checked against the in_progress table
 //   finished games   checked against the games table
 // So each missing game gets fetched from LittleGolem via the /game route.
@@ -18,8 +17,7 @@ const DAYS = 45;
 // How many recent games we fetch per player from the API.
 const LIMIT = 100;
 
-const VARIANTS = ['DEFAULT', 'SIZE30', 'SIZE48'];
-const API_BASE = 'https://api.littlegolem.net/players/{plid}/games?gtype=twixt&variant={variant}&offset=0&limit={limit}';
+const API_BASE = 'https://api.littlegolem.net/players/{plid}/games?gtype=twixt&offset=0&limit={limit}';
 
 // Helper: fetch URL via HTTPS, returns { statusCode, body }
 function httpsGet(url) {
@@ -64,11 +62,10 @@ async function getRecentPlayerIds() {
   return rows.map(row => row.player_id);
 }
 
-// Fetch one player's most recent LIMIT games for a variant from the
-// LittleGolem JSON API. Returns the `games` array (or []). Rejects on HTTP
-// or JSON errors.
-function getPlayerGames(playerId, variant) {
-  const url = API_BASE.replace('{plid}', String(playerId)).replace('{variant}', variant).replace('{limit}', String(LIMIT));
+// Fetch one player's most recent LIMIT games from the LittleGolem JSON API.
+// Returns the `games` array (or []). Rejects on HTTP or JSON errors.
+function getPlayerGames(playerId) {
+  const url = API_BASE.replace('{plid}', String(playerId)).replace('{limit}', String(LIMIT));
   return httpsGet(url).then((resp) => {
     if (resp.statusCode !== 200) {
       throw new Error(`HTTP ${resp.statusCode} — could not fetch game list`);
@@ -116,30 +113,28 @@ async function updateRecentPlayers() {
   console.log(`[cron] Found ${inProgressInDb.size} in progress games and ${finishedInDb.size} finished games in db`);
 
   const missing = new Set();
-  for (const variant of VARIANTS) {
-    for (const playerId of playerIds) {
-      console.log(`[cron] getting recent ${variant} games for player ${playerId}`);
-      let games;
-      try {
-        games = await getPlayerGames(playerId, variant);
-      } catch (err) {
-        console.error(`[cron] Skipping player ${playerId} (${variant}): ${err.message}`);
-        await sleep(1000);
-        continue;
-      }
-
-      // status 0 = in progress, anything else (1 = normal finish,
-      // 2 = forfeit / timeout / abandoned) is finished. Check each against
-      // the matching table's set of game numbers.
-      for (const game of games) {
-        const known = game.status === 0 ? inProgressInDb.has(game.gid) : finishedInDb.has(game.gid);
-        if (!known) missing.add(game.gid);
-        if (!known) console.log(`[cron] not known: ${game.gid}`);
-      }
-
-      // 1-second pause between requests to avoid hammering LittleGolem
+  for (const playerId of playerIds) {
+    console.log(`[cron] getting recent games for player ${playerId}`);
+    let games;
+    try {
+      games = await getPlayerGames(playerId);
+    } catch (err) {
+      console.error(`[cron] Skipping player ${playerId}: ${err.message}`);
       await sleep(1000);
+      continue;
     }
+
+    // status 0 = in progress, anything else (1 = normal finish,
+    // 2 = forfeit / timeout / abandoned) is finished. Check each against
+    // the matching table's set of game numbers.
+    for (const game of games) {
+      const known = game.status === 0 ? inProgressInDb.has(game.gid) : finishedInDb.has(game.gid);
+      if (!known) missing.add(game.gid);
+      if (!known) console.log(`[cron] not known: ${game.gid}`);
+    }
+
+    // 1-second pause between requests to avoid hammering LittleGolem
+    await sleep(1000);
   }
 
   const gameNums = [...missing].sort((a, b) => a - b);
