@@ -962,9 +962,7 @@ img.crosshair, img.new-peg {
 }
 
 .download-radio-row {
-  display: flex;
   gap: 16px;
-  align-items: center;
 }
 
 .download-radio-row label {
@@ -972,6 +970,10 @@ img.crosshair, img.new-peg {
   align-items: center;
   gap: 6px;
   cursor: pointer;
+}
+
+.download-radio-row input[type="radio"] {
+  margin: 0;
 }
 
 .download-radio-row label:has(input:disabled) {
