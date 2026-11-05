@@ -9,7 +9,6 @@ class TwixtMoves {
 
   swapFirstMove() {
     if (this.moves.length === 1) {
-      this.moves[0].peg.swapped = true;
       this.moves.push(new SwapMove());
     }
   }

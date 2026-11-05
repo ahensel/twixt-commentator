@@ -68,8 +68,8 @@ const BoardState = {
   colorsSwapped: false,
 
   // Helper methods
-  isPieSwap: () => {
-    return BoardState.board?.isPieSwap;
+  isPlayerColorSwap: () => {
+    return BoardState.board?.isPlayerColorSwap;
   },
   isLegalSpot: (x, y, turn) => {
     return BoardState.board.isValidSpot(x, y, turn ?? BoardState.turn);
@@ -99,7 +99,7 @@ window.addEventListener('load', () => {
   if (!$('board')) return;
   const size = parseInt($('boardSize').value, 10);
   const linkPolicy = $('linkPolicy')?.value === 'R' ? TwixtBoard.LINK_REMOVAL : TwixtBoard.PENCIL_AND_PAPER;
-  const swapStyle = $('swapStyle')?.value === 'P' ? TwixtBoard.SWAP_PIE : TwixtBoard.SWAP_LG;
+  const swapStyle = $('swapStyle')?.value === 'P' ? TwixtBoard.SWAP_PLAYER_COLORS : TwixtBoard.SWAP_LG;
   BoardState.board = new TwixtBoard(size, linkPolicy, swapStyle);
   BoardState.pendingEdit = new PendingEdit(BoardState.board);
   setBoardSize(size);
@@ -135,23 +135,13 @@ function showMovesOnLoad() {
 
   const moves = JSON.parse(movesJson);
 
-  if (moves.length > 1 && moves[1].type === Move.Swap) {
-    if (BoardState.isPieSwap()) {
-      // Pie rule: peg stays, player colors swap.
-      // colorsSwapped will be set after swapFirstMove() runs below.
-    } else {
-      // LG style: peg moves to the diagonally mirrored position.
-      [moves[0].x, moves[0].y] = [moves[0].y, moves[0].x];
-      moves[0].player = 3 - moves[0].player;
-    }
-  }
-
   BoardState.replayMode = 'setup';
   moves.forEach(move => {
     if (move.type === Move.Peg) {
       BoardState.turn = 2 - move.player;
       placePeg(move.x, move.y);
     } else if (move.type === Move.Swap) {
+      executeSwap();
       BoardState.currentMoves.swapFirstMove();
     } else if (move.type === Move.Resign) {
       BoardState.currentMoves.finalMove(new ResignMove());
@@ -167,8 +157,8 @@ function showMovesOnLoad() {
 
   BoardState.currentMoveNum = BoardState.currentMoves.moves.length - (BoardState.currentMoves.gameIsInProgress() ? 0 : 1);
 
-  // For pie-rule games, detect whether a swap was played and update labels/colors.
-  if (BoardState.isPieSwap()) {
+  // For player-color-swap games, detect whether a swap was played and update labels/colors.
+  if (BoardState.isPlayerColorSwap()) {
     const swapOccurred = BoardState.currentMoves.moves.length >= 2 &&
                          BoardState.currentMoves.moves[1].getText() === 'swap';
     BoardState.colorsSwapped = swapOccurred;
@@ -439,29 +429,30 @@ function placePegByNotation(pegString) {
   }
 }
 
+function executeSwap() {
+  if (BoardState.isPlayerColorSwap()) {
+    BoardState.colorsSwapped = !BoardState.colorsSwapped;
+    setPlayerLabels(BoardState.colorsSwapped);
+    BoardState.turn = 0;
+    showTurn();
+  } else {
+    const firstPeg = BoardState.board.getFirstPeg();
+    if (firstPeg) {
+      const oldImg = $(`peg${firstPeg.getPegName()}-${BoardState.bg}`);
+      if (oldImg) oldImg.remove();
+      BoardState.board.swap();
+      const newPeg = BoardState.board.getFirstPeg();
+      drawPeg(newPeg);
+      BoardState.turn = 1;
+      showTurn();
+    }
+  }
+}
+
 // only used by comment clicking; on other occasions handled more efficiently
 function swapFirstPeg() {
   if (BoardState.board.numPegs() === 1) {
-    if (BoardState.isPieSwap()) {
-      // Pie rule: the first peg stays in place; player colors swap.
-      BoardState.colorsSwapped = !BoardState.colorsSwapped;
-      setPlayerLabels(BoardState.colorsSwapped);
-    } else {
-      // LG style: remove the peg, switch color, re-place at the diagonal position.
-      const peg = BoardState.board.getFirstPeg();
-      clearBoard();
-      BoardState.turn = 1 - BoardState.turn;
-      placePeg(peg.y, peg.x);
-
-      // placePeg erroneously put the peg on the user moves stack; correct that.
-      BoardState.currentMoves.popUserMove();
-      const firstMove = BoardState.currentMoves.hasUserMoves() ? BoardState.currentMoves.userMoves[0] : BoardState.currentMoves.moves[0];
-      const peg1 = firstMove.peg;
-      if (!peg1.swapped) {
-        peg1.swapped = true;
-        [peg1.x, peg1.y] = [peg1.y, peg1.x];
-      }
-    }
+    executeSwap();
 
     // Record the swap move (same for both styles).
     if (BoardState.currentMoves.hasUserMoves() ||
@@ -473,7 +464,7 @@ function swapFirstPeg() {
       colorMove(BoardState.currentMoveNum);
     }
 
-    if (BoardState.isPieSwap()) {
+    if (BoardState.isPlayerColorSwap()) {
       // Re-render the main moves list so colors reflect the new swap state.
       showMovesText();
     }
@@ -484,19 +475,10 @@ function swapFirstPeg() {
 function showMovesUpTo(moves, moveNum) {
   for (let i = 0; i < moveNum; i++) {
     const move = moves[i];
-    if (move.peg) {
-      if (move.peg.swapped &&
-          ((!BoardState.currentMoves.hasUserMoves() && moveNum === 1) ||
-           (BoardState.currentMoves.hasUserMoves() && (BoardState.currentMoveNum + BoardState.currentMoves.userMoves.length === 1)))) {
-        // jump to move 1: show the peg in its original unswapped position
-        placePeg(move.peg.y, move.peg.x);
-      } else {
-        if (i === 0 && move.peg.swapped) {
-          BoardState.turn = 1 - BoardState.turn; // switch color for swapped first peg
-        }
-        if (move.peg.swapped) placePeg(move.peg.x, move.peg.y);
-          else placePegByNotation(move.getText());
-      }
+    if (move.type === Move.Swap || move.getText?.() === 'swap') {
+      executeSwap();
+    } else if (move.peg) {
+      placePegByNotation(move.getText());
     }
   }
 }
@@ -512,25 +494,6 @@ function showAllMoves(moveNum, commentMoves) {
 
   const moves = BoardState.currentMoves.getMoves();
   if (moves.length > 0) {
-    // make sure swapping is figured out
-    const firstMove  = (moveNum > 0)
-      ? moves[0]
-      : (BoardState.currentMoves.hasUserMoves() ? BoardState.currentMoves.userMoves[0] : null);
-    const secondMove = (moveNum > 1)
-      ? moves[1]
-      : (moveNum === 1) ? (BoardState.currentMoves.hasUserMoves() ? BoardState.currentMoves.userMoves[0] : null)
-      : (moveNum === 0) ? ((BoardState.currentMoves.userMoves.length > 1) ? BoardState.currentMoves.userMoves[1] : null)
-      : null;
-
-    if (firstMove && secondMove) {
-      const swapped = (secondMove.getText() === 'swap');
-      const peg1 = firstMove.peg;
-      if (peg1.swapped !== swapped) {
-        peg1.swapped = swapped;
-        [peg1.x, peg1.y] = [peg1.y, peg1.x];
-      }
-    }
-
     showMovesUpTo(moves, moveNum);
     BoardState.currentMoveNum = moveNum;
   }
@@ -540,9 +503,9 @@ function showAllMoves(moveNum, commentMoves) {
     showMovesUpTo(userMoves, userMoves.length);
   }
 
-  // For pie-rule games, re-derive whether a swap is active in the displayed position.
+  // For player-color-swap games, re-derive whether a swap is active in the displayed position.
   // clearBoard() above reset colorsSwapped to false, so we must restore it if needed.
-  if (BoardState.isPieSwap()) {
+  if (BoardState.isPlayerColorSwap()) {
     const allDisplayed = [
       ...BoardState.currentMoves.getMoves().slice(0, BoardState.currentMoveNum),
       ...BoardState.currentMoves.getUserMoves(),
@@ -594,6 +557,13 @@ function highlightMoveInSidebar(peg) {
         $(`userMove_${i + firstUserMoveNum}`)?.classList.add('hovered-peg');
         return;
       }
+      if (userMoves[i].getText?.() === 'swap' && BoardState.board.isSwapped()) {
+        const first = BoardState.board.getFirstPeg();
+        if (first?.getPegName() === pegName) {
+          $(`userMove_${i + firstUserMoveNum}`)?.classList.add('hovered-peg');
+          return;
+        }
+      }
     }
   }
 
@@ -603,6 +573,13 @@ function highlightMoveInSidebar(peg) {
       if (mainMoves[i].peg?.getPegName() === pegName) {
         $(`move_${i + 1}`)?.classList.add('hovered-peg');
         return;
+      }
+      if (i === 1 && mainMoves[1]?.getText() === 'swap' && BoardState.board.isSwapped()) {
+        const first = BoardState.board.getFirstPeg();
+        if (first?.getPegName() === pegName) {
+          $('move_2')?.classList.add('hovered-peg');
+          return;
+        }
       }
     }
   }

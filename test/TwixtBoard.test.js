@@ -238,7 +238,7 @@ describe('TwixtBoard (public/javascripts/twixtboard.js)', () => {
     test('play(SwapMove) swaps coordinates and flips first peg to Black (LG style)', () => {
       const board = new TwixtBoard(5);
       expect(board.swapStyle).toBe(TwixtBoard.SWAP_LG);
-      expect(board.isPieSwap).toBe(false);
+      expect(board.isPlayerColorSwap).toBe(false);
       expect(board.canSwap()).toBe(false);
 
       board.play(new Move(2, 4, 1)); // White peg at (2, 4)
@@ -257,10 +257,10 @@ describe('TwixtBoard (public/javascripts/twixtboard.js)', () => {
       expect(board.colorOfPlayer(2)).toBe(TwixtBoard.BLACK);
     });
 
-    test('play(SwapMove) keeps peg position and swaps player colors (Pie rule)', () => {
-      const board = new TwixtBoard(5, TwixtBoard.PENCIL_AND_PAPER, TwixtBoard.SWAP_PIE);
-      expect(board.swapStyle).toBe(TwixtBoard.SWAP_PIE);
-      expect(board.isPieSwap).toBe(true);
+    test('play(SwapMove) keeps peg position and swaps player colors (PlayerColorSwap rule)', () => {
+      const board = new TwixtBoard(5, TwixtBoard.PENCIL_AND_PAPER, TwixtBoard.SWAP_PLAYER_COLORS);
+      expect(board.swapStyle).toBe(TwixtBoard.SWAP_PLAYER_COLORS);
+      expect(board.isPlayerColorSwap).toBe(true);
 
       board.play(new Move(2, 4, 1)); // White peg at (2, 4)
       expect(board.isPegAt(2, 4)).toBe(true);
@@ -286,8 +286,8 @@ describe('TwixtBoard (public/javascripts/twixtboard.js)', () => {
 
     test('accepts string "P" for swapStyle in constructor', () => {
       const board = new TwixtBoard(24, TwixtBoard.PENCIL_AND_PAPER, 'P');
-      expect(board.swapStyle).toBe(TwixtBoard.SWAP_PIE);
-      expect(board.isPieSwap).toBe(true);
+      expect(board.swapStyle).toBe(TwixtBoard.SWAP_PLAYER_COLORS);
+      expect(board.isPlayerColorSwap).toBe(true);
     });
 
     test('board.swap() executes swap directly on board with single peg', () => {

@@ -4,7 +4,6 @@ class Peg {
     this.x = x;
     this.y = y;
     this.links = [];
-    this.swapped = false;
   }
 
   getXnotation(x) {
@@ -20,9 +19,7 @@ class Peg {
   }
 
   getNotation() {
-    return this.swapped
-      ? this.getXYnotation(this.y, this.x)
-      : this.getXYnotation(this.x, this.y);
+    return this.getXYnotation(this.x, this.y);
   }
 
   getPegName() {

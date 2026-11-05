@@ -17,8 +17,8 @@ class TwixtBoard {
   static LINK_REMOVAL     = 0;
   static PENCIL_AND_PAPER = 1;
 
-  static SWAP_LG  = 0;
-  static SWAP_PIE = 1;
+  static SWAP_LG            = 0;
+  static SWAP_PLAYER_COLORS = 1;
 
   static WHITE = 1;
   static BLACK = 0;
@@ -27,8 +27,8 @@ class TwixtBoard {
     this.size = size;
     this._size = size;
     this.linkXingPolicy = linkXingPolicy ?? TwixtBoard.PENCIL_AND_PAPER;
-    this.swapStyle = (swapStyle === 'P' || swapStyle === TwixtBoard.SWAP_PIE)
-      ? TwixtBoard.SWAP_PIE
+    this.swapStyle = (swapStyle === 'P' || swapStyle === TwixtBoard.SWAP_PLAYER_COLORS)
+      ? TwixtBoard.SWAP_PLAYER_COLORS
       : TwixtBoard.SWAP_LG;
     this._swapped = false;
     this._draw = false;
@@ -42,8 +42,8 @@ class TwixtBoard {
     this._allPegs = [];
   }
 
-  get isPieSwap() {
-    return this.swapStyle === TwixtBoard.SWAP_PIE;
+  get isPlayerColorSwap() {
+    return this.swapStyle === TwixtBoard.SWAP_PLAYER_COLORS;
   }
 
   isSwapped() {
@@ -208,7 +208,7 @@ class TwixtBoard {
       this._board[firstPeg.y][firstPeg.x] = swappedPeg;
       this._allPegs = [swappedPeg];
     }
-    // SWAP_PIE: the first peg stays at its location as White.
+    // SWAP_PLAYER_COLORS: the first peg stays at its location as White.
     // Player color mapping flips (handled via colorOfPlayer / playerOfColor).
   }
 
@@ -233,14 +233,14 @@ class TwixtBoard {
   }
 
   colorOfPlayer(num) {
-    if (this.swapStyle === TwixtBoard.SWAP_PIE && this._swapped) {
+    if (this.swapStyle === TwixtBoard.SWAP_PLAYER_COLORS && this._swapped) {
       return num === 1 ? TwixtBoard.BLACK : TwixtBoard.WHITE;
     }
     return num === 1 ? TwixtBoard.WHITE : TwixtBoard.BLACK;
   }
 
   playerOfColor(color) {
-    if (this.swapStyle === TwixtBoard.SWAP_PIE && this._swapped) {
+    if (this.swapStyle === TwixtBoard.SWAP_PLAYER_COLORS && this._swapped) {
       return color === TwixtBoard.BLACK ? 1 : 2;
     }
     return color === TwixtBoard.WHITE ? 1 : 2;
