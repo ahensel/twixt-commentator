@@ -252,179 +252,76 @@ function jumpFromComment(firstMoveNum, commentMoves) {
 }
 
 function getCommentPegErrors(moves) {
-  let errors = '';
-  let movesSoFar = 0;
-  moves.forEach(move => {
-    errors += getNextCommentPegError(move, movesSoFar);
-    movesSoFar++;
-  });
-  return errors;
-}
-
-function getXFromLetter(xChar) {
-  return (BoardState.board.size < 27)? xChar.toUpperCase().charCodeAt(0) - 64 :
-    ((xChar >= 'a')? xChar.charCodeAt(0) - 96 : xChar.charCodeAt(0) - 38);
-}
-
-function parseLinkNotation(notation, prefix) {
-  let letter, number, isCaseA;
-  let matchA = notation.match(/^([a-zA-Z])'(\d+)$/);
-  if (matchA) {
-    letter = matchA[1];
-    number = matchA[2];
-    isCaseA = true;
-  } else {
-    let matchB = notation.match(/^([a-zA-Z])(\d+)'$/);
-    if (matchB) {
-      letter = matchB[1];
-      number = matchB[2];
-      isCaseA = false;
-    } else {
-      return null;
-    }
-  }
-
-  const num = parseInt(number, 10);
-  const xVal = getXFromLetter(letter);
-  const yVal = num;
-
-  let x1, y1, x2, y2;
-  if (isCaseA) {
-    if (prefix === '-') {
-      const link1 = BoardState.getPeg(xVal, yVal - 1)?.getLink(1, 2);
-      if (link1) return link1;
-      const link2 = BoardState.getPeg(xVal, yVal + 1)?.getLink(1, -2);
-      if (link2) return link2;
-      return null;
-    } else if (prefix === '\\') {
-      x1 = xVal; y1 = yVal - 1;
-      x2 = xVal + 1; y2 = yVal + 1;
-    } else {
-      x1 = xVal; y1 = yVal + 1;
-      x2 = xVal + 1; y2 = yVal - 1;
-    }
-  } else {
-    if (prefix === '-') {
-      const link1 = BoardState.getPeg(xVal - 1, yVal)?.getLink(2, 1);
-      if (link1) return link1;
-      const link2 = BoardState.getPeg(xVal - 1, yVal + 1)?.getLink(2, -1);
-      if (link2) return link2;
-      return null;
-    } else if (prefix === '\\') {
-      x1 = xVal - 1; y1 = yVal;
-      x2 = xVal + 1; y2 = yVal + 1;
-    } else {
-      x1 = xVal - 1; y1 = yVal + 1;
-      x2 = xVal + 1; y2 = yVal;
-    }
-  }
-  return { x1, y1, x2, y2 };
-}
-
-function getPegCoordinates(pegString) {
-  let workingString = pegString;
-  while (true) {
-    let match = workingString.match(/^([-/\\])([a-zA-Z]'[1-9]\d*|[a-zA-Z][1-9]\d*')/);
-    if (!match) {
-      match = workingString.match(/^(\\\\)([a-zA-Z]'[1-9]\d*|[a-zA-Z][1-9]\d*')/);
-    }
-    if (match) {
-      workingString = workingString.substring(match[0].length);
-    } else {
-      break;
-    }
-  }
-
-  const xChar = workingString.substr(0, 1);
-  const x = getXFromLetter(xChar);
-  const y = parseInt(workingString.substr(1), 10);
-
-  return [x, y];
+  return TwixtNotation.validateCommentMoves(moves, BoardState.board, BoardState.turn);
 }
 
 function getNextCommentPegError(pegString, movesSoFar) {
-  if (pegString === 'swap') {
-    const pegsSoFar = BoardState.board.numPegs() + movesSoFar;
-    if (pegsSoFar === 0) return '- Cannot swap as the first move of the game.';
-    if (pegsSoFar >  1) return '- Cannot swap. There is more than one peg on the board.';
-    return '';
-  }
+  return TwixtNotation.validateMove(pegString, BoardState.board, BoardState.turn, movesSoFar);
+}
 
-  const [x, y] = getPegCoordinates(pegString);
+function getXFromLetter(xChar) {
+  return TwixtNotation.letterToX(xChar, BoardState.board.size);
+}
 
-  if (BoardState.getPeg(x, y) != null) {
-    return `- Peg ${pegString} cannot be placed because there is already a peg on that spot.\n`;
+function parseLinkNotation(notation, prefix) {
+  if (prefix === '-') {
+    return TwixtNotation.findLink(notation, BoardState.board);
   }
-  if (!BoardState.board.isValidSpot(x, y, (BoardState.turn + movesSoFar) % 2)) {
-    return `- Illegal spot for peg: ${pegString}\n`;
-  }
-  return '';
+  return TwixtNotation.parseLinkEndpoints(notation, prefix, BoardState.board.size);
+}
+
+function getPegCoordinates(pegString) {
+  return TwixtNotation.getPegCoordinates(pegString, BoardState.board.size);
 }
 
 function placePegByNotation(pegString) {
-  if (pegString.toLowerCase() === 'swap') {
+  const parsed = TwixtNotation.parseMove(pegString, BoardState.board.size);
+  if (parsed.isSwap) {
     swapFirstPeg();
-  } else {
-    let workingString = pegString;
-    const actions = [];
-    while (true) {
-      let match = workingString.match(/^([-/\\])([a-zA-Z]'[1-9]\d*|[a-zA-Z][1-9]\d*')/);
-      if (!match) {
-        match = workingString.match(/^(\\\\)([a-zA-Z]'[1-9]\d*|[a-zA-Z][1-9]\d*')/);
-      }
-      if (match) {
-        actions.push({
-          prefix: match[1] === '\\\\' ? '\\' : match[1],
-          notation: match[2]
-        });
-        workingString = workingString.substring(match[0].length);
-      } else {
-        break;
-      }
-    }
+    return;
+  }
 
-    const [x, y] = getPegCoordinates(workingString);
-    if (BoardState.getPeg(x, y) == null && BoardState.isLegalSpot(x, y)) {
-      // 1. Apply removals
-      actions.forEach(action => {
-        if (action.prefix === '-') {
-          const link = parseLinkNotation(action.notation, '-');
-          if (link) {
-            link.remove();
-            BoardState.pendingEdit.removeLink(link);
-            eraseLink(link);
-          }
+  const { x, y } = parsed.peg;
+  if (BoardState.getPeg(x, y) == null && BoardState.isLegalSpot(x, y)) {
+    // 1. Apply removals
+    parsed.actions.forEach(action => {
+      if (action.prefix === '-') {
+        const link = TwixtNotation.findLink(action.notation, BoardState.board);
+        if (link) {
+          link.remove();
+          BoardState.pendingEdit.removeLink(link);
+          eraseLink(link);
         }
-      });
+      }
+    });
 
-      // 2. Apply additions
-      actions.forEach(action => {
-        if (action.prefix === '/' || action.prefix === '\\') {
-          const endpoints = parseLinkNotation(action.notation, action.prefix);
-          if (endpoints) {
-            BoardState.pendingEdit.link(endpoints.x1, endpoints.y1, endpoints.x2, endpoints.y2, false);
-            const peg1 = BoardState.getPeg(endpoints.x1, endpoints.y1);
-            if (peg1) {
-              const link = peg1.getLink(endpoints.x2 - endpoints.x1, endpoints.y2 - endpoints.y1);
-              if (link) {
-                drawLink(link);
-                eraseLinkableMarkersAround(peg1);
-                const peg2 = BoardState.getPeg(endpoints.x2, endpoints.y2);
-                if (peg2) eraseLinkableMarkersAround(peg2);
-              }
+    // 2. Apply additions
+    parsed.actions.forEach(action => {
+      if (action.prefix === '/' || action.prefix === '\\') {
+        const endpoints = TwixtNotation.parseLinkEndpoints(action.notation, action.prefix, BoardState.board.size);
+        if (endpoints) {
+          BoardState.pendingEdit.link(endpoints.x1, endpoints.y1, endpoints.x2, endpoints.y2, false);
+          const peg1 = BoardState.getPeg(endpoints.x1, endpoints.y1);
+          if (peg1) {
+            const link = peg1.getLink(endpoints.x2 - endpoints.x1, endpoints.y2 - endpoints.y1);
+            if (link) {
+              drawLink(link);
+              eraseLinkableMarkersAround(peg1);
+              const peg2 = BoardState.getPeg(endpoints.x2, endpoints.y2);
+              if (peg2) eraseLinkableMarkersAround(peg2);
             }
           }
         }
-      });
-
-      // 3. Place the peg
-      const peg = placePeg(x, y);
-
-      // 4. Force completion of move if we had markers holding it
-      if (BoardState.holdingForMarkers) {
-        nextTurn();
-        BoardState.holdingForMarkers = false;
       }
+    });
+
+    // 3. Place the peg
+    placePeg(x, y);
+
+    // 4. Force completion of move if we had markers holding it
+    if (BoardState.holdingForMarkers) {
+      nextTurn();
+      BoardState.holdingForMarkers = false;
     }
   }
 }
