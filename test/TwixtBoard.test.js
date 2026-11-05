@@ -235,17 +235,72 @@ describe('TwixtBoard (public/javascripts/twixtboard.js)', () => {
       expect(peg2.hasLink(-1, -2)).toBe(true);
     });
 
-    test('play(SwapMove) swaps coordinates and flips first peg to Black', () => {
+    test('play(SwapMove) swaps coordinates and flips first peg to Black (LG style)', () => {
       const board = new TwixtBoard(5);
+      expect(board.swapStyle).toBe(TwixtBoard.SWAP_LG);
+      expect(board.isPieSwap).toBe(false);
+      expect(board.canSwap()).toBe(false);
+
       board.play(new Move(2, 4, 1)); // White peg at (2, 4)
       expect(board.isPegAt(2, 4)).toBe(true);
       expect(board.numPegs()).toBe(1);
+      expect(board.canSwap()).toBe(true);
 
       board.play(new SwapMove(2)); // Black plays swap
+      expect(board.isSwapped()).toBe(true);
+      expect(board.canSwap()).toBe(false);
       expect(board.isPegAt(2, 4)).toBe(false);
       expect(board.isPegAt(4, 2)).toBe(true);
       expect(board.getColor(4, 2)).toBe(TwixtBoard.BLACK);
       expect(board.numPegs()).toBe(1);
+      expect(board.colorOfPlayer(1)).toBe(TwixtBoard.WHITE);
+      expect(board.colorOfPlayer(2)).toBe(TwixtBoard.BLACK);
+    });
+
+    test('play(SwapMove) keeps peg position and swaps player colors (Pie rule)', () => {
+      const board = new TwixtBoard(5, TwixtBoard.PENCIL_AND_PAPER, TwixtBoard.SWAP_PIE);
+      expect(board.swapStyle).toBe(TwixtBoard.SWAP_PIE);
+      expect(board.isPieSwap).toBe(true);
+
+      board.play(new Move(2, 4, 1)); // White peg at (2, 4)
+      expect(board.isPegAt(2, 4)).toBe(true);
+      expect(board.getColor(2, 4)).toBe(TwixtBoard.WHITE);
+      expect(board.colorOfPlayer(1)).toBe(TwixtBoard.WHITE);
+      expect(board.colorOfPlayer(2)).toBe(TwixtBoard.BLACK);
+
+      board.play(new SwapMove(2)); // Player 2 swaps
+      expect(board.isSwapped()).toBe(true);
+      // Peg remains at (2, 4) as White
+      expect(board.isPegAt(2, 4)).toBe(true);
+      expect(board.getColor(2, 4)).toBe(TwixtBoard.WHITE);
+      // But player colors are swapped: Player 1 is now Black, Player 2 is now White
+      expect(board.colorOfPlayer(1)).toBe(TwixtBoard.BLACK);
+      expect(board.colorOfPlayer(2)).toBe(TwixtBoard.WHITE);
+      expect(board.playerOfColor(TwixtBoard.BLACK)).toBe(1);
+      expect(board.playerOfColor(TwixtBoard.WHITE)).toBe(2);
+
+      // Player 1 plays move 3 as Black
+      board.play(new Move(3, 3, 1));
+      expect(board.getColor(3, 3)).toBe(TwixtBoard.BLACK);
+    });
+
+    test('accepts string "P" for swapStyle in constructor', () => {
+      const board = new TwixtBoard(24, TwixtBoard.PENCIL_AND_PAPER, 'P');
+      expect(board.swapStyle).toBe(TwixtBoard.SWAP_PIE);
+      expect(board.isPieSwap).toBe(true);
+    });
+
+    test('board.swap() executes swap directly on board with single peg', () => {
+      const board = new TwixtBoard(5);
+      board.setPeg(new Peg(TwixtBoard.WHITE, 2, 4));
+      expect(board.canSwap()).toBe(true);
+      expect(board.swap()).toBe(true);
+      expect(board.isSwapped()).toBe(true);
+      expect(board.isPegAt(4, 2)).toBe(true);
+      expect(board.getColor(4, 2)).toBe(TwixtBoard.BLACK);
+      // Cannot swap again
+      expect(board.canSwap()).toBe(false);
+      expect(board.swap()).toBe(false);
     });
 
     test('resignation, forfeit, and draw', () => {

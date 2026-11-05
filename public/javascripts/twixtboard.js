@@ -17,13 +17,20 @@ class TwixtBoard {
   static LINK_REMOVAL     = 0;
   static PENCIL_AND_PAPER = 1;
 
+  static SWAP_LG  = 0;
+  static SWAP_PIE = 1;
+
   static WHITE = 1;
   static BLACK = 0;
 
-  constructor(size, linkXingPolicy) {
+  constructor(size, linkXingPolicy, swapStyle) {
     this.size = size;
     this._size = size;
     this.linkXingPolicy = linkXingPolicy ?? TwixtBoard.PENCIL_AND_PAPER;
+    this.swapStyle = (swapStyle === 'P' || swapStyle === TwixtBoard.SWAP_PIE)
+      ? TwixtBoard.SWAP_PIE
+      : TwixtBoard.SWAP_LG;
+    this._swapped = false;
     this._draw = false;
     this._resignation = null;
     this._forfeit = null;
@@ -33,6 +40,18 @@ class TwixtBoard {
     // 1-based: board[x][y] is valid for x, y in 1..size
     this._board = Array.from({ length: size + 1 }, () => new Array(size + 1).fill(null));
     this._allPegs = [];
+  }
+
+  get isPieSwap() {
+    return this.swapStyle === TwixtBoard.SWAP_PIE;
+  }
+
+  isSwapped() {
+    return this._swapped;
+  }
+
+  canSwap() {
+    return this.numPegs() === 1 && !this._swapped;
   }
 
   forEachKnightMove(callback) {
@@ -172,17 +191,25 @@ class TwixtBoard {
     }
   }
 
+  swap() {
+    if (!this.canSwap()) return false;
+    this._swap();
+    return true;
+  }
+
   _swap() {
-    // Swap is only legal on move 2, so there is always exactly one peg on the board here.
-    // Move it from (x, y) to (y, x) and flip its color per the LG swap rule.
-    if (this._moves.length === 1) {
-      const firstMove = this._moves[0];
-      const [x, y] = [firstMove.x, firstMove.y];
-      this._board[x][y] = null;
-      const swappedPeg = new _Peg(TwixtBoard.BLACK, y, x);
-      this._board[y][x] = swappedPeg;
+    // Swap is only legal on move 2, when there is exactly one peg on the board.
+    if (this.numPegs() !== 1) return;
+    this._swapped = true;
+    if (this.swapStyle === TwixtBoard.SWAP_LG) {
+      const firstPeg = this.getFirstPeg();
+      this._board[firstPeg.x][firstPeg.y] = null;
+      const swappedPeg = new _Peg(TwixtBoard.BLACK, firstPeg.y, firstPeg.x);
+      this._board[firstPeg.y][firstPeg.x] = swappedPeg;
       this._allPegs = [swappedPeg];
     }
+    // SWAP_PIE: the first peg stays at its location as White.
+    // Player color mapping flips (handled via colorOfPlayer / playerOfColor).
   }
 
   resign(color) { this._resignation = color; }
@@ -206,7 +233,17 @@ class TwixtBoard {
   }
 
   colorOfPlayer(num) {
+    if (this.swapStyle === TwixtBoard.SWAP_PIE && this._swapped) {
+      return num === 1 ? TwixtBoard.BLACK : TwixtBoard.WHITE;
+    }
     return num === 1 ? TwixtBoard.WHITE : TwixtBoard.BLACK;
+  }
+
+  playerOfColor(color) {
+    if (this.swapStyle === TwixtBoard.SWAP_PIE && this._swapped) {
+      return color === TwixtBoard.BLACK ? 1 : 2;
+    }
+    return color === TwixtBoard.WHITE ? 1 : 2;
   }
 
   hasWonPlayer(num) { return this.hasWonColor(this.colorOfPlayer(num)); }

@@ -14,10 +14,6 @@ const wswcut_img = 'data:image/webp;base64,UklGRmQAAABXRUJQVlA4TFcAAAAvGoADEC8gE
 
 const linkablemarker_img = 'data:image/webp;base64,UklGRioAAABXRUJQVlA4TB4AAAAvDAADEA8Q8z8z8x84CLJtNn/JI0ziDhH9T25k5ng=';
 
-// Swap style: 'P' = pie rule (first peg stays, players swap colors)
-// null/undefined = default (first peg moves and changes color, players fixed)
-let SWAP_STYLE = null;
-
 // Lightweight getElementById shorthand — NOT Prototype's $().
 // Use document.getElementById directly if you prefer explicitness.
 const $ = id => document.getElementById(id);
@@ -67,11 +63,14 @@ const BoardState = {
   holdingForMarkers: false,
   numLinkableMarkers: 0,
 
-  // True when SWAP_STYLE === 'P' and a pie-rule swap has been played.
+  // True when pie-rule swap is configured and has been played.
   // Causes player label icons and move-list colors to flip from move 3 onward.
   colorsSwapped: false,
 
   // Helper methods
+  isPieSwap: () => {
+    return BoardState.board?.isPieSwap;
+  },
   isLegalSpot: (x, y, turn) => {
     return BoardState.board.isValidSpot(x, y, turn ?? BoardState.turn);
   },
@@ -100,8 +99,8 @@ window.addEventListener('load', () => {
   if (!$('board')) return;
   const size = parseInt($('boardSize').value, 10);
   const linkPolicy = $('linkPolicy')?.value === 'R' ? TwixtBoard.LINK_REMOVAL : TwixtBoard.PENCIL_AND_PAPER;
-  SWAP_STYLE = $('swapStyle')?.value || null;
-  BoardState.board = new TwixtBoard(size, linkPolicy);
+  const swapStyle = $('swapStyle')?.value === 'P' ? TwixtBoard.SWAP_PIE : TwixtBoard.SWAP_LG;
+  BoardState.board = new TwixtBoard(size, linkPolicy, swapStyle);
   BoardState.pendingEdit = new PendingEdit(BoardState.board);
   setBoardSize(size);
   showMovesOnLoad();
@@ -137,7 +136,7 @@ function showMovesOnLoad() {
   const moves = JSON.parse(movesJson);
 
   if (moves.length > 1 && moves[1].type === Move.Swap) {
-    if (SWAP_STYLE === 'P') {
+    if (BoardState.isPieSwap()) {
       // Pie rule: peg stays, player colors swap.
       // colorsSwapped will be set after swapFirstMove() runs below.
     } else {
@@ -169,7 +168,7 @@ function showMovesOnLoad() {
   BoardState.currentMoveNum = BoardState.currentMoves.moves.length - (BoardState.currentMoves.gameIsInProgress() ? 0 : 1);
 
   // For pie-rule games, detect whether a swap was played and update labels/colors.
-  if (SWAP_STYLE === 'P') {
+  if (BoardState.isPieSwap()) {
     const swapOccurred = BoardState.currentMoves.moves.length >= 2 &&
                          BoardState.currentMoves.moves[1].getText() === 'swap';
     BoardState.colorsSwapped = swapOccurred;
@@ -443,7 +442,7 @@ function placePegByNotation(pegString) {
 // only used by comment clicking; on other occasions handled more efficiently
 function swapFirstPeg() {
   if (BoardState.board.numPegs() === 1) {
-    if (SWAP_STYLE === 'P') {
+    if (BoardState.isPieSwap()) {
       // Pie rule: the first peg stays in place; player colors swap.
       BoardState.colorsSwapped = !BoardState.colorsSwapped;
       setPlayerLabels(BoardState.colorsSwapped);
@@ -474,7 +473,7 @@ function swapFirstPeg() {
       colorMove(BoardState.currentMoveNum);
     }
 
-    if (SWAP_STYLE === 'P') {
+    if (BoardState.isPieSwap()) {
       // Re-render the main moves list so colors reflect the new swap state.
       showMovesText();
     }
@@ -543,7 +542,7 @@ function showAllMoves(moveNum, commentMoves) {
 
   // For pie-rule games, re-derive whether a swap is active in the displayed position.
   // clearBoard() above reset colorsSwapped to false, so we must restore it if needed.
-  if (SWAP_STYLE === 'P') {
+  if (BoardState.isPieSwap()) {
     const allDisplayed = [
       ...BoardState.currentMoves.getMoves().slice(0, BoardState.currentMoveNum),
       ...BoardState.currentMoves.getUserMoves(),
@@ -666,8 +665,8 @@ function updateSwapButton() {
 
 function clearBoard() {
   BoardState.turn = 1;
-  const { size, linkXingPolicy } = BoardState.board;
-  BoardState.board = new TwixtBoard(size, linkXingPolicy);
+  const { size, linkXingPolicy, swapStyle } = BoardState.board;
+  BoardState.board = new TwixtBoard(size, linkXingPolicy, swapStyle);
   BoardState.pendingEdit = new PendingEdit(BoardState.board);
   BoardState.cutLink = null;
   BoardState.holdingForMarkers = false;
