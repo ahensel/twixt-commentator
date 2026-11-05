@@ -45,52 +45,142 @@ const LINK = {
   }
 };
 
-// ─── Centralized mutable board state ──────────────────────────────────────────
+// ─── Game & Session State ───────────────────────────────────────────────────
 
-const BoardState = {
+const GameState = {
   turn: 1,  // 1 = White's turn, 0 = Black's turn
-  bg: 1,    // board glass, for double buffering, to eliminate flicker. 1 or 2.
-
-  pendingEdit: null,  // PendingEdit object, created on load
-  board: null,        // TwixtBoard object, created on load
-  currentMoves: new TwixtMoves(),  // tracks both main line and user variation
-  replayMode: 'none',  // 'setup' while loading the game's moves; 'jump' while jumping to a move
-  currentMoveNum: null,   // current move in the main line, not the variation
+  board: null,  // TwixtBoard object
+  currentMoves: new TwixtMoves(),  // tracks mainline and user variation
+  currentMoveNum: null,   // current move in mainline
+  replayMode: 'none',  // 'none' | 'setup' | 'jump'
+  colorsSwapped: false,  // true when player-color swap occurred
   declaredWinner: null,
+  winnerBannerTimer: null,
 
-  // Link removal state tracking
+  init(size, linkPolicy, swapStyle) {
+    this.turn = 1;
+    this.colorsSwapped = false;
+    this.board = new TwixtBoard(size, linkPolicy, swapStyle);
+  },
+
+  reset() {
+    const size = this.board?.size ?? 24;
+    const linkPolicy = this.board?.linkXingPolicy ?? TwixtBoard.PENCIL_AND_PAPER;
+    const swapStyle = this.board?.swapStyle ?? TwixtBoard.SWAP_LG;
+    this.init(size, linkPolicy, swapStyle);
+  },
+
+  isPlayerColorSwap() {
+    return this.board?.isPlayerColorSwap;
+  },
+
+  isLegalSpot(x, y, turn = this.turn) {
+    return this.board?.isValidSpot(x, y, turn);
+  },
+
+  getPeg(x, y) {
+    return this.board?.getPeg(x, y);
+  },
+
+  hasLinkRemoval() {
+    return this.board?.linkXingPolicy === TwixtBoard.LINK_REMOVAL;
+  },
+
+  flipTurn() {
+    this.turn = 1 - this.turn;
+  }
+};
+
+// ─── Interaction & Tool State ───────────────────────────────────────────────
+
+const BoardInteraction = {
+  pendingEdit: null,
   cutLink: null,
   holdingForMarkers: false,
   numLinkableMarkers: 0,
 
-  // True when pie-rule swap is configured and has been played.
-  // Causes player label icons and move-list colors to flip from move 3 onward.
-  colorsSwapped: false,
+  reset() {
+    this.cutLink = null;
+    this.holdingForMarkers = false;
+    this.numLinkableMarkers = 0;
+  }
+};
 
-  // Helper methods
-  isPlayerColorSwap: () => {
-    return BoardState.board?.isPlayerColorSwap;
+// ─── Board Rendering & Double Buffering ─────────────────────────────────────
+
+const BoardRenderer = {
+  bg: 1,  // board glass index for double buffering (1 or 2)
+
+  boardglass() {
+    return $(`boardglass${this.bg}`);
   },
-  isLegalSpot: (x, y, turn) => {
-    return BoardState.board.isValidSpot(x, y, turn ?? BoardState.turn);
+
+  revealNewBoardglass() {
+    $(`boardglass${this.bg}`).classList.remove('hidden');
+    $(`boardglass${3 - this.bg}`).classList.add('hidden');
   },
-  getPeg: (x, y) => {
-    return BoardState.board.getPeg(x, y);
+
+  switchDrawingBoardglass() {
+    this.bg = 3 - this.bg;  // 1 → 2, 2 → 1
   },
-  hasLinkRemoval: () => {
-    return BoardState.board.linkXingPolicy === TwixtBoard.LINK_REMOVAL;
-  },
-  boardglass: () => {
-    return $(`boardglass${BoardState.bg}`);
-  },
-  revealNewBoardglass: () => {
-    // double buffering to eliminate flicker on slow machines
-    $(`boardglass${BoardState.bg}`).classList.remove('hidden');
-    $(`boardglass${3 - BoardState.bg}`).classList.add('hidden');
-  },
-  switchDrawingBoardglass: () => {
-    BoardState.bg = 3 - BoardState.bg;  // 1 → 2, 2 → 1 (double buffering)
-  },
+
+  clear() {
+    this.boardglass().replaceChildren();
+    $('newwhitepeg')?.classList.add('hidden');
+    $('newblackpeg')?.classList.add('hidden');
+  }
+};
+
+// ─── BoardState Facade (Backwards Compatibility) ───────────────────────────
+
+const BoardState = {
+  get board() { return GameState.board; },
+  set board(b) { GameState.board = b; },
+
+  get turn() { return GameState.turn; },
+  set turn(t) { GameState.turn = t; },
+
+  get currentMoves() { return GameState.currentMoves; },
+  set currentMoves(m) { GameState.currentMoves = m; },
+
+  get currentMoveNum() { return GameState.currentMoveNum; },
+  set currentMoveNum(n) { GameState.currentMoveNum = n; },
+
+  get replayMode() { return GameState.replayMode; },
+  set replayMode(m) { GameState.replayMode = m; },
+
+  get colorsSwapped() { return GameState.colorsSwapped; },
+  set colorsSwapped(s) { GameState.colorsSwapped = s; },
+
+  get declaredWinner() { return GameState.declaredWinner; },
+  set declaredWinner(w) { GameState.declaredWinner = w; },
+
+  get winnerBannerTimer() { return GameState.winnerBannerTimer; },
+  set winnerBannerTimer(t) { GameState.winnerBannerTimer = t; },
+
+  get pendingEdit() { return BoardInteraction.pendingEdit; },
+  set pendingEdit(p) { BoardInteraction.pendingEdit = p; },
+
+  get cutLink() { return BoardInteraction.cutLink; },
+  set cutLink(c) { BoardInteraction.cutLink = c; },
+
+  get holdingForMarkers() { return BoardInteraction.holdingForMarkers; },
+  set holdingForMarkers(h) { BoardInteraction.holdingForMarkers = h; },
+
+  get numLinkableMarkers() { return BoardInteraction.numLinkableMarkers; },
+  set numLinkableMarkers(n) { BoardInteraction.numLinkableMarkers = n; },
+
+  get bg() { return BoardRenderer.bg; },
+  set bg(val) { BoardRenderer.bg = val; },
+
+  isPlayerColorSwap: () => GameState.isPlayerColorSwap(),
+  isLegalSpot: (x, y, turn) => GameState.isLegalSpot(x, y, turn),
+  getPeg: (x, y) => GameState.getPeg(x, y),
+  hasLinkRemoval: () => GameState.hasLinkRemoval(),
+
+  boardglass: () => BoardRenderer.boardglass(),
+  revealNewBoardglass: () => BoardRenderer.revealNewBoardglass(),
+  switchDrawingBoardglass: () => BoardRenderer.switchDrawingBoardglass(),
 };
 
 document.addEventListener('keydown',  e => keyIntercept(e));
@@ -100,13 +190,13 @@ window.addEventListener('load', () => {
   const size = parseInt($('boardSize').value, 10);
   const linkPolicy = $('linkPolicy')?.value === 'R' ? TwixtBoard.LINK_REMOVAL : TwixtBoard.PENCIL_AND_PAPER;
   const swapStyle = $('swapStyle')?.value === 'P' ? TwixtBoard.SWAP_PLAYER_COLORS : TwixtBoard.SWAP_LG;
-  BoardState.board = new TwixtBoard(size, linkPolicy, swapStyle);
-  BoardState.pendingEdit = new PendingEdit(BoardState.board);
+  GameState.init(size, linkPolicy, swapStyle);
+  BoardInteraction.pendingEdit = new PendingEdit(GameState.board);
   setBoardSize(size);
   showMovesOnLoad();
   showTurn();
 
-  setPlayerLabels(BoardState.colorsSwapped);
+  setPlayerLabels(GameState.colorsSwapped);
 
   $('topglass').addEventListener('mousedown', clickOnBoard);
   $('topglass').addEventListener('mousemove', mouseOverBoard);
@@ -538,19 +628,10 @@ function updateSwapButton() {
 }
 
 function clearBoard() {
-  BoardState.turn = 1;
-  const { size, linkXingPolicy, swapStyle } = BoardState.board;
-  BoardState.board = new TwixtBoard(size, linkXingPolicy, swapStyle);
-  BoardState.pendingEdit = new PendingEdit(BoardState.board);
-  BoardState.cutLink = null;
-  BoardState.holdingForMarkers = false;
-  BoardState.numLinkableMarkers = 0;
-  BoardState.colorsSwapped = false;
-
-  BoardState.boardglass().replaceChildren();
-
-  $('newwhitepeg').classList.add('hidden');
-  $('newblackpeg').classList.add('hidden');
+  GameState.reset();
+  BoardInteraction.pendingEdit = new PendingEdit(GameState.board);
+  BoardInteraction.reset();
+  BoardRenderer.clear();
   setPlayerLabels(false);
   updateSwapButton();
 }
@@ -596,14 +677,14 @@ function mouseOverBoard(evt) {
 }
 
 function declareWinnerIfWinner() {
-  const winner = BoardState.board.calculateWinner();
+  const winner = GameState.board.calculateWinner();
 
-  if (winner !== BoardState.declaredWinner) {
+  if (winner !== GameState.declaredWinner) {
     if (winner !== null) {
       showWinnerBanner(["It's a draw!", "White wins!", "Black wins!"][winner]);
     }
   }
-  BoardState.declaredWinner = winner;
+  GameState.declaredWinner = winner;
 }
 
 function showWinnerBanner(text) {
@@ -611,13 +692,13 @@ function showWinnerBanner(text) {
   if (!banner) return;
   banner.firstElementChild.textContent = text;
   banner.classList.add('visible');
-  BoardState.winnerBannerTimer = setTimeout(hideWinnerBanner, 2000);
+  GameState.winnerBannerTimer = setTimeout(hideWinnerBanner, 2000);
 }
 
 function hideWinnerBanner() {
   const banner = $('winner-banner');
   if (!banner) return;
-  clearTimeout(BoardState.winnerBannerTimer);
+  clearTimeout(GameState.winnerBannerTimer);
   banner.classList.remove('visible');
 }
 
@@ -711,7 +792,7 @@ function showTurn() {
 }
 
 function flipTurn() {
-  BoardState.turn = 1 - BoardState.turn;
+  GameState.flipTurn();
   showTurn();
 }
 
@@ -850,10 +931,8 @@ function eraseLinkableMarkersAround(peg) {
 }
 
 function eraseAllLinkableMarkers() {
-  document.querySelectorAll('img[id^="marker_"]').forEach(m => BoardState.boardglass().removeChild(m));
-  BoardState.numLinkableMarkers = 0;
-  BoardState.holdingForMarkers = false;
-  BoardState.cutLink = null;
+  document.querySelectorAll('img[id^="marker_"]').forEach(m => BoardRenderer.boardglass().removeChild(m));
+  BoardInteraction.reset();
 }
 
 function eraseCrosshair() {
