@@ -358,12 +358,12 @@ if (document.getElementById('download-overlay') || document.getElementById('help
 let downloadFocusTrap = null;
 
 function isFullMainVariationDisplayed() {
-  if (typeof BoardState === 'undefined' || !BoardState.currentMoves) return true;
-  if (BoardState.currentMoves.hasUserMoves()) return false;
-  const moves = BoardState.currentMoves.moves;
+  if (typeof GameState === 'undefined' || !GameState.currentMoves) return true;
+  if (GameState.currentMoves.hasUserMoves()) return false;
+  const moves = GameState.currentMoves.moves;
   if (!moves || moves.length === 0) return true;
-  const finalMainMoveNum = moves.length - (BoardState.currentMoves.gameIsInProgress() ? 0 : 1);
-  return typeof BoardState.currentMoveNum === 'number' && BoardState.currentMoveNum >= finalMainMoveNum;
+  const finalMainMoveNum = moves.length - (GameState.currentMoves.gameIsInProgress() ? 0 : 1);
+  return typeof GameState.currentMoveNum === 'number' && GameState.currentMoveNum >= finalMainMoveNum;
 }
 
 function serializeUserMoves(userMoves) {
@@ -463,9 +463,9 @@ document.getElementById('download-form').addEventListener('submit', function(e) 
   }
 
   const isCurrentVar = document.getElementById('download-var-current').checked;
-  if (isCurrentVar && typeof BoardState !== 'undefined' && BoardState.currentMoves) {
-    url += '&currentMoveNum=' + encodeURIComponent(BoardState.currentMoveNum);
-    const userMoves = BoardState.currentMoves.getUserMoves();
+  if (isCurrentVar && typeof GameState !== 'undefined' && GameState.currentMoves) {
+    url += '&currentMoveNum=' + encodeURIComponent(GameState.currentMoveNum);
+    const userMoves = GameState.currentMoves.getUserMoves();
     if (userMoves && userMoves.length > 0) {
       const variationStr = serializeUserMoves(userMoves);
       if (variationStr) {

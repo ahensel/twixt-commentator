@@ -130,8 +130,8 @@
   function showAddNoteBox() {
     // Capture the current highest move number in the game.
     noteStartMoveNum =
-      (typeof BoardState !== 'undefined' && BoardState.currentMoves)
-        ? BoardState.currentMoves.moves.length
+      (typeof GameState !== 'undefined' && GameState.currentMoves)
+        ? GameState.currentMoves.moves.length
         : 0;
 
     document.getElementById('new_note').value = '';

@@ -111,13 +111,13 @@ const BoardInteraction = {
 const BoardRenderer = {
   bg: 1,  // board glass index for double buffering (1 or 2)
 
-  boardglass() {
-    return $(`boardglass${this.bg}`);
+  boardglass(bg) {
+    return $(`boardglass${bg || this.bg}`);
   },
 
   revealNewBoardglass() {
-    $(`boardglass${this.bg}`).classList.remove('hidden');
-    $(`boardglass${3 - this.bg}`).classList.add('hidden');
+    this.boardglass().classList.remove('hidden');
+    this.boardglass(3 - this.bg).classList.add('hidden');
   },
 
   switchDrawingBoardglass() {
@@ -129,58 +129,6 @@ const BoardRenderer = {
     $('newwhitepeg')?.classList.add('hidden');
     $('newblackpeg')?.classList.add('hidden');
   }
-};
-
-// ─── BoardState Facade (Backwards Compatibility) ───────────────────────────
-
-const BoardState = {
-  get board() { return GameState.board; },
-  set board(b) { GameState.board = b; },
-
-  get turn() { return GameState.turn; },
-  set turn(t) { GameState.turn = t; },
-
-  get currentMoves() { return GameState.currentMoves; },
-  set currentMoves(m) { GameState.currentMoves = m; },
-
-  get currentMoveNum() { return GameState.currentMoveNum; },
-  set currentMoveNum(n) { GameState.currentMoveNum = n; },
-
-  get replayMode() { return GameState.replayMode; },
-  set replayMode(m) { GameState.replayMode = m; },
-
-  get colorsSwapped() { return GameState.colorsSwapped; },
-  set colorsSwapped(s) { GameState.colorsSwapped = s; },
-
-  get declaredWinner() { return GameState.declaredWinner; },
-  set declaredWinner(w) { GameState.declaredWinner = w; },
-
-  get winnerBannerTimer() { return GameState.winnerBannerTimer; },
-  set winnerBannerTimer(t) { GameState.winnerBannerTimer = t; },
-
-  get pendingEdit() { return BoardInteraction.pendingEdit; },
-  set pendingEdit(p) { BoardInteraction.pendingEdit = p; },
-
-  get cutLink() { return BoardInteraction.cutLink; },
-  set cutLink(c) { BoardInteraction.cutLink = c; },
-
-  get holdingForMarkers() { return BoardInteraction.holdingForMarkers; },
-  set holdingForMarkers(h) { BoardInteraction.holdingForMarkers = h; },
-
-  get numLinkableMarkers() { return BoardInteraction.numLinkableMarkers; },
-  set numLinkableMarkers(n) { BoardInteraction.numLinkableMarkers = n; },
-
-  get bg() { return BoardRenderer.bg; },
-  set bg(val) { BoardRenderer.bg = val; },
-
-  isPlayerColorSwap: () => GameState.isPlayerColorSwap(),
-  isLegalSpot: (x, y, turn) => GameState.isLegalSpot(x, y, turn),
-  getPeg: (x, y) => GameState.getPeg(x, y),
-  hasLinkRemoval: () => GameState.hasLinkRemoval(),
-
-  boardglass: () => BoardRenderer.boardglass(),
-  revealNewBoardglass: () => BoardRenderer.revealNewBoardglass(),
-  switchDrawingBoardglass: () => BoardRenderer.switchDrawingBoardglass(),
 };
 
 document.addEventListener('keydown',  e => keyIntercept(e));
@@ -225,33 +173,33 @@ function showMovesOnLoad() {
 
   const moves = JSON.parse(movesJson);
 
-  BoardState.replayMode = 'setup';
+  GameState.replayMode = 'setup';
   moves.forEach(move => {
     if (move.type === Move.Peg) {
-      BoardState.turn = 2 - move.player;
+      GameState.turn = 2 - move.player;
       placePeg(move.x, move.y);
     } else if (move.type === Move.Swap) {
       executeSwap();
-      BoardState.currentMoves.swapFirstMove();
+      GameState.currentMoves.swapFirstMove();
     } else if (move.type === Move.Resign) {
-      BoardState.currentMoves.finalMove(new ResignMove());
+      GameState.currentMoves.finalMove(new ResignMove());
     } else if (move.type === Move.Draw) {
-      BoardState.currentMoves.finalMove(new DrawMove());
+      GameState.currentMoves.finalMove(new DrawMove());
     } else if (move.type === Move.Forfeit) {
-      BoardState.currentMoves.finalMove(new ForfeitMove());
+      GameState.currentMoves.finalMove(new ForfeitMove());
     } else if (move.type === Move.Lost) {
-      BoardState.currentMoves.finalMove(new LostMove());
+      GameState.currentMoves.finalMove(new LostMove());
     }
   });
-  BoardState.replayMode = 'none';
+  GameState.replayMode = 'none';
 
-  BoardState.currentMoveNum = BoardState.currentMoves.moves.length - (BoardState.currentMoves.gameIsInProgress() ? 0 : 1);
+  GameState.currentMoveNum = GameState.currentMoves.moves.length - (GameState.currentMoves.gameIsInProgress() ? 0 : 1);
 
   // For player-color-swap games, detect whether a swap was played and update labels/colors.
-  if (BoardState.isPlayerColorSwap()) {
-    const swapOccurred = BoardState.currentMoves.moves.length >= 2 &&
-                         BoardState.currentMoves.moves[1].getText() === 'swap';
-    BoardState.colorsSwapped = swapOccurred;
+  if (GameState.isPlayerColorSwap()) {
+    const swapOccurred = GameState.currentMoves.moves.length >= 2 &&
+                         GameState.currentMoves.moves[1].getText() === 'swap';
+    GameState.colorsSwapped = swapOccurred;
     setPlayerLabels(swapOccurred);
   }
 
@@ -269,7 +217,7 @@ function getMoveColor(moveNum, colorsSwapped) {
 }
 
 function buildMovesText(moves, firstNum, fn) {
-  const colorsSwapped = BoardState.colorsSwapped;
+  const colorsSwapped = GameState.colorsSwapped;
   return moves.map((move, index) => {
     const moveNum = firstNum + index;
     const moveText  = `${moveNum}.${move.getText()}`;
@@ -279,7 +227,7 @@ function buildMovesText(moves, firstNum, fn) {
 }
 
 function showMovesText() {
-  $('moves').innerHTML = buildMovesText(BoardState.currentMoves.getMoves(), 1,
+  $('moves').innerHTML = buildMovesText(GameState.currentMoves.getMoves(), 1,
     (moveText, moveNum, className) => {
       return `<a id='move_${moveNum}' class='${className}' href='' ` +
              `onclick='jumpTo(${moveNum}); return false;'>${moveText}</a>`;
@@ -287,9 +235,9 @@ function showMovesText() {
 }
 
 function getUserMovesFirstNum() {
-  let moveNum = BoardState.currentMoveNum;
+  let moveNum = GameState.currentMoveNum;
   if (moveNum > 0) {
-    const move = BoardState.currentMoves.getMoves()[moveNum - 1];
+    const move = GameState.currentMoves.getMoves()[moveNum - 1];
     if (move.isFinalMove) { // "resign", "forfeit", "draw", "loss"
       moveNum--;
     }
@@ -303,11 +251,11 @@ function getUserMovesFirstNum() {
 function showUserMovesText() {
   let userMovesText = '';
 
-  if (BoardState.currentMoves.hasUserMoves()) {
+  if (GameState.currentMoves.hasUserMoves()) {
     $('copyMovesBtn').classList.remove('hidden');
 
     userMovesText = "|<span class='user-moves'>" +
-      buildMovesText(BoardState.currentMoves.getUserMoves(), getUserMovesFirstNum(),
+      buildMovesText(GameState.currentMoves.getUserMoves(), getUserMovesFirstNum(),
         (moveText, moveNum, className) => {
           return `<span id='userMove_${moveNum}' class='${className}'>${moveText}</span>`;
         }) +
@@ -323,63 +271,63 @@ function showUserMovesText() {
 }
 
 function jumpTo(moveNum) {
-  uncolorMove(BoardState.currentMoveNum);
-  BoardState.currentMoves.clearUserMoves();
+  uncolorMove(GameState.currentMoveNum);
+  GameState.currentMoves.clearUserMoves();
   $('user-moves').innerHTML = '';
   showAllMoves(moveNum, null);
 }
 
 function jumpFromComment(firstMoveNum, commentMoves) {
-  const finalEditMoveNum = BoardState.currentMoves.getMoves().length +
-    (BoardState.currentMoves.gameIsInProgress() ? 1 : 0);
+  const finalEditMoveNum = GameState.currentMoves.getMoves().length +
+    (GameState.currentMoves.gameIsInProgress() ? 1 : 0);
   if (firstMoveNum > finalEditMoveNum) {
     firstMoveNum = finalEditMoveNum;
   }
-  uncolorMove(BoardState.currentMoveNum);
-  BoardState.currentMoves.clearUserMoves();
+  uncolorMove(GameState.currentMoveNum);
+  GameState.currentMoves.clearUserMoves();
 
   showAllMoves(firstMoveNum - 1, commentMoves);
 }
 
 function getCommentPegErrors(moves) {
-  return TwixtNotation.validateCommentMoves(moves, BoardState.board, BoardState.turn);
+  return TwixtNotation.validateCommentMoves(moves, GameState.board, GameState.turn);
 }
 
 function getNextCommentPegError(pegString, movesSoFar) {
-  return TwixtNotation.validateMove(pegString, BoardState.board, BoardState.turn, movesSoFar);
+  return TwixtNotation.validateMove(pegString, GameState.board, GameState.turn, movesSoFar);
 }
 
 function getXFromLetter(xChar) {
-  return TwixtNotation.letterToX(xChar, BoardState.board.size);
+  return TwixtNotation.letterToX(xChar, GameState.board.size);
 }
 
 function parseLinkNotation(notation, prefix) {
   if (prefix === '-') {
-    return TwixtNotation.findLink(notation, BoardState.board);
+    return TwixtNotation.findLink(notation, GameState.board);
   }
-  return TwixtNotation.parseLinkEndpoints(notation, prefix, BoardState.board.size);
+  return TwixtNotation.parseLinkEndpoints(notation, prefix, GameState.board.size);
 }
 
 function getPegCoordinates(pegString) {
-  return TwixtNotation.getPegCoordinates(pegString, BoardState.board.size);
+  return TwixtNotation.getPegCoordinates(pegString, GameState.board.size);
 }
 
 function placePegByNotation(pegString) {
-  const parsed = TwixtNotation.parseMove(pegString, BoardState.board.size);
+  const parsed = TwixtNotation.parseMove(pegString, GameState.board.size);
   if (parsed.isSwap) {
     swapFirstPeg();
     return;
   }
 
   const { x, y } = parsed.peg;
-  if (BoardState.getPeg(x, y) == null && BoardState.isLegalSpot(x, y)) {
+  if (GameState.getPeg(x, y) == null && GameState.isLegalSpot(x, y)) {
     // 1. Apply removals
     parsed.actions.forEach(action => {
       if (action.prefix === '-') {
-        const link = TwixtNotation.findLink(action.notation, BoardState.board);
+        const link = TwixtNotation.findLink(action.notation, GameState.board);
         if (link) {
           link.remove();
-          BoardState.pendingEdit.removeLink(link);
+          BoardInteraction.pendingEdit.removeLink(link);
           eraseLink(link);
         }
       }
@@ -388,16 +336,16 @@ function placePegByNotation(pegString) {
     // 2. Apply additions
     parsed.actions.forEach(action => {
       if (action.prefix === '/' || action.prefix === '\\') {
-        const endpoints = TwixtNotation.parseLinkEndpoints(action.notation, action.prefix, BoardState.board.size);
+        const endpoints = TwixtNotation.parseLinkEndpoints(action.notation, action.prefix, GameState.board.size);
         if (endpoints) {
-          BoardState.pendingEdit.link(endpoints.x1, endpoints.y1, endpoints.x2, endpoints.y2, false);
-          const peg1 = BoardState.getPeg(endpoints.x1, endpoints.y1);
+          BoardInteraction.pendingEdit.link(endpoints.x1, endpoints.y1, endpoints.x2, endpoints.y2, false);
+          const peg1 = GameState.getPeg(endpoints.x1, endpoints.y1);
           if (peg1) {
             const link = peg1.getLink(endpoints.x2 - endpoints.x1, endpoints.y2 - endpoints.y1);
             if (link) {
               drawLink(link);
               eraseLinkableMarkersAround(peg1);
-              const peg2 = BoardState.getPeg(endpoints.x2, endpoints.y2);
+              const peg2 = GameState.getPeg(endpoints.x2, endpoints.y2);
               if (peg2) eraseLinkableMarkersAround(peg2);
             }
           }
@@ -409,28 +357,28 @@ function placePegByNotation(pegString) {
     placePeg(x, y);
 
     // 4. Force completion of move if we had markers holding it
-    if (BoardState.holdingForMarkers) {
+    if (BoardInteraction.holdingForMarkers) {
       nextTurn();
-      BoardState.holdingForMarkers = false;
+      BoardInteraction.holdingForMarkers = false;
     }
   }
 }
 
 function executeSwap() {
-  if (BoardState.isPlayerColorSwap()) {
-    BoardState.colorsSwapped = !BoardState.colorsSwapped;
-    setPlayerLabels(BoardState.colorsSwapped);
-    BoardState.turn = 0;
+  if (GameState.isPlayerColorSwap()) {
+    GameState.colorsSwapped = !GameState.colorsSwapped;
+    setPlayerLabels(GameState.colorsSwapped);
+    GameState.turn = 0;
     showTurn();
   } else {
-    const firstPeg = BoardState.board.getFirstPeg();
+    const firstPeg = GameState.board.getFirstPeg();
     if (firstPeg) {
-      const oldImg = $(`peg${firstPeg.getPegName()}-${BoardState.bg}`);
+      const oldImg = $(`peg${firstPeg.getPegName()}-${BoardRenderer.bg}`);
       if (oldImg) oldImg.remove();
-      BoardState.board.swap();
-      const newPeg = BoardState.board.getFirstPeg();
+      GameState.board.swap();
+      const newPeg = GameState.board.getFirstPeg();
       drawPeg(newPeg);
-      BoardState.turn = 1;
+      GameState.turn = 1;
       showTurn();
     }
   }
@@ -438,20 +386,20 @@ function executeSwap() {
 
 // only used by comment clicking; on other occasions handled more efficiently
 function swapFirstPeg() {
-  if (BoardState.board.numPegs() === 1) {
+  if (GameState.board.numPegs() === 1) {
     executeSwap();
 
     // Record the swap move (same for both styles).
-    if (BoardState.currentMoves.hasUserMoves() ||
-        (BoardState.currentMoves.moves.length > 1 && BoardState.currentMoves.moves[1].getText().toLowerCase() !== 'swap')) {
-      BoardState.currentMoves.userMoves.push(new SwapMove());
+    if (GameState.currentMoves.hasUserMoves() ||
+        (GameState.currentMoves.moves.length > 1 && GameState.currentMoves.moves[1].getText().toLowerCase() !== 'swap')) {
+      GameState.currentMoves.userMoves.push(new SwapMove());
     } else {
-      uncolorMove(BoardState.currentMoveNum);
-      BoardState.currentMoveNum++;
-      colorMove(BoardState.currentMoveNum);
+      uncolorMove(GameState.currentMoveNum);
+      GameState.currentMoveNum++;
+      colorMove(GameState.currentMoveNum);
     }
 
-    if (BoardState.isPlayerColorSwap()) {
+    if (GameState.isPlayerColorSwap()) {
       // Re-render the main moves list so colors reflect the new swap state.
       showMovesText();
     }
@@ -471,37 +419,37 @@ function showMovesUpTo(moves, moveNum) {
 }
 
 function showAllMoves(moveNum, commentMoves) {
-  uncolorMove(BoardState.currentMoveNum);
+  uncolorMove(GameState.currentMoveNum);
   colorMove(moveNum);
 
-  BoardState.replayMode = 'jump';
+  GameState.replayMode = 'jump';
 
-  BoardState.switchDrawingBoardglass();
+  BoardRenderer.switchDrawingBoardglass();
   clearBoard();  // resets colorsSwapped to false
 
-  const moves = BoardState.currentMoves.getMoves();
+  const moves = GameState.currentMoves.getMoves();
   if (moves.length > 0) {
     showMovesUpTo(moves, moveNum);
-    BoardState.currentMoveNum = moveNum;
+    GameState.currentMoveNum = moveNum;
   }
 
-  if (BoardState.currentMoves.hasUserMoves()) {
-    const userMoves = BoardState.currentMoves.getUserMoves();
+  if (GameState.currentMoves.hasUserMoves()) {
+    const userMoves = GameState.currentMoves.getUserMoves();
     showMovesUpTo(userMoves, userMoves.length);
   }
 
   // For player-color-swap games, re-derive whether a swap is active in the displayed position.
   // clearBoard() above reset colorsSwapped to false, so we must restore it if needed.
-  if (BoardState.isPlayerColorSwap()) {
+  if (GameState.isPlayerColorSwap()) {
     const allDisplayed = [
-      ...BoardState.currentMoves.getMoves().slice(0, BoardState.currentMoveNum),
-      ...BoardState.currentMoves.getUserMoves(),
+      ...GameState.currentMoves.getMoves().slice(0, GameState.currentMoveNum),
+      ...GameState.currentMoves.getUserMoves(),
     ];
-    BoardState.colorsSwapped = allDisplayed.some(m => m.getText() === 'swap');
-    setPlayerLabels(BoardState.colorsSwapped);
+    GameState.colorsSwapped = allDisplayed.some(m => m.getText() === 'swap');
+    setPlayerLabels(GameState.colorsSwapped);
   }
 
-  BoardState.replayMode = 'none';
+  GameState.replayMode = 'none';
 
   if (commentMoves != null) {
     const errors = getCommentPegErrors(commentMoves);
@@ -515,7 +463,7 @@ function showAllMoves(moveNum, commentMoves) {
   showUserMovesText();
   updateSwapButton();
 
-  BoardState.revealNewBoardglass();
+  BoardRenderer.revealNewBoardglass();
 }
 
 function uncolorMove(moveNum) {
@@ -536,16 +484,16 @@ function highlightMoveInSidebar(peg) {
   if (!peg) return;
   const pegName = peg.getPegName();
 
-  if (BoardState.currentMoves.hasUserMoves()) {
+  if (GameState.currentMoves.hasUserMoves()) {
     const firstUserMoveNum = getUserMovesFirstNum();
-    const userMoves = BoardState.currentMoves.getUserMoves();
+    const userMoves = GameState.currentMoves.getUserMoves();
     for (let i = 0; i < userMoves.length; i++) {
       if (userMoves[i].peg?.getPegName() === pegName) {
         $(`userMove_${i + firstUserMoveNum}`)?.classList.add('hovered-peg');
         return;
       }
-      if (userMoves[i].getText?.() === 'swap' && BoardState.board.isSwapped()) {
-        const first = BoardState.board.getFirstPeg();
+      if (userMoves[i].getText?.() === 'swap' && GameState.board.isSwapped()) {
+        const first = GameState.board.getFirstPeg();
         if (first?.getPegName() === pegName) {
           $(`userMove_${i + firstUserMoveNum}`)?.classList.add('hovered-peg');
           return;
@@ -554,15 +502,15 @@ function highlightMoveInSidebar(peg) {
     }
   }
 
-  const mainMoves = BoardState.currentMoves.getMoves();
+  const mainMoves = GameState.currentMoves.getMoves();
   if (mainMoves.length > 0) {
-    for (let i = 0; i <= BoardState.currentMoveNum; i++) {
+    for (let i = 0; i <= GameState.currentMoveNum; i++) {
       if (mainMoves[i].peg?.getPegName() === pegName) {
         $(`move_${i + 1}`)?.classList.add('hovered-peg');
         return;
       }
-      if (i === 1 && mainMoves[1]?.getText() === 'swap' && BoardState.board.isSwapped()) {
-        const first = BoardState.board.getFirstPeg();
+      if (i === 1 && mainMoves[1]?.getText() === 'swap' && GameState.board.isSwapped()) {
+        const first = GameState.board.getFirstPeg();
         if (first?.getPegName() === pegName) {
           $('move_2')?.classList.add('hovered-peg');
           return;
@@ -582,8 +530,8 @@ function unhighlightMoveInSidebar() {
 }
 
 function updateBackNextButtons() {
-  const backDisabled = !BoardState.currentMoves.hasUserMoves() && BoardState.currentMoveNum <= 0;
-  const nextDisabled = BoardState.currentMoves.hasUserMoves() || BoardState.currentMoveNum >= BoardState.currentMoves.moves.length;
+  const backDisabled = !GameState.currentMoves.hasUserMoves() && GameState.currentMoveNum <= 0;
+  const nextDisabled = GameState.currentMoves.hasUserMoves() || GameState.currentMoveNum >= GameState.currentMoves.moves.length;
 
   $('backLink').classList.toggle('disabled', backDisabled);
   $('nextLink').classList.toggle('disabled', nextDisabled);
@@ -592,32 +540,32 @@ function updateBackNextButtons() {
 }
 
 function backButton() {
-  if (BoardState.hasLinkRemoval() && BoardState.numLinkableMarkers > 0) {
+  if (GameState.hasLinkRemoval() && BoardInteraction.numLinkableMarkers > 0) {
     eraseAllLinkableMarkers();
-    showAllMoves(BoardState.currentMoveNum, null);
-  } else if (BoardState.currentMoves.hasUserMoves()) {
-    BoardState.currentMoves.popUserMove();
-    showAllMoves(BoardState.currentMoveNum, null);
-  } else if (BoardState.currentMoveNum > 0) {
-    showAllMoves(BoardState.currentMoveNum - 1, null);
+    showAllMoves(GameState.currentMoveNum, null);
+  } else if (GameState.currentMoves.hasUserMoves()) {
+    GameState.currentMoves.popUserMove();
+    showAllMoves(GameState.currentMoveNum, null);
+  } else if (GameState.currentMoveNum > 0) {
+    showAllMoves(GameState.currentMoveNum - 1, null);
   }
-  const pegCount = BoardState.board.numPegs();
+  const pegCount = GameState.board.numPegs();
   if (pegCount === 0) {
     showTurn();
   }
 }
 
 function nextButton() {
-  if (!BoardState.currentMoves.hasUserMoves() && BoardState.currentMoveNum < BoardState.currentMoves.moves.length) {
-    showAllMoves(BoardState.currentMoveNum + 1, null);
+  if (!GameState.currentMoves.hasUserMoves() && GameState.currentMoveNum < GameState.currentMoves.moves.length) {
+    showAllMoves(GameState.currentMoveNum + 1, null);
   }
 }
 
 function updateSwapButton() {
   const swapBtn = $('swap-button');
   if (!swapBtn) return;
-  const moveCount = BoardState.currentMoves.userMoves.length + BoardState.currentMoveNum;
-  const pegCount = BoardState.board.numPegs();
+  const moveCount = GameState.currentMoves.userMoves.length + GameState.currentMoveNum;
+  const pegCount = GameState.board.numPegs();
   // count moves because there is still one peg after a swap
   // count pegs because first move could be forfeit or resign
   if (moveCount === 1 && pegCount === 1) {
@@ -645,17 +593,17 @@ function mouseOverBoard(evt) {
   const pixelY = evt.offsetY;
 
   if (isPegSpot(pixelX, pixelY)) {
-    if (BoardState.hasLinkRemoval()) eraseCutLink();
+    if (GameState.hasLinkRemoval()) eraseCutLink();
 
     const x = xCoord(pixelX);
     const y = yCoord(pixelY);
-    const peg = BoardState.getPeg(x, y);
+    const peg = GameState.getPeg(x, y);
 
     if (peg) {
       highlightMoveInSidebar(peg);
     }
 
-    if (!BoardState.holdingForMarkers && BoardState.isLegalSpot(x, y)) {
+    if (!BoardInteraction.holdingForMarkers && GameState.isLegalSpot(x, y)) {
       if (peg == null) {
         drawCrosshair(x, y);
       } else {
@@ -667,8 +615,8 @@ function mouseOverBoard(evt) {
   } else {
     eraseCrosshair();
 
-    if (BoardState.hasLinkRemoval()) {
-      const link = getRemovableLink(pixelX, pixelY, BoardState.turn);
+    if (GameState.hasLinkRemoval()) {
+      const link = getRemovableLink(pixelX, pixelY, GameState.turn);
       if (link != null) drawCutLink(link);
       else              eraseCutLink();
     }
@@ -709,45 +657,45 @@ function clickOnBoard(evt) {
   if (isPegSpot(pixelX, pixelY)) {
     const x = xCoord(pixelX);
     const y = yCoord(pixelY);
-    const peg = BoardState.getPeg(x, y);
+    const peg = GameState.getPeg(x, y);
 
-    if (peg == null && !BoardState.holdingForMarkers && BoardState.isLegalSpot(x, y)) {
+    if (peg == null && !BoardInteraction.holdingForMarkers && GameState.isLegalSpot(x, y)) {
       const peg = placePeg(x, y);
       showUserMovesText();
       highlightMoveInSidebar(peg);
-    } else if (BoardState.hasLinkRemoval() && peg != null && peg.color === BoardState.turn) {
+    } else if (GameState.hasLinkRemoval() && peg != null && peg.color === GameState.turn) {
       placeLinks(peg, false);
-      if (BoardState.holdingForMarkers && BoardState.numLinkableMarkers === 0) {
+      if (BoardInteraction.holdingForMarkers && BoardInteraction.numLinkableMarkers === 0) {
         nextTurn();
         showUserMovesText();
-        BoardState.holdingForMarkers = false;
+        BoardInteraction.holdingForMarkers = false;
       }
     }
-  } else if (BoardState.hasLinkRemoval() && BoardState.cutLink != null) {
+  } else if (GameState.hasLinkRemoval() && BoardInteraction.cutLink != null) {
     executeCutLink();
   }
   return true;
 }
 
 function placePeg(x, y) {
-  const peg = BoardState.pendingEdit.placePeg(x, y, BoardState.turn);
+  const peg = BoardInteraction.pendingEdit.placePeg(x, y, GameState.turn);
   drawPeg(peg);
   placeLinks(peg, true);
-  if (BoardState.numLinkableMarkers === 0) nextTurn();
-  else BoardState.holdingForMarkers = true;
+  if (BoardInteraction.numLinkableMarkers === 0) nextTurn();
+  else BoardInteraction.holdingForMarkers = true;
   return peg;
 }
 
 function placeLinks(peg, isNew) {
-  BoardState.pendingEdit.addLinksTo(peg, isNew);
+  BoardInteraction.pendingEdit.addLinksTo(peg, isNew);
   drawLinks(peg);
-  if (BoardState.hasLinkRemoval()) eraseLinkableMarkersAround(peg);
+  if (GameState.hasLinkRemoval()) eraseLinkableMarkersAround(peg);
 }
 
 function executeCutLink() {
-  const link = BoardState.cutLink;
+  const link = BoardInteraction.cutLink;
   link.remove();
-  BoardState.pendingEdit.removeLink(link);
+  BoardInteraction.pendingEdit.removeLink(link);
   eraseCutLink();
   eraseLink(link);
   drawLinkableMarkers(link);
@@ -756,27 +704,27 @@ function executeCutLink() {
 // True when the just-finished edit continues the main line: no user
 // variation is in progress and the edit matches the next mainline move.
 function continuesMainline(edit) {
-  return BoardState.currentMoves.userMoves.length === 0 &&
-         BoardState.currentMoves.moves[BoardState.currentMoveNum]?.getText() === edit.getText();
+  return GameState.currentMoves.userMoves.length === 0 &&
+         GameState.currentMoves.moves[GameState.currentMoveNum]?.getText() === edit.getText();
 }
 
 function nextTurn() {
-  const edit = BoardState.pendingEdit.takeCurrentEdit();
-  if (BoardState.replayMode === 'setup') {
+  const edit = BoardInteraction.pendingEdit.takeCurrentEdit();
+  if (GameState.replayMode === 'setup') {
     // Building the main line from the game's recorded moves.
-    BoardState.currentMoves.recordMainline(edit);
-  } else if (BoardState.replayMode === 'none' && continuesMainline(edit)) {
-    uncolorMove(BoardState.currentMoveNum);
-    BoardState.currentMoveNum++;
-    colorMove(BoardState.currentMoveNum);
-  } else if (BoardState.replayMode === 'none') {
+    GameState.currentMoves.recordMainline(edit);
+  } else if (GameState.replayMode === 'none' && continuesMainline(edit)) {
+    uncolorMove(GameState.currentMoveNum);
+    GameState.currentMoveNum++;
+    colorMove(GameState.currentMoveNum);
+  } else if (GameState.replayMode === 'none') {
     // The user branched off the main line.
-    BoardState.currentMoves.recordUserMove(edit);
+    GameState.currentMoves.recordUserMove(edit);
   }
   flipTurn();
   updateSwapButton();
-  if (BoardState.hasLinkRemoval()) {
-    drawLinkableMarkersInBox(1, 1, BoardState.board.size, BoardState.board.size, BoardState.turn);
+  if (GameState.hasLinkRemoval()) {
+    drawLinkableMarkersInBox(1, 1, GameState.board.size, GameState.board.size, GameState.turn);
   }
 }
 
@@ -788,7 +736,7 @@ function setPlayerLabels(colorsSwapped = false) {
 }
 
 function showTurn() {
-  $('turn').innerHTML = `${['Black', 'White'][BoardState.turn]}'s turn:`;
+  $('turn').innerHTML = `${['Black', 'White'][GameState.turn]}'s turn:`;
 }
 
 function flipTurn() {
@@ -799,7 +747,7 @@ function flipTurn() {
 // ─── Clipboard ────────────────────────────────────────────────────────────────
 
 function copyMovesToClipboard() {
-  const plainText = '|' + buildMovesText(BoardState.currentMoves.getUserMoves(), getUserMovesFirstNum(),
+  const plainText = '|' + buildMovesText(GameState.currentMoves.getUserMoves(), getUserMovesFirstNum(),
     (moveText) => moveText);
 
   const onSuccess = () => {
@@ -846,7 +794,7 @@ function drawLinks(peg) {
 }
 
 function getLinkAt(x, y, dx, dy, color) {
-  const peg = BoardState.getPeg(x, y);
+  const peg = GameState.getPeg(x, y);
   if (peg != null && peg.color === color) return peg.getLink(dx, dy);
   return null;
 }
@@ -879,7 +827,7 @@ function isPegSpot(pixelX, pixelY) {
 
 function drawPeg(peg) {
   const image = addInlineImgToBoard(
-    PEG.IMAGES[peg.color], `peg${peg.getPegName()}-${BoardState.bg}`,
+    PEG.IMAGES[peg.color], `peg${peg.getPegName()}-${BoardRenderer.bg}`,
     xPixels(peg.x) - (PEG.SIZE/2), yPixels(peg.y) - (PEG.SIZE/2), PEG.SIZE, PEG.SIZE
   );
   eraseCrosshair();
@@ -901,12 +849,12 @@ function getMarkerName(x, y) { return `marker_${x}_${y}`; }
 function drawLinkableMarkersInBox(minX, minY, maxX, maxY, color) {
   for (let x = minX; x <= maxX; x++) {
     for (let y = minY; y <= maxY; y++) {
-      if (BoardState.board.isLinkable(x, y) && BoardState.getPeg(x, y).color === color) {
+      if (GameState.board.isLinkable(x, y) && GameState.getPeg(x, y).color === color) {
         const markerName = getMarkerName(x, y);
         if (!$(markerName)) {
           addInlineImgToBoard(linkablemarker_img, markerName,
             xPixels(x) - (PEG.SIZE/2), yPixels(y) - (PEG.SIZE/2), PEG.SIZE, PEG.SIZE);
-          BoardState.numLinkableMarkers++;
+          BoardInteraction.numLinkableMarkers++;
         }
       }
     }
@@ -922,9 +870,9 @@ function eraseLinkableMarkersAround(peg) {
   for (let x = peg.x - 3; x <= peg.x + 3; x++) {
     for (let y = peg.y - 3; y <= peg.y + 3; y++) {
       const m = $(getMarkerName(x, y));
-      if (m != null && !BoardState.board.isLinkable(x, y)) {
-        BoardState.boardglass().removeChild(m);
-        BoardState.numLinkableMarkers--;
+      if (m != null && !GameState.board.isLinkable(x, y)) {
+        BoardRenderer.boardglass().removeChild(m);
+        BoardInteraction.numLinkableMarkers--;
       }
     }
   }
@@ -961,7 +909,7 @@ function drawCrosshair(x, y) {
 }
 
 function drawTickMarks(leftPos, topPos, tickClass) {
-  const boardPixels = (BoardState.board.size * GRID.SPACING) + (GRID.MARGIN * 2);
+  const boardPixels = (GameState.board.size * GRID.SPACING) + (GRID.MARGIN * 2);
 
   const vtick = getVtick('vtick', leftPos, 0);
   const vtick2 = getVtick('vtick2', leftPos, boardPixels - GRID.TICK_SIZE);
@@ -1003,33 +951,33 @@ function buildTickMark(id) {
 }
 
 function getLinkId(link, linkType) {
-  return `${linkType}${link.getLinkName()}-${BoardState.bg}`;
+  return `${linkType}${link.getLinkName()}-${BoardRenderer.bg}`;
 }
 
 function eraseCutLink() {
-  if (BoardState.cutLink != null) {
-    const linkElement = $(getLinkId(BoardState.cutLink, 'cut'));
-    BoardState.cutLink = null;
-    if (linkElement) BoardState.boardglass().removeChild(linkElement);
+  if (BoardInteraction.cutLink != null) {
+    const linkElement = $(getLinkId(BoardInteraction.cutLink, 'cut'));
+    BoardInteraction.cutLink = null;
+    if (linkElement) BoardRenderer.boardglass().removeChild(linkElement);
     eraseTickMarks();
   }
 }
 
 function eraseLink(link) {
   const linkElement = $(getLinkId(link, 'link'));
-  if (linkElement) BoardState.boardglass().removeChild(linkElement);
+  if (linkElement) BoardRenderer.boardglass().removeChild(linkElement);
 }
 
 function drawLink(link)    { drawLinkGeneral(link, 'link'); }
 function drawCutLink(link) {
-  if (BoardState.cutLink != null && link.getLinkName() !== BoardState.cutLink.getLinkName()) eraseCutLink();
+  if (BoardInteraction.cutLink != null && link.getLinkName() !== BoardInteraction.cutLink.getLinkName()) eraseCutLink();
   drawLinkGeneral(link, 'cut');
   drawTickMarks(
     (xPixels(link.peg1.x) + xPixels(link.peg2.x)) / 2,
     (yPixels(link.peg1.y) + yPixels(link.peg2.y)) / 2,
     'tick-mouse-link'
   );
-  BoardState.cutLink = link;
+  BoardInteraction.cutLink = link;
 }
 
 function drawLinkGeneral(link, linkType) {
@@ -1069,7 +1017,7 @@ function addInlineImgToBoard(imgfile, id, leftPos, topPos, width, height) {
   });
   img.classList.add('piece');
 
-  BoardState.boardglass().appendChild(img);
+  BoardRenderer.boardglass().appendChild(img);
 
   return img;
 }
