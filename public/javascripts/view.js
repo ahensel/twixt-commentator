@@ -14,10 +14,6 @@ const wswcut_img = 'data:image/webp;base64,UklGRmQAAABXRUJQVlA4TFcAAAAvGoADEC8gE
 
 const linkablemarker_img = 'data:image/webp;base64,UklGRioAAABXRUJQVlA4TB4AAAAvDAADEA8Q8z8z8x84CLJtNn/JI0ziDhH9T25k5ng=';
 
-// Lightweight getElementById shorthand — NOT Prototype's $().
-// Use document.getElementById directly if you prefer explicitness.
-const $ = id => document.getElementById(id);
-
 const styles = getComputedStyle(document.documentElement);
 const GRID = {
   MARGIN: parseInt(styles.getPropertyValue('--grid-margin'), 10),
@@ -88,6 +84,20 @@ const GameState = {
 
   flipTurn() {
     this.turn = 1 - this.turn;
+  },
+
+  getUserMovesFirstNum() {
+    let moveNum = this.currentMoveNum;
+    if (moveNum > 0) {
+      const move = this.currentMoves.getMoves()[moveNum - 1];
+      if (move.isFinalMove) { // "resign", "forfeit", "draw", "loss"
+        moveNum--;
+      }
+    }
+    else if (moveNum < 0) {
+      return 1;
+    }
+    return moveNum + 1;
   }
 };
 
@@ -112,7 +122,7 @@ const BoardRenderer = {
   bg: 1,  // board glass index for double buffering (1 or 2)
 
   boardglass(bg) {
-    return $(`boardglass${bg || this.bg}`);
+    return document.getElementById(`boardglass${bg || this.bg}`);
   },
 
   revealNewBoardglass() {
@@ -126,18 +136,18 @@ const BoardRenderer = {
 
   clear() {
     this.boardglass().replaceChildren();
-    $('newwhitepeg')?.classList.add('hidden');
-    $('newblackpeg')?.classList.add('hidden');
+    document.getElementById('newwhitepeg')?.classList.add('hidden');
+    document.getElementById('newblackpeg')?.classList.add('hidden');
   }
 };
 
 document.addEventListener('keydown',  e => keyIntercept(e));
 
 window.addEventListener('load', () => {
-  if (!$('board')) return;
-  const size = parseInt($('boardSize').value, 10);
-  const linkPolicy = $('linkPolicy')?.value === 'R' ? TwixtBoard.LINK_REMOVAL : TwixtBoard.PENCIL_AND_PAPER;
-  const swapStyle = $('swapStyle')?.value === 'P' ? TwixtBoard.SWAP_PLAYER_COLORS : TwixtBoard.SWAP_LG;
+  if (!document.getElementById('board')) return;
+  const size = parseInt(document.getElementById('boardSize').value, 10);
+  const linkPolicy = document.getElementById('linkPolicy')?.value === 'R' ? TwixtBoard.LINK_REMOVAL : TwixtBoard.PENCIL_AND_PAPER;
+  const swapStyle = document.getElementById('swapStyle')?.value === 'P' ? TwixtBoard.SWAP_PLAYER_COLORS : TwixtBoard.SWAP_LG;
   GameState.init(size, linkPolicy, swapStyle);
   BoardInteraction.pendingEdit = new PendingEdit(GameState.board);
   setBoardSize(size);
@@ -146,15 +156,18 @@ window.addEventListener('load', () => {
 
   setPlayerLabels(GameState.colorsSwapped);
 
-  $('topglass').addEventListener('mousedown', clickOnBoard);
-  $('topglass').addEventListener('mousemove', mouseOverBoard);
-  $('topglass').addEventListener('mouseout', eraseCrosshair);
-  $('swap-button').addEventListener('click', () => { swapFirstPeg(); showUserMovesText(); });
-  $('winner-banner').addEventListener('click', hideWinnerBanner);
+  const topGlass = document.getElementById('topglass');
+  topGlass.addEventListener('contextmenu', e => e.preventDefault());
+  topGlass.addEventListener('mousedown', e => { if (e.button === 0) clickOnBoard(e); });
+  topGlass.addEventListener('mousemove', mouseOverBoard);
+  topGlass.addEventListener('mouseout', eraseCrosshair);
+
+  document.getElementById('swap-button').addEventListener('click', () => { swapFirstPeg(); showUserMovesText(); });
+  document.getElementById('winner-banner').addEventListener('click', hideWinnerBanner);
 });
 
 function setBoardSize(size) {
-  const board = $('board');
+  const board = document.getElementById('board');
   if (!board) return;
 
   const boardPixels  = (GRID.MARGIN * 2) + (GRID.SPACING * size) + 2;  // +2 for 1px border
@@ -165,7 +178,7 @@ function setBoardSize(size) {
 }
 
 function showMovesOnLoad() {
-  const movesJsonEl = $('movesJson');
+  const movesJsonEl = document.getElementById('movesJson');
   if (!movesJsonEl) return;
 
   const movesJson = movesJsonEl.value;
@@ -227,45 +240,31 @@ function buildMovesText(moves, firstNum, fn) {
 }
 
 function showMovesText() {
-  $('moves').innerHTML = buildMovesText(GameState.currentMoves.getMoves(), 1,
+  document.getElementById('moves').innerHTML = buildMovesText(GameState.currentMoves.getMoves(), 1,
     (moveText, moveNum, className) => {
       return `<a id='move_${moveNum}' class='${className}' href='' ` +
              `onclick='jumpTo(${moveNum}); return false;'>${moveText}</a>`;
     });
 }
 
-function getUserMovesFirstNum() {
-  let moveNum = GameState.currentMoveNum;
-  if (moveNum > 0) {
-    const move = GameState.currentMoves.getMoves()[moveNum - 1];
-    if (move.isFinalMove) { // "resign", "forfeit", "draw", "loss"
-      moveNum--;
-    }
-  }
-  else if (moveNum < 0) {
-    return 1;
-  }
-  return moveNum + 1;
-}
-
 function showUserMovesText() {
   let userMovesText = '';
 
   if (GameState.currentMoves.hasUserMoves()) {
-    $('copyMovesBtn').classList.remove('hidden');
+    document.getElementById('copyMovesBtn').classList.remove('hidden');
 
     userMovesText = "|<span class='user-moves'>" +
-      buildMovesText(GameState.currentMoves.getUserMoves(), getUserMovesFirstNum(),
+      buildMovesText(GameState.currentMoves.getUserMoves(), GameState.getUserMovesFirstNum(),
         (moveText, moveNum, className) => {
           return `<span id='userMove_${moveNum}' class='${className}'>${moveText}</span>`;
         }) +
       '</span>';
   }
   else {
-    $('copyMovesBtn').classList.add('hidden');
+    document.getElementById('copyMovesBtn').classList.add('hidden');
   }
 
-  $('user-moves').innerHTML = userMovesText;
+  document.getElementById('user-moves').innerHTML = userMovesText;
   updateBackNextButtons();
   declareWinnerIfWinner();
 }
@@ -273,7 +272,7 @@ function showUserMovesText() {
 function jumpTo(moveNum) {
   uncolorMove(GameState.currentMoveNum);
   GameState.currentMoves.clearUserMoves();
-  $('user-moves').innerHTML = '';
+  document.getElementById('user-moves').innerHTML = '';
   showAllMoves(moveNum, null);
 }
 
@@ -373,7 +372,7 @@ function executeSwap() {
   } else {
     const firstPeg = GameState.board.getFirstPeg();
     if (firstPeg) {
-      const oldImg = $(`peg${firstPeg.getPegName()}-${BoardRenderer.bg}`);
+      const oldImg = document.getElementById(`peg${firstPeg.getPegName()}-${BoardRenderer.bg}`);
       if (oldImg) oldImg.remove();
       GameState.board.swap();
       const newPeg = GameState.board.getFirstPeg();
@@ -466,18 +465,18 @@ function showAllMoves(moveNum, commentMoves) {
   BoardRenderer.revealNewBoardglass();
 }
 
-function uncolorMove(moveNum) {
-  if (moveNum != null && moveNum > 0) {
-    const el = $(`move_${moveNum}`);
-    if (el) el.classList.remove('current-move');
+function findMoveElement(moveNum) {
+  if (!!moveNum && moveNum > 0) {
+    return document.getElementById(`move_${moveNum}`);
   }
 }
 
+function uncolorMove(moveNum) {
+  this.findMoveElement(moveNum)?.classList.remove('current-move');
+}
+
 function colorMove(moveNum) {
-  if (moveNum != null && moveNum > 0) {
-    const el = $(`move_${moveNum}`);
-    if (el) el.classList.add('current-move');
-  }
+  this.findMoveElement(moveNum)?.classList.add('current-move');
 }
 
 function highlightMoveInSidebar(peg) {
@@ -485,17 +484,17 @@ function highlightMoveInSidebar(peg) {
   const pegName = peg.getPegName();
 
   if (GameState.currentMoves.hasUserMoves()) {
-    const firstUserMoveNum = getUserMovesFirstNum();
+    const firstUserMoveNum = GameState.getUserMovesFirstNum();
     const userMoves = GameState.currentMoves.getUserMoves();
     for (let i = 0; i < userMoves.length; i++) {
       if (userMoves[i].peg?.getPegName() === pegName) {
-        $(`userMove_${i + firstUserMoveNum}`)?.classList.add('hovered-peg');
+        document.getElementById(`userMove_${i + firstUserMoveNum}`)?.classList.add('hovered-peg');
         return;
       }
       if (userMoves[i].getText?.() === 'swap' && GameState.board.isSwapped()) {
         const first = GameState.board.getFirstPeg();
         if (first?.getPegName() === pegName) {
-          $(`userMove_${i + firstUserMoveNum}`)?.classList.add('hovered-peg');
+          document.getElementById(`userMove_${i + firstUserMoveNum}`)?.classList.add('hovered-peg');
           return;
         }
       }
@@ -506,13 +505,13 @@ function highlightMoveInSidebar(peg) {
   if (mainMoves.length > 0) {
     for (let i = 0; i <= GameState.currentMoveNum; i++) {
       if (mainMoves[i].peg?.getPegName() === pegName) {
-        $(`move_${i + 1}`)?.classList.add('hovered-peg');
+        this.findMoveElement(i + 1)?.classList.add('hovered-peg');
         return;
       }
       if (i === 1 && mainMoves[1]?.getText() === 'swap' && GameState.board.isSwapped()) {
         const first = GameState.board.getFirstPeg();
         if (first?.getPegName() === pegName) {
-          $('move_2')?.classList.add('hovered-peg');
+          this.findMoveElement(2)?.classList.add('hovered-peg');
           return;
         }
       }
@@ -533,10 +532,12 @@ function updateBackNextButtons() {
   const backDisabled = !GameState.currentMoves.hasUserMoves() && GameState.currentMoveNum <= 0;
   const nextDisabled = GameState.currentMoves.hasUserMoves() || GameState.currentMoveNum >= GameState.currentMoves.moves.length;
 
-  $('backLink').classList.toggle('disabled', backDisabled);
-  $('nextLink').classList.toggle('disabled', nextDisabled);
-  if (backDisabled) $('backLink').blur();
-  if (nextDisabled) $('nextLink').blur();
+  const backLink = document.getElementById('backLink');
+  const nextLink = document.getElementById('nextLink');
+  backLink.classList.toggle('disabled', backDisabled);
+  nextLink.classList.toggle('disabled', nextDisabled);
+  if (backDisabled) backLink.blur();
+  if (nextDisabled) nextLink.blur();
 }
 
 function backButton() {
@@ -562,9 +563,9 @@ function nextButton() {
 }
 
 function updateSwapButton() {
-  const swapBtn = $('swap-button');
+  const swapBtn = document.getElementById('swap-button');
   if (!swapBtn) return;
-  const moveCount = GameState.currentMoves.userMoves.length + GameState.currentMoveNum;
+  const moveCount = GameState.currentMoves.getUserMoves().length + GameState.currentMoveNum;
   const pegCount = GameState.board.numPegs();
   // count moves because there is still one peg after a swap
   // count pegs because first move could be forfeit or resign
@@ -636,7 +637,7 @@ function declareWinnerIfWinner() {
 }
 
 function showWinnerBanner(text) {
-  const banner = $('winner-banner');
+  const banner = document.getElementById('winner-banner');
   if (!banner) return;
   banner.firstElementChild.textContent = text;
   banner.classList.add('visible');
@@ -644,7 +645,7 @@ function showWinnerBanner(text) {
 }
 
 function hideWinnerBanner() {
-  const banner = $('winner-banner');
+  const banner = document.getElementById('winner-banner');
   if (!banner) return;
   clearTimeout(GameState.winnerBannerTimer);
   banner.classList.remove('visible');
@@ -731,12 +732,12 @@ function nextTurn() {
 // Sets player label icons to reflect the current color assignment.
 // When colorsSwapped is true (pie-rule swap), player1 plays black and player2 plays white.
 function setPlayerLabels(colorsSwapped = false) {
-  $('player1-label').src = colorsSwapped ? blackpeg_img : whitepeg_img;
-  $('player2-label').src = colorsSwapped ? whitepeg_img : blackpeg_img;
+  document.getElementById('player1-label').src = colorsSwapped ? blackpeg_img : whitepeg_img;
+  document.getElementById('player2-label').src = colorsSwapped ? whitepeg_img : blackpeg_img;
 }
 
 function showTurn() {
-  $('turn').innerHTML = `${['Black', 'White'][GameState.turn]}'s turn:`;
+  document.getElementById('turn').innerHTML = `${['Black', 'White'][GameState.turn]}'s turn:`;
 }
 
 function flipTurn() {
@@ -751,7 +752,7 @@ function copyMovesToClipboard() {
     (moveText) => moveText);
 
   const onSuccess = () => {
-    const btn = $('copyMovesBtn');
+    const btn = document.getElementById('copyMovesBtn');
     const original = btn.textContent;
     btn.textContent = '✓';
     setTimeout(() => { btn.textContent = original; }, 1000);
@@ -835,9 +836,9 @@ function drawPeg(peg) {
 }
 
 function overlayNewPegMarker(image, pegColor) {
-  $('newwhitepeg').classList.add('hidden');
-  $('newblackpeg').classList.add('hidden');
-  const newpeg = $(`new${['black', 'white'][pegColor]}peg`);
+  document.getElementById('newwhitepeg').classList.add('hidden');
+  document.getElementById('newblackpeg').classList.add('hidden');
+  const newpeg = document.getElementById(`new${['black', 'white'][pegColor]}peg`);
   newpeg.style.left    = image.style.left;
   newpeg.style.top     = image.style.top;
   newpeg.classList.remove('hidden');
@@ -851,7 +852,7 @@ function drawLinkableMarkersInBox(minX, minY, maxX, maxY, color) {
     for (let y = minY; y <= maxY; y++) {
       if (GameState.board.isLinkable(x, y) && GameState.getPeg(x, y).color === color) {
         const markerName = getMarkerName(x, y);
-        if (!$(markerName)) {
+        if (!document.getElementById(markerName)) {
           addInlineImgToBoard(linkablemarker_img, markerName,
             xPixels(x) - (PEG.SIZE/2), yPixels(y) - (PEG.SIZE/2), PEG.SIZE, PEG.SIZE);
           BoardInteraction.numLinkableMarkers++;
@@ -869,7 +870,7 @@ function drawLinkableMarkers(link) {
 function eraseLinkableMarkersAround(peg) {
   for (let x = peg.x - 3; x <= peg.x + 3; x++) {
     for (let y = peg.y - 3; y <= peg.y + 3; y++) {
-      const m = $(getMarkerName(x, y));
+      const m = document.getElementById(getMarkerName(x, y));
       if (m != null && !GameState.board.isLinkable(x, y)) {
         BoardRenderer.boardglass().removeChild(m);
         BoardInteraction.numLinkableMarkers--;
@@ -884,20 +885,20 @@ function eraseAllLinkableMarkers() {
 }
 
 function eraseCrosshair() {
-  const ch = $('crosshair');
+  const ch = document.getElementById('crosshair');
   if (ch) ch.classList.add('hidden');
   eraseTickMarks();
 }
 
 function eraseTickMarks() {
   ['vtick', 'vtick2', 'htick', 'htick2'].forEach(id => {
-    const tick = $(id);
+    const tick = document.getElementById(id);
     if (tick) tick.classList.add('hidden');
   });
 }
 
 function drawCrosshair(x, y) {
-  const ch = $('crosshair');
+  const ch = document.getElementById('crosshair');
   if (ch) {
     const leftPos = xPixels(x);
     const topPos  = yPixels(y);
@@ -935,7 +936,7 @@ function getHtick(id, left, top) {
 }
 
 function getTick(id, left, top) {
-  const tick = $(id) || buildTickMark(id);
+  const tick = document.getElementById(id) || buildTickMark(id);
   tick.style.left = left + 'px';
   tick.style.top = top + 'px';
   tick.classList.remove('hidden');
@@ -946,7 +947,7 @@ function buildTickMark(id) {
   const tick = document.createElement('div');
   tick.id = id;
   tick.classList.add('tick-mark');
-  $('markerglass').appendChild(tick);
+  document.getElementById('markerglass').appendChild(tick);
   return tick;
 }
 
@@ -956,7 +957,7 @@ function getLinkId(link, linkType) {
 
 function eraseCutLink() {
   if (BoardInteraction.cutLink != null) {
-    const linkElement = $(getLinkId(BoardInteraction.cutLink, 'cut'));
+    const linkElement = document.getElementById(getLinkId(BoardInteraction.cutLink, 'cut'));
     BoardInteraction.cutLink = null;
     if (linkElement) BoardRenderer.boardglass().removeChild(linkElement);
     eraseTickMarks();
@@ -964,7 +965,7 @@ function eraseCutLink() {
 }
 
 function eraseLink(link) {
-  const linkElement = $(getLinkId(link, 'link'));
+  const linkElement = document.getElementById(getLinkId(link, 'link'));
   if (linkElement) BoardRenderer.boardglass().removeChild(linkElement);
 }
 
@@ -982,7 +983,7 @@ function drawCutLink(link) {
 
 function drawLinkGeneral(link, linkType) {
   const id = getLinkId(link, linkType);
-  if ($(id)) return;
+  if (document.getElementById(id)) return;
 
   const dx = Math.sign(link.peg1.y - link.peg2.y) * (link.peg1.x - link.peg2.x);
 
@@ -1006,7 +1007,6 @@ function addInlineImgToBoard(imgfile, id, leftPos, topPos, width, height) {
   Object.assign(img, {
     src: imgfile,
     draggable: false,
-    oncontextmenu: 'return false;',
     width,
     height,
     id
@@ -1016,6 +1016,7 @@ function addInlineImgToBoard(imgfile, id, leftPos, topPos, width, height) {
     top: `${topPos}px`
   });
   img.classList.add('piece');
+  img.addEventListener('contextmenu', e => e.preventDefault());
 
   BoardRenderer.boardglass().appendChild(img);
 
