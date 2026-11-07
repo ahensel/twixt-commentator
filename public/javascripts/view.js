@@ -521,10 +521,8 @@ function highlightMoveInSidebar(peg) {
 
 function unhighlightMoveInSidebar() {
   const hovered = document.getElementsByClassName('hovered-peg');
-  if (hovered) {
-    for (const el of hovered) {
-      el.classList.remove('hovered-peg');
-    }
+  for (const el of hovered) {
+    el.classList.remove('hovered-peg');
   }
 }
 
