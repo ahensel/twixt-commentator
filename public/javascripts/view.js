@@ -19,8 +19,8 @@ const GRID = {
   MARGIN: parseInt(styles.getPropertyValue('--grid-margin'), 10),
   SPACING: parseInt(styles.getPropertyValue('--grid-spacing'), 10),
   TICK_SIZE: parseInt(styles.getPropertyValue('--tick-size'), 10),
-  ZERO: () => GRID.MARGIN - GRID.SPACING/2,
 };
+GRID.ZERO = GRID.MARGIN - GRID.SPACING / 2;
 const PEG = {
   SIZE: 13,
   IMAGES: [blackpeg_img, whitepeg_img],
@@ -472,11 +472,11 @@ function findMoveElement(moveNum) {
 }
 
 function uncolorMove(moveNum) {
-  this.findMoveElement(moveNum)?.classList.remove('current-move');
+  findMoveElement(moveNum)?.classList.remove('current-move');
 }
 
 function colorMove(moveNum) {
-  this.findMoveElement(moveNum)?.classList.add('current-move');
+  findMoveElement(moveNum)?.classList.add('current-move');
 }
 
 function highlightMoveInSidebar(peg) {
@@ -505,13 +505,13 @@ function highlightMoveInSidebar(peg) {
   if (mainMoves.length > 0) {
     for (let i = 0; i <= GameState.currentMoveNum; i++) {
       if (mainMoves[i].peg?.getPegName() === pegName) {
-        this.findMoveElement(i + 1)?.classList.add('hovered-peg');
+        findMoveElement(i + 1)?.classList.add('hovered-peg');
         return;
       }
       if (i === 1 && mainMoves[1]?.getText() === 'swap' && GameState.board.isSwapped()) {
         const first = GameState.board.getFirstPeg();
         if (first?.getPegName() === pegName) {
-          this.findMoveElement(2)?.classList.add('hovered-peg');
+          findMoveElement(2)?.classList.add('hovered-peg');
           return;
         }
       }
@@ -748,7 +748,7 @@ function flipTurn() {
 // ─── Clipboard ────────────────────────────────────────────────────────────────
 
 function copyMovesToClipboard() {
-  const plainText = '|' + buildMovesText(GameState.currentMoves.getUserMoves(), getUserMovesFirstNum(),
+  const plainText = '|' + buildMovesText(GameState.currentMoves.getUserMoves(), GameState.getUserMovesFirstNum(),
     (moveText) => moveText);
 
   const onSuccess = () => {
@@ -783,10 +783,10 @@ function copyMovesToClipboard() {
 // useful functions for drawing
 function xDelta(pixelX) { return pixelX - xPixels(xCoord(pixelX)); }
 function yDelta(pixelY) { return pixelY - yPixels(yCoord(pixelY)); }
-function xCoord(pixelX) { return Math.round((pixelX - GRID.ZERO()) / GRID.SPACING); }
-function yCoord(pixelY) { return Math.round((pixelY - GRID.ZERO()) / GRID.SPACING); }
-function xPixels(x)     { return GRID.ZERO() + GRID.SPACING * x; }
-function yPixels(y)     { return GRID.ZERO() + GRID.SPACING * y; }
+function xCoord(pixelX) { return Math.round((pixelX - GRID.ZERO) / GRID.SPACING); }
+function yCoord(pixelY) { return Math.round((pixelY - GRID.ZERO) / GRID.SPACING); }
+function xPixels(x)     { return GRID.ZERO + GRID.SPACING * x; }
+function yPixels(y)     { return GRID.ZERO + GRID.SPACING * y; }
 
 // actual drawing functions
 
