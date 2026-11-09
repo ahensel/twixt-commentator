@@ -1,5 +1,5 @@
 /* CSS used exclusively for drawing the Twixt board (used in views/game/index.ejs) */
-/* depends on twixt.css being imported first */
+/* depends on commentator.css being imported first */
 /* ── Tick marks ────────────────────────────────────────────────── */
 .tick-mark {
   position: absolute;
