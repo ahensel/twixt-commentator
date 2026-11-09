@@ -1,0 +1,404 @@
+/* CSS used exclusively for drawing the Twixt board (used in views/game/index.ejs) */
+/* depends on twixt.css being imported first */
+/* ── Tick marks ────────────────────────────────────────────────── */
+.tick-mark {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.vtick {
+  height: var(--tick-size);
+  border-left: 1px solid;
+}
+
+.htick {
+  width: var(--tick-size);
+  border-top: 1px solid;
+}
+
+.tick-mouse-hole, .tick-mouse-link {
+  border-color: var(--color-tick-hole);
+}
+
+.tick-mouse-peg {
+  border-color: var(--color-tick-peg);
+}
+
+/* ── Board (JavaScript Twixt Board) ───────────────────────────── */
+
+.game-header {
+  margin-top: 15px;
+  flex: 0;
+}
+
+/* board + underbar + sidebar */
+.game-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  position: relative;
+  width: 100%;
+  top: -5px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* board + underbar */
+.board-side {
+  flex: 0 0 auto;
+  margin-left: 10px;
+}
+
+.board {
+  position: relative;
+}
+
+.boardglass,
+.markerglass,
+.topglass {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 1px;
+  top: 1px;
+  background-color: transparent;
+}
+
+.boardglass { z-index: 5; }
+.markerglass { z-index: 10; }
+.topglass {
+  z-index: 15;
+  cursor: pointer;
+  user-select: none;
+}
+
+.winner-banner {
+  position: absolute;
+  inset: 1px;  /* same offset as the other glasses */
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s;
+}
+
+.winner-banner.visible {
+  opacity: 1;
+}
+
+.winner-banner span {
+  padding: 0.5em 1.2em;
+  font-family: var(--font-stack);
+  font-size: var(--font-size-l);
+  font-weight: bold;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  pointer-events: none;
+}
+
+.winner-banner.visible span {
+  pointer-events: auto;
+}
+
+.board .swap-button {
+  position: absolute;
+  font-size: var(--font-size-s);
+  top: -1.2rem;
+  right: 0.2rem;
+  text-decoration: underline;
+}
+
+/* ── CSS-rendered Twixt board (replaces board.gif) ─────────────── */
+.board .twixt-board {
+  --diagonals-color: #a6c76a;
+  --hole-color: #000;
+  --playing-area-color: #f2fff0;
+  --tb-border-color: #e6e6e6;
+  --lr-border-color: #a8a8a8;
+
+  font-family: var(--font-for-moves);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  margin: 0;
+  overflow: hidden;
+  min-width: 144px;
+  min-height: 144px;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--color-border);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--grid-spacing));
+  grid-template-rows: repeat(auto-fill, var(--grid-spacing));
+  padding: var(--grid-margin);
+  z-index: 0;
+}
+
+.board .border {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  background-color: var(--playing-area-color);
+  border: var(--grid-spacing) solid;
+  border-color:
+    var(--tb-border-color) var(--lr-border-color);
+}
+
+.board .crucial-diagonals {
+  position: relative;
+  grid-column: 2 / -2;
+  grid-row: 2 / -2;
+  margin: calc(var(--grid-spacing) / 2);
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Inline SVG carries all 8 crucial diagonal lines.  The SVG coordinate
+   space is 0-100 × 0-100, stretched to fill the square playing area.
+   vector-effect: non-scaling-stroke keeps each line at a constant pixel
+   width regardless of the board's rendered size. */
+.board .crucial-diagonals .diagonal-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.board .crucial-diagonals .diagonal-lines line {
+  stroke: var(--diagonals-color);
+}
+
+.board .holes-layer {
+  display: grid;
+  grid-column: 1/-1;
+  grid-row: 1/-1;
+  grid-template-columns: repeat(auto-fill, var(--grid-spacing));
+  grid-template-rows: repeat(auto-fill, var(--grid-spacing));
+  background: radial-gradient(circle at center,
+      var(--hole-color) 0%,
+      var(--hole-color) 15%,
+      transparent 15%) 0 0 / var(--grid-spacing) var(--grid-spacing);
+  z-index: 2;
+}
+
+.board .corner {
+  border: calc(var(--grid-spacing)/2) solid;
+}
+
+.board .corner.upper {
+  grid-row: 1 / 1;
+  border-bottom-color: var(--lr-border-color);
+  border-top-color: var(--tb-border-color);
+}
+
+.board .corner.lower {
+  grid-row: -2 / -2;
+  border-bottom-color: var(--tb-border-color);
+  border-top-color: var(--lr-border-color);
+}
+
+.board .corner.left {
+  grid-column: 1 / 1;
+  border-left-color: var(--lr-border-color);
+  border-right-color: var(--tb-border-color);
+}
+
+.board .corner.right {
+  grid-column: -2 / -2;
+  border-left-color: var(--tb-border-color);
+  border-right-color: var(--lr-border-color);
+}
+
+.board .left-side {
+  grid-column: 1;
+  padding-right: 3px;
+  margin-left: calc(var(--grid-margin) * -1);
+  text-align: right;
+}
+
+.board .right-side {
+  grid-column: -1;
+  padding-left: 3px;
+  text-align: left;
+}
+
+.board .row-numbers {
+  grid-row: 1 / -1;
+  line-height: var(--grid-spacing);
+  width: var(--grid-margin);
+  overflow-y: hidden;
+  overflow-x: visible;
+  counter-reset: rownum;
+}
+
+.board .row-numbers div::before {
+  counter-increment: rownum;
+  content: counter(rownum);
+}
+
+.board .top-side {
+  grid-row: 1;
+  margin-top: calc(var(--grid-spacing) * -1);
+}
+
+.board .bottom-side {
+  grid-row: -1;
+}
+
+.board .right-half {
+  margin-left: calc(var(--grid-spacing) * 26); /* capital letters on the right */
+}
+.board .column-letters, .board .column-letters2 {
+  grid-column: 1 / -1;
+  line-height: var(--grid-spacing);
+  height: var(--grid-spacing);
+  overflow: hidden;
+  counter-reset: colnum;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--grid-spacing));
+  justify-items: center;
+}
+
+.board .column-letters div::before {
+  counter-increment: colnum;
+  content: counter(colnum, lower-alpha);
+}
+
+.board .column-letters2 div::before {
+  counter-increment: colnum;
+  content: counter(colnum, upper-alpha);
+}
+
+.noscript {
+  position: absolute;
+  top: 200px;
+  left: 70px;
+  width: 338px;
+  font-weight: bold;
+  font-size: 1.25rem;
+  border: 1px solid var(--color-error);
+  padding: 10px;
+  background-color: var(--color-bg);
+}
+
+.turn {
+  font-weight: bold;
+  font-size: 1rem;
+  height: 25px;
+  margin: 10px 0 0 10px;
+}
+
+.game-number-form {
+  margin-left: 10px;
+}
+
+.game-players {
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+.sidebar {
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 400px;
+  min-height: 0;
+  height: 100%;
+  gap: 10px;
+}
+
+.moves-panel {
+  border: 1px solid var(--color-border);
+  padding: 9px;
+  background-color: var(--color-bg);
+  font-size: var(--font-size-s);
+  flex-shrink: 0;
+}
+
+.moves-panel div {
+  margin: 4px;
+}
+
+.moves-panel .back-next {
+  padding: 4px 2px 2px 2px;
+  margin: 2px;
+  user-select: none;
+}
+
+.moves-panel .back-next a.disabled {
+  color: #999;
+  pointer-events: none;
+  cursor: default;
+}
+
+#underbar {
+  position: relative;
+  margin-top: 5px;
+}
+
+#underbar .underbar-status {
+  font-size: var(--font-size-xs);
+}
+
+#moves,
+span.moves {
+  font-family: var(--font-for-moves);
+  background-color: var(--color-moves-bg);
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+span.user-moves {
+  font-family: var(--font-for-moves);
+  background-color: var(--color-user-bg);
+  padding-right: 1px;
+}
+
+.current-move {
+  background-color: var(--color-currm-bg);
+}
+
+.hovered-peg {
+  background-color: var(--color-hp-bg);
+}
+
+.copy-moves-btn {
+  cursor: pointer;
+  float: left;
+  user-select: none;
+  font-size: 1rem;
+  margin-right: 4px;
+  width: 13px;
+}
+
+#comments {
+  border: 1px solid var(--color-border);
+  padding: 10px;
+  background-color: var(--color-bg);
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+  margin-bottom: 5px;
+}
+
+img.piece {
+  position: absolute;
+  user-select: none;
+}
+
+img.crosshair, img.new-peg {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  user-select: none;
+}
