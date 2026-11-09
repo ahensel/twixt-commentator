@@ -171,3 +171,42 @@
   white-space: nowrap;
 }
 
+/* ── Player stats page ─────────────────────────────────────── */
+.ps-th-sort:hover {
+  background: var(--color-even-row);
+}
+
+.ps-player-input {
+  width: 280px;
+  font-size: var(--font-size-s);
+  font-family: var(--font-stack);
+  border: 1px solid var(--color-border);
+  padding: 3px 6px;
+}
+
+.ps-player-listbox {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  min-width: 100%;
+  max-width: 380px;
+  max-height: 280px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  z-index: 200;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+}
+
+.ps-view-btn {
+  font-size: var(--font-size-s);
+  font-family:var(--font-stack);
+  padding: 3px 10px;
+  border: 1px solid var(--color-border);
+  background: var(--color-odd-row);
+  cursor: pointer;
+}

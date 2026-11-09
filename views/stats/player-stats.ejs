@@ -18,7 +18,7 @@
         name="player_display"
         placeholder="Type a name or LG id…"
         value="<%= params.player_display ? params.player_display : (typeof defaultName !== 'undefined' ? defaultName : '') %>"
-        style="width:280px; font-size:var(--font-size-s); font-family:var(--font-stack); border:1px solid var(--color-border); padding:3px 6px;"
+        class="ps-player-input"
         autocomplete="off"
         aria-label="Player name autocomplete"
         aria-expanded="false"
@@ -31,28 +31,14 @@
         id="player-listbox"
         role="listbox"
         aria-label="Player suggestions"
-        style="
-          display:none;
-          position:absolute;
-          left:0; top:100%;
-          min-width:100%;
-          max-width:380px;
-          max-height:280px;
-          overflow-y:auto;
-          margin:0; padding:0;
-          list-style:none;
-          background:var(--color-bg);
-          border:1px solid var(--color-border);
-          z-index:200;
-          box-shadow:0 3px 8px rgba(0,0,0,0.18);
-        "
+        class="ps-player-listbox"
       ></ul>
     </div>
 
     <button
       type="submit"
       id="view-btn"
-      style="font-size:var(--font-size-s); font-family:var(--font-stack); padding:3px 10px; border:1px solid var(--color-border); background:var(--color-odd-row); cursor:pointer;"
+      class="ps-view-btn"
     >View</button>
 
     <span id="player-status" style="font-size:var(--font-size-xs); color:var(--color-hint);"></span>
@@ -69,7 +55,7 @@
 <div id="wld-area">
   <% if (params.player_id) { %>
     <p id="wld-loading" style="font-size:var(--font-size-s); color:var(--color-hint);">
-      <span style="display:inline-block;width:1em;height:1em;border:2px solid var(--color-spinner);border-top-color:transparent;border-radius:50%;animation:ps-spin 0.8s linear infinite;vertical-align:-0.15em;margin-right:0.3em;"></span>
+      <span class="spinner" style="vertical-align:-0.15em;margin-right:0.3em;"></span>
       Loading games…
     </p>
     <p id="wld-error" style="display:none; color:var(--color-error); font-size:var(--font-size-s);"></p>
@@ -94,11 +80,6 @@
     </div>
   <% } %>
 </div>
-
-<style>
-@keyframes ps-spin { to { transform: rotate(360deg); } }
-.ps-th-sort:hover { background: var(--color-even-row); }
-</style>
 
 <script>
 (function () {
