@@ -118,8 +118,8 @@ function commentsInFocus(state) {
 // otherwise the browser interprets it as the Back button — potentially losing their work.
 function keyIntercept(evt) {
   const addCommentElement = document.getElementById('addComment');
-  if (addCommentElement != null &&
-      addCommentElement.style.display === 'inline' &&
+  if (addCommentElement &&
+      !addCommentElement.classList.contains('hidden') &&
       !addCommentElement.focused) {
     if (evt.key === 'Backspace' || (!evt.altKey && !evt.ctrlKey && !evt.metaKey)) {
       document.getElementById('new_comment').focus();
@@ -132,6 +132,8 @@ function keyIntercept(evt) {
   }
   return true;
 }
+
+document.addEventListener('keydown', e => keyIntercept(e));
 
 // ── Inline editing ──────────────────────────────────────────────────────────
 

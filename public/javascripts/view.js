@@ -117,8 +117,6 @@ const BoardRenderer = {
   }
 };
 
-document.addEventListener('keydown',  e => keyIntercept(e));
-
 window.addEventListener('load', () => {
   if (!document.getElementById('board')) return;
   const size = parseInt(document.getElementById('boardSize').value, 10);
@@ -266,25 +264,6 @@ function jumpFromComment(firstMoveNum, commentMoves) {
 
 function getCommentPegErrors(moves) {
   return TwixtNotation.validateCommentMoves(moves, GameState.board, GameState.turn);
-}
-
-function getNextCommentPegError(pegString, movesSoFar) {
-  return TwixtNotation.validateMove(pegString, GameState.board, GameState.turn, movesSoFar);
-}
-
-function getXFromLetter(xChar) {
-  return TwixtNotation.letterToX(xChar, GameState.board.size);
-}
-
-function parseLinkNotation(notation, prefix) {
-  if (prefix === '-') {
-    return TwixtNotation.findLink(notation, GameState.board);
-  }
-  return TwixtNotation.parseLinkEndpoints(notation, prefix, GameState.board.size);
-}
-
-function getPegCoordinates(pegString) {
-  return TwixtNotation.getPegCoordinates(pegString, GameState.board.size);
 }
 
 function placePegByNotation(pegString) {
@@ -805,7 +784,7 @@ function isPegSpot(pixelX, pixelY) {
 }
 
 function drawPeg(peg) {
-  const image = addInlineImgToBoard(
+  const image = addPiece(
     PEG.IMAGES[peg.color], `peg${peg.getPegName()}-${BoardRenderer.bg}`,
     xPixels(peg.x) - (PEG.SIZE/2), yPixels(peg.y) - (PEG.SIZE/2)
   );
@@ -831,7 +810,7 @@ function drawLinkableMarkersInBox(minX, minY, maxX, maxY, color) {
       if (GameState.board.isLinkable(x, y) && GameState.getPeg(x, y).color === color) {
         const markerName = getMarkerName(x, y);
         if (!document.getElementById(markerName)) {
-          addInlineImgToBoard('linkablemarker', markerName,
+          addPiece('linkablemarker', markerName,
             xPixels(x) - (PEG.SIZE/2), yPixels(y) - (PEG.SIZE/2));
           BoardInteraction.numLinkableMarkers++;
         }
@@ -970,15 +949,13 @@ function drawLinkGeneral(link, linkType) {
   const topPos = yPixels(link.minY());
 
   if (Math.abs(dx) === 1) {
-    addInlineImgToBoard(linkClass, id,
-      leftPos + LINK.SHORT_OFFSET, topPos + LINK.LONG_OFFSET);
+    addPiece(linkClass, id, leftPos + LINK.SHORT_OFFSET, topPos + LINK.LONG_OFFSET);
   } else {
-    addInlineImgToBoard(linkClass, id,
-      leftPos + LINK.LONG_OFFSET, topPos + LINK.SHORT_OFFSET);
+    addPiece(linkClass, id, leftPos + LINK.LONG_OFFSET, topPos + LINK.SHORT_OFFSET);
   }
 }
 
-function addInlineImgToBoard(className, id, leftPos, topPos) {
+function addPiece(className, id, leftPos, topPos) {
   const div = document.createElement('div');
   div.id = id;
   div.draggable = false;
