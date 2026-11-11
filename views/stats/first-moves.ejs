@@ -48,26 +48,26 @@
   }
 %>
 
-<div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; flex-wrap:wrap; font-size:var(--font-size-s); color:#555;">
+<div class="fm-legend">
   <span>Residual:</span>
   <span>
-    <span style="display:inline-block; width:14px; height:14px; background:rgba(52,152,219,0.8); border:1px solid #888; vertical-align:middle; border-radius:2px;"></span>
+    <span class="fm-legend-swatch fm-legend-swatch-under"></span>
     White underperforms Elo
   </span>
   <span>
-    <span style="display:inline-block; width:14px; height:14px; background:#f0f0f0; border:1px solid #bbb; vertical-align:middle; border-radius:2px;"></span>
+    <span class="fm-legend-swatch fm-legend-swatch-expected"></span>
     &asymp; expected
   </span>
   <span>
-    <span style="display:inline-block; width:14px; height:14px; background:rgba(231,76,60,0.8); border:1px solid #888; vertical-align:middle; border-radius:2px;"></span>
+    <span class="fm-legend-swatch fm-legend-swatch-over"></span>
     White overperforms Elo
   </span>
-  <span style="margin-left:6px; padding:1px 5px; font-size:var(--font-size-xs);">stripes = &lt;100 games</span>
-  <span style="padding:1px 5px; font-size:var(--font-size-xs);">thick stripes = &lt;20 games</span>
+  <span class="fm-legend-note" style="margin-left: 10px">stripes = &lt;100 games</span>
+  <span class="fm-legend-note">thick stripes = &lt;20 games</span>
 </div>
 
-<h3 style="margin-bottom:6px;">First Move Heatmap</h3>
-<div style="overflow-x: auto;">
+<h3 class="fm-heading">First Move Heatmap</h3>
+<div class="fm-scroll-wrap">
   <table class="main fm-heatmap" cellspacing="0">
     <thead>
       <tr>
@@ -96,7 +96,7 @@
             </td>
           <% } else { %>
             <td class="main fm-cell fm-cell-empty" title="No data for <%= col + r %>">
-              <div class="fm-cell-move" style="color:#ccc;"><%= col + r %></div>
+              <div class="fm-cell-move"><%= col + r %></div>
             </td>
           <% } %>
         <% }); %>
@@ -106,7 +106,7 @@
   </table>
 </div>
 
-<p style="margin-top:6px; font-size:var(--font-size-xs); color:#777;">
+<p class="fm-notes">
   <%= totalGames.toLocaleString() %> games included (board size&nbsp;24, pegs&nbsp;&gt;&nbsp;7 and &lt;&nbsp;100, excluding forfeits and draws).
   Elo ratings use K&nbsp;=&nbsp;32, computed from all size 24 Twixt history.
   Hover a cell for details.
@@ -144,21 +144,21 @@
   the second peg?
 </p>
 
-<h3 style="margin-top:24px; margin-bottom:4px;">Ranked by Residual</h3>
-<p style="font-size:var(--font-size-s); color:#555; margin-bottom:8px;">
+<h3 class="fm-ranked-heading">Ranked by Residual</h3>
+<p class="stats-hint">
   Click any column header to sort.
 </p>
 
-<table class="main fm-ranked" id="fm-ranked-table" cellspacing="0" style="max-width:520px;">
+<table class="main fm-ranked" id="fm-ranked-table" cellspacing="0">
   <thead>
     <tr>
-      <th class="main"                data-col="rank"         data-label="#"        style="text-align:right;">#</th>
-      <th class="main fm-th-sortable" data-col="move"         data-label="Move">Move</th>
-      <th class="main fm-th-sortable" data-col="n"            data-label="Games"    style="text-align:right;">Games</th>
-      <th class="main fm-th-sortable" data-col="winRate"      data-label="Win Rate" style="text-align:right;">Win Rate</th>
-      <th class="main fm-th-sortable" data-col="expectedRate" data-label="Expected" style="text-align:right;">Expected</th>
-      <th class="main fm-th-sortable" data-col="swapRate"     data-label="Swap %"   style="text-align:right;">Swap %</th>
-      <th class="main fm-th-sortable" data-col="residual"     data-label="Residual" style="text-align:right;">Residual &#x25BC;</th>
+      <th class="main text-right"                data-col="rank"         data-label="#">#</th>
+      <th class="main fm-th-sortable"            data-col="move"         data-label="Move">Move</th>
+      <th class="main fm-th-sortable text-right" data-col="n"            data-label="Games">Games</th>
+      <th class="main fm-th-sortable text-right" data-col="winRate"      data-label="Win Rate">Win Rate</th>
+      <th class="main fm-th-sortable text-right" data-col="expectedRate" data-label="Expected">Expected</th>
+      <th class="main fm-th-sortable text-right" data-col="swapRate"     data-label="Swap %">Swap %</th>
+      <th class="main fm-th-sortable text-right" data-col="residual"     data-label="Residual">Residual &#x25BC;</th>
     </tr>
   </thead>
   <tbody id="fm-ranked-tbody">
@@ -171,20 +171,15 @@
         data-expectedrate="<%= m.expectedRate %>"
         data-swaprate="<%= m.swapRate %>"
         data-residual="<%= m.residual %>">
-      <td class="main" style="text-align:right; color:#777;"><%= i + 1 %></td>
-      <td class="main" style="font-family:var(--font-for-moves); font-weight:bold; padding-left:8px;">
-        <span style="
-          display:inline-block; width:10px; height:10px;
-          background:<%= cellColor(m.residual, maxAbsResidual) %>;
-          border:1px solid #999; border-radius:2px;
-          margin-right:5px; vertical-align:middle;
-        "></span><%= moveName(m.move1n) %>
+      <td class="main text-right fm-rank-num"><%= i + 1 %></td>
+      <td class="main fm-move-cell">
+        <span class="fm-move-swatch" style="background:<%= cellColor(m.residual, maxAbsResidual) %>;"></span><%= moveName(m.move1n) %>
       </td>
-      <td class="main" style="text-align:right;"><%= m.n.toLocaleString() %></td>
-      <td class="main" style="text-align:right;"><%= fmtPctPlain(m.winRate) %></td>
-      <td class="main" style="text-align:right;"><%= fmtPctPlain(m.expectedRate) %></td>
-      <td class="main" style="text-align:right; color:#777;"><%= fmtPctPlain(m.swapRate) %></td>
-      <td class="main" style="text-align:right; font-weight:bold; color:<%= residualTextColor(m.residual) %>;">
+      <td class="main text-right"><%= m.n.toLocaleString() %></td>
+      <td class="main text-right"><%= fmtPctPlain(m.winRate) %></td>
+      <td class="main text-right"><%= fmtPctPlain(m.expectedRate) %></td>
+      <td class="main text-right fm-rank-num"><%= fmtPctPlain(m.swapRate) %></td>
+      <td class="main text-right" style="font-weight:bold; color:<%= residualTextColor(m.residual) %>;">
         <%= fmtPct(m.residual) %>
       </td>
     </tr>

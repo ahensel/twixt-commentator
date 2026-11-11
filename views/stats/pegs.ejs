@@ -16,9 +16,9 @@
 %>
 
 <!-- Board size switcher -->
-<div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
-  <span style="font-size:var(--font-size-s); color:#555;">Board size:</span>
-  <div id="size-switcher" style="display:flex; gap:4px; flex-wrap:wrap;">
+<div class="stats-controls">
+  <span class="stats-label">Board size:</span>
+  <div id="size-switcher" class="size-switcher">
     <% boardSizes.forEach(size => { %>
       <button
         class="size-btn<%= size === defaultSize ? ' size-btn-active' : '' %>"
@@ -30,32 +30,28 @@
 </div>
 
 <!-- Result filter checkboxes -->
-<div id="pegs-controls" style="display:flex; gap:16px; margin-bottom:12px; flex-wrap:wrap;">
+<div id="pegs-controls" class="pegs-controls">
   <% RESULT_CODES.forEach((code, i) => { %>
-    <label style="display:flex; align-items:center; gap:6px; cursor:pointer; user-select:none;">
+    <label class="pegs-control-label">
       <input
         type="checkbox"
         id="pegs-toggle-<%= code %>"
+        class="pegs-checkbox"
         data-index="<%= i %>"
         checked
-        style="width:15px; height:15px; accent-color:<%= RESULT_META[code].border %>;"
+        style="accent-color:<%= RESULT_META[code].border %>;"
       >
-      <span style="
-        display:inline-block; width:14px; height:14px;
-        background:<%= RESULT_META[code].bg %>;
-        border:1.5px solid <%= RESULT_META[code].border %>;
-        border-radius:3px; flex-shrink:0;
-      "></span>
+      <span class="pegs-color-swatch" style="background:<%= RESULT_META[code].bg %>; border-color:<%= RESULT_META[code].border %>;"></span>
       <span><%= RESULT_META[code].label %> (<%= code %>)</span>
     </label>
   <% }); %>
 </div>
 
-<div style="max-width: 900px;">
+<div class="pegs-chart-wrap">
   <canvas id="pegs-chart" height="120"></canvas>
 </div>
 
-<p id="pegs-stats" style="margin-top:10px; font-size:var(--font-size-s); color:#444;"></p>
+<p id="pegs-stats"></p>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <script>

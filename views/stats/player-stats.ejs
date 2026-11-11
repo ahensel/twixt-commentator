@@ -7,11 +7,11 @@
   Forfeits are excluded.</p>
 
 <form id="player-stats-form" method="get" action="/stats/player-stats" autocomplete="off">
-  <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
-    <label for="player-input" style="white-space:nowrap; font-size:var(--font-size-s);">
+  <div class="ps-form-row">
+    <label for="player-input" class="stats-label">
       Player:
     </label>
-    <div style="position:relative; display:inline-block;">
+    <div class="ps-input-wrap">
       <input
         id="player-input"
         type="text"
@@ -41,12 +41,12 @@
       class="ps-view-btn"
     >View</button>
 
-    <span id="player-status" style="font-size:var(--font-size-xs); color:var(--color-hint);"></span>
+    <span id="player-status" class="ps-status"></span>
   </div>
 </form>
 
 <% if (params.player_display && !params.player_id) { %>
-  <p style="color:var(--color-error);">
+  <p class="text-error">
     No player matched "<%= params.player_display %>". Please choose a name from the suggestion list.
   </p>
 <% } %>
@@ -54,24 +54,24 @@
 <%# W-L-D results area — populated by JS when player_id is present %>
 <div id="wld-area">
   <% if (params.player_id) { %>
-    <p id="wld-loading" style="font-size:var(--font-size-s); color:var(--color-hint);">
-      <span class="spinner" style="vertical-align:-0.15em;margin-right:0.3em;"></span>
+    <p id="wld-loading" class="ps-hint-text">
+      <span class="spinner"></span>
       Loading games…
     </p>
-    <p id="wld-error" style="display:none; color:var(--color-error); font-size:var(--font-size-s);"></p>
+    <p id="wld-error" class="text-error ps-info-text" style="display:none;"></p>
     <div id="wld-table-wrap" style="display:none;">
-      <p id="board-size-note" style="font-size:var(--font-size-s); display:none;"></p>
-      <div id="board-size-filter" style="display:none; font-size:var(--font-size-s); margin-bottom:8px;"></div>
-      <p id="wld-summary" style="font-size:var(--font-size-s);"></p>
+      <p id="board-size-note" class="ps-info-text" style="display:none;"></p>
+      <div id="board-size-filter" class="ps-info-text" style="display:none;"></div>
+      <p id="wld-summary" class="ps-info-text"></p>
       <table class="main" cellspacing="0" id="wld-table">
         <thead>
           <tr>
-            <th class="main ps-th-sort" data-col="name" style="cursor:pointer; user-select:none; white-space:nowrap;">Opponent ▲</th>
-            <th class="main ps-th-sort" data-col="w"    style="cursor:pointer; user-select:none; text-align:right;">W</th>
-            <th class="main ps-th-sort" data-col="l"    style="cursor:pointer; user-select:none; text-align:right;">L</th>
-            <th class="main ps-th-sort" data-col="d"    style="cursor:pointer; user-select:none; text-align:right;">D</th>
-            <th class="main ps-th-sort" data-col="total" style="cursor:pointer; user-select:none; text-align:right;">Total</th>
-            <th class="main ps-th-sort" data-col="wp" style="cursor:pointer; user-select:none; text-align:right;">Win %</th>
+            <th class="main ps-th-sort" data-col="name">Opponent ▲</th>
+            <th class="main ps-th-sort text-right" data-col="w">W</th>
+            <th class="main ps-th-sort text-right" data-col="l">L</th>
+            <th class="main ps-th-sort text-right" data-col="d">D</th>
+            <th class="main ps-th-sort text-right" data-col="total">Total</th>
+            <th class="main ps-th-sort text-right" data-col="wp">Win %</th>
           </tr>
         </thead>
         <tbody id="wld-tbody"></tbody>
@@ -462,28 +462,23 @@
       tdName.title = 'LG id: ' + row.oppId;
 
       const tdW = document.createElement('td');
-      tdW.className = 'main';
-      tdW.style.textAlign = 'right';
+      tdW.className = 'main text-right';
       tdW.textContent = row.w;
 
       const tdL = document.createElement('td');
-      tdL.className = 'main';
-      tdL.style.textAlign = 'right';
+      tdL.className = 'main text-right';
       tdL.textContent = row.l;
 
       const tdD = document.createElement('td');
-      tdD.className = 'main';
-      tdD.style.textAlign = 'right';
+      tdD.className = 'main text-right';
       tdD.textContent = row.d || '';
 
       const tdTotal = document.createElement('td');
-      tdTotal.className = 'main';
-      tdTotal.style.textAlign = 'right';
+      tdTotal.className = 'main text-right';
       tdTotal.innerHTML = '<b>' + row.total + '</b>';
 
       const tdWp = document.createElement('td');
-      tdWp.className = 'main';
-      tdWp.style.textAlign = 'right';
+      tdWp.className = 'main text-right';
       tdWp.textContent = row.wp.toFixed(1);
 
       tr.appendChild(tdName);
@@ -499,11 +494,11 @@
     tfootEl.innerHTML =
       '<tr>' +
       '<td class="main"><b>Total</b></td>' +
-      '<td class="main" style="text-align:right"><b>' + totalW + '</b></td>' +
-      '<td class="main" style="text-align:right"><b>' + totalL + '</b></td>' +
-      '<td class="main" style="text-align:right"><b>' + (totalD || '') + '</b></td>' +
-      '<td class="main" style="text-align:right"><b>' + totalGames.toLocaleString() + '</b></td>' +
-      '<td class="main" style="text-align:right"><b>' + ((totalW * 100 + totalD * 50) / totalGames).toFixed(1) + '</b></td>' +
+      '<td class="main text-right"><b>' + totalW + '</b></td>' +
+      '<td class="main text-right"><b>' + totalL + '</b></td>' +
+      '<td class="main text-right"><b>' + (totalD || '') + '</b></td>' +
+      '<td class="main text-right"><b>' + totalGames.toLocaleString() + '</b></td>' +
+      '<td class="main text-right"><b>' + ((totalW * 100 + totalD * 50) / totalGames).toFixed(1) + '</b></td>' +
       '</tr>';
 
     // Update column-header sort arrows

@@ -10,21 +10,21 @@
   I have since added some periodically running scripts to keep up the total.
 </p>
 
-<table class="main" cellspacing="0" style="max-width: 480px;">
+<table class="main stats-table-sm" cellspacing="0">
   <thead>
     <tr>
       <th class="main">Metric</th>
-      <th class="main" style="text-align: right;">Count</th>
+      <th class="main text-right">Count</th>
     </tr>
   </thead>
   <tbody>
     <tr class="even">
       <td class="main">Games cached from Little Golem</td>
-      <td class="main" style="text-align: right;"><%= cachedCount.toLocaleString() %></td>
+      <td class="main text-right"><%= cachedCount.toLocaleString() %></td>
     </tr>
     <tr class="odd">
       <td class="main">Finished Twixt games on Little Golem</td>
-      <td class="main" style="text-align: right;">
+      <td class="main text-right">
         <span id="lg-total" class="lg-total-loading" data-cached="<%= cachedCount %>">
           <span class="spinner" aria-label="Loading"></span>
         </span>
@@ -32,7 +32,7 @@
     </tr>
     <tr class="even" id="lg-coverage-row" style="display: none;">
       <td class="main">Coverage</td>
-      <td class="main" style="text-align: right;"><span id="lg-coverage"></span></td>
+      <td class="main text-right"><span id="lg-coverage"></span></td>
     </tr>
   </tbody>
 </table>
@@ -47,10 +47,10 @@
     <tr>
       <th class="main">Size</th>
       <% RESULT_CODES.forEach(code => { %>
-        <th class="main" style="text-align: right;"><%= RESULT_LABELS[code] %></th>
+        <th class="main text-right"><%= RESULT_LABELS[code] %></th>
       <% }); %>
-      <% if (showOther) { %><th class="main" style="text-align: right;">Other</th><% } %>
-      <th class="main" style="text-align: right;">Total</th>
+      <% if (showOther) { %><th class="main text-right">Other</th><% } %>
+      <th class="main text-right">Total</th>
     </tr>
   </thead>
   <tbody>
@@ -58,10 +58,10 @@
     <tr class="<%= i % 2 === 0 ? 'even' : 'odd' %>">
       <td class="main"><%= row.size === null ? '(unknown)' : row.size %></td>
       <% RESULT_CODES.forEach(code => { %>
-        <td class="main" style="text-align: right;"><%= row[code].toLocaleString() %><br/><span style="color: gray; font-size: 0.85em;"><%= pct(row[code], row.total) %></span></td>
+        <td class="main text-right"><%= row[code].toLocaleString() %><br/><span class="stats-pct"><%= pct(row[code], row.total) %></span></td>
       <% }); %>
-      <% if (showOther) { %><td class="main" style="text-align: right;"><%= row.other.toLocaleString() %><br/><span style="color: gray; font-size: 0.85em;"><%= pct(row.other, row.total) %></span></td><% } %>
-      <td class="main" style="text-align: right;"><b><%= row.total.toLocaleString() %></b><br/><span style="color: gray; font-size: 0.85em;"><%= pct(row.total, breakdown.grand.total) %></span></td>
+      <% if (showOther) { %><td class="main text-right"><%= row.other.toLocaleString() %><br/><span class="stats-pct"><%= pct(row.other, row.total) %></span></td><% } %>
+      <td class="main text-right"><b><%= row.total.toLocaleString() %></b><br/><span class="stats-pct"><%= pct(row.total, breakdown.grand.total) %></span></td>
     </tr>
     <% }); %>
   </tbody>
@@ -69,10 +69,10 @@
     <tr>
       <td class="main"><b>Total</b></td>
       <% RESULT_CODES.forEach(code => { %>
-        <td class="main" style="text-align: right;"><b><%= breakdown.grand[code].toLocaleString() %></b><br/><span style="color: gray; font-size: 0.85em;"><%= pct(breakdown.grand[code], breakdown.grand.total) %></span></td>
+        <td class="main text-right"><b><%= breakdown.grand[code].toLocaleString() %></b><br/><span class="stats-pct"><%= pct(breakdown.grand[code], breakdown.grand.total) %></span></td>
       <% }); %>
-      <% if (showOther) { %><td class="main" style="text-align: right;"><b><%= breakdown.grand.other.toLocaleString() %></b><br/><span style="color: gray; font-size: 0.85em;"><%= pct(breakdown.grand.other, breakdown.grand.total) %></span></td><% } %>
-      <td class="main" style="text-align: right;"><b><%= breakdown.grand.total.toLocaleString() %></b><br/><span style="color: gray; font-size: 0.85em;">100%</span></td>
+      <% if (showOther) { %><td class="main text-right"><b><%= breakdown.grand.other.toLocaleString() %></b><br/><span class="stats-pct"><%= pct(breakdown.grand.other, breakdown.grand.total) %></span></td><% } %>
+      <td class="main text-right"><b><%= breakdown.grand.total.toLocaleString() %></b><br/><span class="stats-pct">100%</span></td>
     </tr>
   </tfoot>
 </table>
@@ -87,18 +87,18 @@ so the percentages are directly comparable.</p>
   <thead>
     <tr>
       <th class="main">Size</th>
-      <th class="main" style="text-align: right;">Games of This Size</th>
-      <th class="main" style="text-align: right;">All Games Since Then</th>
-      <th class="main" style="text-align: right;">Share</th>
+      <th class="main text-right">Games of This Size</th>
+      <th class="main text-right">All Games Since Then</th>
+      <th class="main text-right">Share</th>
     </tr>
   </thead>
   <tbody>
     <% sizeIntro.forEach((row, i) => { %>
     <tr class="<%= i % 2 === 0 ? 'even' : 'odd' %>">
       <td class="main"><%= row.size %></td>
-      <td class="main" style="text-align: right;"><%= row.sizeCount.toLocaleString() %></td>
-      <td class="main" style="text-align: right;"><%= row.totalSinceIntro.toLocaleString() %></td>
-      <td class="main" style="text-align: right;"><%= pct(row.sizeCount, row.totalSinceIntro) %></td>
+      <td class="main text-right"><%= row.sizeCount.toLocaleString() %></td>
+      <td class="main text-right"><%= row.totalSinceIntro.toLocaleString() %></td>
+      <td class="main text-right"><%= pct(row.sizeCount, row.totalSinceIntro) %></td>
     </tr>
     <% }); %>
   </tbody>

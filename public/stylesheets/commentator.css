@@ -185,8 +185,8 @@ td {
   font-size: var(--font-size-s);
 }
 
-td.text-right  { text-align: right; }
-td.text-center { text-align: center; }
+td.text-right, th.text-right   { text-align: right; }
+td.text-center, th.text-center { text-align: center; }
 td.italic      { font-style: italic; }
 td.bold       { font-weight: bold; }
 
