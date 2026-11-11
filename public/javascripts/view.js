@@ -1,19 +1,4 @@
-// Inline images, because board pieces are small
-const blackpeg_img = 'data:image/webp;base64,UklGRmAAAABXRUJQVlA4TFMAAAAvDAADECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryA4NIkhpN1a+BCwJIDkAA+Jf1yUJE/wPWFDDMqthmZodyV/I2xeP6y4fKXdn3gWFWBawpAAA=';
-const whitepeg_img = 'data:image/webp;base64,UklGRnYAAABXRUJQVlA4TGoAAAAvDAADEDdAJm2bqqSu38ikbVOV1PUbmbRtqpK6fpv/AAC3qfxXUYFVbNtKzrMA+o8G8AAMAaCCnf4hnlSI6L/atm0Yjz15A9gWA2C0tjW47HG6G81E7i3iQ9IZ/5EMqoaMTmPZvfn16S8A';
-
-const eselink_img = 'data:image/webp;base64,UklGRlIAAABXRUJQVlA4TEUAAAAvGoADECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryg6JIUiMuAzgAB1f8y1t+eUf0X2HSBkw6b0nC8sa8y/UR22HGNxgA';
-const sselink_img = 'data:image/webp;base64,UklGRlIAAABXRUJQVlA4TEUAAAAvDoAGECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKrycyiKJKm5JCAhBPzbG75IoCL6LyRIMPqkQlA7pdI+wv5lHjmMlgIA';
-const sswlink_img = 'data:image/webp;base64,UklGRlQAAABXRUJQVlA4TEcAAAAvDoAGECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryg5o2kpxLANID+edPb679OqL/QoIEu0MEHaUxKp7uo9xr/9i69zpAAAA=';
-const wswlink_img = 'data:image/webp;base64,UklGRlIAAABXRUJQVlA4TEYAAAAvGoADECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryg5pIkqK5AwM4AAevf3lDRB7RfwUBASDiDGoPZbbwV/X58OvzmIEC';
-
-const esecut_img = 'data:image/webp;base64,UklGRmAAAABXRUJQVlA4TFMAAAAvGoADEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryU0FRJEnNHWAg/sFBFJL9u8kIiOi/wrZtkMJ4j1iYk/s5Eh9z5bGSXiwdX+nvB7ZY4rw0CAA=';
-const ssecut_img = 'data:image/webp;base64,UklGRl4AAABXRUJQVlA4TFEAAAAvDoAGEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryUznYNJLk6Gxugdwx8fzJ9KQP4RXRf6Jpm1TN7Y4cDCqekqW+DHsq0lRD5i/qNzx31CwA';
-const sswcut_img = 'data:image/webp;base64,UklGRlwAAABXRUJQVlA4TE8AAAAvDoAGEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryU0FNJFsNsY9CwEn2b+ZeSR/Rf7JJG7s3fxisWaqOMp/mEJGe4lNflLTnf+4V7QUwAA==';
-const wswcut_img = 'data:image/webp;base64,UklGRmQAAABXRUJQVlA4TFcAAAAvGoADEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryU4FVJNmJNmAA/xMHKITu/LsJC4joP9mkTdpOJY9gGEuGeDGkmMBH+//xO1mYGHjJyGMDYwNwGAIA';
-
-const linkablemarker_img = 'data:image/webp;base64,UklGRioAAABXRUJQVlA4TB4AAAAvDAADEA8Q8z8z8x84CLJtNn/JI0ziDhH9T25k5ng=';
-
+// ─── Board metrics (from CSS) ───────────────────────────────────────────────
 const styles = getComputedStyle(document.documentElement);
 const GRID = {
   MARGIN: parseInt(styles.getPropertyValue('--grid-margin'), 10),
@@ -22,24 +7,15 @@ const GRID = {
 };
 GRID.ZERO = GRID.MARGIN - GRID.SPACING / 2;
 const PEG = {
-  SIZE: 13,
-  IMAGES: [blackpeg_img, whitepeg_img],
+  SIZE: parseInt(styles.getPropertyValue('--peg-size'), 10),
+  IMAGES: ['blackpeg', 'whitepeg']
 };
 const LINK = {
-  // links are on the hypotenuse of a 1-2-sqrt(5) right triangle.
-  // const LINK_LENGTH = GRID.SPACING * Math.sqrt(5) - PEG.SIZE;
-  // const LINK.SHORT_DIM = Math.round(LINK_LENGTH / Math.sqrt(5)) + 3;  // 3 for a little overlap with pegs
-  // const LINK.LONG_DIM = Math.round(LINK_LENGTH * 2 / Math.sqrt(5)) + 3;
-  // We could calculate link image dimensions this way, but the fact is that the link images are 15x27 pixels.
-  SHORT_DIM: 15,
-  LONG_DIM: 27,
-  SHORT_OFFSET: () => (GRID.SPACING - LINK.SHORT_DIM) / 2,
-  LONG_OFFSET: () => (GRID.SPACING * 2 - LINK.LONG_DIM) / 2,
-  IMAGES: {
-    eselink_img, sselink_img, sswlink_img, wswlink_img,
-    esecut_img, ssecut_img, sswcut_img, wswcut_img
-  }
+  SHORT_DIM: parseInt(styles.getPropertyValue('--link-short-dim'), 10),
+  LONG_DIM: parseInt(styles.getPropertyValue('--link-long-dim'), 10)
 };
+LINK.SHORT_OFFSET = (GRID.SPACING - LINK.SHORT_DIM) / 2;
+LINK.LONG_OFFSET = (GRID.SPACING * 2 - LINK.LONG_DIM) / 2;
 
 // ─── Game & Session State ───────────────────────────────────────────────────
 
@@ -730,8 +706,12 @@ function nextTurn() {
 // Sets player label icons to reflect the current color assignment.
 // When colorsSwapped is true (pie-rule swap), player1 plays black and player2 plays white.
 function setPlayerLabels(colorsSwapped = false) {
-  document.getElementById('player1-label').src = colorsSwapped ? blackpeg_img : whitepeg_img;
-  document.getElementById('player2-label').src = colorsSwapped ? whitepeg_img : blackpeg_img;
+  const p1 = document.getElementById('player1-label');
+  const p2 = document.getElementById('player2-label');
+  p1?.classList.remove('blackpeg', 'whitepeg');
+  p2?.classList.remove('blackpeg', 'whitepeg');
+  p1?.classList.add(colorsSwapped ? 'blackpeg' : 'whitepeg');
+  p2?.classList.add(colorsSwapped ? 'whitepeg' : 'blackpeg');
 }
 
 function showTurn() {
@@ -827,7 +807,7 @@ function isPegSpot(pixelX, pixelY) {
 function drawPeg(peg) {
   const image = addInlineImgToBoard(
     PEG.IMAGES[peg.color], `peg${peg.getPegName()}-${BoardRenderer.bg}`,
-    xPixels(peg.x) - (PEG.SIZE/2), yPixels(peg.y) - (PEG.SIZE/2), PEG.SIZE, PEG.SIZE
+    xPixels(peg.x) - (PEG.SIZE/2), yPixels(peg.y) - (PEG.SIZE/2)
   );
   eraseCrosshair();
   overlayNewPegMarker(image, peg.color);
@@ -851,8 +831,8 @@ function drawLinkableMarkersInBox(minX, minY, maxX, maxY, color) {
       if (GameState.board.isLinkable(x, y) && GameState.getPeg(x, y).color === color) {
         const markerName = getMarkerName(x, y);
         if (!document.getElementById(markerName)) {
-          addInlineImgToBoard(linkablemarker_img, markerName,
-            xPixels(x) - (PEG.SIZE/2), yPixels(y) - (PEG.SIZE/2), PEG.SIZE, PEG.SIZE);
+          addInlineImgToBoard('linkablemarker', markerName,
+            xPixels(x) - (PEG.SIZE/2), yPixels(y) - (PEG.SIZE/2));
           BoardInteraction.numLinkableMarkers++;
         }
       }
@@ -878,7 +858,7 @@ function eraseLinkableMarkersAround(peg) {
 }
 
 function eraseAllLinkableMarkers() {
-  document.querySelectorAll('img[id^="marker_"]').forEach(m => BoardRenderer.boardglass().removeChild(m));
+  document.querySelectorAll('[id^="marker_"]').forEach(m => BoardRenderer.boardglass().removeChild(m));
   BoardInteraction.reset();
 }
 
@@ -985,38 +965,32 @@ function drawLinkGeneral(link, linkType) {
 
   const dx = Math.sign(link.peg1.y - link.peg2.y) * (link.peg1.x - link.peg2.x);
 
-  const linkImg = LINK.IMAGES[['wsw','ssw','','sse','ese'][dx+2] + linkType + '_img'];
+  const linkClass = ['wsw','ssw','','sse','ese'][dx+2] + linkType;
   const leftPos = xPixels(link.minX());
   const topPos = yPixels(link.minY());
 
   if (Math.abs(dx) === 1) {
-    addInlineImgToBoard(linkImg, id,
-      leftPos + LINK.SHORT_OFFSET(), topPos + LINK.LONG_OFFSET(),
-      LINK.SHORT_DIM, LINK.LONG_DIM);
+    addInlineImgToBoard(linkClass, id,
+      leftPos + LINK.SHORT_OFFSET, topPos + LINK.LONG_OFFSET);
   } else {
-    addInlineImgToBoard(linkImg, id,
-      leftPos + LINK.LONG_OFFSET(), topPos + LINK.SHORT_OFFSET(),
-      LINK.LONG_DIM, LINK.SHORT_DIM);
+    addInlineImgToBoard(linkClass, id,
+      leftPos + LINK.LONG_OFFSET, topPos + LINK.SHORT_OFFSET);
   }
 }
 
-function addInlineImgToBoard(imgfile, id, leftPos, topPos, width, height) {
-  const img = document.createElement('img');
-  Object.assign(img, {
-    src: imgfile,
-    draggable: false,
-    width,
-    height,
-    id
-  });
-  Object.assign(img.style, {
+function addInlineImgToBoard(className, id, leftPos, topPos) {
+  const div = document.createElement('div');
+  div.id = id;
+  div.draggable = false;
+  div.classList.add('piece');
+  if (className) div.classList.add(className);
+  Object.assign(div.style, {
     left: `${leftPos}px`,
     top: `${topPos}px`
   });
-  img.classList.add('piece');
-  img.addEventListener('contextmenu', e => e.preventDefault());
+  div.addEventListener('contextmenu', e => e.preventDefault());
 
-  BoardRenderer.boardglass().appendChild(img);
+  BoardRenderer.boardglass().appendChild(div);
 
-  return img;
+  return div;
 }

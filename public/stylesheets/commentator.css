@@ -33,10 +33,6 @@
   --font-size-m:     0.92rem;
   --font-size-s:     0.83rem;
   --font-size-xs:    0.75rem;
-
-  --grid-spacing: 18px;
-  --grid-margin: 24px;
-  --tick-size: 11px;
 }
 
 /* ── Reset & Base ──────────────────────────────────────────────── */

@@ -1,5 +1,104 @@
-/* CSS used exclusively for drawing the Twixt board (used in views/game/index.ejs) */
+/* CSS used exclusively for drawing the Twixt board */
+/* used in views/game/index.ejs */
 /* depends on commentator.css being imported first */
+
+:root {
+  --grid-spacing: 18px;
+  --grid-margin: 24px;
+  --tick-size: 11px;
+  --peg-size: 13px;
+
+  /* links are on the hypotenuse of a 1, 2, sqrt(5) right triangle. So, */
+  /* const LINK_LENGTH = GRID.SPACING * Math.sqrt(5) - PEG.SIZE; */
+  /* const LINK.SHORT_DIM = Math.round(LINK_LENGTH / Math.sqrt(5)) + 3; */
+  /* const LINK.LONG_DIM = Math.round(LINK_LENGTH * 2 / Math.sqrt(5)) + 3 */
+  /* (+3 for a little overlap with pegs, as the link images are rectangular) */
+  /* We could calculate link image dimensions this way, but the fact is that the link images are 15x27 pixels. */
+  --link-short-dim: 15px;
+  --link-long-dim: 27px;
+}
+
+/* ── Board pieces & markers (inline data URLs) ─────────────────── */
+.piece {
+  position: absolute;
+  user-select: none;
+  background-repeat: no-repeat;
+}
+
+.piece.blackpeg, .blackpeg {
+  background-image: url('data:image/webp;base64,UklGRmAAAABXRUJQVlA4TFMAAAAvDAADECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryA4NIkhpN1a+BCwJIDkAA+Jf1yUJE/wPWFDDMqthmZodyV/I2xeP6y4fKXdn3gWFWBawpAAA=');
+}
+
+.piece.whitepeg, .whitepeg {
+  background-image: url('data:image/webp;base64,UklGRnYAAABXRUJQVlA4TGoAAAAvDAADEDdAJm2bqqSu38ikbVOV1PUbmbRtqpK6fpv/AAC3qfxXUYFVbNtKzrMA+o8G8AAMAaCCnf4hnlSI6L/atm0Yjz15A9gWA2C0tjW47HG6G81E7i3iQ9IZ/5EMqoaMTmPZvfn16S8A');
+}
+
+.piece.eselink, .eselink {
+  background-image: url('data:image/webp;base64,UklGRlIAAABXRUJQVlA4TEUAAAAvGoADECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryg6JIUiMuAzgAB1f8y1t+eUf0X2HSBkw6b0nC8sa8y/UR22HGNxgA');
+}
+
+.piece.sselink, .sselink {
+  background-image: url('data:image/webp;base64,UklGRlIAAABXRUJQVlA4TEUAAAAvDoAGECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKrycyiKJKm5JCAhBPzbG75IoCL6LyRIMPqkQlA7pdI+wv5lHjmMlgIA');
+}
+
+.piece.sswlink, .sswlink {
+  background-image: url('data:image/webp;base64,UklGRlQAAABXRUJQVlA4TEcAAAAvDoAGECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryg5o2kpxLANID+edPb679OqL/QoIEu0MEHaUxKp7uo9xr/9i69zpAAAA=');
+}
+
+.piece.wswlink, .wswlink {
+  background-image: url('data:image/webp;base64,UklGRlIAAABXRUJQVlA4TEYAAAAvGoADECcgECBDltgiJCBDLnGLkIAMucQt8x8AoKryg5pIkqK5AwM4AAevf3lDRB7RfwUBASDiDGoPZbbwV/X58OvzmIEC');
+}
+
+.piece.esecut, .esecut {
+  background-image: url('data:image/webp;base64,UklGRmAAAABXRUJQVlA4TFMAAAAvGoADEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryU0FRJEnNHWAg/sFBFJL9u8kIiOi/wrZtkMJ4j1iYk/s5Eh9z5bGSXiwdX+nvB7ZY4rw0CAA=');
+}
+
+.piece.ssecut, .ssecut {
+  background-image: url('data:image/webp;base64,UklGRl4AAABXRUJQVlA4TFEAAAAvDoAGEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryUznYNJLk6Gxugdwx8fzJ9KQP4RXRf6Jpm1TN7Y4cDCqekqW+DHsq0lRD5i/qNzx31CwA');
+}
+
+.piece.sswcut, .sswcut {
+  background-image: url('data:image/webp;base64,UklGRlwAAABXRUJQVlA4TE8AAAAvDoAGEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryU0FNJFsNsY9CwEn2b+ZeSR/Rf7JJG7s3fxisWaqOMp/mEJGe4lNflLTnf+4V7QUwAA==');
+}
+
+.piece.wswcut, .wswcut {
+  background-image: url('data:image/webp;base64,UklGRmQAAABXRUJQVlA4TFcAAAAvGoADEC8gECBDltgiJCBDLnGLkIAMucQt8x8AoKryU4FVJNmJNmAA/xMHKITu/LsJC4joP9mkTdpOJY9gGEuGeDGkmMBH+//xO1mYGHjJyGMDYwNwGAIA');
+}
+
+.piece.linkablemarker, .linkablemarker {
+  background-image: url('data:image/webp;base64,UklGRioAAABXRUJQVlA4TB4AAAAvDAADEA8Q8z8z8x84CLJtNn/JI0ziDhH9T25k5ng=');
+}
+
+.blackpeg, .whitepeg, .linkablemarker {
+  width: var(--peg-size);
+  height: var(--peg-size);
+}
+
+.eselink, .wswlink, .esecut, .wswcut {
+  width: var(--link-long-dim);
+  height: var(--link-short-dim);
+}
+
+.sselink, .sswlink, .ssecut, .sswcut {
+  width: var(--link-short-dim);
+  height: var(--link-long-dim);
+}
+
+.player-label {
+  display: inline-block;
+  width: var(--peg-size);
+  height: var(--peg-size);
+  vertical-align: baseline;
+  background-repeat: no-repeat;
+}
+
+img.crosshair, img.new-peg {
+  position: absolute;
+  width: var(--peg-size);
+  height: var(--peg-size);
+  user-select: none;
+}
+
 /* ── Tick marks ────────────────────────────────────────────────── */
 .tick-mark {
   position: absolute;
@@ -389,16 +488,4 @@ span.user-moves {
   flex: 1;
   min-height: 0;
   margin-bottom: 5px;
-}
-
-img.piece {
-  position: absolute;
-  user-select: none;
-}
-
-img.crosshair, img.new-peg {
-  position: absolute;
-  width: 13px;
-  height: 13px;
-  user-select: none;
 }
