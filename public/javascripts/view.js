@@ -262,10 +262,6 @@ function jumpFromComment(firstMoveNum, commentMoves) {
   showAllMoves(firstMoveNum - 1, commentMoves);
 }
 
-function getCommentPegErrors(moves) {
-  return TwixtNotation.validateCommentMoves(moves, GameState.board, GameState.turn);
-}
-
 function placePegByNotation(pegString) {
   const parsed = TwixtNotation.parseMove(pegString, GameState.board.size);
   if (parsed.isSwap) {
@@ -406,7 +402,7 @@ function showAllMoves(moveNum, commentMoves) {
   GameState.replayMode = 'none';
 
   if (commentMoves != null) {
-    const errors = getCommentPegErrors(commentMoves);
+    const errors = TwixtNotation.validateCommentMoves(moves, GameState.board, GameState.turn);
     if (errors.length === 0) {
       commentMoves.forEach(move => placePegByNotation(move));
     } else {

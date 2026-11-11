@@ -115,19 +115,19 @@ function commentsInFocus(state) {
 }
 
 // If the user types Backspace, focus must return to the comment box immediately,
-// otherwise the browser interprets it as the Back button — potentially losing their work.
+// otherwise the browser interprets it as the Back button.
 function keyIntercept(evt) {
-  const addCommentElement = document.getElementById('addComment');
-  if (addCommentElement &&
-      !addCommentElement.classList.contains('hidden') &&
-      !addCommentElement.focused) {
-    if (evt.key === 'Backspace' || (!evt.altKey && !evt.ctrlKey && !evt.metaKey)) {
-      document.getElementById('new_comment').focus();
-      if (evt.key === 'Backspace') {
-        evt.preventDefault();
-        evt.stopPropagation();
-        return false;
-      }
+  const commentElement = document.getElementsByClassName('comment-textarea')[0];
+  if (commentElement && !commentElement.matches(':focus') &&
+    !commentElement.classList.contains('hidden') &&
+    (evt.key === 'Backspace' || (!evt.altKey && !evt.ctrlKey && !evt.metaKey))) {
+
+    commentElement.focus();
+
+    if (evt.key === 'Backspace') {
+      evt.preventDefault();
+      evt.stopPropagation();
+      return false;
     }
   }
   return true;
