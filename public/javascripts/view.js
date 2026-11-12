@@ -402,7 +402,7 @@ function showAllMoves(moveNum, commentMoves) {
   GameState.replayMode = 'none';
 
   if (commentMoves != null) {
-    const errors = TwixtNotation.validateCommentMoves(moves, GameState.board, GameState.turn);
+    const errors = TwixtNotation.validateCommentMoves(commentMoves, GameState.board, GameState.turn);
     if (errors.length === 0) {
       commentMoves.forEach(move => placePegByNotation(move));
     } else {
