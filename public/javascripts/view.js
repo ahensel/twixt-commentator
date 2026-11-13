@@ -74,6 +74,15 @@ const GameState = {
       return 1;
     }
     return moveNum + 1;
+  },
+
+  swapOccurred() {
+    if (this.currentMoveNum < 0) {
+      return false;
+    }
+    const secondMove = (this.currentMoveNum > 1) ?
+      this.currentMoves.moves[1] : this.currentMoves.userMoves[1 - this.currentMoveNum];
+    return !!secondMove && secondMove.getText() === 'swap';
   }
 };
 
@@ -184,10 +193,8 @@ function showMovesOnLoad() {
 
   // For player-color-swap games, detect whether a swap was played and update labels/colors.
   if (GameState.isPlayerColorSwap()) {
-    const swapOccurred = GameState.currentMoves.moves.length >= 2 &&
-                         GameState.currentMoves.moves[1].getText() === 'swap';
-    GameState.colorsSwapped = swapOccurred;
-    setPlayerLabels(swapOccurred);
+    GameState.colorsSwapped = GameState.swapOccurred();
+    setPlayerLabels(GameState.colorsSwapped);
   }
 
   showMovesText();
@@ -391,11 +398,7 @@ function showAllMoves(moveNum, commentMoves) {
   // For player-color-swap games, re-derive whether a swap is active in the displayed position.
   // clearBoard() above reset colorsSwapped to false, so we must restore it if needed.
   if (GameState.isPlayerColorSwap()) {
-    const allDisplayed = [
-      ...GameState.currentMoves.getMoves().slice(0, GameState.currentMoveNum),
-      ...GameState.currentMoves.getUserMoves(),
-    ];
-    GameState.colorsSwapped = allDisplayed.some(m => m.getText() === 'swap');
+    GameState.colorsSwapped = GameState.swapOccurred();
     setPlayerLabels(GameState.colorsSwapped);
   }
 
