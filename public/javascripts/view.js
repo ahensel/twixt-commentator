@@ -330,11 +330,9 @@ function executeSwap() {
   } else {
     const firstPeg = GameState.board.getFirstPeg();
     if (firstPeg) {
-      const oldImg = document.getElementById(`peg${firstPeg.getPegName()}-${BoardRenderer.bg}`);
-      if (oldImg) oldImg.remove();
+      document.getElementById(getPegId(firstPeg))?.remove();
       GameState.board.swap();
-      const newPeg = GameState.board.getFirstPeg();
-      drawPeg(newPeg);
+      drawPeg(GameState.board.getFirstPeg());
       GameState.turn = 1;
       showTurn();
     }
@@ -580,10 +578,8 @@ function mouseOverBoard(evt) {
 function declareWinnerIfWinner() {
   const winner = GameState.board.calculateWinner();
 
-  if (winner !== GameState.declaredWinner) {
-    if (winner !== null) {
-      showWinnerBanner(["It's a draw!", "White wins!", "Black wins!"][winner]);
-    }
+  if (winner !== null && winner !== GameState.declaredWinner) {
+    showWinnerBanner(["It's a draw!", "White wins!", "Black wins!"][winner]);
   }
   GameState.declaredWinner = winner;
 }
@@ -782,21 +778,25 @@ function isPegSpot(pixelX, pixelY) {
   return (xd * xd + yd * yd) < (PEG.SIZE * PEG.SIZE / 4 + 1);
 }
 
+function getPegId(peg) {
+  return `peg${peg.getPegName()}-${BoardRenderer.bg}`;
+}
+
 function drawPeg(peg) {
-  const image = addPiece(
-    PEG.IMAGES[peg.color], `peg${peg.getPegName()}-${BoardRenderer.bg}`,
+  const pegElement = addPiece(
+    PEG.IMAGES[peg.color], getPegId(peg),
     xPixels(peg.x) - (PEG.SIZE/2), yPixels(peg.y) - (PEG.SIZE/2)
   );
   eraseCrosshair();
-  overlayNewPegMarker(image, peg.color);
+  overlayNewPegMarker(pegElement, peg.color);
 }
 
-function overlayNewPegMarker(image, pegColor) {
+function overlayNewPegMarker(pegElement, pegColor) {
   document.getElementById('newwhitepeg').classList.add('hidden');
   document.getElementById('newblackpeg').classList.add('hidden');
   const newpeg = document.getElementById(`new${['black', 'white'][pegColor]}peg`);
-  newpeg.style.left    = image.style.left;
-  newpeg.style.top     = image.style.top;
+  newpeg.style.left = pegElement.style.left;
+  newpeg.style.top  = pegElement.style.top;
   newpeg.classList.remove('hidden');
   newpeg.draggable = false;
 }
