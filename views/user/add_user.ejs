@@ -12,6 +12,7 @@
 </script>
 <div>
   <fieldset class="boxed">
+    <legend>New User Registration for Twixt Commentator</legend>
     <% if (errors && errors.length) { %>
       <ul class="error">
         <% errors.forEach((e) => { %>
@@ -19,7 +20,6 @@
         <% }); %>
       </ul>
     <% } %>
-    <legend>New User Registration for Twixt Commentator</legend>
     <form action="/user/add_user" method="post">
       <div class="user-form-grid">
         <label for="user_name">Name:</label>

@@ -12,6 +12,7 @@
 </script>
 <div>
   <fieldset class="boxed">
+    <legend>Your User Profile</legend>
     <% if (errors && errors.length) { %>
       <ul class="error">
         <% errors.forEach((e) => { %>
@@ -19,7 +20,6 @@
         <% }); %>
       </ul>
     <% } %>
-    <legend>Your User Profile</legend>
     <form action="/user/profile/<%= user.id %>" method="post">
       <div class="user-form-grid">
         <label for="user_name">Name:</label>
