@@ -113,13 +113,28 @@ router.post('/profile/:id', async (req, res) => {
   const user = await User.findByPk(req.params.id);
   if (!user) return res.status(404).send('User not found');
 
-  const { name, password, password_confirmation, on_lg, name_on_lg, info } = req.body.user || req.body;
+  const formData = req.body.user || req.body;
+  const { name, password, password_confirmation, on_lg, name_on_lg, info } = formData;
   const errors = [];
 
+  const isCurrentPassword = Boolean(
+    password && user.salt && user.hashed_password &&
+    User._encryptedPassword(password, user.salt) === user.hashed_password
+  );
+  const isChangingPassword = Boolean(
+    (password && !isCurrentPassword) || password_confirmation
+  );
+
   if (!name || name.trim() === '') errors.push('Name is required.');
-  if (password && password !== password_confirmation) errors.push('Password confirmation does not match.');
+  if (isChangingPassword && password !== password_confirmation) {
+    errors.push('Password confirmation does not match.');
+  }
 
   if (errors.length) {
+    if (name !== undefined) user.name = name;
+    user.on_lg = !!on_lg;
+    if (name_on_lg !== undefined) user.name_on_lg = name_on_lg;
+    if (info !== undefined) user.info = info;
     return res.render('user/profile', { user, errors, params: req.body, session: req.session });
   }
 
@@ -127,7 +142,9 @@ router.post('/profile/:id', async (req, res) => {
   user.on_lg = !!on_lg;
   user.name_on_lg = name_on_lg || '';
   user.info = info || '';
-  if (password && password.trim() !== '') user.setPassword(password);
+  if (isChangingPassword && password && password.trim() !== '') {
+    user.setPassword(password);
+  }
   await user.save();
 
   res.redirect(buildBackUrl(req.body));
