@@ -91,7 +91,8 @@ document.addEventListener('keydown', function(e) {
 });
 </script>
 <h3>Commented Games</h3>
-<table class="main" cellspacing="0">
+<div class="table-container">
+<table class="main commented-games-table" cellspacing="0">
   <thead>
     <tr>
       <th class="main">Game #</th>
@@ -132,7 +133,7 @@ document.addEventListener('keydown', function(e) {
           <%= game.result %>
         </td>
         <% } %>
-        <td class="main">
+        <td class="main tournament">
           <% if (game.tournament && game.tournament.trim() !== '') { %>
             <%= game.tournament %>
           <% } else { %>
@@ -152,6 +153,7 @@ document.addEventListener('keydown', function(e) {
     <% }); %>
   </tbody>
 </table>
+</div>
 <div class="pagination">
   <span>Page:</span>
   <% pages.forEach((p) => { %>

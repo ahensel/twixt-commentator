@@ -105,7 +105,9 @@ body.main-page {
 
 /* ── Main-page content wrapper ──────────────────────────────────── */
 .main-page-wrapper {
-  max-width: 900px;
+  width: fit-content;
+  min-width: min(100%, 880px);
+  max-width: min(100%, 1200px);
   margin: 0 auto;
   padding: 24px 32px 40px;
   background-color: var(--color-bg);
@@ -312,6 +314,26 @@ th.main {
 
 tr.even { background-color: var(--color-even-row); }
 tr.odd  { background-color: var(--color-odd-row); }
+
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 12px;
+}
+
+.commented-games-table {
+  width: 100%;
+}
+
+.commented-games-table th,
+.commented-games-table td {
+  white-space: nowrap;
+}
+
+.commented-games-table td.tournament {
+  white-space: normal;
+  max-width: 260px;
+}
 
 /* ── Borders & Boxes ───────────────────────────────────────────── */
 .boxed {
@@ -763,6 +785,7 @@ body.admin-page {
   flex-wrap: wrap;
   gap: 4px;
   font-size: var(--font-size-s);
+  justify-content: center;
 }
 
 .pagination a,
