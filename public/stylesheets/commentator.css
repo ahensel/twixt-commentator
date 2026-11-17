@@ -3,14 +3,15 @@
 /* ── Custom Properties ─────────────────────────────────────────── */
 :root {
   --color-bg:        #ffffff;
-  --color-text:      #000000;
-  --color-link:      #5050ff;
-  --color-hint:      #555;
-  --color-border:    #000000;
-  --color-error:     #ff0000;
-  --color-heading:   navy;
-  --color-even-row:  #cccccc;
-  --color-odd-row:   #eeeeee;
+  --color-text:      #1a1a2e;
+  --color-link:      #2563eb;
+  --color-hint:      #6b7280;
+  --color-border:    #d1d5db;
+  --color-error:     #dc2626;
+  --color-heading:   #1e3a5f;
+  --color-even-row:  #ffffff;
+  --color-odd-row:   #eaf1f9;
+  --color-table-header: #e8edf5;
   --color-moves-bg:  #b0b0b0;
   --color-currm-bg:  #ff8080;
   --color-seq-name:  #ffff80;
@@ -54,14 +55,120 @@ body.game-page {
 }
 
 /* ── Page-level body margins ───────────────────────────────────── */
-body.main-page,
 body.about-page {
-  margin-left: 25px;
-  margin-right: 25px;
+  background-color: #f4f6f8;
+  margin: 0;
+}
+
+body.main-page {
+  background-color: #f4f6f8;
+  margin: 0;
 }
 
 .current-page {
   font-weight: 600;
+}
+
+/* ── Main-page top bar ──────────────────────────────────────────── */
+.main-page-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--color-bg);
+  border-bottom: 2px solid var(--color-border);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.main-page-topbar-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 8px 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.topbar-brand {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-heading);
+  flex: 1;
+  white-space: nowrap;
+}
+
+.main-page-topbar .login-box {
+  position: static;
+  top: auto;
+  right: auto;
+  text-align: left;
+}
+
+/* ── Main-page content wrapper ──────────────────────────────────── */
+.main-page-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 32px 40px;
+  background-color: var(--color-bg);
+  min-height: calc(100vh - 64px);
+}
+
+/* ── Main-page hero ─────────────────────────────────────────────── */
+.main-page-hero {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 20px;
+}
+
+.main-page-hero p {
+  color: var(--color-hint);
+  margin: 0;
+  font-size: var(--font-size-m);
+}
+
+/* ── Game lookup bar ────────────────────────────────────────────── */
+.game-lookup-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.game-lookup-bar form {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* ── About/FAQ page wrapper ─────────────────────────────────────── */
+.about-wrapper {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 32px 40px;
+  background-color: var(--color-bg);
+  min-height: calc(100vh - 54px);
+}
+
+.about-wrapper h2 {
+  margin-top: 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 20px;
+}
+
+/* FAQ question paragraphs — <p><b>only text</b></p> — styled as subheadings */
+.about-wrapper p > b:only-child {
+  display: block;
+  color: var(--color-heading);
+  font-size: 1rem;
+  margin-top: 1.4em;
+  margin-bottom: -0.4em;
+}
+
+.about-wrapper p,
+.about-wrapper li {
+  line-height: 1.6;
 }
 
 /* ── Typography ────────────────────────────────────────────────── */
@@ -119,6 +226,7 @@ button,
 input[type="button"],
 input[type="submit"] {
   cursor: pointer;
+  border-radius: 4px;
 }
 
 /* ── Colored text/link variants ────────────────────────────────── */
@@ -193,12 +301,13 @@ th {
 td.main,
 th.main {
   border-left: 1px solid var(--color-border);
-  padding-left: 5px;
-  padding-right: 5px;
+  padding: 6px 8px;
 }
 
 th.main {
   border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-table-header);
+  font-weight: 600;
 }
 
 tr.even { background-color: var(--color-even-row); }
@@ -207,6 +316,7 @@ tr.odd  { background-color: var(--color-odd-row); }
 /* ── Borders & Boxes ───────────────────────────────────────────── */
 .boxed {
   border: 1px solid var(--color-border);
+  border-radius: 4px;
 }
 
 .info {
@@ -412,18 +522,50 @@ tr.odd  { background-color: var(--color-odd-row); }
 
 .please-register {
   border: 1px solid var(--color-border);
+  border-radius: 4px;
   padding: 4px;
   font-size: var(--font-size-s);
 }
 
 /* ── Admin page ─────────────────────────────────────────────────── */
-.admin-page {
-  margin: 10px;
+body.admin-page {
+  background-color: #f4f6f8;
+  margin: 0;
 }
 
-.admin-page .user-info {
-  width: 350px;
-  height: 310px;
+/* ── Admin content wrapper ──────────────────────────────────────── */
+.admin-wrapper {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 32px 40px;
+  background-color: var(--color-bg);
+  min-height: calc(100vh - 54px);
+}
+
+.admin-wrapper fieldset.boxed {
+  border-radius: 8px;
+  padding: 20px 24px 24px;
+  margin: 0;
+}
+
+.admin-wrapper legend {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-heading);
+  padding: 0 8px;
+}
+
+.admin-wrapper hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 16px 0;
+}
+
+.admin-wrapper .user-info {
+  width: 100%;
+  max-width: 400px;
+  height: 160px;
+  resize: vertical;
 }
 
 /* ── User Info Popup Modal ──────────────────────────────────────── */
@@ -444,6 +586,7 @@ tr.odd  { background-color: var(--color-odd-row); }
 .modal {
   background-color: var(--color-bg);
   border: 1px solid var(--color-border);
+  border-radius: 8px;
   padding: 20px 24px;
   min-width: 300px;
   max-width: 500px;
@@ -610,3 +753,34 @@ tr.odd  { background-color: var(--color-odd-row); }
   animation: spinner-spin 0.8s linear infinite;
 }
 @keyframes spinner-spin { to { transform: rotate(360deg); } }
+
+
+/* ── Pagination ─────────────────────────────────────────────────── */
+.pagination {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-size: var(--font-size-s);
+}
+
+.pagination a,
+.pagination .current-page {
+  padding: 3px 9px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.pagination a:hover {
+  background-color: var(--color-even-row);
+  text-decoration: none;
+}
+
+.pagination .current-page {
+  background-color: var(--color-link);
+  color: #ffffff;
+  border-color: var(--color-link);
+  font-weight: 600;
+}

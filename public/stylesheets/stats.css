@@ -409,3 +409,24 @@
   background: var(--color-odd-row);
   cursor: pointer;
 }
+
+/* ── Override main stylesheet's even/odd row colors ─────────────── */
+/* Stats tables are compact and don't need row striping.             */
+tr.even,
+tr.odd {
+  background-color: transparent;
+}
+
+/* ── Horizontal row separators in place of striping ─────────────── */
+td.main {
+  border-bottom: 1px solid var(--color-border);
+}
+
+tr:last-child td.main {
+  border-bottom: none;
+}
+
+tfoot td.main {
+  border-bottom: none;
+  border-top: 1px solid var(--color-border);
+}

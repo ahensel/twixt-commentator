@@ -16,7 +16,14 @@
     </script>
   </head>
   <body class="admin-page">
-    <p class="err"><%= flash && flash.error ? flash.error : '' %></p>
-    <%- body %>
+    <header class="main-page-topbar">
+      <div class="main-page-topbar-inner">
+        <a class="topbar-brand" href="/">Twixt Commentator</a>
+      </div>
+    </header>
+    <main class="admin-wrapper">
+      <p class="err"><%= flash && flash.error ? flash.error : '' %></p>
+      <%- body %>
+    </main>
   </body>
 </html>

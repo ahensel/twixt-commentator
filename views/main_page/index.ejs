@@ -1,14 +1,14 @@
 <% layout('layouts/main_page') %>
-<h2>Twixt Commentator</h2>
-A forum to view, comment on, and read other people's comments on Twixt games.&nbsp;Enjoy!
-<br/>
-<br/>
-<form action="/game" method="post">
-  View <a href="https://www.littlegolem.net/app/#/gamelist/twixt/DEFAULT">Little Golem</a> Twixt Game:&nbsp;<input id="new_gid" class="boxed" type="text" name="new_gid" size="12" maxlength="12">
-  <input type="submit" value="Go">
-</form>
-<br/>
-<button id="new-blank-board-btn" onclick="openBlankBoardModal(); return false;">New Blank Board</button>
+<div class="main-page-hero">
+  <p>A forum to view, comment on, and read other people's comments on Twixt games. Enjoy!</p>
+</div>
+<div class="game-lookup-bar">
+  <form action="/game" method="post">
+    View <a href="https://www.littlegolem.net/app/#/gamelist/twixt/DEFAULT">Little Golem</a> Twixt Game:&nbsp;<input id="new_gid" class="boxed" type="text" name="new_gid" size="12" maxlength="12">
+    <input type="submit" value="Go">
+  </form>
+  <button id="new-blank-board-btn" onclick="openBlankBoardModal(); return false;">New Blank Board</button>
+</div>
 
 <!-- Blank Board Modal -->
 <div id="blank-board-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="blank-board-title">
@@ -152,17 +152,18 @@ document.addEventListener('keydown', function(e) {
     <% }); %>
   </tbody>
 </table>
-Page:&nbsp;<% pages.forEach((p) => { %>
-  <% if (p.page === null) { %>
-    ...&nbsp;
-  <% } else if (p.current) { %>
-    <span class="current-page"><%= p.label %></span>&nbsp;
-  <% } else { %>
-    <a href="<%= p.url %>"><%= p.label %></a>&nbsp;
-  <% } %>
-<% }); %>
-<br/>
-<br/>
+<div class="pagination">
+  <span>Page:</span>
+  <% pages.forEach((p) => { %>
+    <% if (p.page === null) { %>
+      <span>…</span>
+    <% } else if (p.current) { %>
+      <span class="current-page"><%= p.label %></span>
+    <% } else { %>
+      <a href="<%= p.url %>"><%= p.label %></a>
+    <% } %>
+  <% }); %>
+</div>
 <p>
   <a href="/faq">FAQ</a>
   |

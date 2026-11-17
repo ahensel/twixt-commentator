@@ -16,8 +16,15 @@
     </script>
   </head>
   <body class="main-page">
-    <div class="err"><%= flash && flash.error ? flash.error : '' %></div>
-    <%- include('_loginbox') %>
-    <%- body %>
+    <header class="main-page-topbar">
+      <div class="main-page-topbar-inner">
+        <span class="topbar-brand">Twixt Commentator</span>
+        <%- include('_loginbox') %>
+      </div>
+    </header>
+    <main class="main-page-wrapper">
+      <div class="err"><%= flash && flash.error ? flash.error : '' %></div>
+      <%- body %>
+    </main>
   </body>
 </html>
