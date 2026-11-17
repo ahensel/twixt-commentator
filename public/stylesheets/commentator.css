@@ -109,7 +109,7 @@ body.main-page {
   min-width: min(100%, 880px);
   max-width: min(100%, 1200px);
   margin: 0 auto;
-  padding: 24px 32px 40px;
+  padding: 24px 32px 1px;
   background-color: var(--color-bg);
   min-height: calc(100vh - 64px);
 }
