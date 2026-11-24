@@ -87,14 +87,32 @@
   height: var(--peg-size);
 }
 
-.eselink, .wswlink, .esecut, .wswcut {
+.eselink, .wswlink, .esecut, .wswcut,
+.eseghostlink, .wswghostlink {
   width: var(--link-long-dim);
   height: var(--link-short-dim);
 }
 
-.sselink, .sswlink, .ssecut, .sswcut {
+.sselink, .sswlink, .ssecut, .sswcut,
+.sseghostlink, .sswghostlink {
   width: var(--link-short-dim);
   height: var(--link-long-dim);
+}
+
+.eseghostlink {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="27" height="15"><line x1="1" y1="1" x2="26" y2="14" stroke="black" stroke-opacity="0.3" stroke-width="1.5" stroke-linecap="butt"/></svg>');
+}
+
+.sseghostlink {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="15" height="27"><line x1="1" y1="1" x2="14" y2="26" stroke="black" stroke-opacity="0.3" stroke-width="1.5" stroke-linecap="butt"/></svg>');
+}
+
+.sswghostlink {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="15" height="27"><line x1="14" y1="1" x2="1" y2="26" stroke="black" stroke-opacity="0.3" stroke-width="1.5" stroke-linecap="butt"/></svg>');
+}
+
+.wswghostlink {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="27" height="15"><line x1="26" y1="1" x2="1" y2="14" stroke="black" stroke-opacity="0.3" stroke-width="1.5" stroke-linecap="butt"/></svg>');
 }
 
 .player-label {

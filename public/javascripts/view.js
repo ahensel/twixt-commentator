@@ -844,6 +844,7 @@ function eraseCrosshair() {
   const ch = document.getElementById('crosshair');
   if (ch) ch.classList.add('hidden');
   eraseTickMarks();
+  eraseGhostLinks();
 }
 
 function eraseTickMarks() {
@@ -862,7 +863,46 @@ function drawCrosshair(x, y) {
     ch.style.top  = `${topPos - PEG.SIZE/2}px`;
     ch.classList.remove('hidden');
     drawTickMarks(leftPos, topPos, 'tick-mouse-hole');
+    drawGhostLinks(x, y);
   }
+}
+
+// Ghost links: temporary grey links showing what would auto-connect if a peg
+// were placed at (x, y) for the current player.
+function drawGhostLinks(x, y) {
+  eraseGhostLinks();
+  const board = GameState.board;
+  const color = GameState.turn;
+  board.forEachKnightMove((dx, dy) => {
+    const nx = x + dx;
+    const ny = y + dy;
+    const neighbor = board.getPeg(nx, ny);
+    if (neighbor?.color === color && !neighbor.hasLink(-dx, -dy) &&
+      !board.crossesExistingLink(x, y, nx, ny, color)) {
+        // Position using the same anchor logic as drawLinkGeneral.
+        const minX = Math.min(x, nx);
+        const minY = Math.min(y, ny);
+        const sdx = Math.sign(ny - y) * (nx - x);  // same sign logic as drawLinkGeneral's dx
+        const linkClass = ['wsw', 'ssw', '', 'sse', 'ese'][sdx + 2] + 'ghostlink';
+        const leftPos = xPixels(minX);
+        const topPos = yPixels(minY);
+        const div = document.createElement('div');
+        div.classList.add('piece', linkClass);
+        div.dataset.ghostlink = '';
+        if (Math.abs(sdx) === 1) {
+          div.style.left = `${leftPos + LINK.SHORT_OFFSET}px`;
+          div.style.top = `${topPos + LINK.LONG_OFFSET}px`;
+        } else {
+          div.style.left = `${leftPos + LINK.LONG_OFFSET}px`;
+          div.style.top = `${topPos + LINK.SHORT_OFFSET}px`;
+        }
+        document.getElementById('markerglass').appendChild(div);
+    }
+  });
+}
+
+function eraseGhostLinks() {
+  document.querySelectorAll('[data-ghostlink]').forEach(el => el.remove());
 }
 
 function drawTickMarks(leftPos, topPos, tickClass) {
